@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IUserCategoryService;
 import com.Xoot.CreditoParaTi.Definiciones.Services.IUserService;
 import com.Xoot.CreditoParaTi.entity.Usuario;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.UserDTO;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/user")
 public class UserController {
 	// Implementacion de interfaz
 	@Autowired
 	private IUserService userService;
 	@Autowired
-	private ICategoryUserService categoryUserService;
+	private IUserCategoryService categoryUserService;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	private Object data;
@@ -38,7 +37,7 @@ public class UserController {
 	/*
 	 * Metodo para obtener todos los usuarios activos
 	 */
-	@GetMapping("/allActive")
+	@GetMapping("/all")
 	public ResponseDTO allActive() {
 		try {
 			data = userService.findAllActive();

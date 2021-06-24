@@ -27,12 +27,6 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Usuario> findAll() {
-		return (List<Usuario>)userDao.findAll();
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public Usuario findById(Integer id) {
 		return userDao.findById(id).orElse(null);
 	}

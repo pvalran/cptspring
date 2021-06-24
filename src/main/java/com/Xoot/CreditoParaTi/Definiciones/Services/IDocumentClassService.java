@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.entity.DocumentClass;
 
-public interface IClassDocumentService {
-	public List<DocumentClass> findAll();
-
+public interface IDocumentClassService {
 	public DocumentClass findById(Integer id);
 
 	public DocumentClass save(DocumentClass classDocument);

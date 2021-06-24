@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.IClassDocumentService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentClassService;
 import com.Xoot.CreditoParaTi.entity.DocumentClass;
-import com.Xoot.CreditoParaTi.models.dao.IClassDocumentDao;
+import com.Xoot.CreditoParaTi.models.dao.IDocumentClassDao;
 
 @Service
-public class ClassDocumentImpl implements IClassDocumentService{
+public class DocumentClassImpl implements IDocumentClassService{
 	
 	@Autowired
-	private IClassDocumentDao classDocumentDao;
+	private IDocumentClassDao classDocumentDao;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<DocumentClass> findAll() {
-		return (List<DocumentClass>)classDocumentDao.findAll();
+	public List<DocumentClass> findAllActive() {
+		return classDocumentDao.findAllActive();
 	}
 
 	@Override
@@ -38,12 +38,6 @@ public class ClassDocumentImpl implements IClassDocumentService{
 	@Transactional
 	public void delete(Integer id) {
 		classDocumentDao.deleteById(id);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<DocumentClass> findAllActive() {
-		return classDocumentDao.findAllActive();
 	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.Xoot.CreditoParaTi.entity.DocumentType;
 
-public interface ITypeDocumentDao extends CrudRepository<DocumentType, Integer>, JpaSpecificationExecutor<DocumentType> {
+public interface IDocumentTypeDao extends CrudRepository<DocumentType, Integer>, JpaSpecificationExecutor<DocumentType> {
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_type WHERE status_flag = 1;")
 	List<DocumentType> findAllActive();
 }

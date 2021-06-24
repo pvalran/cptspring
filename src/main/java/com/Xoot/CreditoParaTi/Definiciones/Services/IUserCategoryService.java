@@ -3,9 +3,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
 
-public interface ICategoryUserService {
-	public List<UsuarioCategory> findAll();
-	
+public interface IUserCategoryService {
 	public UsuarioCategory findById(Integer id);
 	
 	public UsuarioCategory save(UsuarioCategory categoryUser);

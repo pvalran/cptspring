@@ -7,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IUserCategoryService;
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
-import com.Xoot.CreditoParaTi.models.dao.ICategoryUserDao;
+import com.Xoot.CreditoParaTi.models.dao.IUserCategoryDao;
 
 
 @Service
-public class CategoryUserImpl implements ICategoryUserService {
+public class UserCategoryImpl implements IUserCategoryService {
 	
 	@Autowired
-	private ICategoryUserDao categoryUserDao;
+	private IUserCategoryDao categoryUserDao;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<UsuarioCategory> findAll() {
-		return (List<UsuarioCategory>)categoryUserDao.findAll();
+	public List<UsuarioCategory> findAllActive() {
+		return categoryUserDao.findAllActive();
 	}
 
 	@Override
@@ -40,12 +40,6 @@ public class CategoryUserImpl implements ICategoryUserService {
 	@Transactional
 	public void delete(Integer id) {
 		categoryUserDao.deleteById(id);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<UsuarioCategory> findAllActive() {
-		return categoryUserDao.findAllActive();
 	}
 	
 	@Override

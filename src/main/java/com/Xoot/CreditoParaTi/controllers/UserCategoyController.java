@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IUserCategoryService;
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
-import com.Xoot.CreditoParaTi.entity.DTO.CategoryUserDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.CatalogueDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 @RestController
-@RequestMapping("/categoryUser")
-public class CategoryUserController {
+@RequestMapping("/user/type")
+public class UserCategoyController {
 	@Autowired
-	private ICategoryUserService CategoryUserService;
+	private IUserCategoryService CategoryUserService;
 	private Object data;
     private String message;
     private Boolean result;
@@ -28,7 +28,7 @@ public class CategoryUserController {
     /*
 	 * Metodo para obtener todos las categorias de usuario activos
 	 */
-	@GetMapping("/allActive")
+	@GetMapping("/all")
 	public ResponseDTO allActive() {
 		try {
 			data = CategoryUserService.findAllActive();
@@ -63,11 +63,11 @@ public class CategoryUserController {
 	 * Metodo para crear una categoria de usuario
 	 */
 	@PostMapping("/create")
-	public ResponseDTO create(@RequestBody CategoryUserDTO categoryUser) {		
+	public ResponseDTO create(@RequestBody  CatalogueDTO catalogue) {		
 		try {
 			UsuarioCategory catUser = new UsuarioCategory();
 			catUser.setStatus_flag(1);
-			catUser.setName(categoryUser.getName());
+			catUser.setName(catalogue.getName());
 			
 			data = CategoryUserService.save(catUser);
 			result = true;
@@ -84,10 +84,10 @@ public class CategoryUserController {
 	 * Metodo para actualizar una categoria de usuario
 	 */
 	@PutMapping("/update")
-	public ResponseDTO update(@RequestBody CategoryUserDTO categoryUser) {
+	public ResponseDTO update(@RequestBody  CatalogueDTO catalogue) {
 		try {
-			UsuarioCategory CategoryUserActual = CategoryUserService.findById(categoryUser.getIdCategoryUser());
-			CategoryUserActual.setName(categoryUser.getName());
+			UsuarioCategory CategoryUserActual = CategoryUserService.findById(catalogue.getIdCatalogue());
+			CategoryUserActual.setName(catalogue.getName());
 			CategoryUserActual.setStatus_flag(1);
 			CategoryUserActual.setMdfd_on(new Date());
 			

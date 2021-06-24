@@ -5,8 +5,7 @@ import java.util.List;
 import com.Xoot.CreditoParaTi.entity.Usuario;
 
 public interface IUserService {
-	public List<Usuario> findAll();
-	
+
 	public Usuario findById(Integer id);
 	
 	public Usuario save(Usuario user);

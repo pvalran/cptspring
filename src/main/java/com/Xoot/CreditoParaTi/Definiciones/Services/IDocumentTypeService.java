@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.entity.DocumentType;
 
-public interface ITypeDocumentService {
-	public List<DocumentType> findAll();
-
+public interface IDocumentTypeService {
 	public DocumentType findById(Integer id);
 
 	public DocumentType save(DocumentType typeDocument);
