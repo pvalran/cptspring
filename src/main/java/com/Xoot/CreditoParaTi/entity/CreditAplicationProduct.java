@@ -13,14 +13,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "categoryUser")
-public class CategoryUser implements Serializable {
+@Table(name = "credits_aplication_products")
+public class CreditAplicationProduct implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer category_id;
+	private Integer idProduct;
 
-	@Column(unique = true, name = "name", length = 20)
+	@Column(unique = true, name = "name", length = 50)
 	private String name;
 
 	@Column(name = "status_flag")
@@ -46,12 +46,12 @@ public class CategoryUser implements Serializable {
 		mdfd_on = new java.util.Date();
 	}
 
-	public Integer getCategory_id() {
-		return category_id;
+	public Integer getIdProduct() {
+		return idProduct;
 	}
 
-	public void setCategory_id(Integer category_id) {
-		this.category_id = category_id;
+	public void setIdProduct(Integer idProduct) {
+		this.idProduct = idProduct;
 	}
 
 	public String getName() {

@@ -31,7 +31,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
-		// TODO Auto-generated method stub
 		return super.authenticationManager();
 	}
 	

@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "users_categories_user", joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "category_id"), 
 	uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "category_id" }))
-	private List<CategoryUser> categoryUser;
+	private List<UsuarioCategory> categoryUser;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -101,11 +101,11 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
-	public List<CategoryUser> getCategoryUser() {
+	public List<UsuarioCategory> getCategoryUser() {
 		return categoryUser;
 	}
 
-	public void setCategoryUser(List<CategoryUser> categoryUser) {
+	public void setCategoryUser(List<UsuarioCategory> categoryUser) {
 		this.categoryUser = categoryUser;
 	}
 

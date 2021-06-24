@@ -1,11 +1,13 @@
 package com.Xoot.CreditoParaTi.entity.DTO;
 
+import java.util.List;
+
 public class UserDTO {
 	private Integer idUser;
 	private String username;
 	private String password;
 	private String email;
-	private Integer idCategory;
+	private List<Integer> idCategory;
 	
 	public Integer getIdUser() {
 		return idUser;
@@ -31,10 +33,10 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getIdCategory() {
+	public List<Integer> getIdCategory() {
 		return idCategory;
 	}
-	public void setIdCategory(Integer idCategory) {
+	public void setIdCategory(List<Integer> idCategory) {
 		this.idCategory = idCategory;
-	}	
+	}
 }

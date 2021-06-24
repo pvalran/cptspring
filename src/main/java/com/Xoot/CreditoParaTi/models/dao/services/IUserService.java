@@ -13,7 +13,9 @@ public interface IUserService {
 	
 	public void delete(Integer id);
 	
-	public Usuario userLogin(String userName, String pass);
-	
 	public List<Usuario> findAllActive();
+	
+	public Usuario findByUsername(String username);
+	
+	public Usuario findByemail(String email);
 }

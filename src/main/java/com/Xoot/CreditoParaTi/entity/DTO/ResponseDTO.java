@@ -1,4 +1,4 @@
-package com.Xoot.CreditoParaTi.utilidades;
+package com.Xoot.CreditoParaTi.entity.DTO;
 
 public class ResponseDTO {
 	private Object data;

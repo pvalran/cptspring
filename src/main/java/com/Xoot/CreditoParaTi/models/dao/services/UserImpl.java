@@ -49,11 +49,6 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	}
 
 	@Override
-	public Usuario userLogin(String userName, String pass) {
-		return (Usuario)userDao.findByLogin(userName, pass);
-	}
-
-	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> findAllActive() {
 		return userDao.findAllActive();
@@ -77,5 +72,18 @@ public class UserImpl  implements IUserService, UserDetailsService{
 				.collect(Collectors.toList());
 		
 		return new User(usuario.getUsername(), usuario.getPassword(), authorities);
+	}
+
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Usuario findByUsername(String username) {
+		return userDao.findByUsername(username);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Usuario findByemail(String email) {
+		return userDao.findByemail(email);
 	}
 }

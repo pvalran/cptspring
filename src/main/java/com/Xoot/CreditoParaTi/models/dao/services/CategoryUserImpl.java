@@ -1,12 +1,13 @@
 package com.Xoot.CreditoParaTi.models.dao.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Xoot.CreditoParaTi.entity.CategoryUser;
+import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
 import com.Xoot.CreditoParaTi.models.dao.ICategoryUserDao;
 
 
@@ -18,19 +19,19 @@ public class CategoryUserImpl implements ICategoryUserService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<CategoryUser> findAll() {
-		return (List<CategoryUser>)categoryUserDao.findAll();
+	public List<UsuarioCategory> findAll() {
+		return (List<UsuarioCategory>)categoryUserDao.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public CategoryUser findById(Integer id) {
+	public UsuarioCategory findById(Integer id) {
 		return categoryUserDao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public CategoryUser save(CategoryUser CategoryUser) {
+	public UsuarioCategory save(UsuarioCategory CategoryUser) {
 		return categoryUserDao.save(CategoryUser);
 	}
 
@@ -42,7 +43,20 @@ public class CategoryUserImpl implements ICategoryUserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<CategoryUser> findAllActive() {
+	public List<UsuarioCategory> findAllActive() {
 		return categoryUserDao.findAllActive();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds) {
+		List<UsuarioCategory> lstRetorno = new ArrayList<>();
+		UsuarioCategory cat;
+		for (Integer p:lstIds) {
+			cat = findById(p);
+			lstRetorno.add(cat);
+		}
+		
+		return lstRetorno;
 	}
 }

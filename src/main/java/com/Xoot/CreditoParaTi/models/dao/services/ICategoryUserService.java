@@ -2,16 +2,18 @@ package com.Xoot.CreditoParaTi.models.dao.services;
 
 import java.util.List;
 
-import com.Xoot.CreditoParaTi.entity.CategoryUser;
+import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
 
 public interface ICategoryUserService {
-	public List<CategoryUser> findAll();
+	public List<UsuarioCategory> findAll();
 	
-	public CategoryUser findById(Integer id);
+	public UsuarioCategory findById(Integer id);
 	
-	public CategoryUser save(CategoryUser categoryUser);
+	public UsuarioCategory save(UsuarioCategory categoryUser);
 	
 	public void delete(Integer id);
 	
-	public List<CategoryUser> findAllActive();
+	public List<UsuarioCategory> findAllActive();
+	
+	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds);
 }
