@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
 import com.Xoot.CreditoParaTi.entity.DTO.CategoryUserDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
-import com.Xoot.CreditoParaTi.models.dao.services.ICategoryUserService;
 
 @RestController
 @RequestMapping("/categoryUser")
@@ -25,7 +24,7 @@ public class CategoryUserController {
 	private Object data;
     private String message;
     private Boolean result;
-    
+
     /*
 	 * Metodo para obtener todos las categorias de usuario activos
 	 */
@@ -64,12 +63,12 @@ public class CategoryUserController {
 	 * Metodo para crear una categoria de usuario
 	 */
 	@PostMapping("/create")
-	public ResponseDTO create(@RequestBody CategoryUserDTO categoryUser) {		
+	public ResponseDTO create(@RequestBody CategoryUserDTO categoryUser) {
 		try {
 			UsuarioCategory catUser = new UsuarioCategory();
 			catUser.setStatus_flag(1);
 			catUser.setName(categoryUser.getName());
-			
+
 			data = CategoryUserService.save(catUser);
 			result = true;
 			message = "Exito";
@@ -91,7 +90,7 @@ public class CategoryUserController {
 			CategoryUserActual.setName(categoryUser.getName());
 			CategoryUserActual.setStatus_flag(1);
 			CategoryUserActual.setMdfd_on(new Date());
-			
+
 			data = CategoryUserService.save(CategoryUserActual);
 			result = true;
 			message = "Exito";
@@ -107,13 +106,13 @@ public class CategoryUserController {
 	 * Metodo para borrado logico de un usuario por Id
 	 */
 	@GetMapping("/delete/{id}")
-	public ResponseDTO delete(@PathVariable Integer id) {	
+	public ResponseDTO delete(@PathVariable Integer id) {
 		try {
 			UsuarioCategory catUser = CategoryUserService.findById(id);
 			catUser.setStatus_flag(0);
 			catUser.setMdfd_on(new Date());
 			CategoryUserService.save(catUser);
-			
+
 			data = null;
 			result = true;
 			message = "Exito";

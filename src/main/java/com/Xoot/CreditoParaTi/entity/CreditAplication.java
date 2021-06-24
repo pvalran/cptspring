@@ -27,7 +27,7 @@ public class CreditAplication implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer idCreditAplication;
-	
+
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private Usuario usuario;
@@ -35,18 +35,18 @@ public class CreditAplication implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	private Customer customer;
-	
+
 	@OneToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private CreditAplicationProduct product;
-	
+
 	@OneToOne
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private CreditApplicationStatus status;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "credits_aplications_documents", joinColumns = @JoinColumn(name = "credit_application_id"), 
-	inverseJoinColumns = @JoinColumn(name = "documents_id"), 
+	@JoinTable(name = "credits_aplications_documents", joinColumns = @JoinColumn(name = "credit_application_id"),
+	inverseJoinColumns = @JoinColumn(name = "documents_id"),
 	uniqueConstraints = @UniqueConstraint(columnNames = { "credit_application_id", "documents_id" }))
 	private List<Document> documents;
 
@@ -74,7 +74,7 @@ public class CreditAplication implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 }

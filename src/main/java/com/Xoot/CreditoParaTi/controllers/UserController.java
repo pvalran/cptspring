@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
+import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IUserService;
 import com.Xoot.CreditoParaTi.entity.Usuario;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.UserDTO;
-import com.Xoot.CreditoParaTi.models.dao.services.ICategoryUserService;
-import com.Xoot.CreditoParaTi.models.dao.services.IUserService;
 
 @RestController
 @RequestMapping("/user")

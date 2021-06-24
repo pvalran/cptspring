@@ -45,7 +45,7 @@ public class DocumentClass implements Serializable {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
 	}
-	
+
 	public Integer getIdClassDocument() {
 		return idClassDocument;
 	}
@@ -103,7 +103,7 @@ public class DocumentClass implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 

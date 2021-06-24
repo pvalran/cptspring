@@ -21,11 +21,11 @@ public class Document implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer idDocument;
-	
+
 	@OneToOne
 	@JoinColumn(name = "type_document_id", referencedColumnName = "id")
 	private DocumentType typeDocument;
-	
+
 	@OneToOne
 	@JoinColumn(name = "class_document_id", referencedColumnName = "id")
 	private DocumentClass classDocument;
@@ -118,7 +118,7 @@ public class Document implements Serializable {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 }

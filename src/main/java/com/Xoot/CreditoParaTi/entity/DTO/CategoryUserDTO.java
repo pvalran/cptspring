@@ -3,7 +3,7 @@ package com.Xoot.CreditoParaTi.entity.DTO;
 public class CategoryUserDTO {
 	private Integer idCategoryUser;
 	private String name;
-	
+
 	public Integer getIdCategoryUser() {
 		return idCategoryUser;
 	}

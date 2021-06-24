@@ -8,7 +8,7 @@ public class UserDTO {
 	private String password;
 	private String email;
 	private List<Integer> idCategory;
-	
+
 	public Integer getIdUser() {
 		return idUser;
 	}

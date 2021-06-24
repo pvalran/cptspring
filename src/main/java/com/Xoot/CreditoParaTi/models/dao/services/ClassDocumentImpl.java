@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Xoot.CreditoParaTi.Definiciones.Services.IClassDocumentService;
 import com.Xoot.CreditoParaTi.entity.DocumentClass;
 import com.Xoot.CreditoParaTi.models.dao.IClassDocumentDao;
 
 @Service
 public class ClassDocumentImpl implements IClassDocumentService{
-	
+
 	@Autowired
 	private IClassDocumentDao classDocumentDao;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<DocumentClass> findAll() {
