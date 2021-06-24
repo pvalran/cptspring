@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.Xoot.CreditoParaTi.Definiciones.Services.IUserService;
 import com.Xoot.CreditoParaTi.entity.Usuario;
 import com.Xoot.CreditoParaTi.models.dao.IUserDao;
 

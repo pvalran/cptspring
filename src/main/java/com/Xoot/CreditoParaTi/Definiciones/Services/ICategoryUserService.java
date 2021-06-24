@@ -1,5 +1,4 @@
-package com.Xoot.CreditoParaTi.models.dao.services;
-
+package com.Xoot.CreditoParaTi.Definiciones.Services;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;

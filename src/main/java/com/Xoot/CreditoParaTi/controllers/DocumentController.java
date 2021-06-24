@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Xoot.CreditoParaTi.Definiciones.Services.IClassDocumentService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.ITypeDocumentService;
 import com.Xoot.CreditoParaTi.entity.DocumentClass;
 import com.Xoot.CreditoParaTi.entity.DocumentType;
 import com.Xoot.CreditoParaTi.entity.DTO.CatalogueDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
-import com.Xoot.CreditoParaTi.models.dao.services.IClassDocumentService;
-import com.Xoot.CreditoParaTi.models.dao.services.ITypeDocumentService;
 
 @RestController
 @RequestMapping("/documents")
