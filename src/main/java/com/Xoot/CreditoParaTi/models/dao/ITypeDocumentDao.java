@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+
 import com.Xoot.CreditoParaTi.entity.DocumentType;
 
 public interface ITypeDocumentDao extends CrudRepository<DocumentType, Integer>, JpaSpecificationExecutor<DocumentType> {

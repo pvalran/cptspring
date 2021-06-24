@@ -7,17 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICategoryUserService;
 import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
 import com.Xoot.CreditoParaTi.models.dao.ICategoryUserDao;
 
 
 @Service
 public class CategoryUserImpl implements ICategoryUserService {
-
+	
 	@Autowired
 	private ICategoryUserDao categoryUserDao;
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<UsuarioCategory> findAll() {
@@ -47,7 +46,7 @@ public class CategoryUserImpl implements ICategoryUserService {
 	public List<UsuarioCategory> findAllActive() {
 		return categoryUserDao.findAllActive();
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds) {
@@ -57,7 +56,7 @@ public class CategoryUserImpl implements ICategoryUserService {
 			cat = findById(p);
 			lstRetorno.add(cat);
 		}
-
+		
 		return lstRetorno;
 	}
 }

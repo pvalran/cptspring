@@ -1,4 +1,4 @@
-package com.Xoot.CreditoParaTi.Definiciones.Services;
+package com.Xoot.CreditoParaTi.models.dao.services;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import com.Xoot.CreditoParaTi.models.dao.ITypeDocumentDao;
 
 @Service
 public class TypeDocumentImpl implements ITypeDocumentService{
-
+	
 	@Autowired
 	private ITypeDocumentDao typeDocumentDao;
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<DocumentType> findAll() {
@@ -36,7 +36,7 @@ public class TypeDocumentImpl implements ITypeDocumentService{
 	@Override
 	@Transactional
 	public void delete(Integer id) {
-		typeDocumentDao.deleteById(id);
+		typeDocumentDao.deleteById(id); 
 	}
 
 	@Override

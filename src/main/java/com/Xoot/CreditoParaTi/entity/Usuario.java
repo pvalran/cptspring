@@ -37,8 +37,8 @@ public class Usuario implements Serializable {
 	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_categories_user", joinColumns = @JoinColumn(name = "user_id"),
-	inverseJoinColumns = @JoinColumn(name = "category_id"),
+	@JoinTable(name = "users_categories_user", joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "category_id"), 
 	uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "category_id" }))
 	private List<UsuarioCategory> categoryUser;
 
@@ -158,7 +158,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 }

@@ -4,7 +4,7 @@ public class ResponseDTO {
 	private Object data;
     private String message;
     private Boolean result;
-
+    
     public ResponseDTO(Object data, String message, Boolean result) {
         this.data = data;
         this.message = message;
