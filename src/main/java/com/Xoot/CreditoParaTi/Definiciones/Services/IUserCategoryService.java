@@ -8,9 +8,9 @@ public interface IUserCategoryService {
 	
 	public UsuarioCategory save(UsuarioCategory categoryUser);
 	
-	public void delete(Integer id);
-	
 	public List<UsuarioCategory> findAllActive();
 	
 	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds);
+	
+	public UsuarioCategory findByName(String name);
 }

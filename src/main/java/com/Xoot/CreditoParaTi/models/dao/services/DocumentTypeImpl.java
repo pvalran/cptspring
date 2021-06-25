@@ -29,15 +29,15 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 	}
 
 	@Override
-	@Transactional
-	public void delete(Integer id) {
-		typeDocumentDao.deleteById(id); 
+	@Transactional(readOnly = true)
+	public List<DocumentType> findAllActive() {
+		return typeDocumentDao.findAllActive();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<DocumentType> findAllActive() {
-		return typeDocumentDao.findAllActive();
+	public DocumentType findByName(String name) {
+		return typeDocumentDao.findByName(name);
 	}
 
 }

@@ -20,7 +20,7 @@ public class DocumentType implements Serializable {
 	@Column(name = "id")
 	private Integer idTypeDocument;
 
-	@Column(unique = true, name = "name", length = 50)
+	@Column(name = "name", length = 50)
 	private String name;
 
 	@Column(name = "status_flag")

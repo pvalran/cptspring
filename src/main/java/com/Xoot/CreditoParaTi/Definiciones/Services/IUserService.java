@@ -10,8 +10,6 @@ public interface IUserService {
 	
 	public Usuario save(Usuario user);
 	
-	public void delete(Integer id);
-	
 	public List<Usuario> findAllActive();
 	
 	public Usuario findByUsername(String username);

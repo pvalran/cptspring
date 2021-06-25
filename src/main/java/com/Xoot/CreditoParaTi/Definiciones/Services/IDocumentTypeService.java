@@ -9,7 +9,7 @@ public interface IDocumentTypeService {
 
 	public DocumentType save(DocumentType typeDocument);
 
-	public void delete(Integer id);
-
 	public List<DocumentType> findAllActive();
+	
+	public DocumentType findByName(String name);
 }

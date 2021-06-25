@@ -35,9 +35,8 @@ public class DocumentClassImpl implements IDocumentClassService{
 	}
 
 	@Override
-	@Transactional
-	public void delete(Integer id) {
-		classDocumentDao.deleteById(id);
+	@Transactional(readOnly = true)
+	public DocumentClass findByName(String name) {
+		return classDocumentDao.findByName(name);
 	}
-
 }

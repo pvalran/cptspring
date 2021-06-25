@@ -9,7 +9,6 @@ public interface IDocumentService {
 
 	public Document save(Document document);
 
-	public void delete(Integer id);
-
 	public List<Document> findAllActive();
+	
 }

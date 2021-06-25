@@ -45,7 +45,7 @@ public class CreditAplication implements Serializable {
 	private CreditApplicationStatus status;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "credits_aplications_documents", joinColumns = @JoinColumn(name = "credit_application_id"), 
+	@JoinTable(name = "credits_aplications_documents_rel", joinColumns = @JoinColumn(name = "credit_application_id"), 
 	inverseJoinColumns = @JoinColumn(name = "documents_id"), 
 	uniqueConstraints = @UniqueConstraint(columnNames = { "credit_application_id", "documents_id" }))
 	private List<Document> documents;

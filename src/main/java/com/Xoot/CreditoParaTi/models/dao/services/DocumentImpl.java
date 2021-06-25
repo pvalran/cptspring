@@ -27,11 +27,6 @@ public class DocumentImpl implements IDocumentService{
 	}
 
 	@Override
-	public void delete(Integer id) {
-		documentDao.deleteById(id);		
-	}
-
-	@Override
 	@Transactional(readOnly = true)
 	public List<Document> findAllActive() {
 		return documentDao.findAllActive();

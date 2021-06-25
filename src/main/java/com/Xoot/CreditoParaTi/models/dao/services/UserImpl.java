@@ -38,12 +38,6 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	}
 
 	@Override
-	@Transactional
-	public void delete(Integer id) {
-		userDao.deleteById(id);
-	}
-
-	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> findAllActive() {
 		return userDao.findAllActive();

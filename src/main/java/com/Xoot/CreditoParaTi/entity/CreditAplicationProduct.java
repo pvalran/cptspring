@@ -20,7 +20,7 @@ public class CreditAplicationProduct implements Serializable {
 	@Column(name = "id")
 	private Integer idProduct;
 
-	@Column(unique = true, name = "name", length = 50)
+	@Column(name = "name", length = 50)
 	private String name;
 
 	@Column(name = "status_flag")

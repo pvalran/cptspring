@@ -11,13 +11,12 @@ import com.Xoot.CreditoParaTi.entity.Usuario;
 
 public interface IUserDao extends CrudRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario>{
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users WHERE status_flag = 1 AND username=:userName AND password=:pass LIMIT 1;")
-	public Usuario findByLogin(@Param("userName") String userName, @Param("pass") String pass);
-	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users WHERE status_flag = 1;")
 	public List<Usuario> findAllActive();
 	
-	public Usuario findByUsername(String username);
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users WHERE status_flag = 1 AND username=:userName LIMIT 1;")
+	public Usuario findByUsername(@Param("userName") String userName);
 	
-	public Usuario findByemail(String email);
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users WHERE status_flag = 1 AND email=:email LIMIT 1;")
+	public Usuario findByemail(@Param("email") String email);
 }

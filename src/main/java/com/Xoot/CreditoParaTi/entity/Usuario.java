@@ -27,17 +27,17 @@ public class Usuario implements Serializable {
 	@Column(name = "id")
 	private Integer idUser;
 
-	@Column(unique = true, name = "username", length = 16)
+	@Column(name = "username", length = 16)
 	private String username;
 
-	@Column(unique = true, name = "email", length = 255)
+	@Column(name = "email", length = 255)
 	private String email;
 
 	@Column(name = "password", length = 60)
 	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_categories_user", joinColumns = @JoinColumn(name = "user_id"), 
+	@JoinTable(name = "users_categories_rel", joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "category_id"), 
 	uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "category_id" }))
 	private List<UsuarioCategory> categoryUser;

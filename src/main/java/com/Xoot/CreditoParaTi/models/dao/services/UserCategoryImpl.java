@@ -37,12 +37,6 @@ public class UserCategoryImpl implements IUserCategoryService {
 	}
 
 	@Override
-	@Transactional
-	public void delete(Integer id) {
-		categoryUserDao.deleteById(id);
-	}
-	
-	@Override
 	@Transactional(readOnly = true)
 	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds) {
 		List<UsuarioCategory> lstRetorno = new ArrayList<>();
@@ -53,5 +47,10 @@ public class UserCategoryImpl implements IUserCategoryService {
 		}
 		
 		return lstRetorno;
+	}
+
+	@Override
+	public UsuarioCategory findByName(String name) {
+		return categoryUserDao.findByName(name);
 	}
 }
