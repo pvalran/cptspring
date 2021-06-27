@@ -3,13 +3,21 @@ package com.Xoot.CreditoParaTi.Definiciones.Services;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.entity.DocumentType;
+import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 public interface IDocumentTypeService {
-	public DocumentType findById(Integer id);
+	DocumentType findById(Integer id);
 
-	public DocumentType save(DocumentType typeDocument);
-
-	public List<DocumentType> findAllActive();
+	List<DocumentType> findAllActive();
 	
-	public DocumentType findByName(String name);
+	DocumentType findByName(String name);
+	
+	ResponseDTO save(CatalogoDTO catalogo);
+	
+	ResponseDTO update(Integer id, CatalogoDTO catalogo);
+	
+	ResponseDTO delete(Integer id);
+
+	ResponseDTO getById(Integer id);
 }

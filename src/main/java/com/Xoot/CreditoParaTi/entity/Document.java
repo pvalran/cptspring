@@ -21,14 +21,21 @@ public class Document implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer idDocument;
-	
+
+	@Column(name = "name")
+	private String name;
+
 	@OneToOne
 	@JoinColumn(name = "type_document_id", referencedColumnName = "id")
 	private DocumentType typeDocument;
-	
+
 	@OneToOne
 	@JoinColumn(name = "class_document_id", referencedColumnName = "id")
 	private DocumentClass classDocument;
+
+	@OneToOne
+	@JoinColumn(name = "credit_aplication_id", referencedColumnName = "id")
+	private CreditAplication creditAplication;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -61,6 +68,14 @@ public class Document implements Serializable {
 		this.idDocument = idDocument;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public DocumentType getTypeDocument() {
 		return typeDocument;
 	}
@@ -75,6 +90,14 @@ public class Document implements Serializable {
 
 	public void setClassDocument(DocumentClass classDocument) {
 		this.classDocument = classDocument;
+	}
+
+	public CreditAplication getCreditAplication() {
+		return creditAplication;
+	}
+
+	public void setCreditAplication(CreditAplication creditAplication) {
+		this.creditAplication = creditAplication;
 	}
 
 	public Integer getStatus_flag() {
