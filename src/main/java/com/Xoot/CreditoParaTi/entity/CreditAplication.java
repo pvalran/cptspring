@@ -1,24 +1,19 @@
 package com.Xoot.CreditoParaTi.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "credits_aplications")
@@ -43,12 +38,6 @@ public class CreditAplication implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private CreditApplicationStatus status;
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "credits_aplications_documents_rel", joinColumns = @JoinColumn(name = "credit_application_id"), 
-	inverseJoinColumns = @JoinColumn(name = "documents_id"), 
-	uniqueConstraints = @UniqueConstraint(columnNames = { "credit_application_id", "documents_id" }))
-	private List<Document> documents;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;

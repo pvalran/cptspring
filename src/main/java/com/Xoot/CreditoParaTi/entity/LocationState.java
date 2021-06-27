@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,10 +22,6 @@ public class LocationState implements Serializable {
 
 	@Column(name = "name", length = 50)
 	private String name;
-
-	@OneToOne
-	@JoinColumn(name = "country_id", referencedColumnName = "id")
-	private LocationCountry country;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -66,14 +60,6 @@ public class LocationState implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public LocationCountry getCountry() {
-		return country;
-	}
-
-	public void setCountry(LocationCountry country) {
-		this.country = country;
 	}
 
 	public Integer getStatus_flag() {
