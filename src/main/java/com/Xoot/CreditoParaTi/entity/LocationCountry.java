@@ -7,28 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "documents")
-public class Document implements Serializable {
+@Table(name = "locations_countries")
+public class LocationCountry implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idDocument;
-	
-	@OneToOne
-	@JoinColumn(name = "type_document_id", referencedColumnName = "id")
-	private DocumentType typeDocument;
-	
-	@OneToOne
-	@JoinColumn(name = "class_document_id", referencedColumnName = "id")
-	private DocumentClass classDocument;
+	private Integer idCountry;
+
+	@Column(name = "name", length = 50)
+	private String name;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -53,28 +46,20 @@ public class Document implements Serializable {
 		mdfd_on = new java.util.Date();
 	}
 
-	public Integer getIdDocument() {
-		return idDocument;
+	public Integer getIdCountry() {
+		return idCountry;
 	}
 
-	public void setIdDocument(Integer idDocument) {
-		this.idDocument = idDocument;
+	public void setIdCountry(Integer idCountry) {
+		this.idCountry = idCountry;
 	}
 
-	public DocumentType getTypeDocument() {
-		return typeDocument;
+	public String getName() {
+		return name;
 	}
 
-	public void setTypeDocument(DocumentType typeDocument) {
-		this.typeDocument = typeDocument;
-	}
-
-	public DocumentClass getClassDocument() {
-		return classDocument;
-	}
-
-	public void setClassDocument(DocumentClass classDocument) {
-		this.classDocument = classDocument;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getStatus_flag() {
