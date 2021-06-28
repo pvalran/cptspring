@@ -35,7 +35,7 @@ public class Document implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "credit_aplication_id", referencedColumnName = "id")
-	private CreditAplication creditAplication;
+	private CreditApplication creditAplication;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -92,11 +92,11 @@ public class Document implements Serializable {
 		this.classDocument = classDocument;
 	}
 
-	public CreditAplication getCreditAplication() {
+	public CreditApplication getCreditAplication() {
 		return creditAplication;
 	}
 
-	public void setCreditAplication(CreditAplication creditAplication) {
+	public void setCreditAplication(CreditApplication creditAplication) {
 		this.creditAplication = creditAplication;
 	}
 

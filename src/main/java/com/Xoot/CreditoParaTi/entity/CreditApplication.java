@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "credits_aplications")
-public class CreditAplication implements Serializable {
+public class CreditApplication implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -33,7 +33,7 @@ public class CreditAplication implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private CreditAplicationProduct product;
+	private CreditApplicationProduct product;
 	
 	@OneToOne
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
