@@ -14,5 +14,8 @@ public interface IUserCategoryDao extends CrudRepository<UsuarioCategory, Intege
     List<UsuarioCategory> findAllActive();
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users_categories WHERE status_flag = 1 AND name=:name LIMIT 1;")
+	public UsuarioCategory findByNameActive(@Param("name") String name);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.users_categories WHERE name=:name LIMIT 1;")
 	public UsuarioCategory findByName(@Param("name") String name);
 }

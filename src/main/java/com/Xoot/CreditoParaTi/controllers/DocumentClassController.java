@@ -58,6 +58,17 @@ public class DocumentClassController {
 			return new ResponseDTO(null, "Ocurrió un error al actualizar la clase de documento.", false);
 		}
 	}
+	
+	@PutMapping("/Active/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseDTO active(@PathVariable Integer id) {
+		try {
+			return classDocumentService.active(id);
+			
+		} catch (Exception e) {
+			return new ResponseDTO(null, "Ocurrió un error al activar el Status", false);
+		}
+	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseDTO delete(@PathVariable Integer id) {

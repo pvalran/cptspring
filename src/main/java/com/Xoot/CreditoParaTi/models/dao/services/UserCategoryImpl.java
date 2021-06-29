@@ -17,25 +17,129 @@ import com.Xoot.CreditoParaTi.models.dao.IUserCategoryDao;
 
 @Service
 public class UserCategoryImpl implements IUserCategoryService {
-	
-	@Autowired
-	private IUserCategoryDao categoryUserDao;
-	public Object data;
+	public Object data = null;
+	public Boolean result = false;
 	public String message;
-	public Boolean result;
-	
+
+	@Autowired
+	private IUserCategoryDao _userCategoryDao;
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<UsuarioCategory> findAllActive() {
-		return categoryUserDao.findAllActive();
+		return _userCategoryDao.findAllActive();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public UsuarioCategory findById(Integer id) {
-		return categoryUserDao.findById(id).orElse(null);
+		return _userCategoryDao.findById(id).orElse(null);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public UsuarioCategory findByName(String name) {
+		return _userCategoryDao.findByNameActive(name);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseDTO getById(Integer id) {
+		UsuarioCategory usuarioCategory = findById(id);
+
+		if(CheckUserCategoryNotExist(usuarioCategory)) {
+			return CreateResponseUserCategoryNotExist();
+		}
+	
+		data = usuarioCategory;
+		result = true;
+		message = "Exito";
+		
+		return new ResponseDTO(data, message, result);
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO save(CatalogoDTO catalogo) {
+		UsuarioCategory usuarioCategoryByName = _userCategoryDao.findByName(catalogo.getName());
+
+		if (usuarioCategoryByName != null) {
+			return CreateResonseDuplicatedUserCategory(usuarioCategoryByName);
+		} 
+		
+		UsuarioCategory userCategory = new UsuarioCategory();
+
+		data = saveUsuarioCategory(1,catalogo.getName(),userCategory);
+
+		result = true;
+
+		message = "Registro creado.";
+		
+		return new ResponseDTO(data, message, result);
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO update(Integer id, CatalogoDTO catalogo) {
+
+		UsuarioCategory userCategoryById = findById(id);
+
+		UsuarioCategory userCategoryByName = _userCategoryDao.findByName(catalogo.getName());
+
+		if(CheckUserCategoryNotExist(userCategoryById)) {
+			return CreateResponseUserCategoryNotExist();
+		}
+
+		if(CheckDuplicatedProducto(id, catalogo, userCategoryByName)) {
+			return CreateResonseDuplicatedUserCategory(userCategoryByName);
+		}
+
+		data = saveUsuarioCategory(1,catalogo.getName(),userCategoryById);
+
+		result = true;
+
+		message = "Registro actualizado.";
+
+		return new ResponseDTO(data, message, result);
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO delete(Integer id) {
+		UsuarioCategory userCategory = findById(id);
+		
+		if(CheckUserCategoryNotExist(userCategory)) {
+			return CreateResponseUserCategoryNotExist();
+		}
+
+		saveUsuarioCategory(0,null,userCategory);
+
+		result = true;
+
+		message = "Registro eliminado.";
+
+		return new ResponseDTO(data, message, result);
+	}
+
+	@Override
+	@Transactional
+	public ResponseDTO active(Integer Id) {
+		UsuarioCategory userCategoryByName = findById(Id);
+		
+		if(CheckUserCategoryNotExist(userCategoryByName)) {
+			return CreateResponseUserCategoryNotExist();
+		}
+		
+		saveUsuarioCategory(1,null,userCategoryByName);
+
+		result = true;
+
+		message = "Registro Activado.";
+
+		return new ResponseDTO(data, message, result);
+		
+	}
+	 
 	@Override
 	@Transactional(readOnly = true)
 	public List<UsuarioCategory> getlistCategory(List<Integer> lstIds) {
@@ -48,96 +152,59 @@ public class UserCategoryImpl implements IUserCategoryService {
 		
 		return lstRetorno;
 	}
-
-	@Override
-	public UsuarioCategory findByName(String name) {
-		return categoryUserDao.findByName(name);
+	
+	private boolean CheckUserCategoryNotExist(UsuarioCategory usuarioCategory) {
+		boolean response = false;
+		
+		if (usuarioCategory == null) {
+			response = true;
+		}
+		
+		return response;
 	}
 	
-	@Override
-	@Transactional(readOnly = true)
-	public ResponseDTO getById(Integer id) {
-		UsuarioCategory category = findById(id);
-
-		if (category == null) {
-			data = null;
-			result = false;
-			message = "No existe una categoria de usuario con el id proporcionado.";
-		} else {
-			data = category;
-			result = true;
-			message = "Exito";
-		}
+	private ResponseDTO CreateResponseUserCategoryNotExist() {
+		message = "No existe una categoria de usuario con el id proporcionado.";
 		
 		return new ResponseDTO(data, message, result);
 	}
 	
-	@Override
-	@Transactional
-	public ResponseDTO save(CatalogoDTO catalogo) {
-		UsuarioCategory categoryExist = findByName(catalogo.getName());
-		
-		if (categoryExist != null) {
-			data = null;
-			result = false;
-			message = "Ya se registro una categoria de usuario con el nombre " + catalogo.getName();
-		} else {
-			UsuarioCategory category = new UsuarioCategory();
-			category.setStatus_flag(1);
-			category.setName(catalogo.getName());
+	private UsuarioCategory saveUsuarioCategory(Integer userCategory_flag, String userCategoryName, UsuarioCategory userCategory ) {
 
-			data = categoryUserDao.save(category);
-			result = true;
-			message = "Registro creado.";
+	    if( userCategoryName != null && !userCategoryName.isEmpty()) {
+	    	userCategory.setName(userCategoryName);
+	    }
+	    
+	    userCategory.setStatus_flag(userCategory_flag);
+		
+	    userCategory.setMdfd_on(new Date());
+		
+		return _userCategoryDao.save(userCategory);
+	}
+
+	private boolean CheckDuplicatedProducto(Integer id, CatalogoDTO catalogo,
+			UsuarioCategory userCategoryByName) {
+		
+		boolean response = false;
+
+		if (userCategoryByName != null
+				&& userCategoryByName.getCategory_id() != id) {
+			response = true;		
 		}
+		
+		return response;
+	}
+	
+	private ResponseDTO CreateResonseDuplicatedUserCategory(UsuarioCategory userCategoryByName) {
+		
+		if(userCategoryByName.getStatus_flag() == 0) {
+			message = "Ya existe una categoria de usuario con el nombre: " + userCategoryByName.getName() + " y se encuentra inactivo ID " + userCategoryByName.getCategory_id();
+		}else {
+			message = "Ya existe una categoria de usuario con el nombre: " + userCategoryByName.getName();
+		}
+	
 		return new ResponseDTO(data, message, result);
 	}
 
-	@Override
-	@Transactional
-	public ResponseDTO update(Integer id, CatalogoDTO catalogo) {
-		UsuarioCategory categoryActual = findById(id);
-		UsuarioCategory categoryExist = findByName(catalogo.getName());
-		
-		data = null;
-		result = false;
-		
-		if (categoryActual == null) {	
-			message = "No existe una categoria de usuario con el id proporcionado.";
-		} else if (categoryExist != null && categoryExist.getCategory_id() != id) {
-			message = "Ya se registro una categoria de usuario con el nombre " + catalogo.getName();
-		} else {
-			categoryActual.setName(catalogo.getName());
-			categoryActual.setMdfd_on(new Date());
-
-			data = categoryUserDao.save(categoryActual);
-			result = true;
-			message = "Registro actualizado.";
-		}
-		return new ResponseDTO(data, message, result);
-	}
-	
-	@Override
-	@Transactional
-	public ResponseDTO delete(Integer id) {
-		UsuarioCategory category = findById(id);
-
-		if (category == null) {
-			data = null;
-			result = false;
-			message = "No existe una categoria de usuario con el id proporcionado.";
-		} else {
-			category.setStatus_flag(0);
-			category.setMdfd_on(new Date());
-			categoryUserDao.save(category);
-
-			data = null;
-			result = true;
-			message = "Registro eliminado.";
-		}
-		
-		return new ResponseDTO(data, message, result);
-	}
-	
-	
 }
+

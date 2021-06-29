@@ -18,6 +18,8 @@ public interface IUserCategoryService {
 	
 	ResponseDTO update(Integer id, CatalogoDTO catalogo);
 	
+	ResponseDTO active(Integer id);
+	
 	ResponseDTO delete(Integer id);
 
 	ResponseDTO getById(Integer id);

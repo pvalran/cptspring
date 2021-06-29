@@ -19,7 +19,7 @@ import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 @RequestMapping("/user/type")
 public class UserCategoyController {
 	@Autowired
-	private IUserCategoryService CategoryUserService;
+	private IUserCategoryService _categoryUserService;
 
 	/*
 	 * Metodo para obtener todos las categorias de usuario activos
@@ -27,7 +27,7 @@ public class UserCategoyController {
 	@GetMapping("/all")
 	public ResponseDTO allActive() {
 		try {
-			return new ResponseDTO(CategoryUserService.findAllActive(), "Exito", true);
+			return new ResponseDTO(_categoryUserService.findAllActive(), "Exito", true);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al mostrar todas las categorías de usuario.", false);
 		}
@@ -39,7 +39,7 @@ public class UserCategoyController {
 	@GetMapping("/show/{id}")
 	public ResponseDTO show(@PathVariable Integer id) {
 		try {
-			return CategoryUserService.getById(id);
+			return _categoryUserService.getById(id);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al mostrar la categoría de usuario.", false);
 		}
@@ -52,7 +52,7 @@ public class UserCategoyController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO create(@RequestBody CatalogoDTO catalogo) {
 		try {
-			return CategoryUserService.save(catalogo);
+			return _categoryUserService.save(catalogo);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al crear la categoría de usuario.", false);
 		}
@@ -65,9 +65,20 @@ public class UserCategoyController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO update(@PathVariable Integer id, @RequestBody CatalogoDTO catalogo) {
 		try {
-			return CategoryUserService.update(id, catalogo);
+			return _categoryUserService.update(id, catalogo);
 		} catch (Exception e) {
 			return new ResponseDTO(true, "Ocurrió un error al actualizar la categoría de usuario.", false);
+		}
+	}
+	
+	@PutMapping("/Active/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseDTO active(@PathVariable Integer id) {
+		try {
+			return _categoryUserService.active(id);
+			
+		} catch (Exception e) {
+			return new ResponseDTO(null, "Ocurrió un error al activar el Status", false);
 		}
 	}
 
@@ -77,7 +88,7 @@ public class UserCategoyController {
 	@GetMapping("/delete/{id}")
 	public ResponseDTO delete(@PathVariable Integer id) {
 		try {
-			return CategoryUserService.delete(id);
+			return _categoryUserService.delete(id);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al eliminar la categoría de usuario.", false);
 		}

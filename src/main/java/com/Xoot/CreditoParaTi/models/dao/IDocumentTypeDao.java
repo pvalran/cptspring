@@ -15,5 +15,8 @@ public interface IDocumentTypeDao extends CrudRepository<DocumentType, Integer>,
 	public List<DocumentType> findAllActive();
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_type WHERE status_flag = 1 AND name=:name LIMIT 1;")
+	public DocumentType findByNameActive(@Param("name") String name);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_type WHERE name=:name LIMIT 1;")
 	public DocumentType findByName(@Param("name") String name);
 }
