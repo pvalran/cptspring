@@ -12,6 +12,7 @@ import com.Xoot.CreditoParaTi.entity.DocumentClass;
 import com.Xoot.CreditoParaTi.entity.DocumentType;
 import com.Xoot.CreditoParaTi.entity.DTO.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.models.dao.IDocumentClassDao;
 import com.Xoot.CreditoParaTi.models.dao.IDocumentTypeDao;
 
 @Service
@@ -22,8 +23,8 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 
 	@Autowired
 	private IDocumentTypeDao _typeDocumentDao;
-	
-	private DocumentClassImpl _classDocumentservice;
+	@Autowired
+	private IDocumentClassDao _classDocumentDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -88,12 +89,16 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 		
 		DocumentType documentType = new DocumentType();
 
-		data = saveDocumentType(1,catalogo.getName(),catalogo.getIdClass(),documentType);
+		DocumentType documentTypeReturn = saveDocumentType(1,catalogo.getName(),catalogo.getIdClass(),documentType);
 		
+		data = documentTypeReturn;
 
-		result = true;
-
-		message = "Registro creado.";
+		result = documentTypeReturn == null ? false : true;
+		if(documentTypeReturn == null) {
+			message = "No existe la clase de documento enviado.";
+		}else {
+			message = "Registro creado.";
+		}
 		
 		return new ResponseDTO(data, message, result);
 	}
@@ -182,19 +187,23 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 	    	documentType.setName(documentTypeName);
 	    }
 	    
+	    DocumentType documentTypeReturn = null;
+	    
 	    if( idClass != null && idClass > 0) {
-	    	DocumentClass documentClass= _classDocumentservice.findById(idClass);
+	    	DocumentClass documentClass= _classDocumentDao.findById(idClass).orElse(null);
 	    	
 	    	if(documentClass != null) {
 	    		documentType.setClassDocument(documentClass);
+	    		
+	    		documentType.setStatus_flag(documentType_flag);
+	    		
+	    	    documentType.setMdfd_on(new Date());
+	    	    
+	    	    documentTypeReturn = _typeDocumentDao.save(documentType);
 	    	}
 	    }
-	    
-	    documentType.setStatus_flag(documentType_flag);
-		
-	    documentType.setMdfd_on(new Date());
-		
-		return _typeDocumentDao.save(documentType);
+	    		
+		return documentTypeReturn;
 	}
 
 	private boolean CheckDuplicatedDocumentType(Integer id, DocumentTypeDTO catalogo, DocumentType documentTypeByName) {
