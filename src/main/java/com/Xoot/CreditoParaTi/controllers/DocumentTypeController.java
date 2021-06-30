@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentTypeService;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 @RestController
@@ -38,10 +38,19 @@ public class DocumentTypeController {
 			return new ResponseDTO(e, "Ocurrió al mostrar el tipo de documento.", false);
 		}
 	}
+	
+	@GetMapping("/getByClass/{id}")
+	public ResponseDTO getByClass(@PathVariable Integer id) {
+		try {
+			return typeDocumentService.getByClass(id);
+		} catch (Exception e) {
+			return new ResponseDTO(e, "Ocurrió al mostrar los tipos de documento.", false);
+		}
+	}
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO create(@RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO create(@RequestBody DocumentTypeDTO catalogo) {
 		try {
 			return typeDocumentService.save(catalogo);
 		} catch (Exception e) {
@@ -51,7 +60,7 @@ public class DocumentTypeController {
 
 	@PutMapping("/update/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO update(@PathVariable Integer id, @RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO update(@PathVariable Integer id, @RequestBody DocumentTypeDTO catalogo) {
 		try {
 			return typeDocumentService.update(id, catalogo);
 		} catch (Exception e) {

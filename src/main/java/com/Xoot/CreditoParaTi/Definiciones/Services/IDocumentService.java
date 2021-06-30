@@ -11,7 +11,7 @@ public interface IDocumentService {
 
 	List<Document> findAllActive(Integer idCreditAplication);
 	
-	Document findAllIds(Integer idCreditAplication,Integer idClassDocument,Integer idTypeDocument);
+	Document findAllIds(Integer idCreditAplication,Integer idTypeDocument);
 	
 	ResponseDTO save(DocumentDTO user);
 	
@@ -19,6 +19,5 @@ public interface IDocumentService {
 	
 	ResponseDTO delete(Integer id);
 
-	ResponseDTO getById(Integer id);
-	
+	ResponseDTO getById(Integer id);	
 }

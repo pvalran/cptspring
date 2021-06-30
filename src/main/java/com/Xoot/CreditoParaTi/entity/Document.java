@@ -30,10 +30,6 @@ public class Document implements Serializable {
 	private DocumentType typeDocument;
 
 	@OneToOne
-	@JoinColumn(name = "class_document_id", referencedColumnName = "id")
-	private DocumentClass classDocument;
-
-	@OneToOne
 	@JoinColumn(name = "credit_aplication_id", referencedColumnName = "id")
 	private CreditApplication creditAplication;
 
@@ -82,14 +78,6 @@ public class Document implements Serializable {
 
 	public void setTypeDocument(DocumentType typeDocument) {
 		this.typeDocument = typeDocument;
-	}
-
-	public DocumentClass getClassDocument() {
-		return classDocument;
-	}
-
-	public void setClassDocument(DocumentClass classDocument) {
-		this.classDocument = classDocument;
 	}
 
 	public CreditApplication getCreditAplication() {

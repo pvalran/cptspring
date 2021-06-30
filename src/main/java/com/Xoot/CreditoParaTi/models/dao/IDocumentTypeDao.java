@@ -19,4 +19,7 @@ public interface IDocumentTypeDao extends CrudRepository<DocumentType, Integer>,
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_type WHERE name=:name LIMIT 1;")
 	public DocumentType findByName(@Param("name") String name);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_type WHERE class_document_id=:idClass;")
+	public List<DocumentType> findByClass(@Param("idClass") Integer id);
 }

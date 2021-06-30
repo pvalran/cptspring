@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentTypeService;
+import com.Xoot.CreditoParaTi.entity.DocumentClass;
 import com.Xoot.CreditoParaTi.entity.DocumentType;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.models.dao.IDocumentTypeDao;
 
@@ -21,7 +22,9 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 
 	@Autowired
 	private IDocumentTypeDao _typeDocumentDao;
-
+	
+	private DocumentClassImpl _classDocumentservice;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<DocumentType> findAllActive() {
@@ -39,6 +42,12 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 	public DocumentType findByName(String name) {
 		return _typeDocumentDao.findByNameActive(name);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<DocumentType> findByClass(Integer id) {
+		return _typeDocumentDao.findByClass(id);
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -55,10 +64,22 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 		
 		return new ResponseDTO(data, message, result);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseDTO getByClass(Integer id) {
+		List<DocumentType> lstDocumentType = findByClass(id);
+
+		if(lstDocumentType.size() == 0) {
+			return new ResponseDTO(null, "No existen tipos de documentos de la la clase: " + id, false);
+		}
+		
+		return new ResponseDTO(lstDocumentType, "Exito", true);
+	}
 
 	@Override
 	@Transactional
-	public ResponseDTO save(CatalogoDTO catalogo) {
+	public ResponseDTO save(DocumentTypeDTO catalogo) {
 		DocumentType documentTypeByName = _typeDocumentDao.findByName(catalogo.getName());
 
 		if (documentTypeByName != null) {
@@ -67,7 +88,8 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 		
 		DocumentType documentType = new DocumentType();
 
-		data = saveDocumentType(1,catalogo.getName(),documentType);
+		data = saveDocumentType(1,catalogo.getName(),catalogo.getIdClass(),documentType);
+		
 
 		result = true;
 
@@ -78,7 +100,7 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 
 	@Override
 	@Transactional
-	public ResponseDTO update(Integer id, CatalogoDTO catalogo) {
+	public ResponseDTO update(Integer id, DocumentTypeDTO catalogo) {
 
 		DocumentType documentTypeById = findById(id);
 
@@ -92,7 +114,7 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 			return CreateResonseDuplicatedDocumentType(documentTypeByName);
 		}
 
-		data = saveDocumentType(1,catalogo.getName(),documentTypeById);
+		data = saveDocumentType(1,catalogo.getName(),catalogo.getIdClass(),documentTypeById);
 
 		result = true;
 
@@ -110,7 +132,7 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 			return CreateResponseDocumentTypeNotExist();
 		}
 
-		saveDocumentType(0,null,documentType);
+		saveDocumentType(0,null,null,documentType);
 
 		result = true;
 
@@ -128,7 +150,7 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 			return CreateResponseDocumentTypeNotExist();
 		}
 		
-		saveDocumentType(1,null,documentTypeByName);
+		saveDocumentType(1,null,null,documentTypeByName);
 
 		result = true;
 
@@ -154,10 +176,18 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 		return new ResponseDTO(data, message, result);
 	}
 	
-	private DocumentType saveDocumentType(Integer documentType_flag, String documentTypeName, DocumentType documentType ) {
+	private DocumentType saveDocumentType(Integer documentType_flag, String documentTypeName, Integer idClass,DocumentType documentType ) {
 
 	    if( documentTypeName != null && !documentTypeName.isEmpty()) {
 	    	documentType.setName(documentTypeName);
+	    }
+	    
+	    if( idClass != null && idClass > 0) {
+	    	DocumentClass documentClass= _classDocumentservice.findById(idClass);
+	    	
+	    	if(documentClass != null) {
+	    		documentType.setClassDocument(documentClass);
+	    	}
 	    }
 	    
 	    documentType.setStatus_flag(documentType_flag);
@@ -167,7 +197,7 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 		return _typeDocumentDao.save(documentType);
 	}
 
-	private boolean CheckDuplicatedDocumentType(Integer id, CatalogoDTO catalogo, DocumentType documentTypeByName) {
+	private boolean CheckDuplicatedDocumentType(Integer id, DocumentTypeDTO catalogo, DocumentType documentTypeByName) {
 		
 		boolean response = false;
 

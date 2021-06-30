@@ -16,10 +16,8 @@ public interface IDocumentDao extends CrudRepository<Document, Integer> {
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents "
 			+ "WHERE credit_aplication_id=:idCreditAplication "
 			+"AND type_document_id=:idTypeDocument "
-			+"AND class_document_id=:idClassDocument "
 			+ "AND status_flag = 1 LIMIT 1;")
 	public Document findAllIds(
 			@Param("idCreditAplication") Integer idCreditAplication,
-			@Param("idClassDocument") Integer idClassDocument,
 			@Param("idTypeDocument") Integer idTypeDocument);
 }
