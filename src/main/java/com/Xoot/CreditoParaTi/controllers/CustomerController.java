@@ -11,51 +11,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICustomerGenderService;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.Definiciones.Services.ICustomerService;
+import com.Xoot.CreditoParaTi.entity.DTO.CustomerDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 @RestController
-@RequestMapping("/customer/gender")
-public class CustomerGenderController {
+@RequestMapping("/customer/customer")
+public class CustomerController {
 	@Autowired
-	private ICustomerGenderService _customerGenderService;
-
+	private ICustomerService _customerService;
+	
 	@GetMapping("/all")
 	public ResponseDTO allActive() {
 		try {
-			return new ResponseDTO(_customerGenderService.findAllActive(), "Exito", true);
+			return new ResponseDTO(_customerService.findAllActive(), "Exito", true);
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al mostrar todos los generos activos.", false);
+			return new ResponseDTO(null, "Ocurrió un error al mostrar todos los clientes activos.", false);
 		}
 	}
 
 	@GetMapping("/show/{id}")
 	public ResponseDTO show(@PathVariable Integer id) {
 		try {
-			return _customerGenderService.getById(id);
+			return _customerService.getById(id);
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al mostrar el genero.", false);
+			return new ResponseDTO(null, "Ocurrió un error al mostrar el cliente.", false);
 		}
 	}
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO create(@RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO create(@RequestBody CustomerDTO customer) {
 		try {
-			return _customerGenderService.save(catalogo);
+			return _customerService.save(customer);
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al crear el genero.", false);
+			return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
 		}
 	}
 
 	@PutMapping("/update/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO update(@PathVariable Integer id, @RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO update(@PathVariable Integer id, @RequestBody CustomerDTO customer) {
 		try {
-			return _customerGenderService.update(id, catalogo);
+			return _customerService.update(id, customer);
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al actualizar el genero.", false);
+			return new ResponseDTO(null, "Ocurrió un error al actualizar el cliente.", false);
 		}
 	}
 	
@@ -63,19 +63,19 @@ public class CustomerGenderController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO active(@PathVariable Integer id) {
 		try {
-			return _customerGenderService.active(id);
+			return _customerService.active(id);
 			
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al activar el genero", false);
+			return new ResponseDTO(null, "Ocurrió un error al activar el cliente", false);
 		}
 	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseDTO delete(@PathVariable Integer id) {
 		try {
-			return _customerGenderService.delete(id);
+			return _customerService.delete(id);
 		} catch (Exception e) {
-			return new ResponseDTO(null, "Ocurrió un error al eliminar el genero", false);
+			return new ResponseDTO(null, "Ocurrió un error al eliminar el cliente", false);
 		}
 	}
 }
