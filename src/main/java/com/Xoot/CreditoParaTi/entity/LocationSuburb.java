@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "locations_colonies")
+@Table(name = "locations_Suburb")
 public class LocationSuburb implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
