@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.ICreditApplicationProductService;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.CreditApplicationProductDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 @RestController
@@ -41,9 +41,9 @@ public class CreditApplicationProductController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO create(@RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO create(@RequestBody CreditApplicationProductDTO creditApplicationProductDTO) {
 		try {
-			return _creditApplicationProductSerice.save(catalogo);
+			return _creditApplicationProductSerice.save(creditApplicationProductDTO);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al crear el Status.", false);
 		}
@@ -51,9 +51,9 @@ public class CreditApplicationProductController {
 
 	@PutMapping("/update/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseDTO update(@PathVariable Integer id, @RequestBody CatalogoDTO catalogo) {
+	public ResponseDTO update(@PathVariable Integer id, @RequestBody CreditApplicationProductDTO creditApplicationProductDTO) {
 		try {
-			return _creditApplicationProductSerice.update(id, catalogo);
+			return _creditApplicationProductSerice.update(id, creditApplicationProductDTO);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Ocurrió un error al actualizar el Status.", false);
 		}

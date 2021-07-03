@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.ICreditApplicationProductService;
+import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentTypeService;
 import com.Xoot.CreditoParaTi.entity.CreditApplicationProduct;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.CreditApplicationProductDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.models.dao.ICreditApplicationProductDao;
 
@@ -21,6 +22,8 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 
 	@Autowired
 	private ICreditApplicationProductDao _CreditAplicationProductDao;
+	@Autowired
+	private IDocumentTypeService _documentTypeService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -58,8 +61,8 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 
 	@Override
 	@Transactional
-	public ResponseDTO save(CatalogoDTO catalogo) {
-		CreditApplicationProduct CreditaApplicationProductoByName = _CreditAplicationProductDao.findByName(catalogo.getName());
+	public ResponseDTO save(CreditApplicationProductDTO creditApplicationProductDTO) {
+		CreditApplicationProduct CreditaApplicationProductoByName = _CreditAplicationProductDao.findByName(creditApplicationProductDTO.getName());
 
 		if (CreditaApplicationProductoByName != null) {
 			return CreateResonseDuplicatedProducto(CreditaApplicationProductoByName);
@@ -67,7 +70,7 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 		
 		CreditApplicationProduct CreditAplicationProduct = new CreditApplicationProduct();
 
-		data = saveCreditAplicationProduct(1,catalogo.getName(),CreditAplicationProduct);
+		data = saveCreditAplicationProduct(1,creditApplicationProductDTO,CreditAplicationProduct);
 
 		result = true;
 
@@ -78,21 +81,21 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 
 	@Override
 	@Transactional
-	public ResponseDTO update(Integer id, CatalogoDTO catalogo) {
+	public ResponseDTO update(Integer id, CreditApplicationProductDTO creditApplicationProductDTO) {
 
 		CreditApplicationProduct CreditaApplicationProductoById = findById(id);
 
-		CreditApplicationProduct CreditaApplicationProductoByName = _CreditAplicationProductDao.findByName(catalogo.getName());
+		CreditApplicationProduct CreditaApplicationProductoByName = _CreditAplicationProductDao.findByName(creditApplicationProductDTO.getName());
 
 		if(CheckProductoNotExist(CreditaApplicationProductoById)) {
 			return CreateResponseProductoNotExist();
 		}
 
-		if(CheckDuplicatedProducto(id, catalogo, CreditaApplicationProductoByName)) {
+		if(CheckDuplicatedProducto(id, creditApplicationProductDTO, CreditaApplicationProductoByName)) {
 			return CreateResonseDuplicatedProducto(CreditaApplicationProductoByName);
 		}
 
-		data = saveCreditAplicationProduct(1,catalogo.getName(),CreditaApplicationProductoById);
+		data = saveCreditAplicationProduct(1,creditApplicationProductDTO,CreditaApplicationProductoById);
 
 		result = true;
 
@@ -154,20 +157,26 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 		return new ResponseDTO(data, message, result);
 	}
 	
-	private CreditApplicationProduct saveCreditAplicationProduct(Integer Producto_flag, String ProductoName, CreditApplicationProduct CreditAplicationProduct ) {
+	private CreditApplicationProduct saveCreditAplicationProduct(Integer Producto_flag, 
+			CreditApplicationProductDTO creditApplicationProductDTO, 
+			CreditApplicationProduct creditAplicationProduct ) {
 
-	    if( ProductoName != null && !ProductoName.isEmpty()) {
-	    	CreditAplicationProduct.setName(ProductoName);
+	    if( creditApplicationProductDTO.getName() != null && !creditApplicationProductDTO.getName().isEmpty()) {
+	    	creditAplicationProduct.setName(creditApplicationProductDTO.getName());
 	    }
 	    
-	    CreditAplicationProduct.setStatus_flag(Producto_flag);
+	    if(creditApplicationProductDTO.getIdDocumentType().size() > 0) {
+	    	creditAplicationProduct.setDocumentType(_documentTypeService.getlistDocumentType(creditApplicationProductDTO.getIdDocumentType()));
+	    }
+	    
+	    creditAplicationProduct.setStatus_flag(Producto_flag);
 		
-	    CreditAplicationProduct.setMdfd_on(new Date());
+	    creditAplicationProduct.setMdfd_on(new Date());
 		
-		return _CreditAplicationProductDao.save(CreditAplicationProduct);
+		return _CreditAplicationProductDao.save(creditAplicationProduct);
 	}
 
-	private boolean CheckDuplicatedProducto(Integer id, CatalogoDTO catalogo,
+	private boolean CheckDuplicatedProducto(Integer id, CreditApplicationProductDTO creditApplicationProductDTO,
 			CreditApplicationProduct CreditaApplicationProductoByName) {
 		
 		boolean response = false;

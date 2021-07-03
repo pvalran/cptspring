@@ -63,7 +63,6 @@ public class UserImpl  implements IUserService, UserDetailsService{
 		return new User(usuario.getUsername(), usuario.getPassword(), authorities);
 	}
 
-	
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario findByUsername(String username) {

@@ -15,6 +15,8 @@ public interface IDocumentTypeService {
 	
 	List<DocumentType> findByClass(Integer id);
 	
+	List<DocumentType> getlistDocumentType(List<Integer> lstIds);
+	
 	ResponseDTO save(DocumentTypeDTO catalogo);
 	
 	ResponseDTO update(Integer id, DocumentTypeDTO catalogo);

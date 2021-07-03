@@ -1,5 +1,6 @@
 package com.Xoot.CreditoParaTi.models.dao.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -163,6 +164,21 @@ public class DocumentTypeImpl implements IDocumentTypeService{
 
 		return new ResponseDTO(data, message, result);
 		
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<DocumentType> getlistDocumentType(List<Integer> lstIds) {
+		List<DocumentType> lstRetorno = new ArrayList<>();
+		DocumentType documentType;
+		for (Integer p:lstIds) {
+			documentType = findById(p);
+			if(documentType != null) {
+				lstRetorno.add(documentType);
+			}
+		}
+		
+		return lstRetorno;
 	}
 	 
 	private boolean CheckDocumentTypeNotExist(DocumentType DocumentType) {
