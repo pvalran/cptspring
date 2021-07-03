@@ -25,6 +25,9 @@ public class LocationSuburb implements Serializable {
 	@Column(name = "name", length = 50)
 	private String name;
 
+	@Column(name = "ZipCode")
+	private Integer ZipCode;
+
 	@OneToOne
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private LocationCity city;
@@ -66,6 +69,14 @@ public class LocationSuburb implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getZipCode() {
+		return ZipCode;
+	}
+
+	public void setZipCode(Integer zipCode) {
+		ZipCode = zipCode;
 	}
 
 	public LocationCity getCity() {

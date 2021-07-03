@@ -1,5 +1,7 @@
 package com.Xoot.CreditoParaTi.models.dao.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,11 @@ public class LocationStateImpl implements ILocationStateService {
 	@Override
 	public LocationState save(LocationState locationState) {
 		return locationStatedao.save(locationState);
+	}
+	
+	@Override
+	public List<LocationState> findByListName(List<String> lstNameState) {
+		
+		return locationStatedao.findByListName(lstNameState);
 	}
 }

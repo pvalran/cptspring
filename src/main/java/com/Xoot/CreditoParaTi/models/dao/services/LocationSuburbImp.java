@@ -21,4 +21,10 @@ public class LocationSuburbImp implements ILocationSuburbService {
 		return (List<LocationSuburb>) iLocationSuburbDao.saveAll(lstSuburb);
 	}
 
+	@Override
+	public List<LocationSuburb> findByListName(List<String> lstNameSuburb) {
+		
+		return iLocationSuburbDao.findByListName(lstNameSuburb);
+	}
+
 }

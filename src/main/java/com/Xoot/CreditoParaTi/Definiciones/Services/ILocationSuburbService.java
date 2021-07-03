@@ -8,6 +8,8 @@ import com.Xoot.CreditoParaTi.entity.LocationSuburb;
 
 public interface ILocationSuburbService {
 	
-	public List<LocationSuburb> saveRange(List<LocationSuburb> lstSuburb);
-	
+	List<LocationSuburb> saveRange(List<LocationSuburb> lstSuburb);
+
+	List<LocationSuburb> findByListName(List<String> lstNameSuburb);
+
 }

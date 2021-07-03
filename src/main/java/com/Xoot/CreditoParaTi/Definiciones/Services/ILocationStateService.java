@@ -1,9 +1,12 @@
 package com.Xoot.CreditoParaTi.Definiciones.Services;
 
+import java.util.List;
+
 import com.Xoot.CreditoParaTi.entity.LocationState;
 
 public interface ILocationStateService {
 
-	public LocationState save(LocationState locationState);
+	LocationState save(LocationState locationState);
 
+	List<LocationState> findByListName(List<String> lstNameState);
 }

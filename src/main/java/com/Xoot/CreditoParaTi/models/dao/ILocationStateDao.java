@@ -2,7 +2,6 @@ package com.Xoot.CreditoParaTi.models.dao;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +15,7 @@ public interface ILocationStateDao
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.locations_states;")
     public List<LocationState> findAll();
+	
+	@Query( nativeQuery = true, value =  "SELECT * FROM cpt.locations_states where name in :names" )
+	List<LocationState> findByListName(@Param("names") List<String> lstNameState);
 }
