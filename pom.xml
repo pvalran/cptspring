@@ -96,11 +96,29 @@
 	</dependencies>
 	<build>
 		<plugins>
+
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<attachClasses>true</attachClasses>
+					<webXml>target/web.xml</webXml>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+					<archiveClasses>true</archiveClasses>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+
+				</configuration>
 			</plugin>
 		</plugins>
+
 		<finalName>CreditoParaTi</finalName>
 	</build>
 

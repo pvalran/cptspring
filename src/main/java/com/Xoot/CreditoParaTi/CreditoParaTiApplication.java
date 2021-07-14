@@ -25,7 +25,7 @@ public class CreditoParaTiApplication extends SpringBootServletInitializer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:8100");
+				registry.addMapping("/**").allowedOrigins("http://3.131.97.198:8100");
 			}
 		};
 	}
