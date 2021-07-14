@@ -96,7 +96,10 @@
 	</dependencies>
 	<build>
 		<plugins>
-
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
@@ -118,8 +121,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
 		<finalName>CreditoParaTi</finalName>
 	</build>
-
 </project>
