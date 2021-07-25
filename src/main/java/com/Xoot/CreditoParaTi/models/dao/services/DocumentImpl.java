@@ -3,6 +3,8 @@ package com.Xoot.CreditoParaTi.models.dao.services;
 import java.util.Date;
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.Definiciones.Services.ICreditApplicationService;
+import com.Xoot.CreditoParaTi.entity.CreditApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +21,15 @@ import com.Xoot.CreditoParaTi.models.dao.IDocumentDao;
 public class DocumentImpl implements IDocumentService {
 	@Autowired
 	private IDocumentDao documentDao;
+
+	@Autowired
+	private IDocumentService documentService;
+
 	@Autowired
 	public IDocumentTypeService typeDocumentService;
+	@Autowired
+	public ICreditApplicationService creditApplicationService;
+
 	public Object data;
 	public String message;
 	public Boolean result;
@@ -66,24 +75,28 @@ public class DocumentImpl implements IDocumentService {
 	public ResponseDTO save(DocumentDTO document) {
 		Document documentExist = findAllIds(document.getCreditAplicationId(),document.getTypeDocumentId());
 		DocumentType typeDocument = typeDocumentService.findById(document.getTypeDocumentId());
+		CreditApplication creditApplication = creditApplicationService.findById(document.getCreditAplicationId());
 
 		data = null;
 		result = false;
 		if (documentExist != null) {
+			Document documentUpdate = documentService.findById(documentExist.getIdDocument());
+			documentUpdate.setStatus_flag(0);
+			documentDao.save(documentUpdate);
 			message = "El documento ha sido registrado anteriormente.";
 		} else if (typeDocument == null) {
 			message = "El tipo de documento proporcionado no existe.";
-		} else {
-			Document newDocument = new Document();
-
-			newDocument.setStatus_flag(1);
-			//newDocument.setCreditAplication(null);
-			newDocument.setTypeDocument(typeDocument);
-
-			data = documentDao.save(newDocument);
-			result = true;
-			message = "Registro creado.";
+			return new ResponseDTO(data, message, result);
 		}
+
+		Document newDocument = new Document();
+		newDocument.setName(document.getName());
+		newDocument.setStatus_flag(1);
+		newDocument.setCreditAplication(creditApplication);
+		newDocument.setTypeDocument(typeDocument);
+		data = documentDao.save(newDocument);
+		result = true;
+		message = "Registro creado.";
 		return new ResponseDTO(data, message, result);
 	}
 	

@@ -20,21 +20,19 @@ import springfox.documentation.service.ResponseMessage;
 public class LocationController {
 
 	@Autowired
-    private IPersistenceLocation persitenceLocation;
-	
-	 @PostMapping("/importLocations") 
-	 @ResponseStatus(HttpStatus.CREATED)
-	 public ResponseEntity<ResponseMessage> importLocations(@RequestParam("file") MultipartFile reapExcelDataFile) {
-		    String message = "";
-		    try {
-		    	
-		    	persitenceLocation.persistLocation(reapExcelDataFile);
+	private IPersistenceLocation persitenceLocation;
 
-		      message = "Se importo correctamente la información del archivo: " + reapExcelDataFile.getOriginalFilename();
-		      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(0, message, null, null, null));
-		    } catch (Exception e) {
-		      message = "Ocurrió un error al importar el archivo " + reapExcelDataFile.getOriginalFilename() + "!";
-		      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(0, message, null, null, null));
-		    }
-     }
+	@PostMapping("/importLocations")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ResponseMessage> importLocations(@RequestParam("file") MultipartFile reapExcelDataFile) {
+		String message = "";
+		try {
+			persitenceLocation.persistLocation(reapExcelDataFile);
+			message = "Se importo correctamente la información del archivo: " + reapExcelDataFile.getOriginalFilename();
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(0, message, null, null, null));
+		} catch (Exception e) {
+			message = "Ocurrió un error al importar el archivo " + reapExcelDataFile.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(0, message, null, null, null));
+		}
+	}
 }

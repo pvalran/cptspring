@@ -23,6 +23,8 @@ public interface ICreditApplicationService {
 	ResponseDTO delete(Integer id);
 
 	ResponseDTO getById(Integer id);
+
+
 	
 	ResponseDTO addCustomer(Integer id, CreditApplicationDTO creditApplicationDTO);
 }

@@ -12,7 +12,10 @@ public interface ILocationCityDao extends CrudRepository<LocationCity, Integer> 
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM cpt.locations_cities;")
     List<LocationCity> findAll();
-	
+
+	@Query(nativeQuery = true, value = "SELECT * FROM cpt.locations_cities where state_id = :id;")
+	List<LocationCity> getMuntoState(Integer id);
+
 	@Query( nativeQuery = true, value =  "SELECT * FROM cpt.locations_cities where name in :names" )
 	List<LocationCity> findByListName(@Param("names") List<String> lstNameState);
 }

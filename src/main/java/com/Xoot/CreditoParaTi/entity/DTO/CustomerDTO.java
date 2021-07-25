@@ -3,6 +3,7 @@ package com.Xoot.CreditoParaTi.entity.DTO;
 import java.util.Date;
 
 public class CustomerDTO {
+	private Integer idCustomer;
 	private String name;
 	private String paternalLastName;
 	private String motherLastName;
@@ -15,6 +16,8 @@ public class CustomerDTO {
 	private Integer stateOfBirth_id;
 	private Integer gender_id;
 	private Integer colony_id;
+
+
 
 	public String getName() {
 		return name;
@@ -110,5 +113,13 @@ public class CustomerDTO {
 
 	public void setColony_id(Integer colony_id) {
 		this.colony_id = colony_id;
+	}
+
+	public Integer getIdCustomer() {
+		return idCustomer;
+	}
+
+	public void setIdCustomer(Integer idCustomer) {
+		this.idCustomer = idCustomer;
 	}
 }

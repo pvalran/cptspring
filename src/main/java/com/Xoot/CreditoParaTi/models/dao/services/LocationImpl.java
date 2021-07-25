@@ -107,26 +107,16 @@ public class LocationImpl implements ILocationService {
 	private void AddSuburb(List<LocationDTO> lstLocation, String ZipCode, String Suburb) {
 
 		if(!Suburb.isEmpty() && !ZipCode.isEmpty()) {
-			
-			
 			lstLocation.forEach((location) -> {
-
 				String ZipCodeInList = location.getZipCode();
-
 				if (location.getLstSuburb() != null) {
-
 					if (ZipCodeInList.equals(ZipCode)) {
-
 						SuburbDTO SuburbDTO = new SuburbDTO(Suburb);
-
 						location.getLstSuburb().add(SuburbDTO);
 					}
 				}
-
 			});
-			
 		}
-
 	}
 
 }

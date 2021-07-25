@@ -22,4 +22,7 @@ public interface ICreditApplicationProductService {
 	ResponseDTO delete(Integer id);
 
 	ResponseDTO getById(Integer id);
+
+
+
 }

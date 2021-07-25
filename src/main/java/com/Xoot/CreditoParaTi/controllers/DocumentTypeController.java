@@ -16,7 +16,7 @@ import com.Xoot.CreditoParaTi.entity.DTO.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 
 @RestController
-@RequestMapping("/documents/type")
+@RequestMapping("/documents/types")
 public class DocumentTypeController {
 	@Autowired
 	private IDocumentTypeService typeDocumentService;
