@@ -1,9 +1,14 @@
 package com.Xoot.CreditoParaTi.entity.DTO;
 
+import com.Xoot.CreditoParaTi.entity.LocationState;
+
 public class LocationsCitiesDTO {
+    private Integer idMunicipality;
     private String Name;
-    private Integer stateId;
-    private Integer cityCode;
+    private Integer state;
+    private Integer municipality_code;
+
+
 
     public String getName() {
         return Name;
@@ -13,19 +18,28 @@ public class LocationsCitiesDTO {
         Name = name;
     }
 
-    public Integer getStateId() {
-        return stateId;
+
+    public Integer getState() {
+        return state;
     }
 
-    public void setStateId(Integer stateId) {
-        this.stateId = stateId;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
-    public Integer getCityCode() {
-        return cityCode;
+    public Integer getIdMunicipality() {
+        return idMunicipality;
     }
 
-    public void setCityCode(Integer cityCode) {
-        this.cityCode = cityCode;
+    public void setIdMunicipality(Integer idMunicipality) {
+        this.idMunicipality = idMunicipality;
+    }
+
+    public Integer getMunicipality_code() {
+        return municipality_code;
+    }
+
+    public void setMunicipality_code(Integer municipality_code) {
+        this.municipality_code = municipality_code;
     }
 }

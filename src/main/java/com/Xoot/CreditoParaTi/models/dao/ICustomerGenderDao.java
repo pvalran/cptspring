@@ -11,12 +11,12 @@ import com.Xoot.CreditoParaTi.entity.CustomerGender;
 
 public interface ICustomerGenderDao extends CrudRepository<CustomerGender, Integer>, JpaSpecificationExecutor<CustomerGender> {
 
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.customer_genders WHERE status_flag = 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM customer_genders WHERE status_flag = 1")
 	public List<CustomerGender> findAllActive();
 
-	@Query(nativeQuery = true, value = "SELECT * FROM  cpt.customer_genders WHERE status_flag = 1 AND name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM customer_genders WHERE status_flag = 1 AND name=:name LIMIT 1")
 	public CustomerGender findByNameActive(@Param("name") String name);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM  cpt.customer_genders WHERE name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM customer_genders WHERE name=:name LIMIT 1")
 	public CustomerGender findByName(@Param("name") String name);
 }

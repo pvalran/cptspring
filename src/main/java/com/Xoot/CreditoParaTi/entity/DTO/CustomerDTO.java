@@ -16,6 +16,8 @@ public class CustomerDTO {
 	private Integer stateOfBirth_id;
 	private Integer gender_id;
 	private Integer colony_id;
+	private Integer creditsAplicationProducts;
+	private Integer userId;
 
 
 
@@ -121,5 +123,21 @@ public class CustomerDTO {
 
 	public void setIdCustomer(Integer idCustomer) {
 		this.idCustomer = idCustomer;
+	}
+
+	public Integer getCreditsAplicationProducts() {
+		return creditsAplicationProducts;
+	}
+
+	public void setCreditsAplicationProducts(Integer creditsAplicationProducts) {
+		this.creditsAplicationProducts = creditsAplicationProducts;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

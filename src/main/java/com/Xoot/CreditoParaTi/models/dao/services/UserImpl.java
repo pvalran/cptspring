@@ -74,4 +74,7 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	public Usuario findByemail(String email) {
 		return userDao.findByemail(email);
 	}
+
+    @Override
+    public Usuario Login(String userName, String password) { return userDao.Login(userName,password); }
 }

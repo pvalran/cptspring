@@ -9,11 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.lang.reflect.Type;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 @Service
 public class LocationColoniesImp implements ILocationColoniesService {
 	@Autowired
 	private ILocationColoniesDao iLocationColoniesDao;
+	@Autowired
+	private ModelMapper modelMapper;
+
 
 	@Override
 	public List<LocationColonies> saveRange(List<LocationColonies> lstColonies) {
@@ -26,7 +32,13 @@ public class LocationColoniesImp implements ILocationColoniesService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<LocationColonies> getCityToMun(Integer id) { return iLocationColoniesDao.getCityToMun(id); }
+	public List<LocationColonies> getCityToMun(Integer id) {
+
+
+
+		return iLocationColoniesDao.getCityToMun(id);
+
+	}
 
 
 	@Override

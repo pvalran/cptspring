@@ -17,7 +17,8 @@ public class CreditoParaTiApplication extends SpringBootServletInitializer {
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(CreditoParaTiApplication.class, args);
+            System.setProperty("server.servlet.context-path", "/CreditoParaTi");
+            SpringApplication.run(CreditoParaTiApplication.class, args);
 	}
 	
 	@Bean

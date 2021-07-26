@@ -95,7 +95,7 @@ public class PersistenceLocationImp implements IPersistenceLocation {
 				
 				LocationSuburb.setZipCode(Integer.parseInt( location.getZipCode()));			
 				
-			    LocationSuburb.setCity(locationCityCreated);
+			    LocationSuburb.setMunicipality_id(locationCityCreated.getIdMunicipality());
 
 				lstLocationSuburb.add(LocationSuburb);
 			}

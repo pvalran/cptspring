@@ -11,12 +11,12 @@ import com.Xoot.CreditoParaTi.entity.DocumentClass;
 
 public interface IDocumentClassDao extends CrudRepository<DocumentClass, Integer>, JpaSpecificationExecutor<DocumentClass> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_class WHERE status_flag = 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM documents_class WHERE status_flag = 1")
 	public List<DocumentClass> findAllActive();
 
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_class WHERE status_flag = 1 AND name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM documents_class WHERE status_flag = 1 AND name=:name LIMIT 1")
 	public DocumentClass findByNameActive(@Param("name") String name);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.documents_class WHERE name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM documents_class WHERE name=:name LIMIT 1")
 	public DocumentClass findByName(@Param("name") String name);
 }

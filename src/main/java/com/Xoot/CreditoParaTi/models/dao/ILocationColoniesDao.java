@@ -11,9 +11,9 @@ import java.util.List;
 public interface ILocationColoniesDao
 		extends CrudRepository<LocationColonies, Integer>, JpaSpecificationExecutor<LocationColonies> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.locations_colonies;")
+	@Query(nativeQuery = true, value = "SELECT * FROM locations_colonies")
     List<LocationColonies> findAll();
 
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.locations_colonies where city_id = :id;")
-	List<LocationColonies> getCityToMun(Integer id);
+	@Query(nativeQuery = true, value = "SELECT * FROM locations_colonies where (city_id = :id or city_code = :id)")
+	List<LocationColonies> getCityToMun(@Param("id") Integer id);
 }

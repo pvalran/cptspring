@@ -12,12 +12,12 @@ import com.Xoot.CreditoParaTi.entity.CreditApplicationStatus;
 public interface ICreditApplicationStatusDao
 		extends CrudRepository<CreditApplicationStatus, Integer>, JpaSpecificationExecutor<CreditApplicationStatus> {
 
-	@Query(nativeQuery = true, value = "SELECT * FROM cpt.credits_aplication_status WHERE status_flag = 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplication_status WHERE status_flag = 1")
 	public List<CreditApplicationStatus> findAllActive();
 
-	@Query(nativeQuery = true, value = "SELECT * FROM  cpt.credits_aplication_status WHERE status_flag = 1 AND name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplication_status WHERE status_flag = 1 AND name=:name LIMIT 1")
 	public CreditApplicationStatus findByNameActive(@Param("name") String name);
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM  cpt.credits_aplication_status WHERE name=:name LIMIT 1;")
+	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplication_status WHERE name=:name LIMIT 1")
 	public CreditApplicationStatus findByName(@Param("name") String name);
 }

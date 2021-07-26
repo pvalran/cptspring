@@ -98,7 +98,8 @@ public class UserController {
 				newUser.setStatus_flag(1);
 				newUser.setUsername(user.getUsername());
 				newUser.setEmail(user.getEmail());
-				newUser.setPassword(encoder.encode(user.getPassword()));
+				//newUser.setPassword(encoder.encode(user.getPassword()));
+				newUser.setPassword(user.getPassword());
 				newUser.setDtLastLogin(null);
 				newUser.setCategoryUser(categoryUserService.getlistCategory(user.getIdCategory()));
 
@@ -113,6 +114,32 @@ public class UserController {
 		}
 		return new ResponseDTO(data, message, result);
 	}
+
+	@PostMapping("/login")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseDTO Login(@RequestBody UserDTO user) {
+		try {
+			Usuario validaUsername = userService.findByUsername(user.getUsername());
+			Usuario validaEmail = userService.findByemail(user.getEmail());
+
+			data = null;
+			result = false;
+
+			data = userService.Login(user.getUsername(),user.getPassword());
+			if (data == null) {
+				message = "No autorizado";
+			} else {
+				message = "Autorizado";
+			}
+			result = true;
+		} catch (Exception ex) {
+			data = null;
+			result = false;
+			message = "Ocurrió un error en el login  usuario.";
+		}
+		return new ResponseDTO(data, message, result);
+	}
+
 
 	/*
 	 * Metodo para actualizar un usuario por Id
@@ -180,4 +207,6 @@ public class UserController {
 		}
 		return new ResponseDTO(data, message, result);
 	}
+
+
 }

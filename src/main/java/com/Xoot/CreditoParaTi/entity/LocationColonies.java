@@ -10,7 +10,7 @@ public class LocationColonies implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idColonies;
+	private Integer idCity;
 
 	@Column(name = "name", length = 50)
 	private String name;
@@ -18,9 +18,14 @@ public class LocationColonies implements Serializable {
 	@Column(name = "status_flag")
 	private Integer status_flag;
 
-	@OneToOne
-	@JoinColumn(name = "city_id", referencedColumnName = "id")
-	private LocationCity city;
+	//@OneToOne
+	//@JoinColumn(name = "city_id", referencedColumnName = "id")
+	@Column(name = "city_id")
+	private Integer municipality_id;
+
+	@Column(name = "city_code")
+	private Integer city_code;
+
 
 	@Column(name = "crtd_on")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -42,12 +47,12 @@ public class LocationColonies implements Serializable {
 		mdfd_on = new java.util.Date();
 	}
 
-	public Integer getIdColonies() {
-		return idColonies;
+	public Integer getIdCity() {
+		return idCity;
 	}
 
-	public void setIdColonies(Integer idColonies) {
-		this.idColonies = idColonies;
+	public void setIdCity(Integer idCity) {
+		this.idCity = idCity;
 	}
 
 	public String getName() {
@@ -62,12 +67,12 @@ public class LocationColonies implements Serializable {
 		return status_flag;
 	}
 
-	public LocationCity getCity() {
-		return city;
+	public Integer getMunicipality_id() {
+		return municipality_id;
 	}
 
-	public void setCity(LocationCity city) {
-		this.city = city;
+	public void setMunicipality_id(Integer municipality_id) {
+		this.municipality_id = municipality_id;
 	}
 
 	public Date getCrtd_on() {
@@ -106,4 +111,12 @@ public class LocationColonies implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public Integer getCity_code() {
+		return city_code;
+	}
+
+	public void setCity_code(Integer city_code) {
+		this.city_code = city_code;
+	}
 }

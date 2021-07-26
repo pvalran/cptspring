@@ -165,9 +165,7 @@ public class CreditApplicationProductImpl implements ICreditApplicationProductSe
 	    	creditAplicationProduct.setName(creditApplicationProductDTO.getName());
 	    }
 	    
-	    if(creditApplicationProductDTO.getIdDocumentType().size() > 0) {
-	    	creditAplicationProduct.setDocumentType(_documentTypeService.getlistDocumentType(creditApplicationProductDTO.getIdDocumentType()));
-	    }
+
 	    
 	    creditAplicationProduct.setStatus_flag(Producto_flag);
 		

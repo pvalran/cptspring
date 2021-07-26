@@ -20,7 +20,7 @@ public class LocationCity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idCity;
+	private Integer idMunicipality;
 
 	@Column(name = "name", length = 50)
 	private String name;
@@ -31,6 +31,9 @@ public class LocationCity implements Serializable {
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
+
+	@Column(name = "city_code")
+	private Integer municipality_code;
 
 	@Column(name = "crtd_on")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -52,12 +55,12 @@ public class LocationCity implements Serializable {
 		mdfd_on = new java.util.Date();
 	}
 
-	public Integer getIdCity() {
-		return idCity;
+	public Integer getIdMunicipality() {
+		return idMunicipality;
 	}
 
-	public void setIdCity(Integer idCity) {
-		this.idCity = idCity;
+	public void setIdMunicipality(Integer idMunicipality) {
+		this.idMunicipality = idMunicipality;
 	}
 
 	public String getName() {
@@ -116,8 +119,19 @@ public class LocationCity implements Serializable {
 		this.mdfd_by = mdfd_by;
 	}
 
+
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+
+	public Integer getMunicipality_code() {
+		return municipality_code;
+	}
+
+	public void setMunicipality_code(Integer municipality_code) {
+		this.municipality_code = municipality_code;
+	}
 }

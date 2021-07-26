@@ -94,17 +94,17 @@ public class CustomerImpl implements ICustomerService {
 
 		Customer customerById = findById(id);
 
-		Customer customerByCurp = _customerDao.findByCurp(customerDTO.getCurp());
+		//Customer customerByCurp = _customerDao.findByCurp(customerDTO.getCurp());
 
 		if (CheckCustomerNotExist(customerById)) {
 			return CreateResponseCustomerNotExist();
 		}
 
-		if (customerByCurp != null) {
+		/*if (customerByCurp != null) {
 			if (CheckDuplicatedCustomer(id, customerByCurp)) {
 				return CreateResonseDuplicatedCustomer(customerByCurp);
 			}
-		}
+		}*/
 
 		data = saveCustomer(1, customerDTO, customerById);
 

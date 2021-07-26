@@ -35,7 +35,7 @@ public class DocumentFileController {
 	@Autowired
 	private IDocumentDao documentDao;
 
-	@PostMapping("/upload")
+	@PostMapping("/uploadfile")
 	public ResponseDTO upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Integer id) {
 		Object data = null;
 		String message = "";
@@ -84,7 +84,7 @@ public class DocumentFileController {
 		return new ResponseDTO(data, message, result);
 	}
 
-	@GetMapping("/dowload/{name:.+}")
+	@GetMapping("/dowloadfile/{name:.+}")
 	public ResponseEntity<Resource> viewFile(@PathVariable String name) {
 
 		Path rutaArchivo = Paths.get("D://uploadJava").resolve(name).toAbsolutePath();

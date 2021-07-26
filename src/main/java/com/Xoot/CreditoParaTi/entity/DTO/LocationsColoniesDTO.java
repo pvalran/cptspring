@@ -1,8 +1,19 @@
 package com.Xoot.CreditoParaTi.entity.DTO;
 
 public class LocationsColoniesDTO {
+    private Integer idCity;
     private String name;
-    private Integer cityId;
+    private Integer municipality_id;
+    private Integer city_code;
+
+
+    public Integer getIdCity() {
+        return idCity;
+    }
+
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
+    }
 
     public String getName() {
         return name;
@@ -12,11 +23,19 @@ public class LocationsColoniesDTO {
         this.name = name;
     }
 
-    public Integer getCityId() {
-        return cityId;
+    public Integer getMunicipality_id() {
+        return municipality_id;
     }
 
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
+    public void setMunicipality_id(Integer municipality_id) {
+        this.municipality_id = municipality_id;
+    }
+
+    public Integer getCity_code() {
+        return city_code;
+    }
+
+    public void setCity_code(Integer city_code) {
+        this.city_code = city_code;
     }
 }

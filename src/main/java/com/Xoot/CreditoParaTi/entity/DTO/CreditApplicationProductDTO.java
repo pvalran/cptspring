@@ -3,8 +3,9 @@ package com.Xoot.CreditoParaTi.entity.DTO;
 import java.util.List;
 
 public class CreditApplicationProductDTO {
+	private Integer idProduct;
 	private String name;
-	private List<Integer> idDocumentType;
+
 
 	public String getName() {
 		return name;
@@ -14,12 +15,14 @@ public class CreditApplicationProductDTO {
 		this.name = name;
 	}
 
-	public List<Integer> getIdDocumentType() {
-		return idDocumentType;
+
+	public Integer getIdProduct() {
+		return idProduct;
 	}
 
-	public void setIdDocumentType(List<Integer> idDocumentType) {
-		this.idDocumentType = idDocumentType;
+	public void setIdProduct(Integer idProduct) {
+		this.idProduct = idProduct;
 	}
+
 
 }

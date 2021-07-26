@@ -20,7 +20,7 @@ public class LocationSuburb implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idSuburb;
+	private Integer idColony;
 
 	@Column(name = "name", length = 50)
 	private String name;
@@ -28,9 +28,16 @@ public class LocationSuburb implements Serializable {
 	@Column(name = "ZipCode")
 	private Integer ZipCode;
 
-	@OneToOne
-	@JoinColumn(name = "city_id", referencedColumnName = "id")
-	private LocationCity city;
+	//@OneToOne
+	//@JoinColumn(name = "city_id", referencedColumnName = "id")
+	@Column(name = "city_id")
+	private Integer municipality_id;
+
+	@Column(name = "suburb_code")
+	private Integer colony_code;
+
+	@Column(name = "city_code")
+	private Integer municipality_code;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -55,13 +62,14 @@ public class LocationSuburb implements Serializable {
 		mdfd_on = new java.util.Date();
 	}
 
-	public Integer getIdSuburb() {
-		return idSuburb;
+	public Integer getIdColony() {
+		return idColony;
 	}
 
-	public void setIdSuburb(Integer idSuburb) {
-		this.idSuburb = idSuburb;
+	public void setIdColony(Integer idColony) {
+		this.idColony = idColony;
 	}
+
 
 	public String getName() {
 		return name;
@@ -79,20 +87,20 @@ public class LocationSuburb implements Serializable {
 		ZipCode = zipCode;
 	}
 
-	public LocationCity getCity() {
-		return city;
-	}
-
-	public void setCity(LocationCity city) {
-		this.city = city;
-	}
-
 	public Integer getStatus_flag() {
 		return status_flag;
 	}
 
 	public void setStatus_flag(Integer status_flag) {
 		this.status_flag = status_flag;
+	}
+
+	public Integer getMunicipality_id() {
+		return municipality_id;
+	}
+
+	public void setMunicipality_id(Integer municipality_id) {
+		this.municipality_id = municipality_id;
 	}
 
 	public java.util.Date getCrtd_on() {
@@ -131,4 +139,21 @@ public class LocationSuburb implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+
+	public Integer getColony_code() {
+		return colony_code;
+	}
+
+	public void setColony_code(Integer colony_code) {
+		this.colony_code = colony_code;
+	}
+
+	public Integer getMunicipality_code() {
+		return municipality_code;
+	}
+
+	public void setMunicipality_code(Integer municipality_code) {
+		this.municipality_code = municipality_code;
+	}
 }

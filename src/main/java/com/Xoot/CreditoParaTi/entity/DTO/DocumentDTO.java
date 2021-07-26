@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.entity.DTO;
 
 public class DocumentDTO {
 
-	private Integer idDocumento;
+	private Integer idDocument;
 	private String name;
 	private Integer typeDocumentId;
 	private Integer creditAplicationId;
@@ -38,19 +38,19 @@ public class DocumentDTO {
 
 	public void setClassDocumentId(Integer classDocumentId) { this.classDocumentId = classDocumentId; }
 
-	public Integer getIdDocumento() {
-		return idDocumento;
-	}
-
-	public void setIdDocumento(Integer idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
 	public Integer getStatus_flag() {
 		return status_flag;
 	}
 
 	public void setStatus_flag(Integer status_flag) {
 		this.status_flag = status_flag;
+	}
+
+	public Integer getIdDocument() {
+		return idDocument;
+	}
+
+	public void setIdDocument(Integer idDocument) {
+		this.idDocument = idDocument;
 	}
 }

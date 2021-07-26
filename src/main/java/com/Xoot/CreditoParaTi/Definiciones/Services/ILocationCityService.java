@@ -2,6 +2,7 @@ package com.Xoot.CreditoParaTi.Definiciones.Services;
 
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.entity.DTO.LocationsCitiesDTO;
 import com.Xoot.CreditoParaTi.entity.LocationCity;
 import com.Xoot.CreditoParaTi.entity.LocationState;
 
@@ -11,7 +12,7 @@ public interface ILocationCityService {
 
 	List<LocationCity> findAllActive();
 
-	List<LocationCity> getMuntoState(Integer id);
+	List<LocationsCitiesDTO> getMuntoState(Integer id);
 
 	List<LocationCity> findByListName(List<String> lstNameCity);
 }
