@@ -12,7 +12,7 @@ import com.Xoot.CreditoParaTi.entity.Document;
 
 public interface IDocumentDao extends CrudRepository<Document, Integer>, JpaSpecificationExecutor<Document> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE status_flag = 1 AND credit_aplication_id=:idCreditAplication LIMIT 1")
+	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE status_flag = 1 AND credit_aplication_id=:idCreditAplication")
 	public List<Document> findAllActive(@Param("idCreditAplication") Integer idCreditAplication);
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM documents "

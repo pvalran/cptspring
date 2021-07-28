@@ -1,9 +1,8 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.*;
+import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.entity.DTO.*;
-import com.Xoot.CreditoParaTi.entity.Document;
-import com.Xoot.CreditoParaTi.entity.LocationState;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +44,24 @@ public class CatalogController {
 	@Autowired
 	private ICreditApplicationService CreditApplicationService;
 	@Autowired
+	private ITypeCivilService TypeCivilService;
+	@Autowired
+	private ITypeContractService TypeContractService;
+	@Autowired
+	private ITypeDatosService TypeDatosService;
+	@Autowired
+	private ITypeDocumentService TypeDocumentService;
+	@Autowired
+	private ITypeLaboralActivityService TypeLaboralActivityService;
+	@Autowired
+	private ITypeMaritalStatusService TypeMaritalStatusService;
+	@Autowired
+	private ITypeNationalityService TypeNationalityService;
+	@Autowired
+	private ITypePositionService TypePositionService;
+	@Autowired
+	private ITypeReferenceService TypeReferenceService;
+	@Autowired
 	private ModelMapper modelMapper;
 	@GetMapping("/catalogy/{catalog}")
 	public ResponseDTO allActive(@PathVariable String catalog) {
@@ -75,6 +92,33 @@ public class CatalogController {
 				case "typecredit":
 					listType = new TypeToken<List<CreditApplicationProductDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(CreditApplicationProductService.findAllActive(),listType), "Exito", true);
+				case "typecivil":
+					listType = new TypeToken<List<TypeCivilDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeCivilService.findAllActive(),listType), "Exito", true);
+				case "typecontract":
+					listType = new TypeToken<List<TypeContractDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeContractService.findAllActive(),listType), "Exito", true);
+				case "typedatos":
+					listType = new TypeToken<List<TypeDatosDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeDatosService.findAllActive(),listType), "Exito", true);
+				case "typedocument":
+					listType = new TypeToken<List<TypeDocumentDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeDocumentService.findAllActive(),listType), "Exito", true);
+				case "typelaboralactivity":
+					listType = new TypeToken<List<TypeLaboralActivityDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeLaboralActivityService.findAllActive(),listType), "Exito", true);
+				case "typemaritalstatus":
+					listType = new TypeToken<List<TypeMaritalStatusDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeMaritalStatusService.findAllActive(),listType), "Exito", true);
+				case "typenationality":
+					listType = new TypeToken<List<TypeNationalityDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeNationalityService.findAllActive(),listType), "Exito", true);
+				case "typeposition":
+					listType = new TypeToken<List<TypePositionDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypePositionService.findAllActive(),listType), "Exito", true);
+				case "typereference":
+					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {

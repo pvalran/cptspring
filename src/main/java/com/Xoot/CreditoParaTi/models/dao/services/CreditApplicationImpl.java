@@ -152,7 +152,7 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 		}
 		
 		
-		Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer_id()).orElse(null);
+		Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
 		
 		if(customer != null) {
 			creditApplicationById.setCustomer(customer);
@@ -189,21 +189,21 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 	private CreditApplication saveCreditApplication(Integer creditApplication_flag, CreditApplicationDTO creditApplicationDTO, CreditApplication creditApplication) {
 
 		if (creditApplicationDTO != null) {
-			if (creditApplicationDTO.getProduct_id() != null) {
-				CreditApplicationProduct product = _creditApplicationProductDao.findById(creditApplicationDTO.getCustomer_id()).orElse(null);
+			if (creditApplicationDTO.getProduct() != null) {
+				CreditApplicationProduct product = _creditApplicationProductDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
 				creditApplication.setProduct(product);
 			}
-			if (creditApplicationDTO.getStatus_id() != null) {
-				CreditApplicationStatus status = _creditApplicationStatusDao.findById(creditApplicationDTO.getCustomer_id()).orElse(null);
+			if (creditApplicationDTO.getStatus() != null) {
+				CreditApplicationStatus status = _creditApplicationStatusDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
 				creditApplication.setStatus(status);
 			}
-			if (creditApplicationDTO.getCustomer_id() != null) {
-				Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer_id()).orElse(null);
+			if (creditApplicationDTO.getCustomer() != null) {
+				Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
 				creditApplication.setCustomer(customer);
 			}
-			if (creditApplicationDTO.getUser_id() != null) {
-				Usuario user = _userDao.findById(creditApplicationDTO.getCustomer_id()).orElse(null);
-				creditApplication.setUsuario(user);
+			if (creditApplicationDTO.getUser() != null) {
+				Usuario user = _userDao.findById(creditApplicationDTO.getUser()).orElse(null);
+				creditApplication.setUser(user);
 			}
 		}
 

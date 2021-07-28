@@ -1,41 +1,53 @@
 package com.Xoot.CreditoParaTi.entity.DTO;
 
 public class CreditApplicationDTO {
-	private Integer user_id;
-	private Integer customer_id;
-	private Integer product_id;
-	private Integer status_id;
 
-	public Integer getUser_id() {
-		return user_id;
+	private Integer idCreditAplication;
+	private Integer user;
+	private Integer customer;
+	private Integer product;
+	private Integer status;
+
+
+
+
+	public Integer getCustomer() {
+		return customer;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setCustomer(Integer customer) {
+		this.customer = customer;
 	}
 
-	public Integer getCustomer_id() {
-		return customer_id;
+	public Integer getProduct() {
+		return product;
 	}
 
-	public void setCustomer_id(Integer customer_id) {
-		this.customer_id = customer_id;
+	public void setProduct(Integer product) {
+		this.product = product;
 	}
 
-	public Integer getProduct_id() {
-		return product_id;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setProduct_id(Integer product_id) {
-		this.product_id = product_id;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
-	public Integer getStatus_id() {
-		return status_id;
+	public Integer getUser() {
+		return user;
 	}
 
-	public void setStatus_id(Integer status_id) {
-		this.status_id = status_id;
+	public void setUser(Integer user) {
+		this.user = user;
 	}
 
+	public Integer getIdCreditAplication() {
+		return idCreditAplication;
+	}
+
+	public void setIdCreditAplication(Integer idCreditAplication) {
+		this.idCreditAplication = idCreditAplication;
+	}
 }

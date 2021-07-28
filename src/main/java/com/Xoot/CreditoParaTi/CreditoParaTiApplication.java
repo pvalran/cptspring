@@ -17,11 +17,10 @@ public class CreditoParaTiApplication extends SpringBootServletInitializer {
 	}
 	
 	public static void main(String[] args) {
-            System.setProperty("server.servlet.context-path", "/CreditoParaTi");
-            SpringApplication.run(CreditoParaTiApplication.class, args);
+		SpringApplication.run(CreditoParaTiApplication.class, args);
 	}
 	
-	@Bean
+	/*@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -29,5 +28,5 @@ public class CreditoParaTiApplication extends SpringBootServletInitializer {
 				registry.addMapping("/**").allowedOrigins("http://localhost:8100");
 			}
 		};
-	}
+	}*/
 }

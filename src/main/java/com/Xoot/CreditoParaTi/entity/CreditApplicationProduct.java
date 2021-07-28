@@ -57,6 +57,7 @@ public class CreditApplicationProduct implements Serializable {
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
 	}
 
 	public Integer getIdProduct() {

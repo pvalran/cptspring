@@ -24,7 +24,7 @@ public class CreditApplication implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private Usuario usuario;
+	private Usuario user;
 
 	@OneToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -59,6 +59,7 @@ public class CreditApplication implements Serializable {
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
 	}
 
 	public Integer getIdCreditAplication() {
@@ -69,13 +70,6 @@ public class CreditApplication implements Serializable {
 		this.idCreditAplication = idCreditAplication;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -145,4 +139,12 @@ public class CreditApplication implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
 }
