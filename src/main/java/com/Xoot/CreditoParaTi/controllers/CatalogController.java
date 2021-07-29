@@ -62,6 +62,8 @@ public class CatalogController {
 	@Autowired
 	private ITypeReferenceService TypeReferenceService;
 	@Autowired
+	private IDetalleCredito detalleCreditoService;
+	@Autowired
 	private ModelMapper modelMapper;
 	@GetMapping("/catalogy/{catalog}")
 	public ResponseDTO allActive(@PathVariable String catalog) {
@@ -125,6 +127,17 @@ public class CatalogController {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
+
+	@GetMapping("/getDetalleCredito/{id}")
+	public ResponseDTO getDetalleCredito(@PathVariable Integer id) {
+		try {
+			return new ResponseDTO(detalleCreditoService.findByCreditID(id), "Exito", true);
+		} catch (Exception e) {
+			return new ResponseDTO(null, e.getMessage(), false);
+		}
+
+	}
+
 
 	@GetMapping("/getMunToState/{id}")
 	public ResponseDTO getMuntoState(@PathVariable Integer id) {

@@ -19,4 +19,6 @@ public interface IDocumentClassDao extends CrudRepository<DocumentClass, Integer
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM documents_class WHERE name=:name LIMIT 1")
 	public DocumentClass findByName(@Param("name") String name);
+
+
 }

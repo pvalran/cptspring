@@ -2,6 +2,7 @@ package com.Xoot.CreditoParaTi.models.dao;
 
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.entity.EconomicDependents;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,4 +20,7 @@ public interface ICustomerDao extends CrudRepository<Customer, Integer>, JpaSpec
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM customers WHERE curp=:curp LIMIT 1")
 	public Customer findByCurp(@Param("curp") String curp);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM customers WHERE credit_id=:creditId and status_flag = 1 limit 1")
+	public Customer findByCreditId(@Param("creditId") Integer creditId);
 }

@@ -20,13 +20,13 @@ public class CreditoParaTiApplication extends SpringBootServletInitializer {
 		SpringApplication.run(CreditoParaTiApplication.class, args);
 	}
 	
-	/*@Bean
+	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:8100");
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200");
 			}
 		};
-	}*/
+	}
 }
