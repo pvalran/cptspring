@@ -4,24 +4,21 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "economic_dependents")
-public class EconomicDependents {
+@Table(name = "medical_questionnaire")
+public class MedicalQuestionnaire {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer IdEconomicDependent;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")
+    private Integer IdMedicalQuestionnaire;
 
-    @Column(name="age")
-    private Integer age;
+    @Column(name = "weight")
+    private Double weight;
 
-    @Column(name = "type_dependent")
-    private Integer typeDependent;
+    @Column(name = "height")
+    private Double height;
 
-    @Column(name = "type_occupation")
-    private Integer typeOccupation;
-
-    @Column(name= "creditApplication_id")
-    private Integer creditApplication;
+    @Column(name= "creaditApplication_id")
+    private Integer creaditApplication;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -47,44 +44,36 @@ public class EconomicDependents {
         status_flag = 1;
     }
 
-    public Integer getIdEconomicDependent() {
-        return IdEconomicDependent;
+    public Integer getIdMedicalQuestionnaire() {
+        return IdMedicalQuestionnaire;
     }
 
-    public void setIdEconomicDependent(Integer idEconomicDependent) {
-        IdEconomicDependent = idEconomicDependent;
+    public void setIdMedicalQuestionnaire(Integer idMedicalQuestionnaire) {
+        IdMedicalQuestionnaire = idMedicalQuestionnaire;
     }
 
-    public Integer getAge() {
-        return age;
+    public Double getWeight() {
+        return weight;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
-    public Integer getTypeDependent() {
-        return typeDependent;
+    public Double getHeight() {
+        return height;
     }
 
-    public void setTypeDependent(Integer typeDependent) {
-        this.typeDependent = typeDependent;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
-    public Integer getTypeOccupation() {
-        return typeOccupation;
+    public Integer getCreaditApplication() {
+        return creaditApplication;
     }
 
-    public void setTypeOccupation(Integer typeOccupation) {
-        this.typeOccupation = typeOccupation;
-    }
-
-    public Integer getCreditApplication() {
-        return creditApplication;
-    }
-
-    public void setCreditApplication(Integer creditApplication) {
-        this.creditApplication = creditApplication;
+    public void setCreaditApplication(Integer creaditApplication) {
+        this.creaditApplication = creaditApplication;
     }
 
     public Integer getStatus_flag() {

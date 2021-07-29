@@ -54,8 +54,14 @@ public class FormController {
     private IReferenceService referenceService;
     @Autowired
     private IPropertyService propertyService;
-
-
+    @Autowired
+    private IAnswerMedicalquestionnaireService answerMedicalquestionnaireService;
+    @Autowired
+    private IMedicalQuestionnaireService medicalQuestionnaireService;
+    @Autowired
+    private IAnswerQuestionnaireService answerQuestionnaireService;
+    @Autowired
+    private IFreeQuestionnaireService freeQuestionnaireService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -160,7 +166,7 @@ public class FormController {
                     }
                 }*/
                 DocumentDTO documentDTO = new DocumentDTO();
-                documentDTO.setCreditAplicationId(creditID);
+                documentDTO.setCreditAplication(creditID);
                 documentDTO.setTypeDocumentId(documentTypeID);
                 documentDTO.setClassDocumentId(2);
                 documentDTO.setName(namefile);
@@ -433,6 +439,38 @@ public class FormController {
     public ResponseDTO FormProperty(@PathVariable Integer id,@RequestBody PropertyDTO propertyDTO) {
         try {
             return propertyService.update(id,propertyDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+        }
+    }
+
+    @GetMapping("/medicalanswerquestionnaire/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer id) {
+        try {
+            return new ResponseDTO( modelMapper.map(propertyService.findById(id),PropertyDTO.class),"Informacion laboral",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+        }
+    }
+
+    @PostMapping("/medicalanswerquestionnaire")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormMedicalquestionnaire(@RequestBody MedicalQuestionnaireAnswerDTO medicalQuestionnaireAnswerDTO) {
+        try {
+            return answerMedicalquestionnaireService.save(medicalQuestionnaireAnswerDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+        }
+    }
+
+    @PutMapping("/medicalanswerquestionnaire/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer id,@RequestBody MedicalQuestionnaireAnswerDTO medicalQuestionnaireAnswerDTO) {
+        try {
+            return new ResponseDTO(null, "En desarrollo.", true);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
         }

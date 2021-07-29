@@ -51,7 +51,7 @@ public class Spouse {
     private java.util.Date dateOfBirth;
 
     @Column(name= "creaditApplication_id")
-    private Integer creaditApplication;
+    private Integer creditApplication;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -189,12 +189,12 @@ public class Spouse {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getCreaditApplication() {
-        return creaditApplication;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 
     public Integer getStatus_flag() {

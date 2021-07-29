@@ -18,6 +18,7 @@ public class CustomerDTO {
 	private Integer colony_id;
 	private Integer creditsAplicationProducts;
 	private Integer userId;
+	private Integer creditId;
 
 
 
@@ -139,5 +140,14 @@ public class CustomerDTO {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+
+	public Integer getCreditId() {
+		return creditId;
+	}
+
+	public void setCreditId(Integer creditId) {
+		this.creditId = creditId;
 	}
 }

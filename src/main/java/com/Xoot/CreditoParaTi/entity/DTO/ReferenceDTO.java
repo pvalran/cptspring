@@ -9,7 +9,9 @@ public class ReferenceDTO {
     private String email;
     private String phone;
     private String mobile;
-    private Integer creaditApplication;
+    private Integer creditApplication;
+
+
 
     public Integer getIdReference() {
         return IdReference;
@@ -75,11 +77,11 @@ public class ReferenceDTO {
         this.mobile = mobile;
     }
 
-    public Integer getCreaditApplication() {
-        return creaditApplication;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 }

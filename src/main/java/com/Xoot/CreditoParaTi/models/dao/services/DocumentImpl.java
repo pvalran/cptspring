@@ -73,9 +73,9 @@ public class DocumentImpl implements IDocumentService {
 	@Override
 	@Transactional
 	public ResponseDTO save(DocumentDTO document) {
-		Document documentExist = findAllIds(document.getCreditAplicationId(),document.getTypeDocumentId());
+		Document documentExist = findAllIds(document.getCreditAplication(),document.getTypeDocumentId());
 		DocumentType typeDocument = typeDocumentService.findById(document.getTypeDocumentId());
-		CreditApplication creditApplication = creditApplicationService.findById(document.getCreditAplicationId());
+		//CreditApplication creditApplication = creditApplicationService.findById(document.getCreditAplication());
 
 		data = null;
 		result = false;
@@ -92,8 +92,8 @@ public class DocumentImpl implements IDocumentService {
 		Document newDocument = new Document();
 		newDocument.setName(document.getName());
 		newDocument.setStatus_flag(1);
-		newDocument.setCreditAplication(creditApplication);
-		newDocument.setTypeDocument(typeDocument);
+		newDocument.setCreditAplication(document.getCreditAplication());
+		newDocument.setTypeDocument(typeDocument.getIdTypeDocument());
 		data = documentDao.save(newDocument);
 		result = true;
 		message = "Registro creado.";
@@ -105,7 +105,7 @@ public class DocumentImpl implements IDocumentService {
 	public ResponseDTO update(Integer id, DocumentDTO document) {
 		
 		Document documentActual = findById(id);
-		Document documentExist = findAllIds(document.getCreditAplicationId(), document.getTypeDocumentId());
+		Document documentExist = findAllIds(document.getCreditAplication(), document.getTypeDocumentId());
 		DocumentType typeDocument = typeDocumentService.findById(document.getTypeDocumentId());
 
 		data = null;
@@ -118,7 +118,7 @@ public class DocumentImpl implements IDocumentService {
 			message = "El tipo de documento proporcionado no existe.";
 		} else {
 			//newDocument.setCreditAplication(null);
-			documentActual.setTypeDocument(typeDocument);
+			documentActual.setTypeDocument(typeDocument.getIdTypeDocument());
 
 			data = documentDao.save(documentActual);
 			result = true;

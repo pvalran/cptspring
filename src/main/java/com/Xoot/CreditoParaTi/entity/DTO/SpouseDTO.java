@@ -131,11 +131,11 @@ public class SpouseDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getCreaditApplication() {
+    public Integer getCreditApplication() {
         return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
+    public void setCreditApplication(Integer creditApplication) {
         this.creditApplication = creditApplication;
     }
 }

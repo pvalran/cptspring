@@ -212,11 +212,11 @@ public class Work {
         this.state = state;
     }
 
-    public Integer getCreaditApplication() {
+    public Integer getCreditApplication() {
         return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creditApplication) {
+    public void setCreditApplication(Integer creditApplication) {
         this.creditApplication = creditApplication;
     }
 

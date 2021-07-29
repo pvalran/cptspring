@@ -33,7 +33,8 @@ public class Reference {
     private String mobile;
 
     @Column(name= "creaditApplication_id")
-    private Integer creaditApplication;
+    private Integer creditApplication;
+
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -123,12 +124,12 @@ public class Reference {
         this.mobile = mobile;
     }
 
-    public Integer getCreaditApplication() {
-        return creaditApplication;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 
     public Integer getStatus_flag() {

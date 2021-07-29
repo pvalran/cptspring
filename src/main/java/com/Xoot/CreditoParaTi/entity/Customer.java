@@ -79,6 +79,9 @@ public class Customer implements Serializable {
 	@Column(name = "mdfd_by", length = 50)
 	private String mdfd_by;
 
+	@Column(name = "creditId")
+	private Integer creditId;
+
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
@@ -233,4 +236,12 @@ public class Customer implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public Integer getCreditId() {
+		return creditId;
+	}
+
+	public void setCreditId(Integer creditId) {
+		this.creditId = creditId;
+	}
 }

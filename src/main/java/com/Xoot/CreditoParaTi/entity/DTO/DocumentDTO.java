@@ -5,7 +5,7 @@ public class DocumentDTO {
 	private Integer idDocument;
 	private String name;
 	private Integer typeDocumentId;
-	private Integer creditAplicationId;
+	private Integer creditAplication;
 	private Integer classDocumentId;
 	private Integer status_flag;
 
@@ -26,13 +26,6 @@ public class DocumentDTO {
 		this.typeDocumentId = typeDocumentId;
 	}
 
-	public Integer getCreditAplicationId() {
-		return creditAplicationId;
-	}
-
-	public void setCreditAplicationId(Integer creditAplicationId) {
-		this.creditAplicationId = creditAplicationId;
-	}
 
 	public Integer getClassDocumentId() { return classDocumentId; }
 
@@ -52,5 +45,13 @@ public class DocumentDTO {
 
 	public void setIdDocument(Integer idDocument) {
 		this.idDocument = idDocument;
+	}
+
+	public Integer getCreditAplication() {
+		return creditAplication;
+	}
+
+	public void setCreditAplication(Integer creditAplication) {
+		this.creditAplication = creditAplication;
 	}
 }

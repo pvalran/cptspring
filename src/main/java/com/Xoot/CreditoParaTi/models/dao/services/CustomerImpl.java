@@ -212,6 +212,7 @@ public class CustomerImpl implements ICustomerService {
 			}
 		}
 
+		customer.setCreditId(customerDTO.getCreditId());
 		customer.setStatus_flag(customer_flag);
 
 		customer.setMdfd_on(new Date());
@@ -239,6 +240,6 @@ public class CustomerImpl implements ICustomerService {
 			message = "Ya existe un cliente con el curp: " + customerByCurp.getCurp();
 		}
 
-		return new ResponseDTO(data, message, result);
+		return new ResponseDTO(customerByCurp, message, result);
 	}
 }

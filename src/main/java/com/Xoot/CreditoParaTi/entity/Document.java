@@ -25,13 +25,12 @@ public class Document implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	@OneToOne
-	@JoinColumn(name = "type_document_id", referencedColumnName = "id")
-	private DocumentType typeDocument;
 
-	@OneToOne
-	@JoinColumn(name = "credit_aplication_id", referencedColumnName = "id")
-	private CreditApplication creditAplication;
+	@Column(name = "type_document_id")
+	private Integer typeDocument;
+
+	@Column(name = "credit_aplication_id")
+	private Integer creditAplication;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -73,19 +72,19 @@ public class Document implements Serializable {
 		this.name = name;
 	}
 
-	public DocumentType getTypeDocument() {
+	public Integer getTypeDocument() {
 		return typeDocument;
 	}
 
-	public void setTypeDocument(DocumentType typeDocument) {
+	public void setTypeDocument(Integer typeDocument) {
 		this.typeDocument = typeDocument;
 	}
 
-	public CreditApplication getCreditAplication() {
+	public Integer getCreditAplication() {
 		return creditAplication;
 	}
 
-	public void setCreditAplication(CreditApplication creditAplication) {
+	public void setCreditAplication(Integer creditAplication) {
 		this.creditAplication = creditAplication;
 	}
 

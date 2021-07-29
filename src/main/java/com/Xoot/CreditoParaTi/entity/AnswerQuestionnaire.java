@@ -4,24 +4,24 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "economic_dependents")
-public class EconomicDependents {
+@Table(name = "answer_questionnaire")
+public class AnswerQuestionnaire {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer IdEconomicDependent;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")
+    private Integer IdAnswer;
 
-    @Column(name="age")
-    private Integer age;
+    @Column(name = "answer_numer")
+    private Integer answerNumer;
 
-    @Column(name = "type_dependent")
-    private Integer typeDependent;
+    @Column(name = "answer")
+    private Integer answer;
 
-    @Column(name = "type_occupation")
-    private Integer typeOccupation;
+    @Column(name = "MedicalQuestionnaire_Id")
+    private Integer IdMedicalQuestionnaire;
 
-    @Column(name= "creditApplication_id")
-    private Integer creditApplication;
+    @Column(name= "creaditApplication_id")
+    private Integer creaditApplication;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -47,44 +47,45 @@ public class EconomicDependents {
         status_flag = 1;
     }
 
-    public Integer getIdEconomicDependent() {
-        return IdEconomicDependent;
+
+    public Integer getIdAnswer() {
+        return IdAnswer;
     }
 
-    public void setIdEconomicDependent(Integer idEconomicDependent) {
-        IdEconomicDependent = idEconomicDependent;
+    public void setIdAnswer(Integer idAnswer) {
+        IdAnswer = idAnswer;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getAnswerNumer() {
+        return answerNumer;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setAnswerNumer(Integer answerNumer) {
+        this.answerNumer = answerNumer;
     }
 
-    public Integer getTypeDependent() {
-        return typeDependent;
+    public Integer getAnswer() {
+        return answer;
     }
 
-    public void setTypeDependent(Integer typeDependent) {
-        this.typeDependent = typeDependent;
+    public void setAnswer(Integer answer) {
+        this.answer = answer;
     }
 
-    public Integer getTypeOccupation() {
-        return typeOccupation;
+    public Integer getIdMedicalQuestionnaire() {
+        return IdMedicalQuestionnaire;
     }
 
-    public void setTypeOccupation(Integer typeOccupation) {
-        this.typeOccupation = typeOccupation;
+    public void setIdMedicalQuestionnaire(Integer idMedicalQuestionnaire) {
+        this.IdMedicalQuestionnaire = idMedicalQuestionnaire;
     }
 
-    public Integer getCreditApplication() {
-        return creditApplication;
+    public Integer getCreaditApplication() {
+        return creaditApplication;
     }
 
-    public void setCreditApplication(Integer creditApplication) {
-        this.creditApplication = creditApplication;
+    public void setCreaditApplication(Integer creaditApplication) {
+        this.creaditApplication = creaditApplication;
     }
 
     public Integer getStatus_flag() {
