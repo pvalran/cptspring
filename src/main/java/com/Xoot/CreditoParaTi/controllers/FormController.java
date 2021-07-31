@@ -3,6 +3,7 @@ package com.Xoot.CreditoParaTi.controllers;
 import com.Xoot.CreditoParaTi.Definiciones.Services.*;
 import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.entity.DTO.*;
+import com.Xoot.CreditoParaTi.models.dao.ICreditApplicationDao;
 import com.Xoot.CreditoParaTi.models.dao.IDocumentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 import java.lang.reflect.Type;
@@ -64,6 +66,9 @@ public class FormController {
     private IFreeQuestionnaireService freeQuestionnaireService;
 
     @Autowired
+    private ICreditApplicationDao creditApplicationDao;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     private final Path root = Paths.get("/srv/www/upload");
@@ -83,15 +88,27 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormCustomer(@RequestBody CustomerDTO customer) {
         Customer customerResponse;
+        CreditApplicationDTO creditApplicationDTO;
         try {
             ResponseDTO responseDTO = customerService.save(customer);
             customerResponse = (Customer) responseDTO.getData();
             Integer IdCustomer = customerResponse.getIdCustomer();
-            CreditApplicationDTO creditApplication = new CreditApplicationDTO();
-            creditApplication.setCustomer(IdCustomer);
-            creditApplication.setProduct(customer.getCreditsAplicationProducts());
-            creditApplication.setUser(customer.getUserId());
-            return creditApplicationService.save(creditApplication);
+
+
+            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(customer.getCreditId());
+
+            if (creditApplication != null) {
+                creditApplicationDTO = modelMapper.map(creditApplication,CreditApplicationDTO.class);
+                creditApplicationDTO.setCustomer(IdCustomer);
+                creditApplicationDTO.setProduct(customer.getCreditsAplicationProducts());
+                creditApplicationDTO.setUser(customer.getUserId());
+            } else {
+                creditApplicationDTO = new CreditApplicationDTO();
+                creditApplicationDTO.setCustomer(IdCustomer);
+                creditApplicationDTO.setProduct(customer.getCreditsAplicationProducts());
+                creditApplicationDTO.setUser(customer.getUserId());
+            }
+            return creditApplicationService.save(creditApplicationDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
@@ -133,38 +150,9 @@ public class FormController {
                     File filename = pathFile.toFile();
                     byte[] decodedBytes = Base64.getDecoder().decode(file);
                     FileUtils.writeByteArrayToFile(filename, decodedBytes);
-                    // create output file
-                    /*File outputFile = new File(inputFile
-                            .getParentFile()
-                            .getAbsolutePath() + File.pathSeparator + outputFilePath);
-                    */
-                    // decode the string and write to file
-                    //Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
                 } catch (Exception e) {
                     throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
                 }
-
-                //String nombreArchivo = file.getOriginalFilename();
-
-                /*String nombreArchivo = UUID.randomUUID().toString() + "_"
-                        + file.getOriginalFilename().replace(" ", "");
-                Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-
-                try {
-                    Files.copy(file.getInputStream(), rutaArchivo);
-                } catch (IOException e) {
-                    message = e.getMessage().concat(": ").concat(e.getCause().getMessage());
-                }*/
-
-                /*if (nombreAnterior != null && nombreAnterior.length() > 0) {
-                    Path rutaAnterior = Paths.get("uploads").resolve(nombreAnterior).toAbsolutePath();
-
-                    File archivoAnterior = rutaAnterior.toFile();
-
-                    if (archivoAnterior.exists() && archivoAnterior.canRead()) {
-                        archivoAnterior.delete();
-                    }
-                }*/
                 DocumentDTO documentDTO = new DocumentDTO();
                 documentDTO.setCreditAplication(creditID);
                 documentDTO.setTypeDocumentId(documentTypeID);
@@ -202,21 +190,6 @@ public class FormController {
         } catch (IOException e) {
             return new ResponseDTO(e.getMessage(), "Ocurrió un error en la descargar.", false);
         }
-
-        /*ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader
-                .getResource(rutaArchivo.toString())
-                .getFile());*/
-
-        /*if (!recurso.exists() && !recurso.isReadable()) {
-            throw new RuntimeException("Error: no se pudo cargar la imagen " + name);
-        }
-
-        HttpHeaders cabecera = new HttpHeaders();
-        cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
-
-        return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
-        */
     }
 
     @GetMapping("/downfilename/{name}")
@@ -232,21 +205,6 @@ public class FormController {
         } catch (IOException e) {
             return new ResponseDTO(e.getMessage(), "Ocurrió un error en la descargar.", false);
         }
-
-        /*ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader
-                .getResource(rutaArchivo.toString())
-                .getFile());*/
-
-        /*if (!recurso.exists() && !recurso.isReadable()) {
-            throw new RuntimeException("Error: no se pudo cargar la imagen " + name);
-        }
-
-        HttpHeaders cabecera = new HttpHeaders();
-        cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
-
-        return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
-        */
     }
 
     @GetMapping("/additionalInformation/{id}")

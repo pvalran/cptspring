@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.Definiciones.Services.ICreditApplicationService;
 import com.Xoot.CreditoParaTi.entity.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.DTO.CreditApplicationDTO;
+import com.Xoot.CreditoParaTi.models.dao.ICreditApplicationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,9 @@ import com.Xoot.CreditoParaTi.models.dao.IDocumentDao;
 public class DocumentImpl implements IDocumentService {
 	@Autowired
 	private IDocumentDao documentDao;
+
+	@Autowired
+	private ICreditApplicationDao creditApplicationDao;
 
 	@Autowired
 	private IDocumentService documentService;
@@ -76,6 +81,14 @@ public class DocumentImpl implements IDocumentService {
 		Document documentExist = findAllIds(document.getCreditAplication(),document.getTypeDocumentId());
 		DocumentType typeDocument = typeDocumentService.findById(document.getTypeDocumentId());
 		//CreditApplication creditApplication = creditApplicationService.findById(document.getCreditAplication());
+		CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(document.getCreditAplication());
+
+		if (creditApplication != null) {
+			CreditApplicationDTO creditApplicationDTO = new CreditApplicationDTO();
+			creditApplicationDTO.setUser(document.getUserId());
+			creditApplicationDTO.setCreditId(document.getCreditAplication());
+			creditApplicationService.save(creditApplicationDTO);
+		}
 
 		data = null;
 		result = false;
@@ -93,7 +106,7 @@ public class DocumentImpl implements IDocumentService {
 		newDocument.setName(document.getName());
 		newDocument.setStatus_flag(1);
 		newDocument.setCreditAplication(document.getCreditAplication());
-		newDocument.setTypeDocument(typeDocument.getIdTypeDocument());
+		newDocument.setTypeDocumentId(typeDocument.getIdTypeDocument());
 		data = documentDao.save(newDocument);
 		result = true;
 		message = "Registro creado.";
@@ -118,7 +131,7 @@ public class DocumentImpl implements IDocumentService {
 			message = "El tipo de documento proporcionado no existe.";
 		} else {
 			//newDocument.setCreditAplication(null);
-			documentActual.setTypeDocument(typeDocument.getIdTypeDocument());
+			documentActual.setTypeDocumentId(typeDocument.getIdTypeDocument());
 
 			data = documentDao.save(documentActual);
 			result = true;

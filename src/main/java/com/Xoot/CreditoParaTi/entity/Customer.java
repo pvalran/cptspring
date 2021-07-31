@@ -79,7 +79,7 @@ public class Customer implements Serializable {
 	@Column(name = "mdfd_by", length = 50)
 	private String mdfd_by;
 
-	@Column(name = "creditId")
+	@Column(name = "credit_id")
 	private Integer creditId;
 
 	@PrePersist

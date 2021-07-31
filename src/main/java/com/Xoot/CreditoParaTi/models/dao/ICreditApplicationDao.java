@@ -19,4 +19,8 @@ public interface ICreditApplicationDao extends CrudRepository<CreditApplication,
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE user_id=:idUser AND status_flag = 1")
 	public List<CreditApplication> getAllByUser(@Param("idUser") Integer idUser);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE credit_id=:creditId limit 1")
+	public CreditApplication FindByCreditUser(@Param("creditId") Integer creditId);
+
 }

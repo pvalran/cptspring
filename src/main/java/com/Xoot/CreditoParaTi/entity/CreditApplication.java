@@ -38,6 +38,9 @@ public class CreditApplication implements Serializable {
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private CreditApplicationStatus status;
 
+	@Column (name ="credit_id")
+	private Integer creditId;
+
 	@Column(name = "status_flag")
 	private Integer status_flag;
 
@@ -95,6 +98,14 @@ public class CreditApplication implements Serializable {
 		this.status = status;
 	}
 
+	public Integer getCreditId() {
+		return creditId;
+	}
+
+	public void setCreditId(Integer creditId) {
+		this.creditId = creditId;
+	}
+
 	public Integer getStatus_flag() {
 		return status_flag;
 	}
@@ -147,4 +158,6 @@ public class CreditApplication implements Serializable {
 	public void setUser(Usuario user) {
 		this.user = user;
 	}
+
+
 }

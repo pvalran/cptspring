@@ -27,10 +27,13 @@ public class Document implements Serializable {
 
 
 	@Column(name = "type_document_id")
-	private Integer typeDocument;
+	private Integer typeDocumentId;
 
 	@Column(name = "credit_aplication_id")
 	private Integer creditAplication;
+
+	@Column(name = "user_id")
+	private Integer userId;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -72,14 +75,13 @@ public class Document implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getTypeDocument() {
-		return typeDocument;
+	public Integer getTypeDocumentId() {
+		return typeDocumentId;
 	}
 
-	public void setTypeDocument(Integer typeDocument) {
-		this.typeDocument = typeDocument;
+	public void setTypeDocumentId(Integer typeDocumentId) {
+		this.typeDocumentId = typeDocumentId;
 	}
-
 	public Integer getCreditAplication() {
 		return creditAplication;
 	}
@@ -132,4 +134,13 @@ public class Document implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }

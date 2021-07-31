@@ -7,6 +7,7 @@ public class DocumentDTO {
 	private Integer typeDocumentId;
 	private Integer creditAplication;
 	private Integer classDocumentId;
+	private Integer userId;
 	private Integer status_flag;
 
 
@@ -53,5 +54,13 @@ public class DocumentDTO {
 
 	public void setCreditAplication(Integer creditAplication) {
 		this.creditAplication = creditAplication;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

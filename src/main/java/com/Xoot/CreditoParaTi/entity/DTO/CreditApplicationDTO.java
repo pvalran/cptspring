@@ -7,9 +7,24 @@ public class CreditApplicationDTO {
 	private Integer customer;
 	private Integer product;
 	private Integer status;
+	private Integer creditId;
 
 
+	public Integer getIdCreditAplication() {
+		return idCreditAplication;
+	}
 
+	public void setIdCreditAplication(Integer idCreditAplication) {
+		this.idCreditAplication = idCreditAplication;
+	}
+
+	public Integer getUser() {
+		return user;
+	}
+
+	public void setUser(Integer user) {
+		this.user = user;
+	}
 
 	public Integer getCustomer() {
 		return customer;
@@ -35,19 +50,11 @@ public class CreditApplicationDTO {
 		this.status = status;
 	}
 
-	public Integer getUser() {
-		return user;
+	public Integer getCreditId() {
+		return creditId;
 	}
 
-	public void setUser(Integer user) {
-		this.user = user;
-	}
-
-	public Integer getIdCreditAplication() {
-		return idCreditAplication;
-	}
-
-	public void setIdCreditAplication(Integer idCreditAplication) {
-		this.idCreditAplication = idCreditAplication;
+	public void setCreditId(Integer creditId) {
+		this.creditId = creditId;
 	}
 }
