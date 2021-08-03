@@ -29,6 +29,9 @@ public class Document implements Serializable {
 	@Column(name = "type_document_id")
 	private Integer typeDocumentId;
 
+	@Column(name = "class_document_id")
+	private Integer class_document_id;
+
 	@Column(name = "credit_aplication_id")
 	private Integer creditAplication;
 
@@ -142,5 +145,13 @@ public class Document implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Integer getClass_document_id() {
+		return class_document_id;
+	}
+
+	public void setClass_document_id(Integer class_document_id) {
+		this.class_document_id = class_document_id;
 	}
 }

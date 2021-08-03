@@ -50,17 +50,17 @@ public class Customer implements Serializable {
 	@Column(name = "street_and_number", length = 255)
 	private String streetAndNumber;
 
-	@OneToOne
-	@JoinColumn(name = "state_of_birth_id", referencedColumnName = "id")
-	private LocationState stateOfBirth;
+	@Column(name = "state_of_birth_id")
+	private Integer stateOfBirth_id;
 
-	@OneToOne
-	@JoinColumn(name = "gender_id", referencedColumnName = "id")
-	private CustomerGender gender;
+	@Column(name = "gender_id")
+	private Integer gender_id;
 
-	@OneToOne
-	@JoinColumn(name = "suburb_id", referencedColumnName = "id")
-	private LocationSuburb suburb;
+	@Column(name = "suburb_id")
+	private Integer colony_id;
+
+	@Column(name = "state_id")
+	private Integer state_id;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
@@ -86,6 +86,7 @@ public class Customer implements Serializable {
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
 	}
 
 	public Integer getIdCustomer() {
@@ -168,29 +169,32 @@ public class Customer implements Serializable {
 		this.streetAndNumber = streetAndNumber;
 	}
 
-	public LocationState getStateOfBirth() {
-		return stateOfBirth;
+
+
+	public Integer getStateOfBirth_id() {
+		return stateOfBirth_id;
 	}
 
-	public void setStateOfBirth(LocationState stateOfBirth) {
-		this.stateOfBirth = stateOfBirth;
+	public void setStateOfBirth_id(Integer stateOfBirth_id) {
+		this.stateOfBirth_id = stateOfBirth_id;
 	}
 
-	public CustomerGender getGender() {
-		return gender;
+	public Integer getGender_id() {
+		return gender_id;
 	}
 
-	public void setGender(CustomerGender gender) {
-		this.gender = gender;
+	public void setGender_id(Integer gender_id) {
+		this.gender_id = gender_id;
 	}
 
-	public LocationSuburb getSuburb() {
-		return suburb;
+	public Integer getColony_id() {
+		return colony_id;
 	}
 
-	public void setSuburb(LocationSuburb suburb) {
-		this.suburb = suburb;
+	public void setColony_id(Integer colony_id) {
+		this.colony_id = colony_id;
 	}
+
 
 	public Integer getStatus_flag() {
 		return status_flag;
@@ -243,5 +247,13 @@ public class Customer implements Serializable {
 
 	public void setCreditId(Integer creditId) {
 		this.creditId = creditId;
+	}
+
+	public Integer getState_id() {
+		return state_id;
+	}
+
+	public void setState_id(Integer state_id) {
+		this.state_id = state_id;
 	}
 }

@@ -10,13 +10,7 @@ public class CreditApplicationDTO {
 	private Integer creditId;
 
 
-	public Integer getIdCreditAplication() {
-		return idCreditAplication;
-	}
 
-	public void setIdCreditAplication(Integer idCreditAplication) {
-		this.idCreditAplication = idCreditAplication;
-	}
 
 	public Integer getUser() {
 		return user;
@@ -56,5 +50,13 @@ public class CreditApplicationDTO {
 
 	public void setCreditId(Integer creditId) {
 		this.creditId = creditId;
+	}
+
+	public Integer getIdCreditAplication() {
+		return idCreditAplication;
+	}
+
+	public void setIdCreditAplication(Integer idCreditAplication) {
+		this.idCreditAplication = idCreditAplication;
 	}
 }

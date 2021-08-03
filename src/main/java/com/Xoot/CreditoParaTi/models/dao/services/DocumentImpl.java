@@ -83,7 +83,7 @@ public class DocumentImpl implements IDocumentService {
 		//CreditApplication creditApplication = creditApplicationService.findById(document.getCreditAplication());
 		CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(document.getCreditAplication());
 
-		if (creditApplication != null) {
+		if (creditApplication == null) {
 			CreditApplicationDTO creditApplicationDTO = new CreditApplicationDTO();
 			creditApplicationDTO.setUser(document.getUserId());
 			creditApplicationDTO.setCreditId(document.getCreditAplication());
@@ -107,6 +107,8 @@ public class DocumentImpl implements IDocumentService {
 		newDocument.setStatus_flag(1);
 		newDocument.setCreditAplication(document.getCreditAplication());
 		newDocument.setTypeDocumentId(typeDocument.getIdTypeDocument());
+		newDocument.setClass_document_id(document.getClassDocumentId());
+		newDocument.setUserId(document.getUserId());
 		data = documentDao.save(newDocument);
 		result = true;
 		message = "Registro creado.";

@@ -18,6 +18,9 @@ public class SpouseDTO {
     private Integer countryOfResidence;
     private Date dateOfBirth;
     private Integer creditApplication;
+    private DocumentDTO img1;
+    private DocumentDTO img2;
+    private DocumentDTO img3;
 
     public Integer getIdSpouse() {
         return idSpouse;
@@ -137,5 +140,29 @@ public class SpouseDTO {
 
     public void setCreditApplication(Integer creditApplication) {
         this.creditApplication = creditApplication;
+    }
+
+    public DocumentDTO getImg1() {
+        return img1;
+    }
+
+    public void setImg1(DocumentDTO img1) {
+        this.img1 = img1;
+    }
+
+    public DocumentDTO getImg2() {
+        return img2;
+    }
+
+    public void setImg2(DocumentDTO img2) {
+        this.img2 = img2;
+    }
+
+    public DocumentDTO getImg3() {
+        return img3;
+    }
+
+    public void setImg3(DocumentDTO img3) {
+        this.img3 = img3;
     }
 }

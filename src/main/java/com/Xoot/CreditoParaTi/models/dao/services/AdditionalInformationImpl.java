@@ -4,6 +4,7 @@ import com.Xoot.CreditoParaTi.Definiciones.Services.IAdditionalInformationServic
 import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
 import com.Xoot.CreditoParaTi.entity.DTO.AdditionalInformationDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.entity.DTO.SpouseDTO;
 import com.Xoot.CreditoParaTi.models.dao.IAdditionalInformationDao;
 import org.mapstruct.Mapper;
 import org.modelmapper.ModelMapper;
@@ -47,14 +48,14 @@ public class AdditionalInformationImpl implements IAdditionalInformationService 
     public ResponseDTO update(Integer id, AdditionalInformationDTO additionalInformationDTO) {
         AdditionalInformation entity = additionalInformationDao.findById(id).orElse(null);
         if (entity != null) {
-            additionalInformationDTO.setMdfd_on(new Date());
-            /*ModelMapper mapper = new ModelMapper();*/
+            entity.setMdfd_on(new Date());
             modelMapper.getConfiguration().setSkipNullEnabled(true)
                     .setCollectionsMergeEnabled(false)
                     .setMatchingStrategy(MatchingStrategies.STRICT);
             modelMapper.map(additionalInformationDTO,entity);
             additionalInformationDao.save(entity);
-            return  new ResponseDTO(entity,"Registro creado",true);
+            additionalInformationDTO = modelMapper.map(entity, AdditionalInformationDTO.class);
+            return  new ResponseDTO(additionalInformationDTO,"Registro creado",true);
         }
         return  new ResponseDTO(additionalInformationDTO,"Error en registro",false);
     }

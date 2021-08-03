@@ -63,6 +63,8 @@ public class CreditApplication implements Serializable {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
 		status_flag = 1;
+
+
 	}
 
 	public Integer getIdCreditAplication() {

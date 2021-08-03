@@ -190,11 +190,18 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 
 		if (creditApplicationDTO != null) {
 			if (creditApplicationDTO.getProduct() != null) {
-				CreditApplicationProduct product = _creditApplicationProductDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
+				CreditApplicationProduct product = _creditApplicationProductDao.findById(creditApplicationDTO.getProduct()).orElse(null);
+				creditApplication.setProduct(product);
+			} else {
+				CreditApplicationProduct product = _creditApplicationProductDao.findById(1).orElse(null);
 				creditApplication.setProduct(product);
 			}
+
 			if (creditApplicationDTO.getStatus() != null) {
-				CreditApplicationStatus status = _creditApplicationStatusDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
+				CreditApplicationStatus status = _creditApplicationStatusDao.findById(creditApplicationDTO.getStatus()).orElse(null);
+				creditApplication.setStatus(status);
+			} else {
+				CreditApplicationStatus status = _creditApplicationStatusDao.findById(1).orElse(null);
 				creditApplication.setStatus(status);
 			}
 			if (creditApplicationDTO.getCustomer() != null) {
@@ -207,6 +214,7 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 			}
 		}
 
+		creditApplication.setCreditId(creditApplicationDTO.getCreditId());
 		creditApplication.setStatus_flag(creditApplication_flag);
 
 		creditApplication.setMdfd_on(new Date());

@@ -4,12 +4,15 @@ import com.Xoot.CreditoParaTi.Definiciones.Services.IFreeQuestionnaireService;
 import com.Xoot.CreditoParaTi.entity.FreeQuestionnaire;
 import com.Xoot.CreditoParaTi.entity.DTO.FreeQuestionnaireDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.entity.Reference;
 import com.Xoot.CreditoParaTi.models.dao.IFreeQuestionnaireDao;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,9 +42,20 @@ public class FreeQuestionnaireImpl implements IFreeQuestionnaireService {
     }
 
     @Override
-    public ResponseDTO update(Integer id, FreeQuestionnaireDTO FreeQuestionnaireDTO) {
-        return null;
+    public ResponseDTO update(Integer id, FreeQuestionnaireDTO ObjDTO) {
+        FreeQuestionnaire Entity = freeQuestionnaireDao.findById(id).orElse(null);
+        if (Entity != null) {
+            Entity.setMdfd_on(new Date());
+            modelMapper.getConfiguration().setSkipNullEnabled(true)
+                    .setCollectionsMergeEnabled(false)
+                    .setMatchingStrategy(MatchingStrategies.STRICT);
+            modelMapper.map(ObjDTO,Entity);
+            freeQuestionnaireDao.save(Entity);
+            return new ResponseDTO(ObjDTO,"Modificaciòn realizada con exito",true);
+        }
+        return new ResponseDTO(ObjDTO,"Error en la modificación del registro",false);
     }
+
 
     @Override
     public ResponseDTO active(Integer id) {

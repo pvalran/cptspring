@@ -6,10 +6,12 @@ import com.Xoot.CreditoParaTi.entity.DTO.WorkDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.models.dao.IWorkDao;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,9 +41,21 @@ public class WorkImpl implements IWorkService {
     }
 
     @Override
-    public ResponseDTO update(Integer id, WorkDTO additionalInformationDTO) {
-        return null;
+    public ResponseDTO update(Integer id, WorkDTO ObjDTO) {
+        Work Entity = WorkDao.findById(id).orElse(null);
+        if (Entity != null) {
+            Entity.setMdfd_on(new Date());
+            modelMapper.getConfiguration().setSkipNullEnabled(true)
+                    .setCollectionsMergeEnabled(false)
+                    .setMatchingStrategy(MatchingStrategies.STRICT);
+            modelMapper.map(ObjDTO,Entity);
+            WorkDao.save(Entity);
+            ObjDTO = modelMapper.map(Entity,WorkDTO.class);
+            return new ResponseDTO(ObjDTO,"Modificaciòn realizada con exito",true);
+        }
+        return new ResponseDTO(ObjDTO,"Error en la modificación del registro",false);
     }
+
 
     @Override
     public ResponseDTO active(Integer id) {

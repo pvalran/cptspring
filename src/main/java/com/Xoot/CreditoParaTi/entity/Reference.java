@@ -65,7 +65,7 @@ public class Reference {
     }
 
     public void setIdReference(Integer idReference) {
-        IdReference = idReference;
+        this.IdReference = idReference;
     }
 
     public Integer getTypeReference() {

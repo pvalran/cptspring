@@ -6,10 +6,12 @@ import com.Xoot.CreditoParaTi.entity.DTO.SpouseDTO;
 import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
 import com.Xoot.CreditoParaTi.models.dao.ISpouseDao;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,8 +42,18 @@ public class SpouseImpl implements ISpouseService {
 
     @Override
     public ResponseDTO update(Integer id, SpouseDTO spouseDTO) {
-
-        return null;
+        Spouse entity = spouseDao.findById(id).orElse(null);
+        if (entity != null) {
+            entity.setMdfd_on(new Date());
+            modelMapper.getConfiguration().setSkipNullEnabled(true)
+                    .setCollectionsMergeEnabled(false)
+                    .setMatchingStrategy(MatchingStrategies.STRICT);
+            modelMapper.map(spouseDTO,entity);
+            spouseDao.save(entity);
+            spouseDTO = modelMapper.map(entity,SpouseDTO.class);
+            return new ResponseDTO(spouseDTO,"Modificaciòn realizada con exito",true);
+        }
+        return new ResponseDTO(spouseDTO,"Error en la modificación del registro",false);
     }
 
     @Override

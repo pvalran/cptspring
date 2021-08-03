@@ -3,6 +3,8 @@ package com.Xoot.CreditoParaTi.models.dao.services;
 import java.util.Date;
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.entity.DTO.AdditionalInformationDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,8 @@ public class CustomerImpl implements ICustomerService {
 	private ILocationStateDao _locationStateDao;
 	@Autowired
 	private ILocationSuburbDao _locationSuburbDao;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -51,6 +55,9 @@ public class CustomerImpl implements ICustomerService {
 	public Customer findByCurp(String curp) {
 		return _customerDao.findByCurpActive(curp);
 	}
+
+
+
 
 	@Override
 	@Transactional(readOnly = true)
@@ -106,7 +113,8 @@ public class CustomerImpl implements ICustomerService {
 			}
 		}*/
 
-		data = saveCustomer(1, customerDTO, customerById);
+		data =  modelMapper.map(saveCustomer(1, customerDTO, customerById), CustomerDTO.class);
+
 
 		result = true;
 
@@ -199,20 +207,24 @@ public class CustomerImpl implements ICustomerService {
 				customer.setStreetAndNumber(customerDTO.getStreetAndNumber());
 			}
 			if (customerDTO.getStateOfBirth_id() != null) {
-				LocationState state = _locationStateDao.findById(customerDTO.getStateOfBirth_id()).orElse(null);
-				customer.setStateOfBirth(state);
+				customer.setStateOfBirth_id(customerDTO.getStateOfBirth_id());
 			}
 			if (customerDTO.getGender_id() != null) {
-				CustomerGender gender =  _customerGenderDao.findById(customerDTO.getGender_id()).orElse(null);
-				customer.setGender(gender);
+				customer.setGender_id(customerDTO.getGender_id());
 			}
 			if (customerDTO.getColony_id() != null) {
-				LocationSuburb suburb = _locationSuburbDao.findById(customerDTO.getColony_id()).orElse(null);
-				customer.setSuburb(suburb);
+				customer.setColony_id(customerDTO.getColony_id());
+			}
+
+			if (customerDTO.getState_id() != null) {
+				customer.setState_id(customerDTO.getState_id());
+			}
+
+			if (customerDTO.getCreditId() != null) {
+				customer.setCreditId(customerDTO.getCreditId());
 			}
 		}
 
-		customer.setCreditId(customerDTO.getCreditId());
 		customer.setStatus_flag(customer_flag);
 
 		customer.setMdfd_on(new Date());

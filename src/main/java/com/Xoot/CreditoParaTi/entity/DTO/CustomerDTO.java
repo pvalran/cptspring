@@ -19,6 +19,7 @@ public class CustomerDTO {
 	private Integer creditsAplicationProducts;
 	private Integer userId;
 	private Integer creditId;
+	private Integer state_id;
 
 
 
@@ -149,5 +150,13 @@ public class CustomerDTO {
 
 	public void setCreditId(Integer creditId) {
 		this.creditId = creditId;
+	}
+
+	public Integer getState_id() {
+		return state_id;
+	}
+
+	public void setState_id(Integer state_id) {
+		this.state_id = state_id;
 	}
 }

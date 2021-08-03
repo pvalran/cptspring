@@ -102,13 +102,17 @@ public class FormController {
                 creditApplicationDTO.setCustomer(IdCustomer);
                 creditApplicationDTO.setProduct(customer.getCreditsAplicationProducts());
                 creditApplicationDTO.setUser(customer.getUserId());
+                creditApplicationService.update(creditApplicationDTO.getIdCreditAplication(),creditApplicationDTO);
             } else {
                 creditApplicationDTO = new CreditApplicationDTO();
                 creditApplicationDTO.setCustomer(IdCustomer);
                 creditApplicationDTO.setProduct(customer.getCreditsAplicationProducts());
                 creditApplicationDTO.setUser(customer.getUserId());
+                creditApplicationDTO.setCreditId(customer.getCreditId());
+                creditApplicationService.save(creditApplicationDTO);
             }
-            return creditApplicationService.save(creditApplicationDTO);
+
+            return responseDTO;
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
@@ -156,8 +160,10 @@ public class FormController {
                 DocumentDTO documentDTO = new DocumentDTO();
                 documentDTO.setCreditAplication(creditID);
                 documentDTO.setTypeDocumentId(documentTypeID);
-                documentDTO.setClassDocumentId(2);
+                documentDTO.setClassDocumentId(3);
                 documentDTO.setName(namefile);
+                documentDTO.setUserId(userID);
+
                 ResponseDTO responseDTO = documentService.save(documentDTO);
                 Document document = (Document) responseDTO.getData();
                 documentDTO = modelMapper.map(document,DocumentDTO.class);
@@ -192,6 +198,26 @@ public class FormController {
         }
     }
 
+    @GetMapping("/download/{creditId}/{idType}")
+    public ResponseDTO viewFile(@PathVariable Integer creditId,@PathVariable Integer idType) {
+        Resource recurso = null;
+        Document document = documentService.findAllIds(creditId,idType);
+        Path rutaArchivo = Paths.get("/srv/www/upload").resolve(document.getName()).toAbsolutePath();
+
+        File file = rutaArchivo.toFile();
+
+        try {
+            byte[] fileContent = FileUtils.readFileToByteArray(file);
+            String base64File = Base64.getEncoder()
+                    .encodeToString(fileContent);
+            return new ResponseDTO(base64File, "Descarga de archivo.", true);
+        } catch (IOException e) {
+            return new ResponseDTO(e.getMessage(), "Ocurrió un error en la descargar.", false);
+        }
+    }
+
+
+
     @GetMapping("/downfilename/{name}")
     public ResponseDTO viewFile(@PathVariable String name) {
         Resource recurso = null;
@@ -211,7 +237,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormAdditionalInformation(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(additionalInformationService.findById(id),AdditionalInformationDTO.class),"Informacion adicional registrada",true);
+            return new ResponseDTO( modelMapper.map(additionalInformationService.findById(id),AdditionalInformationDTO.class),"Información de datos adicionales",true);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al registrar la información adicional.", false);
@@ -226,7 +252,7 @@ public class FormController {
            return additionalInformationService.save(additionalInformation);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
+            return new ResponseDTO(null, "Ocurrió un error en creación de los datos adicionales.", false);
         }
     }
 
@@ -236,7 +262,7 @@ public class FormController {
         try {
             return additionalInformationService.update(id,additionalInformationDTO);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos adicionales.", false);
         }
     }
 
@@ -244,10 +270,10 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormEconomicDependenty(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(economicDependientiesService.findById(id),AdditionalInformationDTO.class),"Informacion de dependientes economicos",true);
+            return new ResponseDTO( modelMapper.map(economicDependientiesService.findById(id),EconomicDependientiesDto.class),"Información del formulario de dependientes economicos",true);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error al registrar la información de dependientes economicos.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información de los dependientes economicos.", false);
         }
     }
 
@@ -259,7 +285,7 @@ public class FormController {
             return economicDependientiesService.save(economicDependientiesDto);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de dependientes economicos.", false);
         }
     }
 
@@ -269,7 +295,7 @@ public class FormController {
         try {
             return economicDependientiesService.update(id,economicDependientiesDto);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de los dependientes economicos.", false);
         }
     }
 
@@ -277,10 +303,12 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormSpouse(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(spouseService.findById(id),SpouseDTO.class),"Informacion del conyuge",true);
+            SpouseDTO spouseDTO = modelMapper.map(spouseService.findById(id),SpouseDTO.class);
+
+            return new ResponseDTO(spouseDTO,"Informacion del conyuge",true);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información del coyuge.", false);
         }
     }
 
@@ -292,7 +320,7 @@ public class FormController {
             return spouseService.save(spouseDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos del coyuge.", false);
         }
     }
 
@@ -302,7 +330,7 @@ public class FormController {
         try {
             return spouseService.update(id,spouseDTO);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos del coyuge.", false);
         }
     }
 
@@ -310,10 +338,10 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormWork(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(workService.findById(id),WorkDTO.class),"Informacion laboral",true);
+            return new ResponseDTO( modelMapper.map(workService.findById(id),WorkDTO.class),"Información  de los datos laborales",true);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información laboral.", false);
         }
     }
 
@@ -324,7 +352,7 @@ public class FormController {
             return workService.save(workDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos laborales.", false);
         }
     }
 
@@ -334,7 +362,7 @@ public class FormController {
         try {
             return workService.update(id,workDTO);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos laborales.", false);
         }
     }
 
@@ -342,10 +370,10 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormReference(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(referenceService.findById(id),ReferenceDTO.class),"Informacion laboral",true);
+            return new ResponseDTO( modelMapper.map(referenceService.findById(id),ReferenceDTO.class),"Información de datos de referencias personales",true);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información de los datos de referencias personales.", false);
         }
     }
 
@@ -356,7 +384,7 @@ public class FormController {
             return referenceService.save(referenceDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de referencias personales.", false);
         }
     }
 
@@ -366,7 +394,7 @@ public class FormController {
         try {
             return referenceService.update(id,referenceDTO);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de referencias personales.", false);
         }
     }
 
@@ -374,10 +402,10 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormProperty(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(propertyService.findById(id),PropertyDTO.class),"Informacion laboral",true);
+            return new ResponseDTO( modelMapper.map(propertyService.findById(id),PropertyDTO.class),"Información de los datos de inmuebles",true);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información de los datos de los inmuebles.", false);
         }
     }
 
@@ -388,7 +416,7 @@ public class FormController {
             return propertyService.save(propertyDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de los inmuebles.", false);
         }
     }
 
@@ -398,7 +426,7 @@ public class FormController {
         try {
             return propertyService.update(id,propertyDTO);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de los inmuebles.", false);
         }
     }
 
@@ -406,7 +434,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(propertyService.findById(id),PropertyDTO.class),"Informacion laboral",true);
+            return answerMedicalquestionnaireService.findById(id);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
@@ -420,7 +448,7 @@ public class FormController {
             return answerMedicalquestionnaireService.save(medicalQuestionnaireAnswerDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la creación del cuestionario medico.", false);
         }
     }
 
@@ -430,7 +458,7 @@ public class FormController {
         try {
             return new ResponseDTO(null, "En desarrollo.", true);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la actualización del cuestionario medico.", false);
         }
     }
 }

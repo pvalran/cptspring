@@ -50,7 +50,7 @@ public class Spouse {
     @Column(name="date_of_birth")
     private java.util.Date dateOfBirth;
 
-    @Column(name= "creaditApplication_id")
+    @Column(name= "creadit_application_id")
     private Integer creditApplication;
 
     @Column(name = "status_flag")

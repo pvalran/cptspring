@@ -17,8 +17,8 @@ public class MedicalQuestionnaire {
     @Column(name = "height")
     private Double height;
 
-    @Column(name= "creaditApplication_id")
-    private Integer creaditApplication;
+    @Column(name= "credit_application_id")
+    private Integer creditApplication;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -68,12 +68,12 @@ public class MedicalQuestionnaire {
         this.height = height;
     }
 
-    public Integer getCreaditApplication() {
-        return creaditApplication;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 
     public Integer getStatus_flag() {
@@ -115,4 +115,6 @@ public class MedicalQuestionnaire {
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
     }
+
+
 }
