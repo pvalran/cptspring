@@ -90,14 +90,14 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             spouseDTO.setImg2(new DocumentDTO());
             spouseDTO.setImg3(new DocumentDTO());
             for (Document doc:docSpouse) {
-                /*Path rutaArchivo = Paths.get("/srv/www/upload").resolve(doc.getName()).toAbsolutePath();
+                Path rutaArchivo = Paths.get("/srv/www/upload").resolve(doc.getName()).toAbsolutePath();
                 File file = rutaArchivo.toFile();
                 try {
                     byte[] fileContent = FileUtils.readFileToByteArray(file);
                     base64File = Base64.getEncoder().encodeToString(fileContent);
                 } catch (IOException e) {
                     base64File = null;
-                }*/
+                }
 
                 switch (doc.getTypeDocumentId()){
                      case 12:

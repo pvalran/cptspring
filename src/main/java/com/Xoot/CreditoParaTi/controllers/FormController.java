@@ -61,6 +61,9 @@ public class FormController {
     @Autowired
     private IMedicalQuestionnaireService medicalQuestionnaireService;
     @Autowired
+    private ITransactionService transactionService;
+
+    @Autowired
     private IAnswerQuestionnaireService answerQuestionnaireService;
     @Autowired
     private IFreeQuestionnaireService freeQuestionnaireService;
@@ -196,6 +199,24 @@ public class FormController {
         } catch (IOException e) {
             return new ResponseDTO(e.getMessage(), "Ocurrió un error en la descargar.", false);
         }
+    }
+
+    @PostMapping("/transaction/{creditId}/{transaction}")
+    public ResponseDTO FormTransaction(@PathVariable Integer creditId,@PathVariable Integer idType,
+        @RequestBody TransactionDTO transactionDTO) {
+        try {
+            Integer userID;
+            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditId);
+            if (creditApplication != null) {
+                userID = creditApplication.getUser().getIdUser();
+            } else {
+                return new ResponseDTO(null, "El id del credito no existe", false);
+            }
+            return new ResponseDTO(transactionService.save(), "Exito", true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, e.getMessage(), false);
+        }
+
     }
 
     @GetMapping("/download/{creditId}/{idType}")

@@ -28,8 +28,9 @@ public class AdditionalInformationDTO {
     private String city;
     private String state;
     private String postal_code;
-    private Integer country;
+    private String country;
     private Integer creaditApplication;
+    private String specifyNationality;
 
     public Integer getIdAdditionalInformaction() {
         return idAdditionalInformaction;
@@ -199,11 +200,11 @@ public class AdditionalInformationDTO {
         this.postal_code = postal_code;
     }
 
-    public Integer getCountry() {
-        return country;
+    public String getCountry() {
+        return this.country;
     }
 
-    public void setCountry(Integer country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -213,5 +214,9 @@ public class AdditionalInformationDTO {
 
     public void setCreaditApplication(Integer creaditApplication) {
         this.creaditApplication = creaditApplication;
+    }
+
+    public String getSpecifyNationality() {
+        return specifyNationality;
     }
 }

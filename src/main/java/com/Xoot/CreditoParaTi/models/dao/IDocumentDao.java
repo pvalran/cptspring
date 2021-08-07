@@ -24,7 +24,7 @@ public interface IDocumentDao extends CrudRepository<Document, Integer>, JpaSpec
 			@Param("idCreditAplication") Integer idCreditAplication,
 			@Param("idTypeDocument") Integer idTypeDocument);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE credit_aplication_id=:creditId and status_flag = 1")
+	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE credit_aplication_id=:creditId and status_flag = 1 order by type_document_id")
 	public List<Document> findByCreditId(@Param("creditId") Integer creditId);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE credit_aplication_id=:creditId" +
