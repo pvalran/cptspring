@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentClassService;
-import com.Xoot.CreditoParaTi.entity.DTO.CatalogoDTO;
-import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.services.interfaces.IDocumentClassService;
+import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
+import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 
 @RestController
 @RequestMapping("/documents/class")

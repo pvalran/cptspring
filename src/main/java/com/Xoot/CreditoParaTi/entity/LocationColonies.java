@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "locations_Colonies")
+@Table(name = "locations_counties")
 public class LocationColonies implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

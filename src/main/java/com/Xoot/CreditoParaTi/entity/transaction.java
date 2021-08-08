@@ -11,8 +11,11 @@ public class transaction {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "transaction_number")
-    private Double transactionNumber;
+    @Column(name = "credit_number")
+    private Integer creditNumber;
+
+    @Column(name = "operation_number")
+    private Double operationNumber;
 
     @Column(name = "transaction_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -57,14 +60,6 @@ public class transaction {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Double getTransactionNumber() {
-        return transactionNumber;
-    }
-
-    public void setTransactionNumber(Double transactionNumber) {
-        this.transactionNumber = transactionNumber;
     }
 
     public Date getTransactionDate() {
@@ -137,5 +132,21 @@ public class transaction {
 
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
+    }
+
+    public Double getOperationNumber() {
+        return operationNumber;
+    }
+
+    public void setOperationNumber(Double operationNumber) {
+        this.operationNumber = operationNumber;
+    }
+
+    public Integer getCreditNumber() {
+        return creditNumber;
+    }
+
+    public void setCreditNumber(Integer creditNumber) {
+        this.creditNumber = creditNumber;
     }
 }

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.ICustomerService;
-import com.Xoot.CreditoParaTi.entity.DTO.CustomerDTO;
-import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
+import com.Xoot.CreditoParaTi.dto.CustomerDTO;
+import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 
 @RestController
 @RequestMapping("/customer/customer")

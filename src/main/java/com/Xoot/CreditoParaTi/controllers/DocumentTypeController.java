@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.IDocumentTypeService;
-import com.Xoot.CreditoParaTi.entity.DTO.DocumentTypeDTO;
-import com.Xoot.CreditoParaTi.entity.DTO.ResponseDTO;
+import com.Xoot.CreditoParaTi.services.interfaces.IDocumentTypeService;
+import com.Xoot.CreditoParaTi.dto.DocumentTypeDTO;
+import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 
 @RestController
 @RequestMapping("/documents/types")

@@ -65,7 +65,7 @@ public class Work {
     @Column(name = "previous_work_seniority")
     private Integer previousWorkSeniority;
 
-    @Column(name= "creaditApplication_id")
+    @Column(name= "creadit_application_id")
     private Integer creditApplication;
 
     @Column(name = "status_flag")

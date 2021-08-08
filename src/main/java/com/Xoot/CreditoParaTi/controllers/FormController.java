@@ -1,33 +1,25 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.*;
+import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.entity.*;
-import com.Xoot.CreditoParaTi.entity.DTO.*;
-import com.Xoot.CreditoParaTi.models.dao.ICreditApplicationDao;
-import com.Xoot.CreditoParaTi.models.dao.IDocumentDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
+import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.List;
 import java.util.UUID;
 
-import java.lang.reflect.Type;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 
 
 @RestController
@@ -62,7 +54,6 @@ public class FormController {
     private IMedicalQuestionnaireService medicalQuestionnaireService;
     @Autowired
     private ITransactionService transactionService;
-
     @Autowired
     private IAnswerQuestionnaireService answerQuestionnaireService;
     @Autowired
@@ -201,22 +192,20 @@ public class FormController {
         }
     }
 
-    @PostMapping("/transaction/{creditId}/{transaction}")
-    public ResponseDTO FormTransaction(@PathVariable Integer creditId,@PathVariable Integer idType,
-        @RequestBody TransactionDTO transactionDTO) {
+    @PostMapping("/transaction")
+    public ResponseDTO FormTransaction(@RequestBody TransactionDTO transactionDTO) {
         try {
             Integer userID;
-            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditId);
+            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(transactionDTO.getCreditNumber());
             if (creditApplication != null) {
                 userID = creditApplication.getUser().getIdUser();
             } else {
                 return new ResponseDTO(null, "El id del credito no existe", false);
             }
-            return new ResponseDTO(transactionService.save(), "Exito", true);
+            return new ResponseDTO(transactionService.save(transactionDTO), "Exito", true);
         } catch (Exception e) {
             return new ResponseDTO(null, e.getMessage(), false);
         }
-
     }
 
     @GetMapping("/download/{creditId}/{idType}")
@@ -258,7 +247,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormAdditionalInformation(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(additionalInformationService.findById(id),AdditionalInformationDTO.class),"Información de datos adicionales",true);
+            return new ResponseDTO( modelMapper.map(additionalInformationService.findById(id), AdditionalInformationDTO.class),"Información de datos adicionales",true);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al registrar la información adicional.", false);
@@ -314,7 +303,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormEconomicDependenty(@PathVariable Integer id,@RequestBody EconomicDependientiesDto economicDependientiesDto) {
         try {
-            return economicDependientiesService.update(id,economicDependientiesDto);
+            return economicDependientiesService.delete(id);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de los dependientes economicos.", false);
         }
@@ -359,7 +348,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormWork(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(workService.findById(id),WorkDTO.class),"Información  de los datos laborales",true);
+            return new ResponseDTO( modelMapper.map(workService.findById(id), WorkDTO.class),"Información  de los datos laborales",true);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información laboral.", false);
@@ -391,7 +380,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormReference(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(referenceService.findById(id),ReferenceDTO.class),"Información de datos de referencias personales",true);
+            return new ResponseDTO( modelMapper.map(referenceService.findById(id), ReferenceDTO.class),"Información de datos de referencias personales",true);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información de los datos de referencias personales.", false);
@@ -413,7 +402,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormReference(@PathVariable Integer id,@RequestBody ReferenceDTO referenceDTO) {
         try {
-            return referenceService.update(id,referenceDTO);
+            return referenceService.delete(id);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de referencias personales.", false);
         }

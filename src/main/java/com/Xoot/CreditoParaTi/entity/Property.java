@@ -56,7 +56,7 @@ public class Property {
     @Column(name= "state")
     private String state;
 
-    @Column(name= "creaditApplication_id")
+    @Column(name= "creadit_application_id")
     private Integer creaditApplication;
 
     @Column(name = "status_flag")

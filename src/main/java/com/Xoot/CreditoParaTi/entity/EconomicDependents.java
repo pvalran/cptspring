@@ -20,7 +20,7 @@ public class EconomicDependents {
     @Column(name = "type_occupation")
     private Integer typeOccupation;
 
-    @Column(name= "creditApplication_id")
+    @Column(name= "credit_application_id")
     private Integer creditApplication;
 
     @Column(name = "status_flag")

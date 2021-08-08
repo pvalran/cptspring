@@ -1,23 +1,17 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.*;
-import com.Xoot.CreditoParaTi.entity.*;
-import com.Xoot.CreditoParaTi.entity.DTO.*;
+import com.Xoot.CreditoParaTi.dto.*;
+import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.lang.reflect.Type;
-import org.modelmapper.ModelMapper;
+
 import org.modelmapper.TypeToken;
 
 @RestController

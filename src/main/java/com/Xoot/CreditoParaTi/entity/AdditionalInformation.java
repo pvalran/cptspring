@@ -74,7 +74,7 @@ public class AdditionalInformation {
     @Column(name= "country")
     private Integer country;
 
-    @Column(name= "creaditApplication_id")
+    @Column(name= "creadit_application_id")
     private Integer creaditApplication;
 
     @Column(name = "status_flag")

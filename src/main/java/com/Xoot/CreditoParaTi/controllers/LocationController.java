@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.Xoot.CreditoParaTi.Definiciones.Services.IPersistenceLocation;
+import com.Xoot.CreditoParaTi.services.interfaces.IPersistenceLocation;
 
 import springfox.documentation.service.ResponseMessage;
 
