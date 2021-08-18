@@ -70,4 +70,17 @@ public class ReferenceImpl implements IReferenceService {
             return new ResponseDTO("", "Error en la Eliminacion del registro", false);
         }
     }
+
+    @Override
+    public ResponseDTO remove(Integer creditId) {
+        try {
+            List<Reference> lstReference = referenceDao.findByCreditId(creditId);
+            for (Reference reference:lstReference){
+                referenceDao.delete(reference);
+            }
+            return new ResponseDTO("","Eliminacion realizada con exito",true);
+        } catch (Exception ex) {
+            return new ResponseDTO("", "Error en la Eliminacion del registro", false);
+        }
+    }
 }

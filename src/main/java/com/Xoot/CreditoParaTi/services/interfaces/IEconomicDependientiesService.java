@@ -19,4 +19,6 @@ public interface IEconomicDependientiesService {
     ResponseDTO active(Integer id);
 
     ResponseDTO delete(Integer id);
+
+    ResponseDTO remove(Integer creditId);
 }

@@ -21,6 +21,11 @@ public class WorkDTO {
     private Integer nowWorkSeniority;
     private Integer previousWorkSeniority;
     private Integer creditApplication;
+    private Integer typeEnrollment;
+    private Double grossIncome;
+    private Double otherIncome;
+    private String sourceIncome;
+    private Double totalIncome;
 
     public Integer getIdWork() {
         return idWork;
@@ -180,5 +185,37 @@ public class WorkDTO {
 
     public void setCreditApplication(Integer creditApplication) {
         this.creditApplication = creditApplication;
+    }
+
+    public Double getGrossIncome() {
+        return grossIncome;
+    }
+
+    public void setGrossIncome(Double grossIncome) {
+        this.grossIncome = grossIncome;
+    }
+
+    public Double getOtherIncome() {
+        return otherIncome;
+    }
+
+    public void setOtherIncome(Double otherIncome) {
+        this.otherIncome = otherIncome;
+    }
+
+    public String getSourceIncome() {
+        return sourceIncome;
+    }
+
+    public void setSourceIncome(String sourceIncome) {
+        this.sourceIncome = sourceIncome;
+    }
+
+    public Double getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(Double totalIncome) {
+        this.totalIncome = totalIncome;
     }
 }

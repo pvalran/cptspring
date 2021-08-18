@@ -155,7 +155,7 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 		Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
 		
 		if(customer != null) {
-			creditApplicationById.setCustomer(customer);
+			creditApplicationById.setCustomer(customer.getIdCustomer());
 			
 			data = saveCreditApplication(1, creditApplicationDTO, creditApplicationById);
 			result = true;
@@ -191,26 +191,26 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 		if (creditApplicationDTO != null) {
 			if (creditApplicationDTO.getProduct() != null) {
 				CreditApplicationProduct product = _creditApplicationProductDao.findById(creditApplicationDTO.getProduct()).orElse(null);
-				creditApplication.setProduct(product);
+				creditApplication.setProduct(product.getIdProduct());
 			} else {
 				CreditApplicationProduct product = _creditApplicationProductDao.findById(1).orElse(null);
-				creditApplication.setProduct(product);
+				creditApplication.setProduct(product.getIdProduct());
 			}
 
 			if (creditApplicationDTO.getStatus() != null) {
 				CreditApplicationStatus status = _creditApplicationStatusDao.findById(creditApplicationDTO.getStatus()).orElse(null);
-				creditApplication.setStatus(status);
+				creditApplication.setStatus(status.getIdCreditAplicationStatus());
 			} else {
 				CreditApplicationStatus status = _creditApplicationStatusDao.findById(1).orElse(null);
-				creditApplication.setStatus(status);
+				creditApplication.setStatus(status.getIdCreditAplicationStatus());
 			}
 			if (creditApplicationDTO.getCustomer() != null) {
 				Customer customer = _customerDao.findById(creditApplicationDTO.getCustomer()).orElse(null);
-				creditApplication.setCustomer(customer);
+				creditApplication.setCustomer(customer.getIdCustomer());
 			}
 			if (creditApplicationDTO.getUser() != null) {
 				Usuario user = _userDao.findById(creditApplicationDTO.getUser()).orElse(null);
-				creditApplication.setUser(user);
+				creditApplication.setUser(user.getIdUser());
 			}
 		}
 

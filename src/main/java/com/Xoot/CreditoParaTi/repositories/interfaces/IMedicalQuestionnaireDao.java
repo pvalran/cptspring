@@ -12,6 +12,6 @@ public interface IMedicalQuestionnaireDao extends CrudRepository<MedicalQuestion
     @Query(nativeQuery = true, value = "select * from medical_questionnaire where status_flag = 1")
     public List<MedicalQuestionnaire> findAllActive();
 
-    @Query(nativeQuery = true, value = "select * from medical_questionnaire where credit_number = :creditID limit 1")
+    @Query(nativeQuery = true, value = "select * from medical_questionnaire where credit_application_id = :creditID limit 1")
     public MedicalQuestionnaire findByCreditID(@Param("creditID") Integer creditID);
 }

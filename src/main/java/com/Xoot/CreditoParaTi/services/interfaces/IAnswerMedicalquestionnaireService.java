@@ -7,9 +7,9 @@ import com.Xoot.CreditoParaTi.entity.MedicalQuestionnaire;
 import java.util.List;
 
 public interface IAnswerMedicalquestionnaireService {
-    ResponseDTO findById(Integer id);
+    MedicalQuestionnaireAnswerDTO findById(Integer id);
 
-    ResponseDTO findByCreditID(Integer CreditID);
+    MedicalQuestionnaireAnswerDTO findByCreditID(Integer CreditID);
 
     List<MedicalQuestionnaire> findAllActive();
 
@@ -20,5 +20,7 @@ public interface IAnswerMedicalquestionnaireService {
     ResponseDTO active(Integer id);
 
     ResponseDTO delete(Integer id);
+
+    ResponseDTO remove(Integer creditId);
 }
 

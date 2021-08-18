@@ -1,5 +1,6 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.entity.Reference;
 import com.Xoot.CreditoParaTi.services.interfaces.IEconomicDependientiesService;
 import com.Xoot.CreditoParaTi.dto.EconomicDependientiesDto;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
@@ -68,6 +69,19 @@ public class EconomicDependientiesImpl implements IEconomicDependientiesService 
     public ResponseDTO delete(Integer id) {
         try {
             economicDependientiesDAO.deleteById(id);
+            return new ResponseDTO("","Eliminacion realizada con exito",true);
+        } catch (Exception ex) {
+            return new ResponseDTO("", "Error en la Eliminacion del registro", false);
+        }
+    }
+
+    @Override
+    public ResponseDTO remove(Integer creditId) {
+        try {
+            List<EconomicDependents> lstEconomic = economicDependientiesDAO.findByCreditId(creditId);
+            for (EconomicDependents economicDependent:lstEconomic){
+                economicDependientiesDAO.delete(economicDependent);
+            }
             return new ResponseDTO("","Eliminacion realizada con exito",true);
         } catch (Exception ex) {
             return new ResponseDTO("", "Error en la Eliminacion del registro", false);

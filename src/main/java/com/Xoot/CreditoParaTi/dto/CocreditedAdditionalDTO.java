@@ -1,16 +1,13 @@
 package com.Xoot.CreditoParaTi.dto;
 
-import javax.persistence.Column;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class AdditionalInformationDTO {
-    private Integer idAdditionalInformaction;
-    private Integer countryOfBirth;
-    private Integer countryOfResidence;
+public class CocreditedAdditionalDTO {
+    private Integer idCocreditedAdditional;
+    private Integer countryBirth;
+    private Integer countryResidence;
     private Integer nationality;
+    private String specifyNationality;
     private Integer civilState;
     private Integer maritalStatus;
     private String numberImss;
@@ -21,41 +18,39 @@ public class AdditionalInformationDTO {
     private Integer nowResidenceSeniority;
     private Integer previousResidenceSeniority;
     private String address;
-    private String external_number;
-    private String interior_number;
+    private String externalNumber;
+    private String interiorNumber;
+    private String postalCode;
     private String suburb;
-    private String municipality;
     private String city;
+    private String county;
     private String state;
-    private String postal_code;
     private String country;
-    private Integer creaditApplication;
-    private String specifyNationality;
-    private Integer otherCivilState;
+    private Integer creditApplication;
 
 
-    public Integer getIdAdditionalInformaction() {
-        return idAdditionalInformaction;
+    public Integer getIdCocreditedAdditional() {
+        return idCocreditedAdditional;
     }
 
-    public void setIdAdditionalInformaction(Integer idAdditionalInformaction) {
-        this.idAdditionalInformaction = idAdditionalInformaction;
+    public void setIdCocreditedAdditional(Integer idCocreditedAdditional) {
+        this.idCocreditedAdditional = idCocreditedAdditional;
     }
 
-    public Integer getCountryOfBirth() {
-        return countryOfBirth;
+    public Integer getCountryBirth() {
+        return countryBirth;
     }
 
-    public void setCountryOfBirth(Integer countryOfBirth) {
-        this.countryOfBirth = countryOfBirth;
+    public void setCountryBirth(Integer countryBirth) {
+        this.countryBirth = countryBirth;
     }
 
-    public Integer getCountryOfResidence() {
-        return countryOfResidence;
+    public Integer getCountryResidence() {
+        return countryResidence;
     }
 
-    public void setCountryOfResidence(Integer countryOfResidence) {
-        this.countryOfResidence = countryOfResidence;
+    public void setCountryResidence(Integer countryResidence) {
+        this.countryResidence = countryResidence;
     }
 
     public Integer getNationality() {
@@ -64,6 +59,14 @@ public class AdditionalInformationDTO {
 
     public void setNationality(Integer nationality) {
         this.nationality = nationality;
+    }
+
+    public String getSpecifyNationality() {
+        return specifyNationality;
+    }
+
+    public void setSpecifyNationality(String specifyNationality) {
+        this.specifyNationality = specifyNationality;
     }
 
     public Integer getCivilState() {
@@ -146,20 +149,28 @@ public class AdditionalInformationDTO {
         this.address = address;
     }
 
-    public String getExternal_number() {
-        return external_number;
+    public String getExternalNumber() {
+        return externalNumber;
     }
 
-    public void setExternal_number(String external_number) {
-        this.external_number = external_number;
+    public void setExternalNumber(String externalNumber) {
+        this.externalNumber = externalNumber;
     }
 
-    public String getInterior_number() {
-        return interior_number;
+    public String getInteriorNumber() {
+        return interiorNumber;
     }
 
-    public void setInterior_number(String interior_number) {
-        this.interior_number = interior_number;
+    public void setInteriorNumber(String interiorNumber) {
+        this.interiorNumber = interiorNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getSuburb() {
@@ -170,20 +181,20 @@ public class AdditionalInformationDTO {
         this.suburb = suburb;
     }
 
-    public String getMunicipality() {
-        return municipality;
-    }
-
-    public void setMunicipality(String municipality) {
-        this.municipality = municipality;
-    }
-
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     public String getState() {
@@ -194,43 +205,19 @@ public class AdditionalInformationDTO {
         this.state = state;
     }
 
-    public String getPostal_code() {
-        return postal_code;
-    }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
     public String getCountry() {
-        return this.country;
+        return country;
     }
 
     public void setCountry(String country) {
         this.country = country;
     }
 
-    public Integer getCreaditApplication() {
-        return creaditApplication;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
-    }
-
-    public String getSpecifyNationality() {
-        return specifyNationality;
-    }
-
-    public void setSpecifyNationality(String specifyNationality) {
-        this.specifyNationality = specifyNationality;
-    }
-
-    public Integer getOtherCivilState() {
-        return otherCivilState;
-    }
-
-    public void setOtherCivilState(Integer otherCivilState) {
-        this.otherCivilState = otherCivilState;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 }

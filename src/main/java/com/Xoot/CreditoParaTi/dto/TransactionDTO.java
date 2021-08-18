@@ -4,12 +4,13 @@ import java.util.Date;
 
 public class TransactionDTO {
     private Integer id;
-    private Integer creditNumber;
+    private Integer creditApplication;
     private Double transactionNumber;
     private Date transactionDate;
     private Integer transactionType;
     private Integer userId;
     private String transactionCode;
+    private Integer transactionStatus;
 
     public Integer getId() {
         return id;
@@ -51,12 +52,12 @@ public class TransactionDTO {
         this.transactionCode = transactionCode;
     }
 
-    public Integer getCreditNumber() {
-        return creditNumber;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreditNumber(Integer creditNumber) {
-        this.creditNumber = creditNumber;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 
     public Double getTransactionNumber() {
@@ -66,4 +67,14 @@ public class TransactionDTO {
     public void setTransactionNumber(Double transactionNumber) {
         this.transactionNumber = transactionNumber;
     }
+
+    public Integer getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(Integer transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+
 }

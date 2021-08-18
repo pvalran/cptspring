@@ -1,5 +1,6 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.entity.EconomicDependents;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerQuestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IFreeQuestionnaireService;
@@ -13,6 +14,7 @@ import com.Xoot.CreditoParaTi.repositories.interfaces.IFreeQuestionnaireDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IMedicalQuestionnaireDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import javax.transaction.Transactional;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,17 +48,17 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
     private ModelMapper modelMapper;
 
     @Override
-    public ResponseDTO findById(Integer id) {
+    public MedicalQuestionnaireAnswerDTO findById(Integer id) {
         MedicalQuestionnaire medicalQuestionn = medicalQuestionnaireDao.findById(id).orElse(null);
         if (medicalQuestionn != null) {
             return findByCreditID(medicalQuestionn.getCreaditApplication());
         } else {
-            return new ResponseDTO("", "Error en el sistema", false);
+            return null;
         }
     }
 
     @Override
-    public ResponseDTO findByCreditID(Integer creditID) {
+    public MedicalQuestionnaireAnswerDTO findByCreditID(Integer creditID) {
         Type lstTypeAnswer;
         Type lstTypeFree;
 
@@ -66,7 +69,7 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             medicalAnswerDTO.setIdMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
             medicalAnswerDTO.setWeight(medicalQuestionn.getWeight());
             medicalAnswerDTO.setHeight(medicalQuestionn.getHeight());
-            medicalAnswerDTO.setCreditApplication(medicalQuestionn.getCreaditApplication());
+            medicalAnswerDTO.setCreaditApplication(medicalQuestionn.getCreaditApplication());
 
             lstTypeAnswer = new TypeToken<List<AnswerQuestionnaireDTO>>() {
             }.getType();
@@ -79,9 +82,9 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             medicalAnswerDTO.setAnswerQuestionnairies(modelMapper.map(lstAnswer, lstTypeAnswer));
             medicalAnswerDTO.setFreeQuestionnairies(modelMapper.map(lstFree, lstTypeFree));
 
-            return new ResponseDTO(medicalAnswerDTO, "Información del cuestionario medico", true);
+            return medicalAnswerDTO;
         } else {
-            return new ResponseDTO("", "Error en el sistema", false);
+            return null;
         }
     }
 
@@ -109,7 +112,7 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             MedicalresponseDTO = modelMapper.map(medicalQuestionnaire, MedicalQuestionnaireAnswerDTO.class);
 
             for (AnswerQuestionnaireDTO answerDTO : requestDTO.getanswerQuestionnairies()) {
-                answerDTO.setCreaditApplication(MedicalresponseDTO.getCreditApplication());
+                answerDTO.setCreaditApplication(MedicalresponseDTO.getCreaditApplication());
                 answerDTO.setIdMedicalQuestionnaire(MedicalresponseDTO.getIdMedicalQuestionnaire());
 
                 answer = modelMapper.map(answerDTO, AnswerQuestionnaire.class);
@@ -120,7 +123,7 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             MedicalresponseDTO.setAnswerQuestionnairies(LAnswerDTO);
 
             for (FreeQuestionnaireDTO freeDTO : requestDTO.getFreeQuestionnairies()) {
-                freeDTO.setCreaditApplication(MedicalresponseDTO.getCreditApplication());
+                freeDTO.setCreaditApplication(MedicalresponseDTO.getCreaditApplication());
                 freeDTO.setIdMedicalQuestionnaire(MedicalresponseDTO.getIdMedicalQuestionnaire());
 
                 free = modelMapper.map(freeDTO, FreeQuestionnaire.class);
@@ -152,29 +155,52 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
 
         MedicalQuestionnaireDTO medicalDTO;
 
-        medicalDTO = modelMapper.map(requestDTO,MedicalQuestionnaireDTO.class);
-        responseDTO = medicalQuestionnaireService.update(id,medicalDTO);
+        MedicalQuestionnaire entity = medicalQuestionnaireDao.findById(id).orElse(null);
 
-        if (responseDTO.getResult() == true) {
-            medicalDTO = modelMapper.map(responseDTO.getData(),MedicalQuestionnaireDTO.class);
+        if (entity != null) {
+            entity.setMdfd_on(new Date());
+            modelMapper.getConfiguration().setSkipNullEnabled(true)
+                    .setCollectionsMergeEnabled(false)
+                    .setMatchingStrategy(MatchingStrategies.STRICT);
+            modelMapper.map(requestDTO,entity);
+            medicalQuestionnaireDao.save(entity);
+            medicalDTO = modelMapper.map(entity, MedicalQuestionnaireDTO.class);
+            requestDTO.setCreaditApplication(medicalDTO.getCreaditApplication());
+            requestDTO.setIdMedicalQuestionnaire(medicalDTO.getIdMedicalQuestionnaire());
+
             for (AnswerQuestionnaireDTO answerDTO : requestDTO.getanswerQuestionnairies()) {
-                answerDTO.setCreaditApplication(medicalDTO.getCreaditApplication());
-                answerDTO.setIdMedicalQuestionnaire(medicalDTO.getIdMedicalQuestionnaire());
-                answer = modelMapper.map(answerDTO, AnswerQuestionnaire.class);
-                answer = answerQuestionnaireDao.save(answer);
+                answer = answerQuestionnaireDao.findByMedicalQuestionnaireAnswer(
+                        medicalDTO.getIdMedicalQuestionnaire(),
+                        answerDTO.getAnswerNumer()
+                );
+
+                answer.setMdfd_on(new Date());
+                modelMapper.getConfiguration().setSkipNullEnabled(true)
+                        .setCollectionsMergeEnabled(false)
+                        .setMatchingStrategy(MatchingStrategies.STRICT);
+                modelMapper.map(answerDTO,answer);
+                answerQuestionnaireDao.save(answer);
                 AnswerDTO = modelMapper.map(answer, AnswerQuestionnaireDTO.class);
+                AnswerDTO.setCreaditApplication(medicalDTO.getCreaditApplication());
+                AnswerDTO.setIdMedicalQuestionnaire(medicalDTO.getIdMedicalQuestionnaire());
                 LAnswerDTO.add(AnswerDTO);
             }
-            requestDTO.setAnswerQuestionnairies(LAnswerDTO);
 
+            requestDTO.setAnswerQuestionnairies(LAnswerDTO);
             for (FreeQuestionnaireDTO freeDTO : requestDTO.getFreeQuestionnairies()) {
+                free = freeQuestionnaireDao.findByMedicalQuestionnaireAnswer(
+                        medicalDTO.getIdMedicalQuestionnaire(),
+                        freeDTO.getAnswerNumer()
+                );
+                free.setMdfd_on(new Date());
+                modelMapper.getConfiguration().setSkipNullEnabled(true)
+                        .setCollectionsMergeEnabled(false)
+                        .setMatchingStrategy(MatchingStrategies.STRICT);
+                modelMapper.map(freeDTO,free);
+                freeQuestionnaireDao.save(free);
+                freeDTO = modelMapper.map(free, FreeQuestionnaireDTO.class);
                 freeDTO.setCreaditApplication(medicalDTO.getCreaditApplication());
                 freeDTO.setIdMedicalQuestionnaire(medicalDTO.getIdMedicalQuestionnaire());
-
-                free = modelMapper.map(freeDTO, FreeQuestionnaire.class);
-                free = freeQuestionnaireDao.save(free);
-                freeDTO = modelMapper.map(free, FreeQuestionnaireDTO.class);
-
                 LFreeDTO.add(freeDTO);
             }
             requestDTO.setFreeQuestionnairies(LFreeDTO);
@@ -191,5 +217,29 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
     @Override
     public ResponseDTO delete(Integer id) {
         return null;
+    }
+
+    @Override
+    public ResponseDTO remove(Integer creditId) {
+        try {
+            List<AnswerQuestionnaire> listAnswer = answerQuestionnaireDao.findByCreditId(creditId);
+            List<FreeQuestionnaire> listFree = freeQuestionnaireDao.findByCreditId(creditId);
+
+            for (AnswerQuestionnaire answer : listAnswer) {
+                answerQuestionnaireDao.delete(answer);
+            }
+
+            for (FreeQuestionnaire free : listFree) {
+                freeQuestionnaireDao.delete(free);
+            }
+
+            MedicalQuestionnaire medicalQuestionnaire = medicalQuestionnaireDao.findByCreditID(creditId);
+            if (medicalQuestionnaire != null) {
+                medicalQuestionnaireDao.delete(medicalQuestionnaire);
+            }
+            return new ResponseDTO("","Eliminacion realizada con exito",true);
+        } catch (Exception ex) {
+            return new ResponseDTO("", "Error en la Eliminacion del registro", false);
+        }
     }
 }

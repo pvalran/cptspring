@@ -60,6 +60,13 @@ public class FormController {
     private IFreeQuestionnaireService freeQuestionnaireService;
 
     @Autowired
+    private ICocreditedWorkService cocreditedWorkService;
+    @Autowired
+    private ICocreditedCustomersService cocreditedCustomersService;
+    @Autowired
+    private ICocreditedAdditionalService cocreditedAdditionalService;
+
+    @Autowired
     private ICreditApplicationDao creditApplicationDao;
 
     @Autowired
@@ -73,7 +80,6 @@ public class FormController {
         try {
             return new ResponseDTO( modelMapper.map(customerService.findById(id),Customer.class),"Informacion de OCR",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
         }
     }
@@ -108,7 +114,6 @@ public class FormController {
 
             return responseDTO;
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
         }
     }
@@ -122,6 +127,13 @@ public class FormController {
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
         }
     }
+
+
+
+
+
+
+
 
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
@@ -192,17 +204,27 @@ public class FormController {
         }
     }
 
+    @GetMapping("/transaction")
+    public ResponseDTO FormTransaction() {
+        try {
+            return new ResponseDTO(transactionService.findAllActive(), "Exito", true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, e.getMessage(), false);
+        }
+    }
+
+
     @PostMapping("/transaction")
     public ResponseDTO FormTransaction(@RequestBody TransactionDTO transactionDTO) {
         try {
             Integer userID;
-            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(transactionDTO.getCreditNumber());
+            CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(transactionDTO.getCreditApplication());
             if (creditApplication != null) {
-                userID = creditApplication.getUser().getIdUser();
+                userID = creditApplication.getUser();
             } else {
                 return new ResponseDTO(null, "El id del credito no existe", false);
             }
-            return new ResponseDTO(transactionService.save(transactionDTO), "Exito", true);
+            return transactionService.save(transactionDTO);
         } catch (Exception e) {
             return new ResponseDTO(null, e.getMessage(), false);
         }
@@ -249,7 +271,6 @@ public class FormController {
         try {
             return new ResponseDTO( modelMapper.map(additionalInformationService.findById(id), AdditionalInformationDTO.class),"Información de datos adicionales",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error al registrar la información adicional.", false);
         }
     }
@@ -261,7 +282,6 @@ public class FormController {
         try {
            return additionalInformationService.save(additionalInformation);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en creación de los datos adicionales.", false);
         }
     }
@@ -282,7 +302,6 @@ public class FormController {
         try {
             return new ResponseDTO( modelMapper.map(economicDependientiesService.findById(id),EconomicDependientiesDto.class),"Información del formulario de dependientes economicos",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información de los dependientes economicos.", false);
         }
     }
@@ -294,16 +313,15 @@ public class FormController {
         try {
             return economicDependientiesService.save(economicDependientiesDto);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de dependientes economicos.", false);
         }
     }
 
-    @PutMapping("/economicdependenty/{id}")
+    @PutMapping("/economicdependenty/{creditId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormEconomicDependenty(@PathVariable Integer id,@RequestBody EconomicDependientiesDto economicDependientiesDto) {
+    public ResponseDTO FormEconomicDependentyRemove(@PathVariable Integer creditId,EconomicDependientiesDto economicDto) {
         try {
-            return economicDependientiesService.delete(id);
+            return economicDependientiesService.remove(creditId);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de los dependientes economicos.", false);
         }
@@ -317,7 +335,6 @@ public class FormController {
 
             return new ResponseDTO(spouseDTO,"Informacion del conyuge",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información del coyuge.", false);
         }
     }
@@ -350,7 +367,6 @@ public class FormController {
         try {
             return new ResponseDTO( modelMapper.map(workService.findById(id), WorkDTO.class),"Información  de los datos laborales",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información laboral.", false);
         }
     }
@@ -361,7 +377,6 @@ public class FormController {
         try {
             return workService.save(workDTO);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la creación de los datos laborales.", false);
         }
     }
@@ -382,7 +397,6 @@ public class FormController {
         try {
             return new ResponseDTO( modelMapper.map(referenceService.findById(id), ReferenceDTO.class),"Información de datos de referencias personales",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información de los datos de referencias personales.", false);
         }
     }
@@ -393,18 +407,17 @@ public class FormController {
         try {
             return referenceService.save(referenceDTO);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de referencias personales.", false);
         }
     }
 
-    @PutMapping("/reference/{id}")
+    @PutMapping("/reference/{creditId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormReference(@PathVariable Integer id,@RequestBody ReferenceDTO referenceDTO) {
+    public ResponseDTO FormReferenceRemove(@PathVariable Integer creditId, ReferenceDTO referenceDTO) {
         try {
-            return referenceService.delete(id);
+            return referenceService.remove(creditId);
         } catch (Exception e) {
-            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de referencias personales.", false);
+            return new ResponseDTO(null, "Ocurrió un error en la información de los dependientes economicos.", false);
         }
     }
 
@@ -412,9 +425,9 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormProperty(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(propertyService.findById(id),PropertyDTO.class),"Información de los datos de inmuebles",true);
+            PropertyDTO propertyDTO = modelMapper.map(propertyService.findById(id),PropertyDTO.class);
+            return new ResponseDTO( propertyDTO,"Información de los datos de inmuebles",true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la información de los datos de los inmuebles.", false);
         }
     }
@@ -425,7 +438,6 @@ public class FormController {
         try {
             return propertyService.save(propertyDTO);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de los inmuebles.", false);
         }
     }
@@ -444,9 +456,8 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer id) {
         try {
-            return answerMedicalquestionnaireService.findById(id);
+            return new ResponseDTO(answerMedicalquestionnaireService.findById(id), "Informacion del cuestionario medico.", true);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en el sistema.", false);
         }
     }
@@ -457,18 +468,111 @@ public class FormController {
         try {
             return answerMedicalquestionnaireService.save(medicalQuestionnaireAnswerDTO);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseDTO(null, "Ocurrió un error en la creación del cuestionario medico.", false);
         }
     }
 
-    @PutMapping("/medicalanswerquestionnaire/{id}")
+    @PutMapping("/medicalanswerquestionnaire/{creditID}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer id,@RequestBody MedicalQuestionnaireAnswerDTO medicalQuestionnaireAnswerDTO) {
+    public ResponseDTO FormMedicalquestionnaire(@PathVariable Integer creditID,@RequestBody MedicalQuestionnaireAnswerDTO medicalQuestionnaireAnswerDTO) {
         try {
-            return new ResponseDTO(null, "En desarrollo.", true);
+            return answerMedicalquestionnaireService.remove(creditID);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error en la actualización del cuestionario medico.", false);
+        }
+    }
+
+    @GetMapping("/cocreditedcustomer/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedCustomer(@PathVariable Integer id) {
+        try {
+            return new ResponseDTO( modelMapper.map(cocreditedCustomersService.findById(id), CocreditedCustomersDTO.class),"Información general del coacreditado",true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error al registrar la información adicional.", false);
+        }
+    }
+
+    @PostMapping("/cocreditedcustomer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedCustomer(@RequestBody CocreditedCustomersDTO ObjDTO) {
+        Customer customerResponse;
+        try {
+            return cocreditedCustomersService.save(ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en creación de generales del coacreditado.", false);
+        }
+    }
+
+    @PutMapping("/cocreditedcustomer/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedCustomer(@PathVariable Integer id,@RequestBody CocreditedCustomersDTO ObjDTO) {
+        try {
+            return cocreditedCustomersService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos generales del coacreditado.", false);
+        }
+    }
+
+    @GetMapping("/cocreditedadditional/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedAdditional(@PathVariable Integer id) {
+        try {
+            return new ResponseDTO( modelMapper.map(cocreditedAdditionalService.findById(id), CocreditedAdditionalDTO.class),"Información general de datos adicionales del coacreditado",true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error al registrar la información de datos adicional de coacreditado.", false);
+        }
+    }
+
+    @PostMapping("/cocreditedadditional")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedAdditional(@RequestBody CocreditedAdditionalDTO ObjDTO) {
+        Customer customerResponse;
+        try {
+            return cocreditedAdditionalService.save(ObjDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseDTO(null, "Ocurrió un error en creación de datos adicional del coacreditado.", false);
+        }
+    }
+
+    @PutMapping("/cocreditedadditional/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedAdditional(@PathVariable Integer id,@RequestBody CocreditedAdditionalDTO ObjDTO) {
+        try {
+            return cocreditedAdditionalService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos adicional del coacreditado.", false);
+        }
+    }
+
+    @GetMapping("/cocreditedwork/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedWork(@PathVariable Integer id) {
+        try {
+            return new ResponseDTO( modelMapper.map(cocreditedWorkService.findById(id), CocreditedWorkDTO.class),"Información laborales del coacreditado",true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error al registrar la información laborales del coacreditado.", false);
+        }
+    }
+
+    @PostMapping("/cocreditedwork")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedWork(@RequestBody CocreditedWorkDTO ObjDTO) {
+        Customer customerResponse;
+        try {
+            return cocreditedWorkService.save(ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en creación de laborales del coacreditado.", false);
+        }
+    }
+
+    @PutMapping("/cocreditedwork/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormCocreditedWork(@PathVariable Integer id,@RequestBody CocreditedWorkDTO ObjDTO) {
+        try {
+            return cocreditedWorkService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos laborales del coacreditado.", false);
         }
     }
 }

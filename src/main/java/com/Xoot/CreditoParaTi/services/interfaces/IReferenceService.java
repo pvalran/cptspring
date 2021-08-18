@@ -18,4 +18,6 @@ public interface IReferenceService {
     ResponseDTO active(Integer id);
 
     ResponseDTO delete(Integer id);
+
+    ResponseDTO remove(Integer id);
 }

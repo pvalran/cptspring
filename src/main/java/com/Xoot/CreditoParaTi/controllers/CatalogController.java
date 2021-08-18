@@ -127,6 +127,7 @@ public class CatalogController {
 		try {
 			return new ResponseDTO(detalleCreditoService.findByCreditID(id), "Exito", true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseDTO(null, e.getMessage(), false);
 		}
 

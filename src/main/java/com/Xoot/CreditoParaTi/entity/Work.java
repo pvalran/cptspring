@@ -68,6 +68,21 @@ public class Work {
     @Column(name= "creadit_application_id")
     private Integer creditApplication;
 
+    @Column(name = "type_enrollment")
+    private Integer typeEnrollment;
+
+    @Column(name = "gross_income")
+    private Double grossIncome;
+
+    @Column(name = "other_income")
+    private Double otherIncome;
+
+    @Column(name = "source_income")
+    private String sourceIncome;
+
+    @Column(name = "total_income")
+    private Double totalIncome;
+
     @Column(name = "status_flag")
     private Integer status_flag;
 
@@ -85,11 +100,14 @@ public class Work {
     @Column(name = "mdfd_by", length = 50)
     private String mdfd_by;
 
+
+
     @PrePersist
     public void prePersist() {
         crtd_on = new java.util.Date();
         mdfd_on = new java.util.Date();
         status_flag = 1;
+        typeEnrollment = 1;
     }
 
     public Integer getIdWork() {
@@ -290,5 +308,45 @@ public class Work {
 
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
+    }
+
+    public Integer getTypeEnrollment() {
+        return typeEnrollment;
+    }
+
+    public void setTypeEnrollment(Integer typeEnrollment) {
+        this.typeEnrollment = typeEnrollment;
+    }
+
+    public Double getGrossIncome() {
+        return grossIncome;
+    }
+
+    public void setGrossIncome(Double grossIncome) {
+        this.grossIncome = grossIncome;
+    }
+
+    public Double getOtherIncome() {
+        return otherIncome;
+    }
+
+    public void setOtherIncome(Double otherIncome) {
+        this.otherIncome = otherIncome;
+    }
+
+    public String getSourceIncome() {
+        return sourceIncome;
+    }
+
+    public void setSourceIncome(String sourceIncome) {
+        this.sourceIncome = sourceIncome;
+    }
+
+    public Double getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(Double totalIncome) {
+        this.totalIncome = totalIncome;
     }
 }

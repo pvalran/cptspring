@@ -4,86 +4,81 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="additional_information")
-public class AdditionalInformation {
+@Table(name="cocredited_additional")
+public class CocreditedAdditional {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idAdditionalInformaction;
+    private Integer idCocreditedAdditional;
 
-    @Column(name="country_of_birth")
-    private Integer countryOfBirth;
-
-    @Column(name="Country_of_residence")
-    private Integer countryOfResidence;
-
+    @Column(name = "country_of_birth")
+    private Integer countryBirth;
+    
+    @Column(name = "country_of_residence")
+    private Integer countryResidence;
+    
     @Column(name = "nationality")
     private Integer nationality;
-
+    
     @Column(name = "specify_nationality")
     private String specifyNationality;
-
+    
     @Column(name = "civil_state")
     private Integer civilState;
-
-    @Column(name = "other_civil_state")
-    private Integer otherCivilState;
-
+    
     @Column(name = "marital_status")
     private Integer maritalStatus;
-
-    @Column(name = "number_imss", length = 75)
+    
+    @Column(name = "number_imss")
     private String numberImss;
-
+    
     @Column(name = "scholarship")
     private Integer scholarship;
-
-    @Column(name = "phone", length = 15)
+    
+    @Column(name = "phone")
     private String phone;
-
-    @Column(name = "mobile", length = 15)
+    
+    @Column(name = "mobile")
     private String mobile;
-
-    @Column(name = "other_phone", length = 15)
+    
+    @Column(name = "other_phone")
     private String otherPhone;
-
-    @Column(name= "now_residence_seniority")
+    
+    @Column(name = "now_residence_seniority")
     private Integer nowResidenceSeniority;
-
+    
     @Column(name = "previous_residence_seniority")
     private Integer previousResidenceSeniority;
-
-    @Column(name= "address", length = 125)
+    
+    @Column(name = "address")
     private String address;
-
-    @Column(name= "external_number")
-    private String external_number;
-
-    @Column(name= "interior_number")
-    private String interior_number;
-
-    @Column(name= "suburb")
+    
+    @Column(name = "external_number")
+    private String externalNumber;
+    
+    @Column(name = "interior_number")
+    private String interiorNumber;
+    
+    @Column(name = "postal_code")
+    private String postalCode;
+    
+    @Column(name = "suburb")
     private String suburb;
-
-    @Column(name= "municipality")
-    private String municipality;
-
-    @Column(name= "city")
+    
+    @Column(name = "city")
     private String city;
-
-    @Column(name= "state")
+    
+    @Column(name = "county")
+    private String county;
+    
+    @Column(name = "state")
     private String state;
+    
+    @Column(name = "country")
+    private String country;
 
-    @Column(name= "postal_code")
-    private String postal_code;
-
-    @Column(name= "country")
-    private Integer country;
-
-    @Column(name= "creadit_application_id")
-    private Integer creaditApplication;
-
-
+    @Column(name =  "credit_application_id")
+    private Integer creditApplication;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -107,31 +102,31 @@ public class AdditionalInformation {
         crtd_on = new java.util.Date();
         mdfd_on = new java.util.Date();
         status_flag = 1;
-
     }
 
-    public Integer getIdAdditionalInformaction() {
-        return idAdditionalInformaction;
+
+    public Integer getIdCocreditedAdditional() {
+        return idCocreditedAdditional;
     }
 
-    public void setIdAdditionalInformaction(Integer idAdditionalInformaction) {
-        this.idAdditionalInformaction = idAdditionalInformaction;
+    public void setIdCocreditedAdditional(Integer idCocreditedAdditional) {
+        this.idCocreditedAdditional = idCocreditedAdditional;
     }
 
-    public Integer getCountryOfBirth() {
-        return countryOfBirth;
+    public Integer getCountryBirth() {
+        return countryBirth;
     }
 
-    public void setCountryOfBirth(Integer countryOfBirth) {
-        this.countryOfBirth = countryOfBirth;
+    public void setCountryBirth(Integer countryBirth) {
+        this.countryBirth = countryBirth;
     }
 
-    public Integer getCountryOfResidence() {
-        return countryOfResidence;
+    public Integer getCountryResidence() {
+        return countryResidence;
     }
 
-    public void setCountryOfResidence(Integer countryOfResidence) {
-        this.countryOfResidence = countryOfResidence;
+    public void setCountryResidence(Integer countryResidence) {
+        this.countryResidence = countryResidence;
     }
 
     public Integer getNationality() {
@@ -140,6 +135,14 @@ public class AdditionalInformation {
 
     public void setNationality(Integer nationality) {
         this.nationality = nationality;
+    }
+
+    public String getSpecifyNationality() {
+        return specifyNationality;
+    }
+
+    public void setSpecifyNationality(String specifyNationality) {
+        this.specifyNationality = specifyNationality;
     }
 
     public Integer getCivilState() {
@@ -222,20 +225,28 @@ public class AdditionalInformation {
         this.address = address;
     }
 
-    public String getExternal_number() {
-        return external_number;
+    public String getExternalNumber() {
+        return externalNumber;
     }
 
-    public void setExternal_number(String external_number) {
-        this.external_number = external_number;
+    public void setExternalNumber(String externalNumber) {
+        this.externalNumber = externalNumber;
     }
 
-    public String getInterior_number() {
-        return interior_number;
+    public String getInteriorNumber() {
+        return interiorNumber;
     }
 
-    public void setInterior_number(String interior_number) {
-        this.interior_number = interior_number;
+    public void setInteriorNumber(String interiorNumber) {
+        this.interiorNumber = interiorNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getSuburb() {
@@ -246,20 +257,20 @@ public class AdditionalInformation {
         this.suburb = suburb;
     }
 
-    public String getMunicipality() {
-        return municipality;
-    }
-
-    public void setMunicipality(String municipality) {
-        this.municipality = municipality;
-    }
-
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     public String getState() {
@@ -270,20 +281,20 @@ public class AdditionalInformation {
         this.state = state;
     }
 
-    public String getPostal_code() {
-        return postal_code;
-    }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
-    public Integer getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Integer country) {
+    public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Integer getCreditApplication() {
+        return creditApplication;
+    }
+
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
 
     public Integer getStatus_flag() {
@@ -324,29 +335,5 @@ public class AdditionalInformation {
 
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
-    }
-
-    public Integer getCreaditApplication() {
-        return creaditApplication;
-    }
-
-    public void setCreaditApplication(Integer creaditApplication) {
-        this.creaditApplication = creaditApplication;
-    }
-
-    public Integer getOtherCivilState() {
-        return otherCivilState;
-    }
-
-    public void setOtherCivilState(Integer otherCivilState) {
-        this.otherCivilState = otherCivilState;
-    }
-
-    public String getSpecifyNationality() {
-        return specifyNationality;
-    }
-
-    public void setSpecifyNationality(String specifyNationality) {
-        this.specifyNationality = specifyNationality;
     }
 }

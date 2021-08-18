@@ -22,21 +22,21 @@ public class CreditApplication implements Serializable {
 	@Column(name = "id")
 	private Integer idCreditAplication;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private Usuario user;
 
-	@OneToOne
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
-	private Customer customer;
+	@Column(name = "user_id")
+	private Integer user;
 
-	@OneToOne
-	@JoinColumn(name = "product_id", referencedColumnName = "id")
-	private CreditApplicationProduct product;
 
-	@OneToOne
-	@JoinColumn(name = "status_id", referencedColumnName = "id")
-	private CreditApplicationStatus status;
+	@Column(name = "customer_id")
+	private Integer customer;
+
+
+	@Column(name = "product_id")
+	private Integer product;
+
+
+	@Column(name = "status_id")
+	private Integer status;
 
 	@Column (name ="credit_id")
 	private Integer creditId;
@@ -76,27 +76,27 @@ public class CreditApplication implements Serializable {
 	}
 
 
-	public Customer getCustomer() {
+	public Integer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(Integer customer) {
 		this.customer = customer;
 	}
 
-	public CreditApplicationProduct getProduct() {
+	public Integer getProduct() {
 		return product;
 	}
 
-	public void setProduct(CreditApplicationProduct product) {
+	public void setProduct(Integer product) {
 		this.product = product;
 	}
 
-	public CreditApplicationStatus getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(CreditApplicationStatus status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -153,11 +153,11 @@ public class CreditApplication implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Usuario getUser() {
+	public Integer getUser() {
 		return user;
 	}
 
-	public void setUser(Usuario user) {
+	public void setUser(Integer user) {
 		this.user = user;
 	}
 

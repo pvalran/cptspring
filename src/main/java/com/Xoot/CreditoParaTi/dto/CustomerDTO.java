@@ -23,6 +23,7 @@ public class CustomerDTO {
 
 
 
+
 	public String getName() {
 		return name;
 	}
@@ -159,4 +160,6 @@ public class CustomerDTO {
 	public void setState_id(Integer state_id) {
 		this.state_id = state_id;
 	}
+
+
 }

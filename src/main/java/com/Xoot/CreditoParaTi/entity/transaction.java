@@ -11,11 +11,11 @@ public class transaction {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "credit_number")
-    private Integer creditNumber;
+    @Column(name = "credit_application_id")
+    private Integer creditApplication;
 
-    @Column(name = "operation_number")
-    private Double operationNumber;
+    @Column(name = "transaction_number", precision=15, scale=2)
+    private Double transactionNumber;
 
     @Column(name = "transaction_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,6 +29,9 @@ public class transaction {
 
     @Column(name = "transaction_code")
     private String transactionCode;
+
+    @Column(name = "transaction_status")
+    private Integer transactionStatus;
 
     @Column(name = "status_flag")
     private Integer status_flag;
@@ -134,19 +137,29 @@ public class transaction {
         this.mdfd_by = mdfd_by;
     }
 
-    public Double getOperationNumber() {
-        return operationNumber;
+    public Double getTransactionNumber() {
+        return transactionNumber;
     }
 
-    public void setOperationNumber(Double operationNumber) {
-        this.operationNumber = operationNumber;
+    public void setTransactionNumber(Double transactionNumber) {
+        this.transactionNumber = transactionNumber;
     }
 
-    public Integer getCreditNumber() {
-        return creditNumber;
+    public Integer getCreditApplication() {
+        return creditApplication;
     }
 
-    public void setCreditNumber(Integer creditNumber) {
-        this.creditNumber = creditNumber;
+    public void setCreditApplication(Integer creditApplication) {
+        this.creditApplication = creditApplication;
     }
+
+    public Integer getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(Integer transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+
 }

@@ -15,4 +15,9 @@ public interface ITransactionDao extends CrudRepository<transaction,Integer>, Jp
     @Query(nativeQuery = true,value="select * from transaction where user_id = :userId and status_flag = 1")
     public List<transaction> findByUser(@Param("userId") Integer userId);
 
+    @Query(nativeQuery = true,value="select * from transaction where creditNumber = :creditId and status_flag = 1")
+    public List<transaction> findByCreditID(@Param("creditId") Integer creditId);
+
+
+
 }

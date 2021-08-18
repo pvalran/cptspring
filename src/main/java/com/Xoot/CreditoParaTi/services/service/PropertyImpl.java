@@ -50,11 +50,11 @@ public class PropertyImpl implements IPropertyService {
                     .setMatchingStrategy(MatchingStrategies.STRICT);
             modelMapper.map(ObjDTO,Entity);
             propertyDao.save(Entity);
+            ObjDTO = modelMapper.map(Entity,PropertyDTO.class);
             return new ResponseDTO(ObjDTO,"Modificaciòn realizada con exito",true);
         }
         return new ResponseDTO(ObjDTO,"Error en la modificación del registro",false);
     }
-
 
     @Override
     public ResponseDTO active(Integer id) {

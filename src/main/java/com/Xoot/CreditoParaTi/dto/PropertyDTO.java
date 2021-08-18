@@ -1,7 +1,31 @@
 package com.Xoot.CreditoParaTi.dto;
 
-public class PropertyDTO {
-    private Integer IdProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import java.io.Serializable;
+
+@JsonPropertyOrder({
+    "useProperty",
+    "typeProperty",
+    "estimatedValue",
+    "totalSurface",
+    "constructionSurface",
+    "paternalLastName",
+    "maternalLastName",
+    "name",
+    "phone",
+    "address",
+    "postalCode",
+    "suburb",
+    "municipality",
+    "city",
+    "state",
+    "creaditApplication",
+    "idProperty",
+    "financingPercentage"}
+)
+public class PropertyDTO implements Serializable {
+
     private Integer useProperty;
     private Integer typeProperty;
     private Double estimatedValue;
@@ -18,6 +42,8 @@ public class PropertyDTO {
     private String city;
     private String state;
     private Integer creaditApplication;
+    private Integer IdProperty;
+    private Integer financingPercentage;
 
 
     public Integer getIdProperty() {
@@ -25,7 +51,7 @@ public class PropertyDTO {
     }
 
     public void setIdProperty(Integer idProperty) {
-        IdProperty = idProperty;
+        this.IdProperty = idProperty;
     }
 
     public Integer getUseProperty() {
@@ -154,5 +180,13 @@ public class PropertyDTO {
 
     public void setCreaditApplication(Integer creaditApplication) {
         this.creaditApplication = creaditApplication;
+    }
+
+    public Integer getFinancingPercentage() {
+        return financingPercentage;
+    }
+
+    public void setFinancingPercentage(Integer financingPercentage) {
+        this.financingPercentage = financingPercentage;
     }
 }

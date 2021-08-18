@@ -1,5 +1,8 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.dto.DocumentDTO;
+import com.Xoot.CreditoParaTi.entity.Document;
+import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ISpouseService;
 import com.Xoot.CreditoParaTi.entity.Spouse;
 import com.Xoot.CreditoParaTi.dto.SpouseDTO;
@@ -18,6 +21,9 @@ import java.util.List;
 public class SpouseImpl implements ISpouseService {
     @Autowired
     private ISpouseDao spouseDao;
+
+    @Autowired
+    private IDocumentDao documentDao;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -51,6 +57,7 @@ public class SpouseImpl implements ISpouseService {
             modelMapper.map(spouseDTO,entity);
             spouseDao.save(entity);
             spouseDTO = modelMapper.map(entity,SpouseDTO.class);
+            spouseDTO = this.setImages(spouseDTO);
             return new ResponseDTO(spouseDTO,"Modificaciòn realizada con exito",true);
         }
         return new ResponseDTO(spouseDTO,"Error en la modificación del registro",false);
@@ -64,5 +71,26 @@ public class SpouseImpl implements ISpouseService {
     @Override
     public ResponseDTO delete(Integer id) {
         return null;
+    }
+
+    public SpouseDTO setImages(SpouseDTO spouseDTO){
+        List<Document> docSpouse = documentDao.findByCreditIdSpouse(spouseDTO.getCreditApplication());
+        spouseDTO.setImg1(new DocumentDTO());
+        spouseDTO.setImg2(new DocumentDTO());
+        spouseDTO.setImg3(new DocumentDTO());
+        for (Document doc:docSpouse) {
+            switch (doc.getTypeDocumentId()){
+                case 12:
+                    spouseDTO.setImg1(modelMapper.map(doc,DocumentDTO.class));
+                    break;
+                case 13:
+                    spouseDTO.setImg2(modelMapper.map(doc,DocumentDTO.class));
+                    break;
+                case 14:
+                    spouseDTO.setImg3(modelMapper.map(doc,DocumentDTO.class));
+                    break;
+            }
+        }
+        return spouseDTO;
     }
 }

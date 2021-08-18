@@ -32,7 +32,7 @@ public class Reference {
     @Column(name="mobile", length = 12)
     private String mobile;
 
-    @Column(name= "creaditApplication_id")
+    @Column(name= "creadit_application_id")
     private Integer creditApplication;
 
 

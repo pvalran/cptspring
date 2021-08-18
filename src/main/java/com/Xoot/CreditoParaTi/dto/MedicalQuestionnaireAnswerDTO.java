@@ -6,7 +6,7 @@ public class MedicalQuestionnaireAnswerDTO {
     private Integer IdMedicalQuestionnaire;
     private Double weight;
     private Double height;
-    private Integer creditApplication;
+    private Integer creaditApplication;
     private List<AnswerQuestionnaireDTO> answerQuestionnairies;
     private List<FreeQuestionnaireDTO> freeQuestionnairies;
 
@@ -34,13 +34,7 @@ public class MedicalQuestionnaireAnswerDTO {
         this.height = height;
     }
 
-    public Integer getCreditApplication() {
-        return creditApplication;
-    }
 
-    public void setCreditApplication(Integer creditApplication) {
-        this.creditApplication = creditApplication;
-    }
 
     public List<AnswerQuestionnaireDTO> getanswerQuestionnairies() {
         return answerQuestionnairies;
@@ -59,4 +53,11 @@ public class MedicalQuestionnaireAnswerDTO {
     }
 
 
+    public Integer getCreaditApplication() {
+        return creaditApplication;
+    }
+
+    public void setCreaditApplication(Integer creaditApplication) {
+        this.creaditApplication = creaditApplication;
+    }
 }

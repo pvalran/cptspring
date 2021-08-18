@@ -82,11 +82,15 @@ public class Customer implements Serializable {
 	@Column(name = "credit_id")
 	private Integer creditId;
 
+	@Column(name = "type_enrollment")
+	private Integer typeEnrollment;
+
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
 		status_flag = 1;
+		typeEnrollment = 1;
 	}
 
 	public Integer getIdCustomer() {
@@ -255,5 +259,13 @@ public class Customer implements Serializable {
 
 	public void setState_id(Integer state_id) {
 		this.state_id = state_id;
+	}
+
+	public Integer getTypeEnrollment() {
+		return typeEnrollment;
+	}
+
+	public void setTypeEnrollment(Integer typeEnrollment) {
+		this.typeEnrollment = typeEnrollment;
 	}
 }

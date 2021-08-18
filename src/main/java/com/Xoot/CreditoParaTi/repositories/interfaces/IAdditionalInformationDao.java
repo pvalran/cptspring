@@ -15,5 +15,4 @@ public interface IAdditionalInformationDao extends CrudRepository<AdditionalInfo
 
     @Query(nativeQuery = true, value = "SELECT * FROM additional_information WHERE creadit_application_id=:creditId")
     public AdditionalInformation findByCreditId(@Param("creditId") Integer creditId);
-
 }

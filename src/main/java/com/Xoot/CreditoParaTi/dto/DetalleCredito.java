@@ -10,6 +10,14 @@ public class DetalleCredito {
     private SpouseDTO spouse;
     private WorkDTO work;
     private List<ReferenceDTO> references;
+    private PropertyDTO property;
+    private MedicalQuestionnaireAnswerDTO medicalquestionnaire;
+    private CocreditedCustomersDTO cocreditedCustomers;
+    private CocreditedAdditionalDTO cocreditedAdditional;
+    private CocreditedWorkDTO cocreditedWork;
+    private PdfDTO pdf;
+
+
 
     public List<DocumentDTO> getDocuments() {
         return documents;
@@ -65,5 +73,53 @@ public class DetalleCredito {
 
     public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
+    }
+
+    public PropertyDTO getProperty() {
+        return property;
+    }
+
+    public void setProperty(PropertyDTO property) {
+        this.property = property;
+    }
+
+    public MedicalQuestionnaireAnswerDTO getMedicalquestionnaire() {
+        return medicalquestionnaire;
+    }
+
+    public void setMedicalquestionnaire(MedicalQuestionnaireAnswerDTO medicalquestionnaire) {
+        this.medicalquestionnaire = medicalquestionnaire;
+    }
+
+    public CocreditedCustomersDTO getCocreditedCustomers() {
+        return cocreditedCustomers;
+    }
+
+    public void setCocreditedCustomers(CocreditedCustomersDTO cocreditedCustomers) {
+        this.cocreditedCustomers = cocreditedCustomers;
+    }
+
+    public CocreditedAdditionalDTO getCocreditedAdditional() {
+        return cocreditedAdditional;
+    }
+
+    public void setCocreditedAdditional(CocreditedAdditionalDTO cocreditedAdditional) {
+        this.cocreditedAdditional = cocreditedAdditional;
+    }
+
+    public CocreditedWorkDTO getCocreditedWork() {
+        return cocreditedWork;
+    }
+
+    public void setCocreditedWork(CocreditedWorkDTO cocreditedWork) {
+        this.cocreditedWork = cocreditedWork;
+    }
+
+    public PdfDTO getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(PdfDTO pdf) {
+        this.pdf = pdf;
     }
 }

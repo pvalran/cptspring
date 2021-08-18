@@ -1,9 +1,11 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.utils.DocumentUtil;
 import org.apache.commons.io.FileUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -36,6 +38,22 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     @Autowired
     IReferenceDao referenceDao;
     @Autowired
+    IPropertyDao propertyDao;
+    @Autowired
+    IMedicalQuestionnaireDao medicalQuestionDao;
+    @Autowired
+    IAnswerMedicalquestionnaireService answerMedicalDao;
+    @Autowired
+    ICocreditedCustomersDao cocreditedCustomersDao;
+    @Autowired
+    ICocreditedAdditionalDao cocreditedAdditionalDao;
+    @Autowired
+    ICocreditedWorkDao cocreditedWorkDao;
+
+    PdfDTO pdfDTO;
+    DocumentUtil ObjDocUtil;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     private DetalleCredito detalleCredito;
@@ -52,8 +70,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         }.getType();
 
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
-
-
         Customer customer = customerDao.findByCreditId(creditID);
         List<Document> documents = documentDao.findByCreditId(creditID);
         List<Document> docSpouse = documentDao.findByCreditIdSpouse(creditID);
@@ -62,6 +78,14 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Spouse spouse = spouseDao.findByCreditId(creditID);
         Work work = workDao.findByCreditId(creditID);
         List<Reference> references = referenceDao.findByCreditId(creditID);
+        Property property = propertyDao.findByCreditId(creditID);
+        MedicalQuestionnaireAnswerDTO MedicalQuestion = answerMedicalDao.findByCreditID(creditID);
+        CocreditedCustomers cocreditedCustomers = cocreditedCustomersDao.findByCreditId(creditID);
+        CocreditedAdditional cocreditedAdditional = cocreditedAdditionalDao.findByCreditId(creditID);
+        CocreditedWork cocreditedWork = cocreditedWorkDao.findByCreditId(creditID);
+
+        Document Pdfexpediente = documentDao.findAllIds(creditID,11);
+        Document Pdfsubcuenta = documentDao.findAllIds(creditID,12);
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
@@ -89,15 +113,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             spouseDTO.setImg2(new DocumentDTO());
             spouseDTO.setImg3(new DocumentDTO());
             for (Document doc:docSpouse) {
-                Path rutaArchivo = Paths.get("/srv/www/upload").resolve(doc.getName()).toAbsolutePath();
-                File file = rutaArchivo.toFile();
-                try {
-                    byte[] fileContent = FileUtils.readFileToByteArray(file);
-                    base64File = Base64.getEncoder().encodeToString(fileContent);
-                } catch (IOException e) {
-                    base64File = null;
-                }
-
                 switch (doc.getTypeDocumentId()){
                      case 12:
                          spouseDTO.setImg1(modelMapper.map(doc,DocumentDTO.class));
@@ -118,6 +133,40 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         if (references != null) {
             detalleCredito.setReferences(modelMapper.map(references, lstTypeReference));
         }
+
+        if (property != null) {
+            detalleCredito.setProperty(modelMapper.map(property,PropertyDTO.class));
+        }
+
+        if (MedicalQuestion != null) {
+            detalleCredito.setMedicalquestionnaire(MedicalQuestion);
+        }
+
+        if (cocreditedCustomers != null) {
+            detalleCredito.setCocreditedCustomers(modelMapper.map(cocreditedCustomers,CocreditedCustomersDTO.class));
+        }
+
+        if (cocreditedAdditional != null) {
+            detalleCredito.setCocreditedAdditional(modelMapper.map(cocreditedAdditional,CocreditedAdditionalDTO.class));
+        }
+
+        if (cocreditedWork != null) {
+            detalleCredito.setCocreditedWork(modelMapper.map(cocreditedWork,CocreditedWorkDTO.class));
+        }
+
+
+        pdfDTO = new PdfDTO();
+        ObjDocUtil = new DocumentUtil();
+
+        if (Pdfexpediente != null) {
+            pdfDTO.setExpediente(true);
+        }
+
+        if (Pdfsubcuenta != null) {
+            pdfDTO.setSubcuenta(true);
+        }
+
+        detalleCredito.setPdf(pdfDTO);
         return detalleCredito;
     }
 }

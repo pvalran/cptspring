@@ -59,6 +59,9 @@ public class Property {
     @Column(name= "creadit_application_id")
     private Integer creaditApplication;
 
+    @Column(name = "financing_percentage")
+    private Integer financingPercentage;
+
     @Column(name = "status_flag")
     private Integer status_flag;
 
@@ -88,7 +91,7 @@ public class Property {
     }
 
     public void setIdProperty(Integer idProperty) {
-        IdProperty = idProperty;
+        this.IdProperty = idProperty;
     }
 
     public Integer getUseProperty() {
@@ -257,5 +260,13 @@ public class Property {
 
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
+    }
+
+    public Integer getFinancingPercentage() {
+        return financingPercentage;
+    }
+
+    public void setFinancingPercentage(Integer financingPercentage) {
+        this.financingPercentage = financingPercentage;
     }
 }
