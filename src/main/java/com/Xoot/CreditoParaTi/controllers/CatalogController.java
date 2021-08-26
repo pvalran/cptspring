@@ -4,10 +4,7 @@ import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.lang.reflect.Type;
@@ -15,6 +12,7 @@ import java.lang.reflect.Type;
 import org.modelmapper.TypeToken;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/catalogies")
 public class CatalogController {
 	@Autowired
@@ -57,6 +55,9 @@ public class CatalogController {
 	private ITypeReferenceService TypeReferenceService;
 	@Autowired
 	private IDetalleCredito detalleCreditoService;
+	@Autowired
+	private ICustomerService customerService;
+
 	@Autowired
 	private ModelMapper modelMapper;
 	@GetMapping("/catalogy/{catalog}")
@@ -115,6 +116,9 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
+				case "customerstransacion":
+					return customerService.getByCustomerTransaction();
+
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {

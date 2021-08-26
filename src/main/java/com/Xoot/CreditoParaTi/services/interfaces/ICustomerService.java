@@ -22,4 +22,6 @@ public interface ICustomerService {
 	ResponseDTO delete(Integer id);
 
 	ResponseDTO getById(Integer id);
+
+	ResponseDTO getByCustomerTransaction();
 }

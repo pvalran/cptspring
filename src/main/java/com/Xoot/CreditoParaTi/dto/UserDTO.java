@@ -3,10 +3,10 @@ package com.Xoot.CreditoParaTi.dto;
 import java.util.List;
 
 public class UserDTO {
-	private String username;
-	private String password;
-	private String email;
-	private List<Integer> idCategory;
+	protected String username;
+	protected String password;
+	protected String email;
+	protected List<Integer> idCategory;
 	
 	public String getUsername() {
 		return username;

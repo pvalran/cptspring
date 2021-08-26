@@ -63,10 +63,27 @@ public class Usuario implements Serializable {
 	@Column(name = "mdfd_by", length = 50)
 	private String mdfd_by;
 
+	@Column(name = "name", length = 75)
+	private String name;
+
+	@Column(name = "paternal_last_name", length = 16)
+	private String paternalLastName;
+
+	@Column(name = "mother_last_name", length = 16)
+	private String motherLastName;
+
+	@Column(name = "profile_id")
+	private String profileId;
+
+	@Column(name = "type_user")
+	private Integer typeUser;
+
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
+		typeUser = 1;
 	}
 
 	public Integer getIdUser() {
@@ -161,4 +178,44 @@ public class Usuario implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPaternalLastName() {
+		return paternalLastName;
+	}
+
+	public void setPaternalLastName(String paternalLastName) {
+		this.paternalLastName = paternalLastName;
+	}
+
+	public String getMotherLastName() {
+		return motherLastName;
+	}
+
+	public void setMotherLastName(String motherLastName) {
+		this.motherLastName = motherLastName;
+	}
+
+	public String getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+
+	public Integer getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(Integer typeUser) {
+		this.typeUser = typeUser;
+	}
 }

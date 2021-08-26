@@ -1,0 +1,139 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+
+	<title>Reporte de identidad</title>
+</head>
+<body>
+<div style="width: 100%; display: flex; flex-direction: row">
+	<img src="/images/logo.png" />
+	<span style="text-align: center; flex-grow:1;">
+		<h3>Reporte de Validación de Identidad</h3>
+	</span>
+</div>
+<table style="width: 100%;" border="1" cellpadding="0" cellspacing="0"  >
+	<tbody>
+		<tr>
+			<td colspan="4" style="background: #000000;color: #FFFFFF;width: 100%;">
+				<span style="
+				display: flex; flex-direction: row;
+				justify-content: space-around; width: 100%; ">
+					<span>Datos Generales del Enrolamiento</span>
+					<span >Folio: <span th:text="${creditId}" /></span>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<span style="display: flex; flex-direction: row;width: 100%; ">
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Validación Identidad</label>
+						<label  th:text="${identidad}"></label>
+					</span>
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Fecha de Impresión</label>
+						<label th:text="${datePrint}"></label>
+					</span>
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Fecha enrolamiento</label>
+						<label  th:text="${dateEnrolment}"></label>
+					</span>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<span style="display: flex; flex-direction: row;width: 100%; ">
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Núm de Propuesta</label>
+						<label th:text="${creditId}"></label>
+					</span>
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Rol</label>
+						<label>N/A</label>
+					</span>
+					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Correo electrónico</label>
+						<label th:text="${email}"></label>
+					</span>
+					<span style="display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
+						<label>Número de celular</label>
+						<label th:text="${mobile}"></label>
+					</span>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td style="background: #000000;color: #FFFFFF;" colspan="4"><span>Detalles de Capas de Validación</span></td>
+		</tr>
+		<tr>
+			<td style="background: #CCCCCC;color: #000000;text-align: center;" colspan="2">Capa de Documento:</td>
+			<td style="background: #CCCCCC;color: #000000;text-align: center;" colspan="2"><span class="bgGrayCenter">Capa Biométrica:</span></td>
+		</tr>
+		<tr>
+			<td><span>Autentificación de documento Nivel 1</span></td>
+			<td style="text-align: center"><span th:text="${selfie}"></span></td>
+			<td><span>Comparación de selfie vs foto de documento identidad.</span></td>
+			<td style="text-align: center"><span th:text="${selfie}"></span></td>
+		</tr>
+		<tr>
+			<td>Candados de seguridad visibles anverso</td>
+			<td style="text-align: center">N/A</td>
+			<td>Autentificación Nivel 1, prueba de vida facial</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td>Candados de seguridad visibles reverso</td>
+			<td style="text-align: center">N/A</td>
+			<td>Verificación biométrica 1:N Deduplicación</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td>Vigencia Documento</td>
+			<td  style="text-align: center" th:text="${vigencia}"></td>
+			<td></td>
+			<td style="text-align: center" ></td>
+		</tr>
+		<tr>
+			<td>MRZ Valido</td>
+			<td  style="text-align: center" th:text="${mrz}"></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="background: #CCCCCC;color: #000000;text-align: center;" colspan="2">Capa de Gobierno:</td>
+			<td style="background: #CCCCCC;color: #000000;text-align: center;" colspan="2">Capa Digital:</td>
+		</tr>
+		<tr>
+			<td>Existe INE en listas nominal</td>
+			<td  style="text-align: center">N/A</td>
+			<td>Email verificado</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td>CURP Valido</td>
+			<td  style="text-align: center" th:text="${curp}"></td>
+			<td>Edad del correo electrónico</td>
+			<td  style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td>Coincidencia del CURP con datos de identidad</td>
+			<td  style="text-align: center" th:text="${curp}"></td>
+			<td>Estatus de Riesgo</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="text-align: center"></td>
+			<td>Geolocalización</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td style="text-align: center"></td>
+			<td>Autentificación Número de Celular</td>
+			<td style="text-align: center">N/A</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

@@ -5,24 +5,29 @@ import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/forms")
 public class FormController {
 
@@ -68,6 +73,9 @@ public class FormController {
 
     @Autowired
     private ICreditApplicationDao creditApplicationDao;
+
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -127,13 +135,6 @@ public class FormController {
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
         }
     }
-
-
-
-
-
-
-
 
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
@@ -213,6 +214,15 @@ public class FormController {
         }
     }
 
+    @GetMapping("/transaction/{creditId}/{type}")
+    public ResponseDTO FormTransaction(@PathVariable("creditId") Integer creditId,@PathVariable("type") Integer typeTransaction) {
+        try {
+            return transactionService.findValidate(creditId,typeTransaction);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseDTO(null, e.getMessage(), false);
+        }
+    }
 
     @PostMapping("/transaction")
     public ResponseDTO FormTransaction(@RequestBody TransactionDTO transactionDTO) {
@@ -575,4 +585,93 @@ public class FormController {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos laborales del coacreditado.", false);
         }
     }
+
+    @GetMapping("/userboard")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoard() {
+        Object data;
+        String message;
+        Boolean result;
+        Type listType;
+        try {
+            listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
+            return new ResponseDTO( modelMapper.map(userService.findAllBoard(), listType),"Usuario",true);
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al crear el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+    @GetMapping("/userboard/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoard(@PathVariable Integer id) {
+        Object data;
+        String message;
+        Boolean result;
+        try {
+            return new ResponseDTO( modelMapper.map(userService.findById(id), UserBoardDTO.class),"Usuario",true);
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al actualización el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+
+    @PostMapping("/userboard")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoard(@RequestBody UserBoardDTO user) {
+        Object data;
+        String message;
+        Boolean result;
+
+        try {
+            Usuario validaUsername = userService.findByUsername(user.getUsername());
+            Usuario validaEmail = userService.findByemail(user.getEmail());
+
+            data = null;
+            result = false;
+            if (validaUsername != null) {
+                message = "El nombre de usuario " + user.getUsername() + ". Se encuentra en uso";
+            } else if (validaEmail != null) {
+                message = "El email " + user.getEmail() + ". Ya se encuentra registrado";
+            } else {
+                Usuario newUser = new Usuario();
+
+                newUser.setStatus_flag(1);
+                newUser.setUsername(user.getEmail());
+                newUser.setEmail(user.getEmail());
+                //newUser.setPassword(encoder.encode(user.getPassword()));
+                newUser.setPassword(user.getPassword());
+                newUser.setDtLastLogin(null);
+                newUser.setName(user.getName());
+                newUser.setPaternalLastName(user.getPaternalLastName());
+                newUser.setMotherLastName(user.getMotherLastName());
+                newUser.setProfileId(user.getProfileId());
+                newUser.setTypeUser(2);
+                data = userService.save(newUser);
+                result = true;
+                message = "Usuario creado";
+            }
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al crear el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+    @PutMapping("/userboard/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoard(@PathVariable Integer id,@RequestBody UserBoardDTO ObjDTO) {
+        try {
+            return userService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos usuario.", false);
+        }
+    }
+
 }

@@ -1,8 +1,15 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.Xoot.CreditoParaTi.dto.ResponseDTO;
+import com.Xoot.CreditoParaTi.dto.SpouseDTO;
+import com.Xoot.CreditoParaTi.dto.UserBoardDTO;
+import com.Xoot.CreditoParaTi.entity.Spouse;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,6 +31,9 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	@Autowired
 	private IUserDao userDao;
 	private Logger logger = LoggerFactory.getLogger(UserImpl.class);
+
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -38,10 +48,30 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	}
 
 	@Override
+	public ResponseDTO update(Integer id, UserBoardDTO ObjDTO) {
+		Usuario entity = userDao.findById(id).orElse(null);
+		if (entity != null) {
+			entity.setMdfd_on(new Date());
+			modelMapper.getConfiguration().setSkipNullEnabled(true)
+					.setCollectionsMergeEnabled(false)
+					.setMatchingStrategy(MatchingStrategies.STRICT);
+			modelMapper.map(ObjDTO,entity);
+			userDao.save(entity);
+			ObjDTO = modelMapper.map(entity,UserBoardDTO.class);
+			return new ResponseDTO(ObjDTO,"Modificaciòn realizada con exito",true);
+		}
+		return new ResponseDTO(ObjDTO,"Error en la modificación del registro",false);
+	}
+
+
+	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> findAllActive() {
 		return userDao.findAllActive();
 	}
+
+	@Override
+	public List<Usuario> findAllBoard()  { return userDao.findAllBoard(); }
 
 	@Override
 	@Transactional(readOnly = true)
@@ -77,4 +107,6 @@ public class UserImpl  implements IUserService, UserDetailsService{
 
     @Override
     public Usuario Login(String userName, String password) { return userDao.Login(userName,password); }
+
+
 }

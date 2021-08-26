@@ -1,8 +1,17 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
+import com.Xoot.CreditoParaTi.dto.DocumentDTO;
+import com.Xoot.CreditoParaTi.entity.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.transaction;
+import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.utils.DocumentUtil;
+import com.Xoot.CreditoParaTi.utils.TransactionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +21,13 @@ import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
 import com.Xoot.CreditoParaTi.entity.Customer;
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerGenderDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationSuburbDao;
 
 @Service
 public class CustomerImpl implements ICustomerService {
 	public Object data = null;
 	public Boolean result = false;
 	public String message;
+	public TransactionUtil transactionUtil;
 
 	@Autowired
 	private ICustomerDao _customerDao;
@@ -31,6 +37,13 @@ public class CustomerImpl implements ICustomerService {
 	private ILocationStateDao _locationStateDao;
 	@Autowired
 	private ILocationSuburbDao _locationSuburbDao;
+	@Autowired
+	private ITransactionDao transactionDao;
+	@Autowired
+	private ICreditApplicationDao creditApplicationDao;
+
+
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -52,9 +65,6 @@ public class CustomerImpl implements ICustomerService {
 		return _customerDao.findByCurpActive(curp);
 	}
 
-
-
-
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseDTO getById(Integer id) {
@@ -68,6 +78,65 @@ public class CustomerImpl implements ICustomerService {
 		result = true;
 		message = "Exito";
 
+		return new ResponseDTO(data, message, result);
+	}
+
+	@Transactional(readOnly = true)
+	public ResponseDTO getByCustomerTransaction() {
+		TransactionUtil ObjTransUtil = new TransactionUtil();
+		List<CreditApplication> creditApplications = creditApplicationDao.findAllActive();
+
+		List<CustomerTransactionDTO> customerTransactions;
+		HashMap<Integer,String> map = new HashMap<>();
+		map.put (1, "A");
+		map.put (2, "R");
+
+		customerTransactions = new ArrayList<CustomerTransactionDTO>();
+		for(CreditApplication creditApplication:creditApplications){
+			if (creditApplication.getCustomer() != null ){
+				CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
+				Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
+				customerTransactionDTO.setCustomer(
+						modelMapper.map(customer, CustomerDTO.class)
+				);
+				List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
+				for (transaction Transaction : transactions) {
+					customerTransactionDTO.setLayerDocument("");
+					customerTransactionDTO.setLayerBiometric("");
+					customerTransactionDTO.setLayerGobernment("");
+					switch (Transaction.getTransactionType()) {
+						case 1:
+							customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
+							break;
+						case 2:
+							customerTransactionDTO.setLayerBiometric(map.get(Transaction.getTransactionStatus()));
+							break;
+						case 3:
+							customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
+							break;
+					}
+
+				}
+
+				if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
+					customerTransactionDTO.setStatus("R");
+				} else if (customerTransactionDTO.getLayerDocument() == "A" || customerTransactionDTO.getLayerBiometric() == "A") {
+					if (customerTransactionDTO.getLayerGobernment() == "A") {
+						customerTransactionDTO.setStatus("A");
+					} else {
+						customerTransactionDTO.setStatus("P");
+					}
+				} else {
+					customerTransactionDTO.setStatus("R");
+				}
+				customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
+				customerTransactions.add(customerTransactionDTO);
+			}
+		}
+
+		data = customerTransactions;
+		result = true;
+		message = "Exito";
 		return new ResponseDTO(data, message, result);
 	}
 
@@ -110,7 +179,6 @@ public class CustomerImpl implements ICustomerService {
 		}*/
 
 		data =  modelMapper.map(saveCustomer(1, customerDTO, customerById), CustomerDTO.class);
-
 
 		result = true;
 
@@ -155,6 +223,8 @@ public class CustomerImpl implements ICustomerService {
 		return new ResponseDTO(data, message, result);
 
 	}
+
+
 
 	private boolean CheckCustomerNotExist(Customer customer) {
 		boolean response = false;
