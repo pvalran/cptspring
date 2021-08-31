@@ -24,6 +24,8 @@ import java.util.List;
 @Service
 public class DetalleCreditoImpl implements IDetalleCredito {
     @Autowired
+    ICreditApplicationDao creditApplicationDao;
+    @Autowired
     ICustomerDao customerDao;
     @Autowired
     IDocumentDao documentDao;
@@ -62,6 +64,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     public DetalleCredito findByCreditID(Integer creditID) {
         detalleCredito = new DetalleCredito();
         String base64File;
+        Customer customer;
         Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {
         }.getType();
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {
@@ -70,7 +73,17 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         }.getType();
 
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
-        Customer customer = customerDao.findByCreditId(creditID);
+
+        CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
+        if (creditApplication != null) {
+            if (creditApplication.getCreditId() != null) {
+                customer = customerDao.findById(creditApplication.getCustomer()).orElse(null);
+            } else {
+                customer = customerDao.findByCreditId(creditID);
+            }
+        } else {
+            customer = customerDao.findByCreditId(creditID);
+        }
         List<Document> documents = documentDao.findByCreditId(creditID);
         List<Document> docSpouse = documentDao.findByCreditIdSpouse(creditID);
         AdditionalInformation additionalInformation = additionalInformationDao.findByCreditId(creditID);

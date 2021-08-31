@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 import com.Xoot.CreditoParaTi.dto.DocumentDTO;
+import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
 import com.Xoot.CreditoParaTi.entity.CreditApplication;
 import com.Xoot.CreditoParaTi.entity.transaction;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
@@ -41,6 +42,9 @@ public class CustomerImpl implements ICustomerService {
 	private ITransactionDao transactionDao;
 	@Autowired
 	private ICreditApplicationDao creditApplicationDao;
+	@Autowired
+	private IAdditionalInformationDao additionalInformationDao;
+
 
 
 
@@ -99,11 +103,12 @@ public class CustomerImpl implements ICustomerService {
 				customerTransactionDTO.setCustomer(
 						modelMapper.map(customer, CustomerDTO.class)
 				);
+				AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
 				List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
+				customerTransactionDTO.setLayerDocument("");
+				customerTransactionDTO.setLayerBiometric("");
+				customerTransactionDTO.setLayerGobernment("");
 				for (transaction Transaction : transactions) {
-					customerTransactionDTO.setLayerDocument("");
-					customerTransactionDTO.setLayerBiometric("");
-					customerTransactionDTO.setLayerGobernment("");
 					switch (Transaction.getTransactionType()) {
 						case 1:
 							customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
@@ -115,12 +120,11 @@ public class CustomerImpl implements ICustomerService {
 							customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
 							break;
 					}
-
 				}
 
 				if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
 					customerTransactionDTO.setStatus("R");
-				} else if (customerTransactionDTO.getLayerDocument() == "A" || customerTransactionDTO.getLayerBiometric() == "A") {
+				} else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
 					if (customerTransactionDTO.getLayerGobernment() == "A") {
 						customerTransactionDTO.setStatus("A");
 					} else {
@@ -128,6 +132,12 @@ public class CustomerImpl implements ICustomerService {
 					}
 				} else {
 					customerTransactionDTO.setStatus("R");
+				}
+
+				if (additional != null) {
+					customerTransactionDTO.setMobile(additional.getMobile());
+				} else {
+					customerTransactionDTO.setMobile("");
 				}
 				customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
 				customerTransactions.add(customerTransactionDTO);

@@ -23,7 +23,7 @@ public interface ICreditApplicationDao extends CrudRepository<CreditApplication,
 	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE credit_id=:creditId limit 1")
 	public CreditApplication FindByCreditUser(@Param("creditId") Integer creditId);
 
-	@Query(nativeQuery = true, value = "select * from credits_aplications ca where crtd_on  BETWEEN  ? and ?  and status_flag = 1")
+	@Query(nativeQuery = true, value = "select * from credits_aplications ca where DATE(crtd_on)  BETWEEN  ? and ?  and status_flag = 1")
 	public List<CreditApplication> getCreditTransDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	@Query(nativeQuery = true, value = "select * from credits_aplications ca inner join customers cu on ca.customer_id = cu.id where " +

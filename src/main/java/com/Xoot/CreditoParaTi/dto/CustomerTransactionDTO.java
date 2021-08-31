@@ -11,6 +11,9 @@ public class CustomerTransactionDTO {
     private String layerBiometric;
     private String layerGobernment;
     private Date crtd_on;
+    private Integer creditId;
+    private String mobile;
+
 
     public CustomerDTO getCustomer() {
         return customer;
@@ -64,5 +67,21 @@ public class CustomerTransactionDTO {
             this.crtd_on = crtd_on;
         }
 
+    }
+
+    public Integer getCreditId() {
+        return creditId;
+    }
+
+    public void setCreditId(Integer creditId) {
+        this.creditId = creditId;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

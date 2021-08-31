@@ -1,7 +1,12 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.Xoot.CreditoParaTi.mapper.Mail;
+import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
+import com.Xoot.CreditoParaTi.utils.PasswordGeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +35,9 @@ public class UserController {
 	private IUserCategoryService categoryUserService;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private IMailService mailService;
+
 	private Object data;
 	private String message;
 	private Boolean result;
@@ -128,14 +136,49 @@ public class UserController {
 			data = userService.Login(user.getUsername(),user.getPassword());
 			if (data == null) {
 				message = "No autorizado";
+				result = false;
 			} else {
 				message = "Autorizado";
+				result = true;
 			}
-			result = true;
+
 		} catch (Exception ex) {
 			data = null;
 			result = false;
 			message = "Ocurrió un error en el login  usuario.";
+		}
+		return new ResponseDTO(data, message, result);
+	}
+
+	@PostMapping("/restorepassword")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseDTO Restorepassword(@RequestBody UserDTO user) {
+		try {
+			data = null;
+			result = false;
+
+			Usuario userchange = userService.findByemail(user.getEmail());
+			if (userchange == null) {
+				message = "Su correo no ha sido registrado";
+				result = false;
+			} else {
+				String username = userchange.getName()+" "+userchange.getPaternalLastName()+" "+userchange.getMotherLastName();
+				String password = PasswordGeneratorUtil.getPassword(8);
+				userchange.setPassword(password);
+				userService.save(userchange);
+				Mail mail = new Mail();
+				mail.setMailFrom("envios@creditoparati.com.mx");
+				mail.setMailTo(user.getEmail());
+				mail.setMailSubject("Recuperación de contraseña");
+				mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
+				mailService.sendEmail(mail);
+				message = "Su correo ha sido enviado";
+				result = true;
+			}
+		} catch (Exception ex) {
+			data = null;
+			result = false;
+			message = "Ocurrió un error en la recuperación de contraseña.";
 		}
 		return new ResponseDTO(data, message, result);
 	}

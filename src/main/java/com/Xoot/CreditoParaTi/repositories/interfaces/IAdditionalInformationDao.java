@@ -13,6 +13,6 @@ public interface IAdditionalInformationDao extends CrudRepository<AdditionalInfo
     @Query(nativeQuery = true, value = "select * from additional_information where status_flag = 1")
     public List<AdditionalInformation> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM additional_information WHERE creadit_application_id=:creditId")
+    @Query(nativeQuery = true, value = "SELECT * FROM additional_information WHERE creadit_application_id=:creditId and status_flag = 1 order by crtd_on desc limit 1")
     public AdditionalInformation findByCreditId(@Param("creditId") Integer creditId);
 }

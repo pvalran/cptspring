@@ -2,16 +2,14 @@ package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
+import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
+import com.Xoot.CreditoParaTi.repositories.interfaces.IAdditionalInformationDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionService;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.TransactionDTO;
-import com.Xoot.CreditoParaTi.entity.transaction;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ITransactionDao;
 import com.Xoot.CreditoParaTi.utils.TransactionUtil;
 import com.google.gson.Gson;
@@ -38,6 +36,8 @@ public class TransactionImpl implements ITransactionService {
     @Autowired
     ITransactionDao transactionDao;
 
+    @Autowired
+    IAdditionalInformationDao additionalInformationDao;
 
 
     @Autowired
@@ -127,15 +127,18 @@ public class TransactionImpl implements ITransactionService {
         for(CreditApplication creditApplication:creditApplications){
             if (creditApplication.getCustomer() != null ){
                 CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
+                customerTransactionDTO.setCreditId(creditApplication.getCreditId());
                 Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
                 customerTransactionDTO.setCustomer(
                         modelMapper.map(customer, CustomerDTO.class)
                 );
+
+                AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
                 List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
+                customerTransactionDTO.setLayerDocument("");
+                customerTransactionDTO.setLayerBiometric("");
+                customerTransactionDTO.setLayerGobernment("");
                 for (transaction Transaction : transactions) {
-                    customerTransactionDTO.setLayerDocument("");
-                    customerTransactionDTO.setLayerBiometric("");
-                    customerTransactionDTO.setLayerGobernment("");
                     switch (Transaction.getTransactionType()) {
                         case 1:
                             customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
@@ -151,7 +154,7 @@ public class TransactionImpl implements ITransactionService {
 
                 if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
                     customerTransactionDTO.setStatus("R");
-                } else if (customerTransactionDTO.getLayerDocument() == "A" || customerTransactionDTO.getLayerBiometric() == "A") {
+                } else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
                     if (customerTransactionDTO.getLayerGobernment() == "A") {
                         customerTransactionDTO.setStatus("A");
                     } else {
@@ -159,6 +162,11 @@ public class TransactionImpl implements ITransactionService {
                     }
                 } else {
                     customerTransactionDTO.setStatus("R");
+                }
+                if (additional != null) {
+                    customerTransactionDTO.setMobile(additional.getMobile());
+                } else {
+                    customerTransactionDTO.setMobile("");
                 }
 
                 customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
@@ -185,7 +193,6 @@ public class TransactionImpl implements ITransactionService {
         map.put (1, "A");
         map.put (2, "R");
 
-
         if ((filterTransacionDTO.getStatus().isEmpty()) ||
                 (filterTransacionDTO.getStatus() == null)) {
             filterTransacionDTO.setStatus("A,R,P");
@@ -193,17 +200,19 @@ public class TransactionImpl implements ITransactionService {
 
         customerTransactions = new ArrayList<CustomerTransactionDTO>();
         for(CreditApplication creditApplication:creditApplications){
-            if (creditApplication.getCustomer() > 0 && creditApplication.getCustomer() != null ){
+            if (creditApplication.getCustomer() != null ){
                 CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
+                customerTransactionDTO.setCreditId(creditApplication.getCreditId());
                 Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
                 customerTransactionDTO.setCustomer(
                         modelMapper.map(customer, CustomerDTO.class)
                 );
+                AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
                 List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
+                customerTransactionDTO.setLayerDocument("");
+                customerTransactionDTO.setLayerBiometric("");
+                customerTransactionDTO.setLayerGobernment("");
                 for (transaction Transaction : transactions) {
-                    customerTransactionDTO.setLayerDocument("");
-                    customerTransactionDTO.setLayerBiometric("");
-                    customerTransactionDTO.setLayerGobernment("");
                     switch (Transaction.getTransactionType()) {
                         case 1:
                             customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
@@ -219,7 +228,7 @@ public class TransactionImpl implements ITransactionService {
 
                 if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
                     customerTransactionDTO.setStatus("R");
-                } else if (customerTransactionDTO.getLayerDocument() == "A" || customerTransactionDTO.getLayerBiometric() == "A") {
+                } else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
                     if (customerTransactionDTO.getLayerGobernment() == "A") {
                         customerTransactionDTO.setStatus("A");
                     } else {
@@ -227,6 +236,11 @@ public class TransactionImpl implements ITransactionService {
                     }
                 } else {
                     customerTransactionDTO.setStatus("R");
+                }
+                if (additional != null) {
+                    customerTransactionDTO.setMobile(additional.getMobile());
+                } else {
+                    customerTransactionDTO.setMobile("");
                 }
                 customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
                 if (filterTransacionDTO.getStatus().toLowerCase().contains(customerTransactionDTO.getStatus().toLowerCase())) {
@@ -263,7 +277,4 @@ public class TransactionImpl implements ITransactionService {
             return new ResponseDTO(null, "Error", false);
         }
     }
-
-
-    ;
 }
