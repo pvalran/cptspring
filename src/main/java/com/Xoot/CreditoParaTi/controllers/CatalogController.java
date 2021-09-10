@@ -1,6 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
+import com.Xoot.CreditoParaTi.entity.Employee;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,8 @@ public class CatalogController {
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
+	@Autowired
+	private IEmployeeService employeeService;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -194,6 +197,21 @@ public class CatalogController {
 		try {
 			Type listType = new TypeToken<List<CreditApplicationDTO>>() {}.getType();
 			return new ResponseDTO(modelMapper.map(CreditApplicationService.getAllByUser(id),listType), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getCustomersUser/{id}")
+	public ResponseDTO getCustomersUser(@PathVariable Integer id) {
+		try {
+			Employee employee = employeeService.findById(id);
+			if (employee.getProfileId().equals("2")) {
+				return customerService.getByCustomerTransaction(employee.getIdUser());
+			} else {
+				return customerService.getByCustomerTransaction();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);

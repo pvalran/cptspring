@@ -54,6 +54,11 @@ public class UserboardImp implements IUserService, UserDetailsService {
     }
 
     @Override
+    public List<Usuario> findAllBoardApp() {
+        return null;
+    }
+
+    @Override
         @Transactional(readOnly = true)
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

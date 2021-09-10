@@ -4,20 +4,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.Xoot.CreditoParaTi.entity.Employee;
 import com.Xoot.CreditoParaTi.mapper.Mail;
+import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;
 import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
 import com.Xoot.CreditoParaTi.utils.PasswordGeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IUserCategoryService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
@@ -26,11 +21,17 @@ import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserDTO;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/user/user")
 public class UserController {
 	// Implementacion de interfaz
 	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private IEmployeeService employeeService;
+
+
 	@Autowired
 	private IUserCategoryService categoryUserService;
 	@Autowired
@@ -112,6 +113,7 @@ public class UserController {
 				newUser.setCategoryUser(categoryUserService.getlistCategory(user.getIdCategory()));
 
 				data = userService.save(newUser);
+
 				result = true;
 				message = "Usuario creado";
 			}
@@ -127,21 +129,23 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO Login(@RequestBody UserDTO user) {
 		try {
-			Usuario validaUsername = userService.findByUsername(user.getUsername());
-			Usuario validaEmail = userService.findByemail(user.getEmail());
-
+			Employee validaUsername = employeeService.findByUsername(user.getUsername());
+			Employee validaEmail = employeeService.findByemail(user.getEmail());
 			data = null;
 			result = false;
-
-			data = userService.Login(user.getUsername(),user.getPassword());
-			if (data == null) {
+			Employee employee = employeeService.Login(user.getUsername(),user.getPassword());
+			if (employee == null) {
 				message = "No autorizado";
 				result = false;
 			} else {
-				message = "Autorizado";
+				if (employee.getDtLastLogin() == null){
+					message = "ChangePassword";
+				} else {
+					message = "Autorizado";
+				}
+				data = employee;
 				result = true;
 			}
-
 		} catch (Exception ex) {
 			data = null;
 			result = false;

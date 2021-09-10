@@ -16,6 +16,9 @@ public interface IUserDao extends CrudRepository<Usuario, Integer>, JpaSpecifica
 
 	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE type_user = 2")
 	public List<Usuario> findAllBoard();
+
+	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE type_user = 1")
+	public List<Usuario> findAllBoardApp();
 	
 	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE status_flag = 1 AND username=:userName LIMIT 1")
 	public Usuario findByUsername(@Param("userName") String userName);

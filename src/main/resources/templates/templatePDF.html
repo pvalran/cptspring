@@ -1,63 +1,65 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
+	<meta charset="UTF-8">
+	<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		  name="viewport">
+	<meta content="ie=edge" http-equiv="X-UA-Compatible">
 	<title>Reporte de identidad</title>
+	<link th:href="@{/pdf.css}" rel="stylesheet"/>
 </head>
 <body>
-<div style="width: 100%; display: flex; flex-direction: row">
-	<img src="/images/logo.png" />
-	<span style="text-align: center; flex-grow:1;">
+<div style="width: 100%; ">
+	<span style="width: *; text-align: center; padding: auto auto;">
 		<h3>Reporte de Validación de Identidad</h3>
 	</span>
 </div>
-<table style="width: 100%;" border="1" cellpadding="0" cellspacing="0"  >
+<table style="width: 100%; ">
 	<tbody>
 		<tr>
 			<td colspan="4" style="background: #000000;color: #FFFFFF;width: 100%;">
-				<span style="
-				display: flex; flex-direction: row;
-				justify-content: space-around; width: 100%; ">
-					<span>Datos Generales del Enrolamiento</span>
-					<span >Folio: <span th:text="${creditId}" /></span>
+				<span style="display: block;">
+					<span >Datos Generales del Enrolamiento</span>
+					<span style="margin-right: auto;">Folio: <span th:text="${creditId}" /></span>
+				</span>
+			</td>
+		</tr>
+		<tr style="float: none;">
+			<td colspan="4">
+				<span style="width: 100%; ">
+					<span style="padding: 0 12; display: inline-block; width: 30%;">
+						<label style="display: block;">Validación Identidad</label>
+						<label style="display: block;"  th:text="${identidad}"></label>
+					</span>
+					<span style="padding: 0 12; display: inline-block; width: 30%;">
+						<label style="display: block;">Fecha de Impresión</label>
+						<label style="display: block;" th:text="${datePrint}"></label>
+					</span>
+					<span style="padding: 0 12; display: inline-block; width: 30%;">
+						<label style="display: block;">Fecha enrolamiento</label>
+						<label style="display: block;"  th:text="${dateEnrolment}"></label>
+					</span>
 				</span>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="4">
 				<span style="display: flex; flex-direction: row;width: 100%; ">
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Validación Identidad</label>
-						<label  th:text="${identidad}"></label>
+					<span style="padding: 0 12; display: inline-block; width: 25%;">
+						<label style="display: block;">Núm de Propuesta</label>
+						<label style="display: block;" th:text="${creditId}"></label>
 					</span>
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Fecha de Impresión</label>
-						<label th:text="${datePrint}"></label>
+					<span style="padding: 0 12; display: inline-block; width: 25%;">
+						<label style="display: block;">Rol</label>
+						<label style="display: block;">N/A</label>
 					</span>
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Fecha enrolamiento</label>
-						<label  th:text="${dateEnrolment}"></label>
+					<span style="padding: 0 12; display: inline-block; width: 25%;">
+						<label style="display: block;">Correo electrónico</label>
+						<label style="display: block;" th:text="${email}"></label>
 					</span>
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="4">
-				<span style="display: flex; flex-direction: row;width: 100%; ">
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Núm de Propuesta</label>
-						<label th:text="${creditId}"></label>
-					</span>
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Rol</label>
-						<label>N/A</label>
-					</span>
-					<span style="padding: 0 12; display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Correo electrónico</label>
-						<label th:text="${email}"></label>
-					</span>
-					<span style="display:flex; flex-direction: column; flex-basis: 0;flex-grow: 1;">
-						<label>Número de celular</label>
-						<label th:text="${mobile}"></label>
+					<span style="padding: 0 12; display: inline-block; width: 25%;">
+						<label style="display: block;">Número de celular</label>
+						<label style="display: block;" th:text="${mobile}"></label>
 					</span>
 				</span>
 			</td>
@@ -71,9 +73,9 @@
 		</tr>
 		<tr>
 			<td><span>Autentificación de documento Nivel 1</span></td>
-			<td style="text-align: center"><span th:text="${selfie}"></span></td>
+			<td style="width:10%; text-align: center"><span th:text="${inevalido}"></span></td>
 			<td><span>Comparación de selfie vs foto de documento identidad.</span></td>
-			<td style="text-align: center"><span th:text="${selfie}"></span></td>
+			<td style="width:10%; text-align: center"><span th:text="${selfie}"></span></td>
 		</tr>
 		<tr>
 			<td>Candados de seguridad visibles anverso</td>

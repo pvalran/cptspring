@@ -1,0 +1,484 @@
+package com.Xoot.CreditoParaTi.controllers;
+
+import com.Xoot.CreditoParaTi.dto.*;
+import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
+import com.Xoot.CreditoParaTi.services.service.PdfGenerator;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.lowagie.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
+
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.WebContext;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+
+@Controller
+@CrossOrigin(origins = "*")
+public class PdfController {
+
+    @Autowired
+    private PdfGenerator pdfGenerator;
+
+    @Autowired
+    private TemplateEngine templateEngine;
+
+    @Autowired
+    ServletContext servletContext;
+
+    @Autowired
+    private ICreditApplicationDao creditApplicationDao;
+
+    @Autowired
+    private ICustomerDao customerDao;
+
+    @Autowired
+    private IAdditionalInformationDao additionalDao;
+
+    @Autowired
+    private ITransactionDao transactionDao;
+
+    @Autowired
+    private ILocationStateDao stateDao;
+
+    @Autowired
+    private IDetalleCredito detalleCredito;
+
+    private String templateName = "templatePDF.html";
+
+    private String fileName = "reaffle.pdf";
+
+    @GetMapping("/identidad/{creditId}")
+    public ResponseEntity<ByteArrayResource> rafflePDF(@PathVariable("creditId") Integer creditId,
+                                                       final HttpServletRequest request,
+                                                       final HttpServletResponse response) throws DocumentException {
+
+        ByteArrayOutputStream byteArrayOutputStreamPDF = pdfGenerator.createPdf(
+                templateName,
+                request,
+                response, creditId);
+        ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName).contentType(MediaType.APPLICATION_PDF)
+                .contentLength(inputStreamResourcePDF.contentLength()).body(inputStreamResourcePDF);
+
+    }
+
+    @GetMapping("/identidadview/{creditId}")
+    public String raffleView(@PathVariable("creditId") Integer creditId,
+                             final HttpServletRequest request,
+                             final HttpServletResponse response,
+                             Model model) throws DocumentException {
+        Gson ObjJson = new Gson();
+
+        CreditApplication credit = creditApplicationDao.FindByCreditUser(creditId);
+
+        String statusINE = "R";
+        String statusSelfie = "R";
+        String statusCurp = "R";
+
+        model.addAttribute("creditId", "N/A");
+        model.addAttribute("datePrint", "N/A");
+        model.addAttribute("dateEnrolment", "N/A");
+        model.addAttribute("mobile", "N/A");
+        model.addAttribute("email", "N/A");
+        model.addAttribute("inevalido", "N/A");
+        model.addAttribute("mrz", "N/A");
+        model.addAttribute("vigencia", "N/A");
+        model.addAttribute("selfie", "N/A");
+        model.addAttribute("curp", "N/A");
+        model.addAttribute("identidad", "N/A");
+
+        if (credit != null) {
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            model.addAttribute("creditId", credit.getCreditId());
+            model.addAttribute("datePrint", dtf2.format(LocalDateTime.now()));
+            model.addAttribute("dateEnrolment", credit.getCrtd_on());
+            if (credit.getCustomer() != null) {
+                Customer customer = customerDao.findById(credit.getCustomer()).orElse(null);
+                Object ObjSelfie = null;
+                Object ObjCurp = null;
+                if (customer != null) {
+                    AdditionalInformation additional = additionalDao.findByCreditId(credit.getCreditId());
+                    model.addAttribute("mobile", additional.getMobile());
+                    model.addAttribute("email", customer.getEmail());
+                    transaction TransIne = transactionDao.findValidate(credit.getCreditId(), 1);
+                    transaction TransSelfie = transactionDao.findValidate(credit.getCreditId(), 2);
+                    transaction TransCurp = transactionDao.findValidate(credit.getCreditId(), 3);
+
+                    if ((TransIne != null) && (TransSelfie != null) && (TransCurp != null)) {
+                        LinkedTreeMap JsonIne = ObjJson.fromJson(TransIne.getTransactionCode(), LinkedTreeMap.class);
+                        LinkedTreeMap JsonSelfie = ObjJson.fromJson(TransSelfie.getTransactionCode(), LinkedTreeMap.class);
+                        LinkedTreeMap JsonCurp = ObjJson.fromJson(TransCurp.getTransactionCode(), LinkedTreeMap.class);
+
+
+                        if (JsonIne.containsKey("error")) {
+                            model.addAttribute("inevalido", "NO");
+                            model.addAttribute("mrz", JsonIne.get("mensaje"));
+                            model.addAttribute("vigencia", JsonIne.get("mensaje"));
+                            statusINE = "R";
+                        } else {
+                            model.addAttribute("inevalido", "SI");
+                            model.addAttribute("mrz", "SI");
+                            model.addAttribute("vigencia", JsonIne.get("vigencia"));
+                            statusINE = "A";
+                        }
+
+                        if (JsonSelfie.get("estatus") == "ok") {
+                            model.addAttribute("selfie", "SI");
+                            statusSelfie = "A";
+                        } else {
+                            model.addAttribute("selfie", "NO");
+                            statusSelfie = "R";
+                        }
+
+                        if (JsonCurp.get("estatus") == "ok") {
+                            model.addAttribute("curp", "SI");
+                            statusCurp = "A";
+                        } else {
+                            model.addAttribute("curp", "NO");
+                            statusCurp = "R";
+                        }
+
+                        if ((statusINE == "R") || (statusSelfie == "R")) {
+                            model.addAttribute("identidad", "RECHAZADA");
+                        } else if ((statusINE == "A") || (statusSelfie == "A") || (statusCurp == "A")) {
+                            model.addAttribute("identidad", "APROBADA");
+                        } else {
+                            model.addAttribute("identidad", "PENDIENTE");
+                        }
+                    }
+                    return "templatePDF.html";
+                } else {
+                    return "templatePDF.html";
+                }
+            } else {
+                return "templatePDF.html";
+            }
+        }
+
+        return "templatePDF.html";
+    }
+
+    @GetMapping("/error")
+    public String errorPDf() {
+        return "errorPDF";
+    }
+
+    @GetMapping("/identidadreportPDF/{creditId}")
+    public ResponseEntity<?> getPDF(@PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        byte[] pdfResponse = pdfGenerator.createPdfItext(request, response, templateName, creditId);
+        if (pdfResponse == null) {
+            /*return ResponseEntity.status(HttpStatus.OK)
+                    .location(URI.create("http://www.yahoo.com"))
+                    .build();*/
+
+            URI yahoo = URI.create("/pdf/error");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(yahoo);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+            /*return ResponseEntity.status(HttpStatus.OK)
+                    .contentType(MediaType.TEXT_HTML)
+                    .location(URI.create("/pdf/error"))
+                    .build();*/
+
+
+            /*response.setHeader("Location", "/pdf/error");
+            response.setStatus(302);
+            return response;*/
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfResponse);
+    }
+
+    @GetMapping("/pdf/solicitud/{creditId}")
+    public ResponseEntity<?> getPDFSolicitud(@PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        WebContext context = new WebContext(request, response, servletContext);
+        List<EconomicDependientiesDto> lstEconomic = new ArrayList<EconomicDependientiesDto>();
+        List<ReferenceDTO> lstReference = new ArrayList<ReferenceDTO>();
+        List<FreeQuestionnaireDTO> lstFreeAnswer = new ArrayList<FreeQuestionnaireDTO>();
+        List<LocationState> lstState;
+        HashMap<String, Object> medicquestionnario = new HashMap<String, Object>();
+        HashMap<Integer, Object> typeDependent = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> typeOccupation = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> typeStates = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> typePosition = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> typeActivity = new HashMap<Integer, Object>();
+
+
+        medicquestionnario.put("weight", 0.00);
+        medicquestionnario.put("height", 0.00);
+        medicquestionnario.put("answer1", 1);
+        medicquestionnario.put("answer2", 1);
+        medicquestionnario.put("answer3", 1);
+        medicquestionnario.put("answer4", 1);
+        medicquestionnario.put("answer5", 1);
+        medicquestionnario.put("answer6", 1);
+        medicquestionnario.put("answer7", 1);
+        medicquestionnario.put("answer8", 1);
+        medicquestionnario.put("answer9", 1);
+        medicquestionnario.put("answer10", 1);
+        medicquestionnario.put("answer11", 1);
+        medicquestionnario.put("answer13", 0);
+
+        typeDependent.put(0, "");
+        typeDependent.put(1, "Esposo(a)");
+        typeDependent.put(2, "Hijo(a)");
+        typeDependent.put(3, "Primo(a)");
+        typeDependent.put(4, "Tio¡(a)");
+        typeDependent.put(5, "Otro (a)");
+
+        typeOccupation.put(0, "");
+        typeOccupation.put(1, "Ama(o) de casa");
+        typeOccupation.put(2, "Empleado(a)");
+        typeOccupation.put(3, "Estudiante");
+
+
+        typePosition.put(1, "Empleado");
+        typePosition.put(2, "Funcionario");
+        typePosition.put(3, "Directivo");
+        typePosition.put(4, "Socio, dueño, propietario");
+        typePosition.put(5, "Profesionista independiente");
+        typePosition.put(6, "Pensionado");
+        typePosition.put(7, "Jubilado");
+        typePosition.put(8, "Otro");
+
+        typeActivity.put(1, "Comercio");
+        typeActivity.put(2, "Industria");
+        typeActivity.put(3, "Servicios");
+        typeActivity.put(4, "Agropecuario");
+        typeActivity.put(5, "Construccion");
+        typeActivity.put(6, "Otro");
+
+
+        lstState = stateDao.findAll();
+        for (LocationState state : lstState) {
+            typeStates.put(state.getIdState(), state.getName());
+        }
+
+        SpouseDTO spouse = new SpouseDTO();
+        WorkDTO work = new WorkDTO();
+        CocreditedCustomersDTO cocreditedCustomers = new CocreditedCustomersDTO();
+        CocreditedAdditionalDTO cocreditedAdditional = new CocreditedAdditionalDTO();
+        CocreditedWorkDTO cocreditedWork = new CocreditedWorkDTO();
+
+
+        context.setVariable("typeDependent", typeDependent);
+        context.setVariable("typeOccupation", typeOccupation);
+        context.setVariable("typeStates", typeStates);
+        context.setVariable("typePosition", typePosition);
+        context.setVariable("typeActivity", typeActivity);
+        context.setVariable("product", "Fovisste Tradicional Individual");
+        DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
+
+        DetalleCredito creditID = detalleCredito.findByCreditID(creditId);
+        if (creditID != null) {
+            context.setVariable("creditId", creditID);
+            if (creditID.getSpouse() != null) {
+                spouse = creditID.getSpouse();
+            }
+            context.setVariable("spouse", spouse);
+            if (creditID.getWork() != null) {
+                work = creditID.getWork();
+            }
+            context.setVariable("work", work);
+            if (creditID.getWork() != null) {
+                work = creditID.getWork();
+            }
+            context.setVariable("work", work);
+            if (creditID.getCocreditedCustomers() != null) {
+                cocreditedCustomers = creditID.getCocreditedCustomers();
+            }
+            context.setVariable("cocreditedCustomers", cocreditedCustomers);
+            if (creditID.getCocreditedAdditional() != null) {
+                cocreditedAdditional = creditID.getCocreditedAdditional();
+            }
+            context.setVariable("cocreditedAdditional", cocreditedAdditional);
+            if (creditID.getCocreditedWork() != null) {
+                cocreditedWork = creditID.getCocreditedWork();
+            }
+            context.setVariable("cocreditedWork", cocreditedWork);
+            for (EconomicDependientiesDto economic : creditID.getDependents()) {
+                lstEconomic.add(economic);
+            }
+            lstReference.add(new ReferenceDTO());
+            lstReference.add(new ReferenceDTO());
+            lstReference.add(new ReferenceDTO());
+            lstReference.add(new ReferenceDTO());
+            Integer idxRef = 0;
+            for (ReferenceDTO reference : creditID.getReferences()) {
+                lstReference.set(idxRef, reference);
+                idxRef++;
+            }
+            for (Integer idx = lstEconomic.size(); idx <= 4; idx++) {
+                EconomicDependientiesDto economicDependient = new EconomicDependientiesDto();
+                economicDependient.setTypeDependent(-1);
+                economicDependient.setTypeOccupation(-1);
+                lstEconomic.add(economicDependient);
+            }
+            context.setVariable("economics", lstEconomic);
+            context.setVariable("references", lstReference);
+            context.setVariable("lstFreeAnswer", lstFreeAnswer);
+            if (creditID.getMedicalquestionnaire() != null) {
+                MedicalQuestionnaireAnswerDTO medical = creditID.getMedicalquestionnaire();
+                medicquestionnario.put("weight", medical.getWeight());
+                medicquestionnario.put("height", medical.getHeight());
+                for (AnswerQuestionnaireDTO answer : medical.getanswerQuestionnairies()) {
+                    String key = "answer" + answer.getAnswerNumer();
+                    medicquestionnario.put(key, answer.getAnswer());
+                }
+                context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
+            }
+            context.setVariable("medicquestionnario", medicquestionnario);
+
+            String processedHtml = templateEngine.process("solcred", context);
+
+            ByteArrayOutputStream target = new ByteArrayOutputStream();
+
+            /*Setup converter properties. */
+            ConverterProperties converterProperties = new ConverterProperties();
+            converterProperties.setBaseUri("https://pimaid.dev:8443");
+
+            /* Call convert method */
+            HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
+
+            /* extract output as bytes */
+            byte[] bytes = target.toByteArray();
+
+            if (bytes == null) {
+            /*return ResponseEntity.status(HttpStatus.OK)
+                    .location(URI.create("http://www.yahoo.com"))
+                    .build();*/
+
+                URI yahoo = URI.create("/pdf/error");
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.setLocation(yahoo);
+                return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+            }
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(bytes);
+        } else {
+            URI yahoo = URI.create("/pdf/error");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(yahoo);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+        }
+    }
+
+
+
+
+    @GetMapping("/pdf/identidadreport/{creditId}")
+    public String getPDFView(@PathVariable("creditId") Integer creditId,
+                             Model context) {
+        Gson ObjJson = new Gson();
+
+        CreditApplication credit = creditApplicationDao.FindByCreditUser(creditId);
+
+        String statusINE = "R";
+        String statusSelfie = "R";
+        String statusCurp = "R";
+
+
+        if (credit != null) {
+            DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            context.addAttribute("creditId", credit.getCreditId());
+            context.addAttribute("datePrint", dtf2.format(LocalDateTime.now()));
+            context.addAttribute("dateEnrolment", credit.getCrtd_on());
+            if (credit.getCustomer() != null) {
+                Customer customer = customerDao.findById(credit.getCustomer()).orElse(null);
+                Object ObjSelfie = null;
+                Object ObjCurp = null;
+                if (customer != null) {
+                    AdditionalInformation additional = additionalDao.findByCreditId(credit.getCreditId());
+                    if (additional != null) {
+                        context.addAttribute("mobile", additional.getMobile());
+                    } else {
+                        context.addAttribute("mobile", " S/N");
+                    }
+                    context.addAttribute("email", customer.getEmail());
+                    transaction TransIne = transactionDao.findValidate(credit.getCreditId(), 1);
+                    transaction TransSelfie = transactionDao.findValidate(credit.getCreditId(), 2);
+                    transaction TransCurp = transactionDao.findValidate(credit.getCreditId(), 3);
+
+                    if (TransIne != null && TransSelfie != null && TransCurp != null) {
+                        LinkedTreeMap JsonIne = ObjJson.fromJson(TransIne.getTransactionCode(), LinkedTreeMap.class);
+                        LinkedTreeMap JsonSelfie = ObjJson.fromJson(TransSelfie.getTransactionCode(), LinkedTreeMap.class);
+                        LinkedTreeMap JsonCurp = ObjJson.fromJson(TransCurp.getTransactionCode(), LinkedTreeMap.class);
+
+                        if (JsonIne.containsKey("error") || JsonIne.containsKey("ERROR")) {
+                            context.addAttribute("inevalido", "NO");
+                            context.addAttribute("mrz", JsonIne.get("mensaje"));
+                            context.addAttribute("vigencia", JsonIne.get("mensaje"));
+                            statusINE = "R";
+                        } else {
+                            context.addAttribute("inevalido", "SI");
+                            context.addAttribute("mrz", "SI");
+                            context.addAttribute("vigencia", JsonIne.get("vigencia"));
+                            statusINE = "A";
+                        }
+
+                        if ((JsonSelfie.get("estatus").toString().toLowerCase() == "ok") || (JsonSelfie.get("estatus").toString().equals("OK"))) {
+                            context.addAttribute("selfie", "SI");
+                            statusSelfie = "A";
+                        } else {
+                            context.addAttribute("selfie", "NO");
+                            statusSelfie = "R";
+                        }
+
+                        if (JsonCurp.get("estatus").toString().toLowerCase().equals("ok")) {
+                            context.addAttribute("curp", "SI");
+                            statusCurp = "A";
+                        } else {
+                            context.addAttribute("curp", "NO");
+                            statusCurp = "R";
+                        }
+
+                        if ((statusINE == "R") || (statusSelfie == "R")) {
+                            context.addAttribute("identidad", "RECHAZADA");
+                        } else if ((statusINE == "A") || (statusSelfie == "A") || (statusCurp == "A")) {
+                            context.addAttribute("identidad", "APROBADA");
+                        } else {
+                            context.addAttribute("identidad", "PENDIENTE");
+                        }
+                    } else {
+                        return "errorPDF";
+                    }
+                } else {
+                    return "errorPDF";
+                }
+            } else {
+                return "errorPDF";
+            }
+        }
+        return "templatePDF";
+    }
+}

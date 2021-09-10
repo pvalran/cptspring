@@ -3,6 +3,7 @@ package com.Xoot.CreditoParaTi.controllers;
 import com.Xoot.CreditoParaTi.mapper.Mail;
 import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/notification")
 public class PushNotificationController {
     @Autowired
@@ -30,6 +32,6 @@ public class PushNotificationController {
         prop.put("password","valran");
         prop.put("link","http://url");
 
-        mailService.sendEmail(mail);
+        mailService.sendEmailTemplete(mail,prop,"emailAddUser");
     }
 }

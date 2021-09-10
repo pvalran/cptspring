@@ -14,10 +14,11 @@
     </style>
 </head>
 <body>
-
-<p>
-    Credito para Tí, te proporcione tus datos para el acceso a nuestra App Movil para, que continues con tu solicitud de credito:
-</p>
-
+    <p th:text="${'Estimado(a): ' + name}"></p>
+    <p>
+        Credito para Ti, te proporcione tus datos para el acceso a nuestra App Movil para, que continues con tu solicitud de credito:
+    </p>
+    <p th:text="${'Su usuario: ' + username}"></p>
+    <p th:text="${'Su password: ' + password}"></p>
 </body>
 </html>

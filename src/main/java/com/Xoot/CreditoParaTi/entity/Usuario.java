@@ -78,6 +78,9 @@ public class Usuario implements Serializable {
 	@Column(name = "type_user")
 	private Integer typeUser;
 
+	@Column(name = "phone")
+	private String phone;
+
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
@@ -216,5 +219,13 @@ public class Usuario implements Serializable {
 
 	public void setTypeUser(Integer typeUser) {
 		this.typeUser = typeUser;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

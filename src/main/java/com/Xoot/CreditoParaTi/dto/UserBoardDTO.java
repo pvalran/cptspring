@@ -11,7 +11,10 @@ public class UserBoardDTO extends UserDTO{
 	private String profileId;
 	private Integer typeUser;
 	private Integer status_flag;
+	private String crtd_by;
 	private java.util.Date crtd_on;
+	private String phone;
+	private Integer sucursal;
 
 	public String getName() {
 		return name;
@@ -75,5 +78,30 @@ public class UserBoardDTO extends UserDTO{
 
 	public void setCrtd_on(Date crtd_on) {
 		this.crtd_on = crtd_on;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public Integer getSucursal() {
+		return sucursal;
+	}
+
+	public void setSucursal(Integer sucursal) {
+		this.sucursal = sucursal;
+	}
+
+	public String getCrtd_by() {
+		return crtd_by;
+	}
+
+	public void setCrtd_by(String crtd_by) {
+		this.crtd_by = crtd_by;
 	}
 }

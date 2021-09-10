@@ -18,6 +18,8 @@ public interface IUserService {
 	public List<Usuario> findAllActive();
 
 	public List<Usuario> findAllBoard();
+
+	public List<Usuario> findAllBoardApp();
 	
 	public Usuario findByUsername(String username);
 	

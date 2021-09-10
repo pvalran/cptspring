@@ -24,4 +24,6 @@ public interface ICustomerService {
 	ResponseDTO getById(Integer id);
 
 	ResponseDTO getByCustomerTransaction();
+
+	ResponseDTO getByCustomerTransaction(Integer UserID);
 }

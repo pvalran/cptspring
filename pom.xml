@@ -16,6 +16,7 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>8</java.version>
+
 	</properties>
 	<packaging>war</packaging>
 	<dependencies>
@@ -142,10 +143,21 @@
             <version>2.8.7</version>
         </dependency>
 
-
-
-
-
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf</artifactId>
+			<version>9.1.22</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.1.12</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>html2pdf</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -153,8 +165,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
 		</plugins>
-		<finalName>CreditoParaTi</finalName>
+		<finalName>Cpttablero</finalName>
 	</build>
 </project>

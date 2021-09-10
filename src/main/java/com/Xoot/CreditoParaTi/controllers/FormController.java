@@ -2,9 +2,11 @@ package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.mapper.Mail;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
+import com.Xoot.CreditoParaTi.utils.PasswordGeneratorUtil;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,9 +21,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.modelmapper.ModelMapper;
 
@@ -78,7 +78,17 @@ public class FormController {
     private IUserService userService;
 
     @Autowired
+    private IEmployeeService employeeService;
+
+    @Autowired
+    private IMailService mailService;
+
+    @Autowired
     private ModelMapper modelMapper;
+
+    private Object data;
+    private String message;
+    private Boolean result;
 
     private final Path root = Paths.get("/srv/www/upload");
 
@@ -586,16 +596,16 @@ public class FormController {
         }
     }
 
-    @GetMapping("/userboard")
+    @GetMapping("/userboard/app")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormUserBoard() {
+    public ResponseDTO FormUserBoardApp() {
         Object data;
         String message;
         Boolean result;
         Type listType;
         try {
             listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
-            return new ResponseDTO( modelMapper.map(userService.findAllBoard(), listType),"Usuario",true);
+            return new ResponseDTO( modelMapper.map(userService.findAllBoardApp(), listType),"Usuario",true);
         } catch (Exception ex) {
             data = null;
             result = false;
@@ -620,10 +630,149 @@ public class FormController {
         return new ResponseDTO(data, message, result);
     }
 
-
-    @PostMapping("/userboard")
+    @GetMapping("/employee")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormUserBoard(@RequestBody UserBoardDTO user) {
+    public ResponseDTO FormEmployee() {
+        Object data;
+        String message;
+        Boolean result;
+        Type listType;
+        try {
+            listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
+            return new ResponseDTO( modelMapper.map(employeeService.findAllBoard(), listType),"Usuario",true);
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al crear el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+    @GetMapping("/employee/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormEmployee(@PathVariable Integer id) {
+        Object data;
+        String message;
+        Boolean result;
+        try {
+            return new ResponseDTO( modelMapper.map(employeeService.findById(id), UserBoardDTO.class),"Usuario",true);
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al actualización el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+    @PostMapping("/employee")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormEmployee(@RequestBody UserBoardDTO user) {
+        Object data;
+        String message;
+        Boolean result;
+
+        try {
+            Employee validaUsername = employeeService.findByUsername(user.getUsername());
+            Employee validaEmail = employeeService.findByemail(user.getEmail());
+            data = null;
+            result = false;
+            if (validaUsername != null) {
+                message = "El nombre de usuario " + user.getUsername() + ". Se encuentra en uso";
+            } else if (validaEmail != null) {
+                message = "El email " + user.getEmail() + ". Ya se encuentra registrado";
+            } else {
+                Employee newEmployee = new Employee();
+                String username = user.getName() + " " +user.getPaternalLastName() + " " + user.getMotherLastName();
+                String password = PasswordGeneratorUtil.getPassword(8);
+                newEmployee.setStatus_flag(1);
+                newEmployee.setUsername(user.getEmail());
+                newEmployee.setEmail(user.getEmail());
+                //newUser.setPassword(encoder.encode(user.getPassword()));
+                newEmployee.setPassword(password);
+                newEmployee.setDtLastLogin(null);
+                newEmployee.setName(user.getName());
+                newEmployee.setPaternalLastName(user.getPaternalLastName());
+                newEmployee.setMotherLastName(user.getMotherLastName());
+                newEmployee.setProfileId(user.getProfileId());
+                newEmployee.setPhone(user.getPhone());
+                newEmployee.setTypeUser(user.getTypeUser());
+                newEmployee.setSucursal(user.getSucursal());
+                data = employeeService.save(newEmployee);
+                try {
+                    Mail mail = new Mail();
+                    mail.setMailFrom("envios@creditoparati.com.mx");
+                    mail.setMailTo(user.getEmail());
+                    mail.setMailSubject("Credito para Ti - Alta de usuario");
+                    mail.setMailContent("");
+                    Map<String, Object> prop = new HashMap<String, Object>();
+                    prop.put("name", username);
+                    prop.put("username", user.getEmail());
+                    prop.put("password", password);
+                    prop.put("link", "http://url");
+
+                    mailService.sendEmailTemplete(mail, prop, "emailAddUser");
+                } catch (Exception ex) {
+
+                }
+                result = true;
+                message = "Usuario creado";
+            }
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error al crear el usuario.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+    @PutMapping("/employee/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormEmployee(@PathVariable Integer id,@RequestBody UserBoardDTO ObjDTO) {
+        try {
+            return employeeService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos usuario.", false);
+        }
+    }
+
+    @PostMapping("/employee/restorepassword")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO Restorepassword(@RequestBody UserDTO user) {
+        try {
+            data = null;
+            result = false;
+
+            Employee userchange = employeeService.findByemail(user.getEmail());
+            if (userchange == null) {
+                message = "Su correo no ha sido registrado";
+                result = false;
+            } else {
+                String username = userchange.getName()+" "+userchange.getPaternalLastName()+" "+userchange.getMotherLastName();
+                String password = PasswordGeneratorUtil.getPassword(8);
+                userchange.setPassword(password);
+                employeeService.save(userchange);
+                Mail mail = new Mail();
+                mail.setMailFrom("envios@creditoparati.com.mx");
+                mail.setMailTo(user.getEmail());
+                mail.setMailSubject("Recuperación de contraseña");
+                mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
+                mailService.sendEmail(mail);
+                message = "Su correo ha sido enviado";
+                result = true;
+            }
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            message = "Ocurrió un error en la recuperación de contraseña.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
+
+
+
+    @PostMapping("/userboard/app")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoardApp(@RequestBody UserBoardDTO user) {
         Object data;
         String message;
         Boolean result;
@@ -640,19 +789,38 @@ public class FormController {
                 message = "El email " + user.getEmail() + ". Ya se encuentra registrado";
             } else {
                 Usuario newUser = new Usuario();
-
+                String username = user.getName() + " " +user.getPaternalLastName() + " " + user.getMotherLastName();
+                String password = PasswordGeneratorUtil.getPassword(8);
                 newUser.setStatus_flag(1);
                 newUser.setUsername(user.getEmail());
                 newUser.setEmail(user.getEmail());
                 //newUser.setPassword(encoder.encode(user.getPassword()));
-                newUser.setPassword(user.getPassword());
+                newUser.setPassword(password);
                 newUser.setDtLastLogin(null);
                 newUser.setName(user.getName());
                 newUser.setPaternalLastName(user.getPaternalLastName());
                 newUser.setMotherLastName(user.getMotherLastName());
                 newUser.setProfileId(user.getProfileId());
-                newUser.setTypeUser(2);
+                newUser.setPhone(user.getPhone());
+                newUser.setTypeUser(user.getTypeUser());
+                newUser.setCrtd_by(user.getCrtd_by());
                 data = userService.save(newUser);
+                try {
+                    Mail mail = new Mail();
+                    mail.setMailFrom("envios@creditoparati.com.mx");
+                    mail.setMailTo(user.getEmail());
+                    mail.setMailSubject("Credito para Ti - Alta de usuario");
+                    mail.setMailContent("");
+                    Map<String, Object> prop = new HashMap<String, Object>();
+                    prop.put("name", username);
+                    prop.put("username", user.getEmail());
+                    prop.put("password", password);
+                    prop.put("link", "http://url");
+
+                    mailService.sendEmailTemplete(mail, prop, "emailAddUser");
+                } catch (Exception ex) {
+
+                }
                 result = true;
                 message = "Usuario creado";
             }
@@ -663,6 +831,8 @@ public class FormController {
         }
         return new ResponseDTO(data, message, result);
     }
+
+
 
     @PutMapping("/userboard/{id}")
     @ResponseStatus(HttpStatus.CREATED)

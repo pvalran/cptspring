@@ -1,0 +1,30 @@
+package com.Xoot.CreditoParaTi.repositories.interfaces;
+
+import com.Xoot.CreditoParaTi.entity.Employee;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface IEmployeeDao extends CrudRepository<Employee, Integer>, JpaSpecificationExecutor<Employee>{
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE status_flag = 1")
+	public List<Employee> findAllActive();
+
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE type_user = 2")
+	public List<Employee> findAllBoard();
+
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE type_user = 1")
+	public List<Employee> findAllBoardApp();
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE status_flag = 1 AND username=:userName LIMIT 1")
+	public Employee findByUsername(@Param("userName") String userName);
+	
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE status_flag = 1 AND email=:email LIMIT 1")
+	public Employee findByemail(@Param("email") String email);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM employee WHERE status_flag = 1 AND username=:userName and password = :password LIMIT 1")
+	public Employee Login(@Param("userName") String userName,@Param("password") String password);
+}
