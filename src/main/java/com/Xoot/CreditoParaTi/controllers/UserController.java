@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.Xoot.CreditoParaTi.dto.UserAuthDTO;
 import com.Xoot.CreditoParaTi.mapper.Mail;
 import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
 import com.Xoot.CreditoParaTi.utils.PasswordGeneratorUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,6 +39,8 @@ public class UserController {
 	private BCryptPasswordEncoder encoder;
 	@Autowired
 	private IMailService mailService;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	private Object data;
 	private String message;
@@ -126,6 +130,8 @@ public class UserController {
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseDTO Login(@RequestBody UserDTO user) {
+		boolean changed = false;
+		UserAuthDTO userAuthDTO;
 		try {
 			Usuario validaUsername = userService.findByUsername(user.getUsername());
 			Usuario validaEmail = userService.findByemail(user.getEmail());
@@ -133,13 +139,21 @@ public class UserController {
 			data = null;
 			result = false;
 
-			data = userService.Login(user.getUsername(),user.getPassword());
-			if (data == null) {
+			Usuario userAuth = userService.Login(user.getUsername(),user.getPassword());
+
+			if (userAuth == null) {
 				message = "No autorizado";
 				result = false;
+				data = null;
 			} else {
+				if (userAuth.getDtLastLogin() == null) {
+					changed = true;
+				}
+				userAuthDTO = modelMapper.map(userAuth, UserAuthDTO.class);
+				userAuthDTO.setChanged(changed);
 				message = "Autorizado";
 				result = true;
+				data = userAuthDTO;
 			}
 
 		} catch (Exception ex) {
@@ -165,13 +179,20 @@ public class UserController {
 				String username = userchange.getName()+" "+userchange.getPaternalLastName()+" "+userchange.getMotherLastName();
 				String password = PasswordGeneratorUtil.getPassword(8);
 				userchange.setPassword(password);
+				userchange.setDtLastLogin(new Date());
 				userService.save(userchange);
 				Mail mail = new Mail();
 				mail.setMailFrom("envios@creditoparati.com.mx");
 				mail.setMailTo(user.getEmail());
 				mail.setMailSubject("Recuperación de contraseña");
-				mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
-				mailService.sendEmail(mail);
+				Map<String,Object> prop = new HashMap<String,Object>();
+				prop.put("name",userchange.getName());
+				prop.put("paterno",userchange.getPaternalLastName());
+				prop.put("materno",userchange.getMotherLastName());
+				prop.put("password",password);
+				/*mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
+				mailService.sendEmail(mail);*/
+				mailService.sendEmailTemplete(mail,prop,"recoveryPassword");
 				message = "Su correo ha sido enviado";
 				result = true;
 			}
@@ -179,6 +200,31 @@ public class UserController {
 			data = null;
 			result = false;
 			message = "Ocurrió un error en la recuperación de contraseña.";
+		}
+		return new ResponseDTO(data, message, result);
+	}
+
+	@PostMapping("/changepassword")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseDTO changepassword(@RequestBody UserAuthDTO user) {
+		try {
+			Usuario userActual = userService.findById(user.getIdUser());
+			data = null;
+			result = false;
+			if (userActual == null) {
+				message = "No existe un usuario con el id proporcionado.";
+			} else {
+				userActual.setPassword(user.getPassword());
+				userActual.setDtLastLogin(new Date());
+				userActual.setMdfd_on(new Date());
+				data = userService.save(userActual);
+				result = true;
+				message = "Exito";
+			}
+		} catch (Exception e) {
+			data = null;
+			result = false;
+			message = "Ocurrió un error al actualizar el usuario.";
 		}
 		return new ResponseDTO(data, message, result);
 	}
