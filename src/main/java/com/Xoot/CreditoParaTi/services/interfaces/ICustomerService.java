@@ -2,6 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 import com.Xoot.CreditoParaTi.entity.Customer;
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
@@ -23,7 +24,7 @@ public interface ICustomerService {
 
 	ResponseDTO getById(Integer id);
 
-	ResponseDTO getByCustomerTransaction();
+	List<CustomerTransactionDTO> getByCustomerTransaction();
 
-	ResponseDTO getByCustomerTransaction(Integer UserID);
+	List<CustomerTransactionDTO> getByCustomerTransaction(Integer UserID);
 }

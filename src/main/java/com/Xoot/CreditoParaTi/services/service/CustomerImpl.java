@@ -84,7 +84,7 @@ public class CustomerImpl implements ICustomerService {
 	}
 
 	@Transactional(readOnly = true)
-	public ResponseDTO getByCustomerTransaction() {
+	public List<CustomerTransactionDTO> getByCustomerTransaction() {
 		TransactionUtil ObjTransUtil = new TransactionUtil();
 		List<CreditApplication> creditApplications = creditApplicationDao.findAllActive();
 
@@ -141,15 +141,11 @@ public class CustomerImpl implements ICustomerService {
 				customerTransactions.add(customerTransactionDTO);
 			}
 		}
-
-		data = customerTransactions;
-		result = true;
-		message = "Exito";
-		return new ResponseDTO(data, message, result);
+		return customerTransactions;
 	}
 
 	@Transactional(readOnly = true)
-	public ResponseDTO getByCustomerTransaction(Integer UserID) {
+	public List<CustomerTransactionDTO> getByCustomerTransaction(Integer UserID) {
 		TransactionUtil ObjTransUtil = new TransactionUtil();
 		Employee employee = employeeDao.findById(UserID).orElse(null);
 
@@ -208,11 +204,7 @@ public class CustomerImpl implements ICustomerService {
 				customerTransactions.add(customerTransactionDTO);
 			}
 		}
-
-		data = customerTransactions;
-		result = true;
-		message = "Exito";
-		return new ResponseDTO(data, message, result);
+		return customerTransactions;
 	}
 
 

@@ -9,33 +9,48 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            font-size: 48px;
+            font-size: 18px;
+        }
+        .float-right {
+            float: right;
+        }
+
+        .float-left {
+            float: left;
+        }
+
+        .float-clear {
+            clear: both;
+        }
+
+        .d-block{
+            display: block;
         }
     </style>
 </head>
 <body>
-<p th:text="${'Hello Dear ' + name}"></p>
-<p th:if="${name.length() > 5}">
-    Wow! You've got a long name (more than 5 chars)!
-</p>
-<p>
-    You have been successfully subscribed to the <b>Fake newsletter</b> on
-    <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
-</p>
-
-<p>
-    You can find <b>your inlined image</b> just below this text.
-</p>
-<p>
-
-    <a href="https://javabydeveloper.com">
-        <img src="http://javabydeveloper.com/wp-content/uploads/2019/12/javabydeveloper-email.png" alt="htts://javabydeveloper.com" height="110" width="500"/>
-    </a>
-</p>
-<p>
-    Regards, <br />
-    <em th:text="${sign}"></em>
-<p th:text="${location}"></p>
-</p>
+<span th:text="${'Fecha: '+ #dates.format(#dates.createNow(),'dd/MM/yyyy')}" class="float-right d-block" ></span>
+<span class="float-clear d-block"></span>
+<span th:text="${'Lugar: '+ location}" class="float-right d-block" ></span>
+<span class="float-clear d-block"></span>
+<span th:text="${'Estimado: '+ name}"></span>
+<p class="d-block"></p>
+<span class="d-block">Bienvenido a <strong>Credito Para Ti, S.A. de C.V. SOFOM ENR</strong>, por este medio le estamos proporcionando los datos (liga) en donde podrá obtener la aplicación APP que le permitirá interactuar para el llenado de su Solicitud de Credito, asi como, enviar los documentos que acompañan a su solicitud.</span>
+<p class="d-block"></p>
+<span th:text="${link}"></span>
+<p class="d-block"></p>
+<span class="d-block">Preferentemente descargue e instale la APP directamente en su equipo de telefónica móvil (celular), en este mismo correo se encuentra su usuario y contraseña temporal para el acceso a la aplicación, la contraseña deberá de cambiarla.</span>
+<p class="d-block"></p>
+<span class="d-block">Para cualquier duda u orientación favor de comunicarse por teléfono con su asesor de crédito</span>
+<p class="d-block"></p>
+<span class="d-block">A t e n t a m e n t e</span>
+<p class="d-block"></p>
+<p class="d-block"></p>
+<span th:text="${namecreated}" class="d-block"></span>
+<span class="d-block">Correo electrónico:&nbsp;<span th:text="${emailcreated}"></span></span>
+<span class="d-block">Numero telefónico:&nbsp;<span th:text="${phonecreated}"></span></span>
+<p class="d-block"></p>
+<p class="d-block"></p>
+<span class="d-block">Nota: podrá consultar nuestro aviso de privacidad en la pagina de internet de Credito Para Ti, SOFOM ENR, creditoparati.com.mx</span>
 </body>
 </html>

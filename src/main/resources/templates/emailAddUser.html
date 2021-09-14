@@ -9,16 +9,40 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            font-size: 48px;
+            font-size: 18x;
+        }
+
+        .float-right{
+            float: right;
+        }
+
+        .float-left{
+            float: left;
+        }
+
+        .float-clear{
+            clear: both;
+        }
+
+        .d-block{
+            display: block;
         }
     </style>
 </head>
 <body>
-    <p th:text="${'Estimado(a): ' + name}"></p>
-    <p>
-        Credito para Ti, te proporcione tus datos para el acceso a nuestra App Movil para, que continues con tu solicitud de credito:
-    </p>
-    <p th:text="${'Su usuario: ' + username}"></p>
-    <p th:text="${'Su password: ' + password}"></p>
+<span th:text="${'Fecha: '+ #dates.format(#dates.createNow(),'dd/MM/yyyy')}" class="float-right d-block" ></span>
+<span class="float-clear d-block"></span>
+<span th:text="${'Lugar: Ciudad de Mexico'}" class="float-right d-block"></span>
+<span class="float-clear d-block"></span>
+<p>&nbsp;</p>
+<span th:text="${'Estimado: ' + name}" class="d-block"></span>
+<p>&nbsp;</p>
+<span class="d-block">Bienvenido a Credito Para Ti, S.A. de C.V. SOFOM ENR, por este medio le estamos proporcionando los datos acceso al Tablero Pima de Credito para Ti</span>
+<p>&nbsp;</p>
+<span class="d-block">Tu usuario:</span>
+<span class="d-block"><strong th:text="${username}"></strong></span>
+<span class="d-block">Tu contraseña:</span>
+<span class="d-block"><strong th:text="${password}"></strong></span>
+<span class="d-block">Te avisamos que en tu primer ingreso el sistema te pide cambiar tu contraseña por razones de seguridad</span>
 </body>
 </html>

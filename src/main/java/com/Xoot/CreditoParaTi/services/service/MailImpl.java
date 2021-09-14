@@ -48,7 +48,7 @@ public class MailImpl implements IMailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
 
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true,"UTF-8");
             mimeMessageHelper.setSubject(mail.getMailSubject());
             mimeMessageHelper.setFrom(new InternetAddress(mail.getMailFrom(), "creditoparati.com"));
             mimeMessageHelper.setTo(mail.getMailTo());

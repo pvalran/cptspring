@@ -788,6 +788,7 @@ public class FormController {
             } else if (validaEmail != null) {
                 message = "El email " + user.getEmail() + ". Ya se encuentra registrado";
             } else {
+                Employee employee = employeeService.findByemail(user.getCrtd_by());
                 Usuario newUser = new Usuario();
                 String username = user.getName() + " " +user.getPaternalLastName() + " " + user.getMotherLastName();
                 String password = PasswordGeneratorUtil.getPassword(8);
@@ -816,8 +817,11 @@ public class FormController {
                     prop.put("username", user.getEmail());
                     prop.put("password", password);
                     prop.put("link", "http://url");
-
-                    mailService.sendEmailTemplete(mail, prop, "emailAddUser");
+                    prop.put("location","Ciudad de Mexico");
+                    prop.put("namecreated", employee.getName()+" "+employee.getPaternalLastName()+" "+employee.getMotherLastName());
+                    prop.put("emailcreated", employee.getEmail());
+                    prop.put("phonecreated", employee.getPhone());
+                    mailService.sendEmailTemplete(mail, prop, "emailAddPropect");
                 } catch (Exception ex) {
 
                 }

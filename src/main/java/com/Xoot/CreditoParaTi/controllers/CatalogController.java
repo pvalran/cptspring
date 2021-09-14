@@ -119,9 +119,6 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
-				case "customerstransacion":
-					return customerService.getByCustomerTransaction();
-
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
@@ -205,13 +202,15 @@ public class CatalogController {
 
 	@GetMapping("/getCustomersUser/{id}")
 	public ResponseDTO getCustomersUser(@PathVariable Integer id) {
+		Object data;
 		try {
 			Employee employee = employeeService.findById(id);
 			if (employee.getProfileId().equals("2")) {
-				return customerService.getByCustomerTransaction(employee.getIdUser());
+				data = customerService.getByCustomerTransaction(employee.getIdUser());
 			} else {
-				return customerService.getByCustomerTransaction();
+				data = customerService.getByCustomerTransaction();
 			}
+			return new ResponseDTO(data, "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
