@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "answer_questionnaire")
 public class AnswerQuestionnaire {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer IdAnswer;
 

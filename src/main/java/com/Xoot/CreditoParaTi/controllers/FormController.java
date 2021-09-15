@@ -148,6 +148,7 @@ public class FormController {
         Integer creditID = upload.getCreditId();
         Integer documentTypeID = upload.getDocumentTypeId();
         Integer userID = upload.getUserId();
+        byte[] decodedBytes;
 
         try {
             if (file != null) {
@@ -159,7 +160,7 @@ public class FormController {
                         filename.delete();
                     }
                     File filename = pathFile.toFile();
-                    byte[] decodedBytes = Base64.getDecoder().decode(file);
+                    decodedBytes = Base64.getDecoder().decode(file);
                     FileUtils.writeByteArrayToFile(filename, decodedBytes);
                 } catch (Exception e) {
                     throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
@@ -170,6 +171,7 @@ public class FormController {
                 documentDTO.setClassDocumentId(3);
                 documentDTO.setName(namefile);
                 documentDTO.setUserId(userID);
+                documentDTO.setDocument(decodedBytes);
 
                 ResponseDTO responseDTO = documentService.save(documentDTO);
                 Document document = (Document) responseDTO.getData();
@@ -192,9 +194,7 @@ public class FormController {
         Resource recurso = null;
         Document document = documentService.findById(id);
         Path rutaArchivo = Paths.get("/srv/www/upload").resolve(document.getName()).toAbsolutePath();
-
         File file = rutaArchivo.toFile();
-
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String base64File = Base64.getEncoder()

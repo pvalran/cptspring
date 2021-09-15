@@ -2,17 +2,7 @@ package com.Xoot.CreditoParaTi.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "documents")
@@ -54,6 +44,11 @@ public class Document implements Serializable {
 
 	@Column(name = "mdfd_by", length = 50)
 	private String mdfd_by;
+
+	@Lob
+	@Column(name = "document")
+	private byte[] document;
+
 
 	@PrePersist
 	public void prePersist() {
@@ -153,5 +148,13 @@ public class Document implements Serializable {
 
 	public void setClass_document_id(Integer class_document_id) {
 		this.class_document_id = class_document_id;
+	}
+
+	public byte[] getDocument() {
+		return document;
+	}
+
+	public void setDocument(byte[] document) {
+		this.document = document;
 	}
 }
