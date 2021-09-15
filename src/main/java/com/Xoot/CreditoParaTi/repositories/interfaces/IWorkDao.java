@@ -13,6 +13,6 @@ public interface IWorkDao extends CrudRepository<Work, Integer>, JpaSpecificatio
     @Query(nativeQuery = true, value = "select * from work where status_flag = 1")
     public List<Work> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM work WHERE creadit_application_id=:creditId and status_flag = 1 LIMIT 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM work WHERE number_request=:creditId and status_flag = 1 LIMIT 1")
     public Work findByCreditId(@Param("creditId") Integer creditId);
 }

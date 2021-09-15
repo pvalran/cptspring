@@ -7,11 +7,11 @@ import java.util.Date;
 @Table(name = "transaction")
 public class transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "credit_application_id")
+    @Column(name = "number_request")
     private Integer creditApplication;
 
     @Column(name = "transaction_number", precision=15, scale=2)

@@ -97,8 +97,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         CocreditedAdditional cocreditedAdditional = cocreditedAdditionalDao.findByCreditId(creditID);
         CocreditedWork cocreditedWork = cocreditedWorkDao.findByCreditId(creditID);
 
-        Document Pdfexpediente = documentDao.findAllIds(creditID,11);
-        Document Pdfsubcuenta = documentDao.findAllIds(creditID,12);
+        Document Pdfexpediente = documentDao.findAllIds(creditID,10);
+        Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));

@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "medical_questionnaire")
 public class MedicalQuestionnaire {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer IdMedicalQuestionnaire;
 
@@ -17,7 +17,7 @@ public class MedicalQuestionnaire {
     @Column(name = "height")
     private Double height;
 
-    @Column(name= "credit_application_id")
+    @Column(name= "number_request")
     private Integer creaditApplication;
 
     @Column(name = "status_flag")

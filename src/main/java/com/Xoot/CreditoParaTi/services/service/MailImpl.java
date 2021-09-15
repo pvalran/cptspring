@@ -48,11 +48,11 @@ public class MailImpl implements IMailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
 
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true,"UTF-8");
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             mimeMessageHelper.setSubject(mail.getMailSubject());
             mimeMessageHelper.setFrom(new InternetAddress(mail.getMailFrom(), "creditoparati.com"));
             mimeMessageHelper.setTo(mail.getMailTo());
-
+            mimeMessageHelper.setEncodeFilenames(true);
             Context context = new Context();
             context.setVariables(props);
             String html = templateEngine.process(template, context);

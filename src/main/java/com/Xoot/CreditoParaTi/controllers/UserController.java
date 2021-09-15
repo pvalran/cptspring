@@ -169,13 +169,20 @@ public class UserController {
 				String username = userchange.getName()+" "+userchange.getPaternalLastName()+" "+userchange.getMotherLastName();
 				String password = PasswordGeneratorUtil.getPassword(8);
 				userchange.setPassword(password);
+				userchange.setDtLastLogin(new Date());
 				userService.save(userchange);
 				Mail mail = new Mail();
 				mail.setMailFrom("envios@creditoparati.com.mx");
 				mail.setMailTo(user.getEmail());
 				mail.setMailSubject("Recuperación de contraseña");
-				mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
-				mailService.sendEmail(mail);
+				Map<String,Object> prop = new HashMap<String,Object>();
+				prop.put("name",userchange.getName());
+				prop.put("paterno",userchange.getPaternalLastName());
+				prop.put("materno",userchange.getMotherLastName());
+				prop.put("password",password);
+				/*mail.setMailContent("Estimado(a): "+ username+"\n Su nueva contraseña es:"+ password);
+				mailService.sendEmail(mail);*/
+				mailService.sendEmailTemplete(mail,prop,"recoveryPassword");
 				message = "Su correo ha sido enviado";
 				result = true;
 			}

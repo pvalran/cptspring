@@ -16,7 +16,7 @@ public interface IFreeQuestionnaireDao extends CrudRepository<FreeQuestionnaire,
     @Query(nativeQuery = true, value = "select * from free_questionnaire where medical_questionnaire_id = :medicalId  order by answer_numer")
     public List<FreeQuestionnaire> findByMedicalQuestionnaire(@Param("medicalId") Integer medicalId);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM free_questionnaire WHERE creadit_application_id=:creditId order by answer_numer")
+    @Query(nativeQuery = true, value = "SELECT * FROM free_questionnaire WHERE number_request=:creditId order by answer_numer")
     public List<FreeQuestionnaire> findByCreditId(@Param("creditId") Integer creditId);
 
     @Query(nativeQuery = true, value = "select * from free_questionnaire " +

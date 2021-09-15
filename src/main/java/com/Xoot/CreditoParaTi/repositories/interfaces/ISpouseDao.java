@@ -13,6 +13,6 @@ public interface ISpouseDao extends CrudRepository<Spouse,Integer>, JpaSpecifica
     @Query(nativeQuery = true,value="select * from spouse where status_flag = 1")
     public List<Spouse> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM spouse WHERE creadit_application_id=:creditId and status_flag = 1 LIMIT 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM spouse WHERE number_request=:creditId and status_flag = 1 LIMIT 1")
     public Spouse findByCreditId(@Param("creditId") Integer creditId);
 }

@@ -15,7 +15,7 @@ public interface IAnswerQuestionnaireDao extends CrudRepository<AnswerQuestionna
     @Query(nativeQuery = true, value = "select * from answer_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer")
     public List<AnswerQuestionnaire> findByMedicalQuestionnaire(@Param("medicalId") Integer medicalId);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM answer_questionnaire WHERE creadit_application_id=:creditId order by answer_numer")
+    @Query(nativeQuery = true, value = "SELECT * FROM answer_questionnaire WHERE number_request=:creditId order by answer_numer")
     public List<AnswerQuestionnaire> findByCreditId(@Param("creditId") Integer creditId);
 
     @Query(nativeQuery = true, value = "select * from answer_questionnaire " +

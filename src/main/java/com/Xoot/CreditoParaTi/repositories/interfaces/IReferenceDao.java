@@ -13,7 +13,7 @@ public interface IReferenceDao extends CrudRepository<Reference, Integer>, JpaSp
     @Query(nativeQuery = true, value = "select * from reference where status_flag = 1")
     public List<Reference> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM reference WHERE creadit_application_id=:creditId and status_flag = 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM reference WHERE number_request=:creditId and status_flag = 1")
     public List<Reference> findByCreditId(@Param("creditId") Integer creditId);
 
 }

@@ -109,16 +109,17 @@ public class DocumentImpl implements IDocumentService {
 		newDocument.setTypeDocumentId(typeDocument.getIdTypeDocument());
 		newDocument.setClass_document_id(document.getClassDocumentId());
 		newDocument.setUserId(document.getUserId());
+		newDocument.setDocument(document.getDocument());
 		data = documentDao.save(newDocument);
 		result = true;
 		message = "Registro creado.";
 		return new ResponseDTO(data, message, result);
 	}
-	
+
 	@Override
 	@Transactional
 	public ResponseDTO update(Integer id, DocumentDTO document) {
-		
+
 		Document documentActual = findById(id);
 		Document documentExist = findAllIds(document.getCreditAplication(), document.getTypeDocumentId());
 		DocumentType typeDocument = typeDocumentService.findById(document.getTypeDocumentId());

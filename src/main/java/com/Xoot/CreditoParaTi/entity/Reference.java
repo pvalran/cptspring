@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "reference")
 public class Reference {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer IdReference;
 
@@ -32,7 +32,7 @@ public class Reference {
     @Column(name="mobile", length = 12)
     private String mobile;
 
-    @Column(name= "creadit_application_id")
+    @Column(name= "number_request")
     private Integer creditApplication;
 
 

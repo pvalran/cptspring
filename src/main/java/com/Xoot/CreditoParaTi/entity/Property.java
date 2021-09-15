@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "property")
 public class Property {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer IdProperty;
 
@@ -56,7 +56,7 @@ public class Property {
     @Column(name= "state")
     private String state;
 
-    @Column(name= "creadit_application_id")
+    @Column(name= "number_request")
     private Integer creaditApplication;
 
     @Column(name = "financing_percentage")

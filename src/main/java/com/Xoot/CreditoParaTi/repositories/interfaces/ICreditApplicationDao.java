@@ -20,7 +20,7 @@ public interface ICreditApplicationDao extends CrudRepository<CreditApplication,
 	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE user_id=:idUser AND status_flag = 1")
 	public List<CreditApplication> getAllByUser(@Param("idUser") Integer idUser);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE credit_id=:creditId limit 1")
+	@Query(nativeQuery = true, value = "SELECT * FROM credits_aplications WHERE number_request=:creditId limit 1")
 	public CreditApplication FindByCreditUser(@Param("creditId") Integer creditId);
 
 	@Query(nativeQuery = true, value = "SELECT ca.* FROM credits_aplications ca inner join users on users.id = ca.user_id  WHERE users.crtd_by = :employee")
@@ -30,7 +30,7 @@ public interface ICreditApplicationDao extends CrudRepository<CreditApplication,
 	public List<CreditApplication> getCreditTransDate(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	@Query(nativeQuery = true, value = "select * from credits_aplications ca inner join customers cu on ca.customer_id = cu.id where " +
-			"convert(ca.credit_id,char(11)) = :search or " +
+			"convert(ca.number_request,char(11)) = :search or " +
 			"cu.email = :search or " +
 			"cu.curp = :search  or " +
 			"concat(cu.name,' ',cu.paternal_last_name,' ',cu.mother_last_name) LIKE %:search%" +

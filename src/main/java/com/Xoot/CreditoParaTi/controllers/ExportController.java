@@ -1,6 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.entity.Employee;
+import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
 import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
@@ -62,7 +63,7 @@ public class ExportController  {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
-
+        String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=enrolados_" + currentDateTime + ".xlsx";

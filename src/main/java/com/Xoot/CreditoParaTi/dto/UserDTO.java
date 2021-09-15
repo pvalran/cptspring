@@ -7,7 +7,8 @@ public class UserDTO {
 	protected String password;
 	protected String email;
 	protected List<Integer> idCategory;
-	
+	protected boolean changed;
+
 	public String getUsername() {
 		return username;
 	}
@@ -32,4 +33,6 @@ public class UserDTO {
 	public void setIdCategory(List<Integer> idCategory) {
 		this.idCategory = idCategory;
 	}
+	public boolean getChanged() { return changed; }
+	public void setChanged(boolean changed) { this.changed = changed; }
 }
