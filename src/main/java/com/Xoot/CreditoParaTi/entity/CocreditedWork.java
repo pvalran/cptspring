@@ -65,7 +65,7 @@ public class CocreditedWork {
     @Column(name = "state")
     private String state;
 
-    @Column(name =  "credit_application_id")
+    @Column(name =  "number_request")
     private Integer creditApplication;
 
     @Column(name = "status_flag")

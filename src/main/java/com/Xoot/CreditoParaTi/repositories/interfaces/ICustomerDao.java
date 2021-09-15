@@ -21,6 +21,6 @@ public interface ICustomerDao extends CrudRepository<Customer, Integer>, JpaSpec
 	@Query(nativeQuery = true, value = "SELECT * FROM customers WHERE curp=:curp LIMIT 1")
 	public Customer findByCurp(@Param("curp") String curp);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM customers WHERE credit_id=:creditId and status_flag = 1 limit 1")
+	@Query(nativeQuery = true, value = "SELECT * FROM customers WHERE number_request=:creditId and status_flag = 1 limit 1")
 	public Customer findByCreditId(@Param("creditId") Integer creditId);
 }

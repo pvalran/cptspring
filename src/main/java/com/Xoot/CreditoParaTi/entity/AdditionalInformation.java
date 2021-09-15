@@ -80,10 +80,8 @@ public class AdditionalInformation {
     @Column(name= "country")
     private Integer country;
 
-    @Column(name= "creadit_application_id")
+    @Column(name= "number_request")
     private Integer creaditApplication;
-
-
 
     @Column(name = "status_flag")
     private Integer status_flag;

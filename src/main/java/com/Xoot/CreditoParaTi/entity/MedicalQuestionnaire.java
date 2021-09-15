@@ -17,7 +17,7 @@ public class MedicalQuestionnaire {
     @Column(name = "height")
     private Double height;
 
-    @Column(name= "credit_application_id")
+    @Column(name= "number_request")
     private Integer creaditApplication;
 
     @Column(name = "status_flag")

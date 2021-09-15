@@ -20,7 +20,7 @@ public class AnswerQuestionnaire {
     @Column(name = "MedicalQuestionnaire_Id")
     private Integer IdMedicalQuestionnaire;
 
-    @Column(name= "creadit_application_id")
+    @Column(name= "number_request")
     private Integer creaditApplication;
 
     @Column(name = "status_flag")

@@ -38,7 +38,7 @@ public class CreditApplication implements Serializable {
 	@Column(name = "status_id")
 	private Integer status;
 
-	@Column (name ="credit_id")
+	@Column (name ="number_request")
 	private Integer creditId;
 
 	@Column(name = "status_flag")

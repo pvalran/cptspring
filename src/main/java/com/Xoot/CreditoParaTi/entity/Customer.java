@@ -79,7 +79,7 @@ public class Customer implements Serializable {
 	@Column(name = "mdfd_by", length = 50)
 	private String mdfd_by;
 
-	@Column(name = "credit_id")
+	@Column(name = "number_request")
 	private Integer creditId;
 
 	@Column(name = "type_enrollment")

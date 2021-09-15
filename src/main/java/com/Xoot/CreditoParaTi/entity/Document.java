@@ -22,7 +22,7 @@ public class Document implements Serializable {
 	@Column(name = "class_document_id")
 	private Integer class_document_id;
 
-	@Column(name = "credit_aplication_id")
+	@Column(name = "number_request")
 	private Integer creditAplication;
 
 	@Column(name = "user_id")

@@ -14,6 +14,6 @@ public interface IEconomicDependientiesDAO extends CrudRepository<EconomicDepend
     @Query(nativeQuery = true, value = "SELECT * FROM economic_dependents WHERE status_flag = 1")
     public List<EconomicDependents> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM economic_dependents WHERE credit_application_id=:creditId")
+    @Query(nativeQuery = true, value = "SELECT * FROM economic_dependents WHERE number_request=:creditId")
     public List<EconomicDependents> findByCreditId(@Param("creditId") Integer creditId);
 }

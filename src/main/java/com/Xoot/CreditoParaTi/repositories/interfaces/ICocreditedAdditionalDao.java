@@ -13,6 +13,6 @@ public interface ICocreditedAdditionalDao extends CrudRepository<CocreditedAddit
     @Query(nativeQuery = true, value = "select * from cocredited_additional where status_flag = 1")
     public List<CocreditedAdditional> findAllActive();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM cocredited_additional WHERE credit_application_id=:creditId limit 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM cocredited_additional WHERE number_request=:creditId limit 1")
     public CocreditedAdditional findByCreditId(@Param("creditId") Integer creditId);
 }

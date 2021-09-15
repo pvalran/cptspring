@@ -11,7 +11,7 @@ public class transaction {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "credit_application_id")
+    @Column(name = "number_request")
     private Integer creditApplication;
 
     @Column(name = "transaction_number", precision=15, scale=2)
