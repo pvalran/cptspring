@@ -1,5 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
+import com.Xoot.CreditoParaTi.mapper.RfcDTO;
+import com.josketres.rfcfacil.Rfc;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.lang.reflect.Type;
 
 import org.modelmapper.TypeToken;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -197,6 +200,20 @@ public class CatalogController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@PostMapping("/getRFC")
+	public ResponseDTO getRFC(@RequestBody RfcDTO rfc) {
+		try {
+			Integer day = rfc.getDateBirthday().getDate();
+			Integer month = rfc.getDateBirthday().getMonth() + 1;
+			Integer year = rfc.getDateBirthday().getYear();
+			Rfc rd = new Rfc.Builder().name(rfc.getName()).firstLastName(rfc.getLastName()).secondLastName(rfc.getLastSecondName()).birthday(day, month, year).build();
+			return new ResponseDTO(rd.toString(), "Rfc generado", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Rfc no encontrado .", false);
 		}
 	}
 }
