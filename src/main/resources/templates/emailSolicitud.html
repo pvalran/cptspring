@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Alta de usuario</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+        }
+        .float-right {
+            float: right;
+        }
+
+        .float-left {
+            float: left;
+        }
+
+        .float-clear {
+            clear: both;
+        }
+
+        .d-block{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<span th:text="${'Fecha: '+ #dates.format(#dates.createNow(),'dd/MM/yyyy')}" class="float-right d-block" ></span>
+<span class="float-clear d-block"></span>
+<span class="float-right d-block">Lugar: Ciudad de México</span>
+<span class="float-clear d-block"></span>
+<span th:text="${'Estimado(a): '+ name}"></span>
+<p class="d-block"></p>
+<span class="d-block"><strong>Credito Para Ti, S.A. de C.V. SOFOM ENR</strong>, por este medio le envia su solicitud de credito HBSC prellenada con los datos que usted ha proporcionado por medio de la App de Credito para Ti.</span>
+<p class="d-block"></p>
+<span class="d-block">La solicitud adjunta a este correo la deberá firma, y posteriormente subir a nuestra app movil en la sesión de documentos </span>
+<p class="d-block"></p>
+<span class="d-block">Para cualquier duda u orientación favor de comunicarse por teléfono con su asesor de crédito</span>
+<p class="d-block"></p>
+<span class="d-block">Nota: podrá consultar nuestro aviso de privacidad en la pagina de internet de Credito Para Ti, SOFOM ENR, creditoparati.com.mx</span>
+</body>
+</html>

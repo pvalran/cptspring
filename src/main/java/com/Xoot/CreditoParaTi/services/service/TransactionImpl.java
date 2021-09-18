@@ -106,7 +106,7 @@ public class TransactionImpl implements ITransactionService {
     }
 
     @Override
-    public ResponseDTO filterDate(FilterTransacionDTO filterTransacionDTO) {
+    public  List<CustomerTransactionDTO> filterDate(FilterTransacionDTO filterTransacionDTO) {
         TransactionUtil ObjTransUtil = new TransactionUtil();
         List<CreditApplication> creditApplications = creditApplicationDao.getCreditTransDate(
                 filterTransacionDTO.getStartdate(),
@@ -116,13 +116,10 @@ public class TransactionImpl implements ITransactionService {
         HashMap<Integer,String> map = new HashMap<>();
         map.put (1, "A");
         map.put (2, "R");
-
-
         if ((filterTransacionDTO.getStatus().isEmpty()) ||
                 (filterTransacionDTO.getStatus() == null)) {
             filterTransacionDTO.setStatus("A,R,P");
         }
-
         customerTransactions = new ArrayList<CustomerTransactionDTO>();
         for(CreditApplication creditApplication:creditApplications){
             if (creditApplication.getCustomer() != null ){
@@ -175,15 +172,11 @@ public class TransactionImpl implements ITransactionService {
                 }
             }
         }
-
-        data = customerTransactions;
-        result = true;
-        message = "Exito";
-        return new ResponseDTO(data, message, result);
+        return customerTransactions;
     }
 
     @Override
-    public ResponseDTO filterSearch(FilterTransacionDTO filterTransacionDTO) {
+    public  List<CustomerTransactionDTO> filterSearch(FilterTransacionDTO filterTransacionDTO) {
         TransactionUtil ObjTransUtil = new TransactionUtil();
         List<CreditApplication> creditApplications = creditApplicationDao.getCreditTransSearch(
                 filterTransacionDTO.getSearch());
@@ -249,10 +242,7 @@ public class TransactionImpl implements ITransactionService {
             }
         }
 
-        data = customerTransactions;
-        result = true;
-        message = "Exito";
-        return new ResponseDTO(data, message, result);
+        return customerTransactions;
     }
 
     @Override

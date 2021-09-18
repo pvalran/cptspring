@@ -4,6 +4,7 @@ import com.Xoot.CreditoParaTi.entity.Employee;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
 import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;
+import com.Xoot.CreditoParaTi.services.interfaces.ITransactionService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
 import com.Xoot.CreditoParaTi.services.service.ExportImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/export")
 public class ExportController  {
     @Autowired
@@ -25,7 +27,8 @@ public class ExportController  {
     private ICustomerService customerService;
     @Autowired
     private IEmployeeService employeeService;
-
+    @Autowired
+    private ITransactionService transactionService;
 
     @GetMapping("/leaflet/excel")
     public void exportLeaflet(HttpServletResponse response) throws IOException {
@@ -62,12 +65,10 @@ public class ExportController  {
         ExportImpl exportService = new ExportImpl();
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-
         String currentDateTime = dateFormatter.format(new Date());
-
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=enrolados_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=transaction_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
-
+        exportService.exportCustomerTransaction(response,transactionService.filterDate(filterTransacionDto));
     }
 }

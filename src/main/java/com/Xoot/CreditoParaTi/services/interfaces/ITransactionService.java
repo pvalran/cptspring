@@ -1,5 +1,6 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
+import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.TransactionDTO;
 import com.Xoot.CreditoParaTi.entity.transaction;
@@ -22,9 +23,9 @@ public interface ITransactionService {
 
     ResponseDTO delete(Integer id);
 
-    ResponseDTO filterDate(FilterTransacionDTO filterTransacionDTO);
+    List<CustomerTransactionDTO> filterDate(FilterTransacionDTO filterTransacionDTO);
 
-    ResponseDTO filterSearch(FilterTransacionDTO filterTransacionDTO);
+    List<CustomerTransactionDTO> filterSearch(FilterTransacionDTO filterTransacionDTO);
 
     ResponseDTO filterStatistics(FilterTransacionDTO filterTransacionDTO);
 

@@ -38,7 +38,7 @@ public class ExportImpl {
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
         font.setBold(true);
-        font.setFontHeight(16);
+        font.setFontHeight(12);
         style.setFont(font);
 
         Integer column = 0;
@@ -68,7 +68,7 @@ public class ExportImpl {
 
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
-        font.setFontHeight(12);
+        font.setFontHeight(10);
         style.setFont(font);
 
         for (Usuario user : Users) {
@@ -121,7 +121,7 @@ public class ExportImpl {
 
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
-        font.setFontHeight(12);
+        font.setFontHeight(10);
         style.setFont(font);
 
         for (CustomerTransactionDTO customer : customters) {
@@ -134,6 +134,43 @@ public class ExportImpl {
             createCell(row, columnCount++, customer.getCustomer().getMotherLastName(), style);
             createCell(row, columnCount++, customer.getStatus(), style);
             createCell(row, columnCount++, customer.getLayerDocument(), style);
+            createCell(row, columnCount++, customer.getLayerGobernment(), style);
+        }
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+    }
+
+    public void exportCustomerTransaction(HttpServletResponse response, List<CustomerTransactionDTO> customters) throws IOException {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        List<String> titles = new ArrayList<String>();
+        titles.add("FOLIO");
+        titles.add("FECHA DE SOLICITUD");
+        titles.add("EMAIL");
+        titles.add("CELULAR");
+        titles.add("ESTATUS");
+        titles.add("CAPA DE DOCUMENTO");
+        titles.add("CAPA DE SELFIE");
+        titles.add("CAPA DE GOBIERNO");
+        writeHeaderLine("Transaciones",titles);
+        int rowCount = 1;
+
+        CellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setFontHeight(10);
+        style.setFont(font);
+
+        for (CustomerTransactionDTO customer : customters) {
+            Row row = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            createCell(row, columnCount++, customer.getCustomer().getCreditId(), style);
+            createCell(row, columnCount++, dateFormatter.format(customer.getCrtd_on()), style);
+            createCell(row, columnCount++, customer.getCustomer().getEmail(), style);
+            createCell(row, columnCount++, customer.getMobile(), style);
+            createCell(row, columnCount++, customer.getStatus(), style);
+            createCell(row, columnCount++, customer.getLayerDocument(), style);
+            createCell(row, columnCount++, customer.getLayerBiometric(), style);
             createCell(row, columnCount++, customer.getLayerGobernment(), style);
         }
         ServletOutputStream outputStream = response.getOutputStream();

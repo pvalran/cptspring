@@ -77,7 +77,11 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
         if (creditApplication != null) {
             if (creditApplication.getCreditId() != null) {
-                customer = customerDao.findById(creditApplication.getCustomer()).orElse(null);
+                if (creditApplication.getCustomer() != null) {
+                    customer = customerDao.findById(creditApplication.getCustomer()).orElse(null);
+                } else {
+                    customer = null;
+                }
             } else {
                 customer = customerDao.findByCreditId(creditID);
             }

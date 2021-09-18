@@ -73,7 +73,8 @@ public class FilterController {
 	public ResponseDTO Customerstransacion(@RequestBody FilterTransacionDTO filterTransacionDto) {
 		Type listType;
 		try {
-			return transactionService.filterDate(filterTransacionDto);
+			return new ResponseDTO(transactionService.filterDate(filterTransacionDto), "Filtro realizado", true);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Filtro no realizado", false);
@@ -84,7 +85,7 @@ public class FilterController {
 	public ResponseDTO CustomersSearctransacion(@RequestBody FilterTransacionDTO filterTransacionDto) {
 		Type listType;
 		try {
-			return transactionService.filterSearch(filterTransacionDto);
+			return new ResponseDTO(transactionService.filterSearch(filterTransacionDto),"Filtro realizado", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Filtro no realizado", false);

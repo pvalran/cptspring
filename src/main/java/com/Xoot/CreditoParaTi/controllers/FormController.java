@@ -78,6 +78,9 @@ public class FormController {
     private IUserService userService;
 
     @Autowired
+    private IBranchOfficeService branchOfficeService;
+
+    @Autowired
     private IEmployeeService employeeService;
 
     @Autowired
@@ -848,4 +851,46 @@ public class FormController {
         }
     }
 
+
+    @GetMapping("/branchoffice")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormBranchOffice() {
+        try {
+            Type listType = new TypeToken<List<BranchOfficeDTO>>() {}.getType();
+            return new ResponseDTO(modelMapper.map(branchOfficeService.findAllActive(),listType), "Exito", true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la información de las sucursales.", false);
+        }
+    }
+
+    @GetMapping("/branchoffice/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormBranchOffice(@PathVariable Integer id) {
+        try {
+            BranchOfficeDTO ObjDTO = modelMapper.map(branchOfficeService.findById(id),BranchOfficeDTO.class);
+            return new ResponseDTO( ObjDTO,"Información de la sucursal",true);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la información de los datos de las sucursales.", false);
+        }
+    }
+
+    @PostMapping("/branchoffice")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormBranchOffice(@RequestBody BranchOfficeDTO ObjDTO) {
+        try {
+            return branchOfficeService.save(ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la creación de los datos de la sucursal.", false);
+        }
+    }
+
+    @PutMapping("/branchoffice/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormBranchOffice(@PathVariable Integer id,@RequestBody BranchOfficeDTO ObjDTO) {
+        try {
+            return branchOfficeService.update(id,ObjDTO);
+        } catch (Exception e) {
+            return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos de la sucursal.", false);
+        }
+    }
 }
