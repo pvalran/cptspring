@@ -1,4 +1,4 @@
-package com.Xoot.CreditoParaTi.repositories.interfaces;
+	package com.Xoot.CreditoParaTi.repositories.interfaces;
 
 import java.util.List;
 
@@ -31,9 +31,11 @@ public interface IDocumentDao extends CrudRepository<Document, Integer>, JpaSpec
 			" and type_document_id in (12,13,14) and status_flag = 1")
 	public List<Document> findByCreditIdSpouse(@Param("creditId") Integer creditId);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE status_flag = 1 " +
-			"AND number_request=:idCreditAplication and class_document_id = 2")
-	public List<Document> findAllActiveCoacredit(@Param("idCreditAplication") Integer idCreditAplication);
+	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE number_request=:creditId" +
+			" and (type_document_id >= 1 and type_document_id <= 11) and status_flag = 1")
+	public List<Document> findByCreditDocCustomer(@Param("creditId") Integer creditId);
 
-
+	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE number_request=:creditId" +
+			" and type_document_id in (12,13,14) and status_flag = 1")
+	public List<Document> findByCreditDocCoacredit(@Param("creditId") Integer creditId);
 }

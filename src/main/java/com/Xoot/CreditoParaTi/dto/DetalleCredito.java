@@ -16,8 +16,7 @@ public class DetalleCredito {
     private CocreditedAdditionalDTO cocreditedAdditional;
     private CocreditedWorkDTO cocreditedWork;
     private PdfDTO pdf;
-
-
+    private Boolean solicitud;
 
     public List<DocumentDTO> getDocuments() {
         return documents;
@@ -121,5 +120,14 @@ public class DetalleCredito {
 
     public void setPdf(PdfDTO pdf) {
         this.pdf = pdf;
+    }
+
+
+    public Boolean getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Boolean solicitud) {
+        this.solicitud = solicitud;
     }
 }

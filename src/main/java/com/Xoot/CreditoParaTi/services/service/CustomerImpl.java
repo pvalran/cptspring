@@ -121,7 +121,6 @@ public class CustomerImpl implements ICustomerService {
 							break;
 					}
 				}
-
 				if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
 					customerTransactionDTO.setStatus("R");
 				} else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
@@ -133,7 +132,6 @@ public class CustomerImpl implements ICustomerService {
 				} else {
 					customerTransactionDTO.setStatus("R");
 				}
-
 				if (additional != null) {
 					customerTransactionDTO.setMobile(additional.getMobile());
 				} else {
@@ -154,19 +152,13 @@ public class CustomerImpl implements ICustomerService {
 	@Transactional
 	public ResponseDTO save(CustomerDTO customerDTO) {
 		Customer customerByCurp = _customerDao.findByCurp(customerDTO.getCurp());
-
 		if (customerByCurp != null) {
 			return CreateResonseDuplicatedCustomer(customerByCurp);
 		}
-
 		Customer customer = new Customer();
-
 		data = saveCustomer(1, customerDTO, customer);
-
 		result = true;
-
 		message = "Registro creado.";
-
 		return new ResponseDTO(data, message, result);
 	}
 
@@ -320,14 +312,12 @@ public class CustomerImpl implements ICustomerService {
 	}
 
 	private ResponseDTO CreateResonseDuplicatedCustomer(Customer customerByCurp) {
-
 		if (customerByCurp.getStatus_flag() == 0) {
 			message = "Ya existe un cliente con el curp: " + customerByCurp.getCurp() + " y se encuentra inactivo ID "
 					+ customerByCurp.getIdCustomer();
 		} else {
 			message = "Ya existe un cliente con el curp: " + customerByCurp.getCurp();
 		}
-
 		return new ResponseDTO(customerByCurp, message, result);
 	}
 }
