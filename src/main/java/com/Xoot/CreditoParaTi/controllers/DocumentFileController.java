@@ -1,6 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -9,17 +10,13 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentService;
@@ -105,5 +102,23 @@ public class DocumentFileController {
 		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
 		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+	}
+
+	@RequestMapping(path = "/apk", method = RequestMethod.GET)
+	public ResponseEntity<Resource> download(String param) throws IOException {
+		Path rutaArchivo = Paths.get("/srv/www/upload/apk").resolve("BrokerCPT.apk").toAbsolutePath();
+		File file = rutaArchivo.toFile();
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BrokerCPT.apk");
+
+		return new ResponseEntity<Resource>(resource, cabecera, HttpStatus.OK);
+
+		/*return ResponseEntity.ok()
+				.contentLength(file.length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.body(resource);
+		*/
 	}
 }

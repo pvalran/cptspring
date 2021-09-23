@@ -17,6 +17,8 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -217,15 +220,6 @@ public class PdfController {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setLocation(yahoo);
             return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
-            /*return ResponseEntity.status(HttpStatus.OK)
-                    .contentType(MediaType.TEXT_HTML)
-                    .location(URI.create("/pdf/error"))
-                    .build();*/
-
-
-            /*response.setHeader("Location", "/pdf/error");
-            response.setStatus(302);
-            return response;*/
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
@@ -442,10 +436,10 @@ public class PdfController {
     }
 
     @GetMapping("/pdf/identidadreport/{creditId}")
-    public String getPDFView(@PathVariable("creditId") Integer creditId,
-                             Model context) {
+    public ResponseEntity<?> getPDFView(@PathVariable("creditId") Integer creditId,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        WebContext context = new WebContext(request, response, servletContext);
         Gson ObjJson = new Gson();
-
         CreditApplication credit = creditApplicationDao.FindByCreditUser(creditId);
 
         String statusINE = "R";
@@ -455,9 +449,9 @@ public class PdfController {
 
         if (credit != null) {
             DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            context.addAttribute("creditId", credit.getCreditId());
-            context.addAttribute("datePrint", dtf2.format(LocalDateTime.now()));
-            context.addAttribute("dateEnrolment", credit.getCrtd_on());
+            context.setVariable("creditId", credit.getCreditId());
+            context.setVariable("datePrint", dtf2.format(LocalDateTime.now()));
+            context.setVariable("dateEnrolment", credit.getCrtd_on());
             if (credit.getCustomer() != null) {
                 Customer customer = customerDao.findById(credit.getCustomer()).orElse(null);
                 Object ObjSelfie = null;
@@ -465,11 +459,11 @@ public class PdfController {
                 if (customer != null) {
                     AdditionalInformation additional = additionalDao.findByCreditId(credit.getCreditId());
                     if (additional != null) {
-                        context.addAttribute("mobile", additional.getMobile());
+                        context.setVariable("mobile", additional.getMobile());
                     } else {
-                        context.addAttribute("mobile", " S/N");
+                        context.setVariable("mobile", " S/N");
                     }
-                    context.addAttribute("email", customer.getEmail());
+                    context.setVariable("email", customer.getEmail());
                     transaction TransIne = transactionDao.findValidate(credit.getCreditId(), 1);
                     transaction TransSelfie = transactionDao.findValidate(credit.getCreditId(), 2);
                     transaction TransCurp = transactionDao.findValidate(credit.getCreditId(), 3);
@@ -480,50 +474,74 @@ public class PdfController {
                         LinkedTreeMap JsonCurp = ObjJson.fromJson(TransCurp.getTransactionCode(), LinkedTreeMap.class);
 
                         if (JsonIne.containsKey("error") || JsonIne.containsKey("ERROR")) {
-                            context.addAttribute("inevalido", "NO");
-                            context.addAttribute("mrz", JsonIne.get("mensaje"));
-                            context.addAttribute("vigencia", JsonIne.get("mensaje"));
+                            context.setVariable("inevalido", "NO");
+                            context.setVariable("mrz", JsonIne.get("mensaje"));
+                            context.setVariable("vigencia", JsonIne.get("mensaje"));
                             statusINE = "R";
                         } else {
-                            context.addAttribute("inevalido", "SI");
-                            context.addAttribute("mrz", "SI");
-                            context.addAttribute("vigencia", JsonIne.get("vigencia"));
+                            context.setVariable("inevalido", "SI");
+                            context.setVariable("mrz", "SI");
+                            context.setVariable("vigencia", JsonIne.get("vigencia"));
                             statusINE = "A";
                         }
 
                         if ((JsonSelfie.get("estatus").toString().toLowerCase() == "ok") || (JsonSelfie.get("estatus").toString().equals("OK"))) {
-                            context.addAttribute("selfie", "SI");
+                            context.setVariable("selfie", "SI");
                             statusSelfie = "A";
                         } else {
-                            context.addAttribute("selfie", "NO");
+                            context.setVariable("selfie", "NO");
                             statusSelfie = "R";
                         }
 
                         if (JsonCurp.get("estatus").toString().toLowerCase().equals("ok")) {
-                            context.addAttribute("curp", "SI");
+                            context.setVariable("curp", "SI");
                             statusCurp = "A";
                         } else {
-                            context.addAttribute("curp", "NO");
+                            context.setVariable("curp", "NO");
                             statusCurp = "R";
                         }
 
                         if ((statusINE == "R") || (statusSelfie == "R")) {
-                            context.addAttribute("identidad", "RECHAZADA");
+                            context.setVariable("identidad", "RECHAZADA");
                         } else if ((statusINE == "A") || (statusSelfie == "A") || (statusCurp == "A")) {
-                            context.addAttribute("identidad", "APROBADA");
+                            context.setVariable("identidad", "APROBADA");
                         } else {
-                            context.addAttribute("identidad", "PENDIENTE");
+                            context.setVariable("identidad", "PENDIENTE");
                         }
                     } else {
-                        return "errorPDF";
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body("Error en la descargar");
                     }
                 } else {
-                    return "errorPDF";
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body("Error en la descargar");
                 }
             } else {
-                return "errorPDF";
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("Error en la descargar");
             }
         }
-        return "templatePDF";
+        String processedHtml = templateEngine.process("templatePDF", context);
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri("http://localhost:8080");
+        HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
+        byte[] bytes = target.toByteArray();
+
+        Path pathFile = this.root.resolve("reporteIdentidad_" + creditId + ".pdf");
+        if (Files.exists(pathFile)) {
+            File filename = pathFile.toFile();
+            filename.delete();
+        }
+        File filename = pathFile.toFile();
+        FileUtils.writeByteArrayToFile(filename, bytes);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(filename));
+
+        HttpHeaders cabecera = new HttpHeaders();
+        cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporteIdentidad_" + creditId + ".pdf");
+        return new ResponseEntity<Resource>(resource, cabecera, HttpStatus.OK);
     }
 }

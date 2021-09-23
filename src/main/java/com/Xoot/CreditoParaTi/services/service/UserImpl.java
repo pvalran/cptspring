@@ -77,6 +77,9 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	public List<Usuario> findAllBoardApp()  { return userDao.findAllBoardApp(); }
 
 	@Override
+	public List<Usuario> findLeafletUser(String promotor)  { return userDao.findLeafletUser(promotor); }
+
+	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		

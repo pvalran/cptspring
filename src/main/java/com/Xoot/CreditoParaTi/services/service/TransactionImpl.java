@@ -4,15 +4,13 @@ import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IAdditionalInformationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionService;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.TransactionDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ITransactionDao;
 import com.Xoot.CreditoParaTi.utils.TransactionUtil;
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
@@ -35,6 +33,9 @@ public class TransactionImpl implements ITransactionService {
 
     @Autowired
     ITransactionDao transactionDao;
+
+    @Autowired
+    IUserDao userDao;
 
     @Autowired
     IAdditionalInformationDao additionalInformationDao;
@@ -63,6 +64,33 @@ public class TransactionImpl implements ITransactionService {
 
     @Override
     public ResponseDTO save(TransactionDTO transactionDTO) {
+        Gson ObjJson = new Gson();
+        Integer status = 1;
+        LinkedTreeMap transCode = ObjJson.fromJson(transactionDTO.getTransactionCode(), LinkedTreeMap.class);
+        switch (transactionDTO.getTransactionType()){
+            case 1:
+                if (transCode.containsKey("error")) {
+                    status = 2;
+                } else {
+                    status = 1;
+                }
+                break;
+            case 2:
+                if (transCode.get("estatus").toString().toLowerCase().equals("ok") ) {
+                    status = 1;
+                } else {
+                    status = 2;
+                }
+                break;
+            case 3:
+                if (transCode.get("estatus").toString().toLowerCase().equals("ok") ) {
+                    status = 1;
+                } else {
+                    status = 2;
+                }
+                break;
+        }
+        transactionDTO.setTransactionStatus(status);
         transaction ObjTrans = transactionDao.save(modelMapper.map(transactionDTO,transaction.class));
         if (ObjTrans != null) {
             return  new ResponseDTO(ObjTrans,"Registro creado",true);
@@ -165,8 +193,9 @@ public class TransactionImpl implements ITransactionService {
                 } else {
                     customerTransactionDTO.setMobile("");
                 }
-
+                Usuario userCreated = userDao.findById(creditApplication.getUser()).orElse(new Usuario());
                 customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
+                customerTransactionDTO.setCrtd_by(userCreated.getCrtd_by());
                 if (filterTransacionDTO.getStatus().toLowerCase().contains(customerTransactionDTO.getStatus().toLowerCase())) {
                     customerTransactions.add(customerTransactionDTO);
                 }
@@ -235,7 +264,9 @@ public class TransactionImpl implements ITransactionService {
                 } else {
                     customerTransactionDTO.setMobile("");
                 }
+                Usuario userCreated = userDao.findById(creditApplication.getUser()).orElse(new Usuario());
                 customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
+                customerTransactionDTO.setCrtd_by(userCreated.getCrtd_by());
                 if (filterTransacionDTO.getStatus().toLowerCase().contains(customerTransactionDTO.getStatus().toLowerCase())) {
                     customerTransactions.add(customerTransactionDTO);
                 }

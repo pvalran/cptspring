@@ -20,6 +20,8 @@ public interface IUserService {
 	public List<Usuario> findAllBoard();
 
 	public List<Usuario> findAllBoardApp();
+
+	public List<Usuario> findLeafletUser(String promotor);
 	
 	public Usuario findByUsername(String username);
 	

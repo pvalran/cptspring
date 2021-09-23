@@ -69,25 +69,14 @@ public class PdfGenerator {
 
     public ByteArrayOutputStream createPdf(final String templateName, final HttpServletRequest request, final HttpServletResponse response,Integer creditId)
             throws DocumentException {
-
         logger.debug("Generando informe pdf");
-
         Assert.notNull(templateName, "The templateName can not be null");
-
-        //IWebContext ctx = new SpringWebContext(request, response, servletContext, LocaleContextHolder.getLocale(), map, context);
-
-
         Context context = new Context();
-
         Gson ObjJson = new Gson();
-
         CreditApplication credit = creditApplicationDao.FindByCreditUser(creditId);
-
         String statusINE = "R";
         String statusSelfie = "R";
         String statusCurp = "R";
-
-
         if (credit != null){
             DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             context.setVariable("creditId",credit.getCreditId());
@@ -108,13 +97,9 @@ public class PdfGenerator {
                     transaction TransIne = transactionDao.findValidate(credit.getCreditId(), 1);
                     transaction TransSelfie = transactionDao.findValidate(credit.getCreditId(), 2);
                     transaction TransCurp = transactionDao.findValidate(credit.getCreditId(), 3);
-
-
                     LinkedTreeMap JsonIne = ObjJson.fromJson(TransIne.getTransactionCode(), LinkedTreeMap.class);
                     LinkedTreeMap JsonSelfie = ObjJson.fromJson(TransSelfie.getTransactionCode(), LinkedTreeMap.class);
                     LinkedTreeMap JsonCurp = ObjJson.fromJson(TransCurp.getTransactionCode(), LinkedTreeMap.class);
-
-
                     if (JsonIne.containsKey("error")) {
                         context.setVariable("inevalido", "NO");
                         context.setVariable("mrz", JsonIne.get("mensaje"));
@@ -126,7 +111,6 @@ public class PdfGenerator {
                         context.setVariable("vigencia", JsonIne.get("vigencia"));
                         statusINE = "A";
                     }
-
                     if (JsonSelfie.get("estatus") == "ok") {
                         context.setVariable("selfie", "SI");
                         statusSelfie = "A";
@@ -134,7 +118,6 @@ public class PdfGenerator {
                         context.setVariable("selfie", "NO");
                         statusSelfie = "R";
                     }
-
                     if (JsonCurp.get("estatus") == "ok") {
                         context.setVariable("curp", "SI");
                         statusCurp = "A";
@@ -142,7 +125,6 @@ public class PdfGenerator {
                         context.setVariable("curp", "NO");
                         statusCurp = "R";
                     }
-
                     if ((statusINE == "R") || (statusSelfie == "R")) {
                         context.setVariable("identidad", "RECHAZADA");
                     } else if ((statusINE == "A") || (statusSelfie == "A") || (statusCurp == "A")) {
@@ -150,7 +132,6 @@ public class PdfGenerator {
                     } else {
                         context.setVariable("identidad", "PENDIENTE");
                     }
-
                 } else {
                     return null;
                 }
@@ -158,21 +139,15 @@ public class PdfGenerator {
                 return null;
             }
         }
-
         String processedHtml = templateEngine.process(templateName, context);
-
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
         try {
-
             ITextRenderer renderer = new ITextRenderer();
             renderer.setDocumentFromString(processedHtml, urlBase);
-
             renderer.layout();
             renderer.createPDF(bos, false);
             renderer.finishPDF();
             logger.info("PDF created correctamente");
-
         } finally {
             if (bos != null) {
                 try {
@@ -185,19 +160,13 @@ public class PdfGenerator {
         return bos;
     }
 
-
     public byte[] createPdfItext(HttpServletRequest request, HttpServletResponse response,final String templateName,Integer creditId) throws IOException {
         WebContext context = new WebContext(request, response, servletContext);
-
         Gson ObjJson = new Gson();
-
         CreditApplication credit = creditApplicationDao.FindByCreditUser(creditId);
-
         String statusINE = "R";
         String statusSelfie = "R";
         String statusCurp = "R";
-
-
         if (credit != null){
             DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             context.setVariable("creditId",credit.getCreditId());
@@ -236,7 +205,7 @@ public class PdfGenerator {
                             statusINE = "A";
                         }
 
-                        if ( (JsonSelfie.get("estatus").toString().toLowerCase() == "ok") || (JsonSelfie.get("estatus").toString().equals("OK") ) ) {
+                        if ( (JsonSelfie.get("estatus").toString().toLowerCase().equals("ok")) || (JsonSelfie.get("estatus").toString().equals("OK") ) ) {
                             context.setVariable("selfie", "SI");
                             statusSelfie = "A";
                         } else {
@@ -269,21 +238,12 @@ public class PdfGenerator {
                 return null;
             }
         }
-
         String processedHtml = templateEngine.process(templateName, context);
-
         ByteArrayOutputStream target = new ByteArrayOutputStream();
-
-        /*Setup converter properties. */
         ConverterProperties converterProperties = new ConverterProperties();
         converterProperties.setBaseUri("https://pimaid.dev:8443");
-
-        /* Call convert method */
         HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
-
-        /* extract output as bytes */
         byte[] bytes = target.toByteArray();
-
         return bytes;
     }
 

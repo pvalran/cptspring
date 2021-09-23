@@ -43,9 +43,8 @@ public class CustomerImpl implements ICustomerService {
 	private IAdditionalInformationDao additionalInformationDao;
 	@Autowired
 	private IEmployeeDao employeeDao;
-
-
-
+	@Autowired
+	private IUserDao userDao;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -137,7 +136,9 @@ public class CustomerImpl implements ICustomerService {
 				} else {
 					customerTransactionDTO.setMobile("");
 				}
+				Usuario userCreated = userDao.findById(creditApplication.getUser()).orElse(new Usuario());
 				customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
+				customerTransactionDTO.setCrtd_by(userCreated.getCrtd_by());
 				customerTransactions.add(customerTransactionDTO);
 			}
 		}

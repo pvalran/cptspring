@@ -60,6 +60,9 @@ public class CatalogController {
 	private ICustomerService customerService;
 	@Autowired
 	private IEmployeeService employeeService;
+	@Autowired
+	private IUserService userService;
+
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -211,6 +214,18 @@ public class CatalogController {
 				data = customerService.getByCustomerTransaction();
 			}
 			return new ResponseDTO(data, "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getLeafletUser/{id}")
+	public ResponseDTO getLeafletUser(@PathVariable Integer id) {
+		try {
+			Employee employee = employeeService.findById(id);
+			Type listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(userService.findLeafletUser(employee.getUsername()),listType), "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);

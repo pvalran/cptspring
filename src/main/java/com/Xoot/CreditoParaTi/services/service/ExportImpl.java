@@ -110,6 +110,7 @@ public class ExportImpl {
         List<String> titles = new ArrayList<String>();
         titles.add("FOLIO");
         titles.add("FECHA DE SOLICITUD");
+        titles.add("PROMOTOR");
         titles.add("NOMBRES");
         titles.add("APELLIDO PATERNO");
         titles.add("APELLIDO MATERNO");
@@ -128,7 +129,9 @@ public class ExportImpl {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
             createCell(row, columnCount++, customer.getCustomer().getCreditId(), style);
+
             createCell(row, columnCount++, dateFormatter.format(customer.getCrtd_on()), style);
+            createCell(row, columnCount++, customer.getCrtd_by(), style);
             createCell(row, columnCount++, customer.getCustomer().getName(), style);
             createCell(row, columnCount++, customer.getCustomer().getPaternalLastName(), style);
             createCell(row, columnCount++, customer.getCustomer().getMotherLastName(), style);
@@ -147,6 +150,7 @@ public class ExportImpl {
         List<String> titles = new ArrayList<String>();
         titles.add("FOLIO");
         titles.add("FECHA DE SOLICITUD");
+        titles.add("PROMOTOR");
         titles.add("EMAIL");
         titles.add("CELULAR");
         titles.add("ESTATUS");
@@ -165,6 +169,7 @@ public class ExportImpl {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
             createCell(row, columnCount++, customer.getCustomer().getCreditId(), style);
+            createCell(row, columnCount++, customer.getCrtd_by(), style);
             createCell(row, columnCount++, dateFormatter.format(customer.getCrtd_on()), style);
             createCell(row, columnCount++, customer.getCustomer().getEmail(), style);
             createCell(row, columnCount++, customer.getMobile(), style);

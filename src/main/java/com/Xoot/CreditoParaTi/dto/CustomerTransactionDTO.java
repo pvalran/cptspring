@@ -11,6 +11,7 @@ public class CustomerTransactionDTO {
     private String layerBiometric;
     private String layerGobernment;
     private Date crtd_on;
+    private String crtd_by;
     private Integer creditId;
     private String mobile;
 
@@ -83,5 +84,13 @@ public class CustomerTransactionDTO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getCrtd_by() {
+        return crtd_by;
+    }
+
+    public void setCrtd_by(String crtd_by) {
+        this.crtd_by = crtd_by;
     }
 }
