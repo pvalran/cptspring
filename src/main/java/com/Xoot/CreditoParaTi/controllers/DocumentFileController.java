@@ -1,6 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -8,18 +9,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentService;
@@ -28,14 +27,15 @@ import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
 
 @RestController
-@RequestMapping("/documents/file")
+@CrossOrigin(origins = "*")
+@RequestMapping("/documents")
 public class DocumentFileController {
 	@Autowired
 	private IDocumentService documentService;
 	@Autowired
 	private IDocumentDao documentDao;
 
-	@PostMapping("/uploadfile")
+	@PostMapping("/file/uploadfile")
 	public ResponseDTO upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Integer id) {
 		Object data = null;
 		String message = "";
@@ -84,7 +84,7 @@ public class DocumentFileController {
 		return new ResponseDTO(data, message, result);
 	}
 
-	@GetMapping("/dowloadfile/{name:.+}")
+	@GetMapping("/file/dowloadfile/{name:.+}")
 	public ResponseEntity<Resource> viewFile(@PathVariable String name) {
 
 		Path rutaArchivo = Paths.get("D://uploadJava").resolve(name).toAbsolutePath();
@@ -105,5 +105,51 @@ public class DocumentFileController {
 		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
 		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+	}
+
+	@RequestMapping(path = "/apk", method = RequestMethod.GET)
+	public ResponseEntity<Resource> download(String param) throws IOException {
+		Path rutaArchivo = Paths.get("/srv/www/upload/apk").resolve("BrokerCPT.apk").toAbsolutePath();
+		File file = rutaArchivo.toFile();
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BrokerCPT.apk");
+
+		return new ResponseEntity<Resource>(resource, cabecera, HttpStatus.OK);
+
+		/*return ResponseEntity.ok()
+				.contentLength(file.length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.body(resource);
+		*/
+	}
+
+	@GetMapping("/view/{creditId}/{idType}")
+	public ResponseEntity<Resource> viewFile(@PathVariable Integer creditId, @PathVariable Integer idType) {
+		try {
+			Resource recurso = null;
+			Document document = documentService.findAllIds(creditId,idType);
+			Path rutaArchivo = Paths.get("/srv/www/upload").resolve(document.getName()).toAbsolutePath();
+			File file = rutaArchivo.toFile();
+
+			byte[] fileContent = FileUtils.readFileToByteArray(file);
+			String filename;
+			InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+			HttpHeaders httpHeaders = new HttpHeaders();
+			if (idType == 10 || idType == 11){
+				filename =  "doc_"+creditId+"_"+idType+".pdf";
+				httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+			} else {
+				filename =  "doc_"+creditId+"_"+idType+".jpg";
+				httpHeaders.setContentType(MediaType.IMAGE_JPEG);
+			}
+			httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+filename);
+			return new ResponseEntity<Resource>(resource, httpHeaders, HttpStatus.OK);
+		} catch (IOException e) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }
