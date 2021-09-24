@@ -374,7 +374,7 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solcred", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("https://pimaid.dev:8443");
+                    converterProperties.setBaseUri("http://localhost:8080");
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
                     byte[] bytes = target.toByteArray();
                     if (bytes.equals(null)) {
@@ -386,14 +386,14 @@ public class PdfController {
                                 .body(resp);
                     }
 
-                    /*Path pathFile = this.root.resolve("solicitud_" + creditId + ".pdf");
+                    Path pathFile = this.root.resolve("solicitud_" + creditId + ".pdf");
                     if (Files.exists(pathFile)) {
                         File filename = pathFile.toFile();
                         filename.delete();
                     }
                     File filename = pathFile.toFile();
                     FileUtils.writeByteArrayToFile(filename, bytes);
-                    Mail mail = new Mail();
+                    /*Mail mail = new Mail();
                     mail.setMailFrom("envios@creditoparati.com.mx");
                     mail.setMailTo(user.getEmail());
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
@@ -408,7 +408,7 @@ public class PdfController {
                     resp.put("result", true);
                     return ResponseEntity.ok()
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(resp);
+                            .body("Enviado");
                 } else {
                     resp.put("data", "");
                     resp.put("message", "Correo no enviado, El número de credito no existe");
