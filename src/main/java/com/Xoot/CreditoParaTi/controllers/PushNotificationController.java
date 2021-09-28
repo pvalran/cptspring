@@ -27,11 +27,16 @@ public class PushNotificationController {
         mail.setMailSubject("Spring Boot - Email Example");
         mail.setMailContent("Learn How to send Email using Spring Boot!!!\n\nThanks\nwww.technicalkeeda.com");
         Map<String,Object> prop= new HashMap<String,Object>();
+        prop.put("location","Ciudad de México");
+
         prop.put("name","Pedro Alberto Valdes Rangel");
         prop.put("username","pvalran@creditoparati.com");
-        prop.put("password","valran");
-        prop.put("link","http://url");
+        prop.put("password","pvalran");
+        prop.put("namecreated","Pedro Alberto Valdes Rangel");
+        prop.put("emailcreated","pvalran@creditoparati.com");
+        prop.put("phonecreated","5541040222");
 
-        mailService.sendEmailTemplete(mail,prop,"emailAddUser");
+
+        mailService.sendEmailTemplete(mail,prop,"emailAddPropect");
     }
 }

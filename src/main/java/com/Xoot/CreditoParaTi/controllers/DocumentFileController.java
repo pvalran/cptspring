@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -110,10 +111,11 @@ public class DocumentFileController {
 		File file = rutaArchivo.toFile();
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-		HttpHeaders cabecera = new HttpHeaders();
-		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BrokerCPT.apk");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BrokerCPT.apk");
 
-		return new ResponseEntity<Resource>(resource, cabecera, HttpStatus.OK);
+		return new ResponseEntity<Resource>(resource, httpHeaders, HttpStatus.OK);
 
 		/*return ResponseEntity.ok()
 				.contentLength(file.length())
