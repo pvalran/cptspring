@@ -32,7 +32,7 @@ public class AdditionalInformationDTO {
     private Integer creaditApplication;
     private String specifyNationality;
     private Integer otherCivilState;
-
+    private String incomeSpouse;
 
     public Integer getIdAdditionalInformaction() {
         return idAdditionalInformaction;
@@ -232,5 +232,13 @@ public class AdditionalInformationDTO {
 
     public void setOtherCivilState(Integer otherCivilState) {
         this.otherCivilState = otherCivilState;
+    }
+
+    public String getIncomeSpouse() {
+        return incomeSpouse;
+    }
+
+    public void setIncomeSpouse(String incomeSpouse) {
+        this.incomeSpouse = incomeSpouse;
     }
 }

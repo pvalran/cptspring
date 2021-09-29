@@ -27,7 +27,9 @@ public class CocreditedAdditionalDTO {
     private String state;
     private String country;
     private Integer creditApplication;
-
+    private String nameSpouse;
+    private String paternalSpouse;
+    private String maternalSpouse;
 
     public Integer getIdCocreditedAdditional() {
         return idCocreditedAdditional;
@@ -219,5 +221,29 @@ public class CocreditedAdditionalDTO {
 
     public void setCreditApplication(Integer creditApplication) {
         this.creditApplication = creditApplication;
+    }
+
+    public String getNameSpouse() {
+        return nameSpouse;
+    }
+
+    public void setNameSpouse(String nameSpouse) {
+        this.nameSpouse = nameSpouse;
+    }
+
+    public String getPaternalSpouse() {
+        return paternalSpouse;
+    }
+
+    public void setPaternalSpouse(String paternalSpouse) {
+        this.paternalSpouse = paternalSpouse;
+    }
+
+    public String getMaternalSpouse() {
+        return maternalSpouse;
+    }
+
+    public void setMaternalSpouse(String maternalSpouse) {
+        this.maternalSpouse = maternalSpouse;
     }
 }

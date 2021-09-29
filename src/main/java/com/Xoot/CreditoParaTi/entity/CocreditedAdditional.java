@@ -97,6 +97,15 @@ public class CocreditedAdditional {
     @Column(name = "mdfd_by", length = 50)
     private String mdfd_by;
 
+    @Column(name = "name_spouse")
+    private String nameSpouse;
+
+    @Column(name = "paternal_spouse")
+    private String paternalSpouse;
+
+    @Column(name = "maternal_spouse")
+    private String maternalSpouse;
+
     @PrePersist
     public void prePersist() {
         crtd_on = new java.util.Date();
@@ -335,5 +344,29 @@ public class CocreditedAdditional {
 
     public void setMdfd_by(String mdfd_by) {
         this.mdfd_by = mdfd_by;
+    }
+
+    public String getNameSpouse() {
+        return nameSpouse;
+    }
+
+    public void setNameSpouse(String nameSpouse) {
+        this.nameSpouse = nameSpouse;
+    }
+
+    public String getPaternalSpouse() {
+        return paternalSpouse;
+    }
+
+    public void setPaternalSpouse(String paternalSpouse) {
+        this.paternalSpouse = paternalSpouse;
+    }
+
+    public String getMaternalSpouse() {
+        return maternalSpouse;
+    }
+
+    public void setMaternalSpouse(String maternalSpouse) {
+        this.maternalSpouse = maternalSpouse;
     }
 }
