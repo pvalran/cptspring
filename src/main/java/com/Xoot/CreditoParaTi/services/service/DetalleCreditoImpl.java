@@ -1,5 +1,6 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.dto.*;
@@ -7,11 +8,16 @@ import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.utils.DocumentUtil;
 import org.apache.commons.io.FileUtils;
+import org.hibernate.transform.Transformers;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -60,12 +66,18 @@ public class DetalleCreditoImpl implements IDetalleCredito {
 
     private DetalleCredito detalleCredito;
 
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+
+
     @Override
     public DetalleCredito findByCreditID(Integer creditID) {
         detalleCredito = new DetalleCredito();
         Boolean solicitud = false;
         String base64File;
         Customer customer;
+        EntityManager em = emf.createEntityManager();
+
         Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {
         }.getType();
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {
@@ -101,6 +113,18 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         CocreditedWork cocreditedWork = cocreditedWorkDao.findByCreditId(creditID);
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
+
+
+        List<DocStatusMap> items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
+                "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
+                "order by dt.id").setParameter("creditID",creditID)
+                .unwrap(org.hibernate.query.NativeQuery.class)
+                .setResultTransformer(Transformers.aliasToBean(DocStatusMap.class))
+                .getResultList();
+
+
+
+
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
         }
@@ -180,6 +204,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 }
             }
         }
+
+        detalleCredito.setDocumentStatus(items);
         detalleCredito.setSolicitud(solicitud);
         return detalleCredito;
     }

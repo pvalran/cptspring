@@ -11,7 +11,8 @@ public interface ILocationCityService {
 
 	List<LocationCity> findAllActive();
 
-	List<LocationsCitiesDTO> getMuntoState(Integer id);
+	List<LocationsCitiesDTO> getCityByMun(Integer id);
+	List<LocationsCitiesDTO> getCityToMun(String state,String counties);
 
 	List<LocationCity> findByListName(List<String> lstNameCity);
 }

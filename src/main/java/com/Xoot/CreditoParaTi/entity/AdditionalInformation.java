@@ -100,6 +100,9 @@ public class AdditionalInformation {
     @Column(name = "mdfd_by", length = 50)
     private String mdfd_by;
 
+    @Column(name = "specify_country_birth")
+    private String specifyCountryBirth;
+
     @Column(name = "income_spouse")
     private String incomeSpouse;
 
@@ -358,5 +361,13 @@ public class AdditionalInformation {
 
     public void setIncomeSpouse(String incomeSpouse) {
         this.incomeSpouse = incomeSpouse;
+    }
+
+    public String getSpecifyCountryBirth() {
+        return specifyCountryBirth;
+    }
+
+    public void setSpecifyCountryBirth(String specifyCountryBirth) {
+        this.specifyCountryBirth = specifyCountryBirth;
     }
 }

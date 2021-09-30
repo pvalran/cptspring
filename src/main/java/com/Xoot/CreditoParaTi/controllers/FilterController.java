@@ -5,7 +5,6 @@ import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,7 @@ public class FilterController {
 	@Autowired
 	private ILocationCityService locationCityService;
 	@Autowired
-	private ILocationColoniesService locationColoniesService;
+	private ILocationCountiesService locationColoniesService;
 	@Autowired
 	private ILocationSuburbService locationSuburbService;
 	@Autowired

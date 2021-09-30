@@ -1,6 +1,7 @@
 package com.Xoot.CreditoParaTi.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,47 +21,61 @@ public class LocationCity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idMunicipality;
+	private Integer idCity;
 
-	@Column(name = "name", length = 50)
+	@Column(name = "code")
+	private String code;
+
+	@Column(name = "name")
 	private String name;
 
-	@OneToOne
-	@JoinColumn(name = "state_id", referencedColumnName = "id")
-	private LocationState state;
+	@Column(name = "counties_id")
+	private Integer countiesId;
+
+	@Column(name = "state_code")
+	private String stateCode;
+
+	@Column(name = "counties_code")
+	private String countiesCode;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
-
-	@Column(name = "city_code")
-	private Integer municipality_code;
 
 	@Column(name = "crtd_on")
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date crtd_on;
 
-	@Column(name = "crtd_by", length = 50)
+	@Column(name = "crtd_by")
 	private String crtd_by;
 
 	@Column(name = "mdfd_on")
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date mdfd_on;
 
-	@Column(name = "mdfd_by", length = 50)
+	@Column(name = "mdfd_by")
 	private String mdfd_by;
 
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
 	}
 
-	public Integer getIdMunicipality() {
-		return idMunicipality;
+	public Integer getIdCity() {
+		return idCity;
 	}
 
-	public void setIdMunicipality(Integer idMunicipality) {
-		this.idMunicipality = idMunicipality;
+	public void setIdCity(Integer idCity) {
+		this.idCity = idCity;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getName() {
@@ -71,12 +86,28 @@ public class LocationCity implements Serializable {
 		this.name = name;
 	}
 
-	public LocationState getState() {
-		return state;
+	public Integer getCountiesId() {
+		return countiesId;
 	}
 
-	public void setState(LocationState state) {
-		this.state = state;
+	public void setCountiesId(Integer countiesId) {
+		this.countiesId = countiesId;
+	}
+
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+
+	public String getCountiesCode() {
+		return countiesCode;
+	}
+
+	public void setCountiesCode(String countiesCode) {
+		this.countiesCode = countiesCode;
 	}
 
 	public Integer getStatus_flag() {
@@ -87,11 +118,11 @@ public class LocationCity implements Serializable {
 		this.status_flag = status_flag;
 	}
 
-	public java.util.Date getCrtd_on() {
+	public Date getCrtd_on() {
 		return crtd_on;
 	}
 
-	public void setCrtd_on(java.util.Date crtd_on) {
+	public void setCrtd_on(Date crtd_on) {
 		this.crtd_on = crtd_on;
 	}
 
@@ -103,11 +134,11 @@ public class LocationCity implements Serializable {
 		this.crtd_by = crtd_by;
 	}
 
-	public java.util.Date getMdfd_on() {
+	public Date getMdfd_on() {
 		return mdfd_on;
 	}
 
-	public void setMdfd_on(java.util.Date mdfd_on) {
+	public void setMdfd_on(Date mdfd_on) {
 		this.mdfd_on = mdfd_on;
 	}
 
@@ -117,21 +148,5 @@ public class LocationCity implements Serializable {
 
 	public void setMdfd_by(String mdfd_by) {
 		this.mdfd_by = mdfd_by;
-	}
-
-
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-
-	public Integer getMunicipality_code() {
-		return municipality_code;
-	}
-
-	public void setMunicipality_code(Integer municipality_code) {
-		this.municipality_code = municipality_code;
 	}
 }

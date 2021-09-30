@@ -25,6 +25,9 @@ public class CocreditedAdditional {
     
     @Column(name = "civil_state")
     private Integer civilState;
+
+    @Column(name = "other_civil_state")
+    private Integer otherCivilState;
     
     @Column(name = "marital_status")
     private Integer maritalStatus;
@@ -96,6 +99,9 @@ public class CocreditedAdditional {
 
     @Column(name = "mdfd_by", length = 50)
     private String mdfd_by;
+
+    @Column(name = "specify_country_birth")
+    private String specifyCountryBirth;
 
     @Column(name = "name_spouse")
     private String nameSpouse;
@@ -368,5 +374,21 @@ public class CocreditedAdditional {
 
     public void setMaternalSpouse(String maternalSpouse) {
         this.maternalSpouse = maternalSpouse;
+    }
+
+    public String getSpecifyCountryBirth() {
+        return specifyCountryBirth;
+    }
+
+    public void setSpecifyCountryBirth(String specifyCountryBirth) {
+        this.specifyCountryBirth = specifyCountryBirth;
+    }
+
+    public Integer getOtherCivilState() {
+        return otherCivilState;
+    }
+
+    public void setOtherCivilState(Integer otherCivilState) {
+        this.otherCivilState = otherCivilState;
     }
 }

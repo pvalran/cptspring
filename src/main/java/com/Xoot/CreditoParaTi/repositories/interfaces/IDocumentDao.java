@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.Xoot.CreditoParaTi.entity.Customer;
+import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -35,7 +36,14 @@ public interface IDocumentDao extends CrudRepository<Document, Integer>, JpaSpec
 			" and (type_document_id >= 1 and type_document_id <= 11) and status_flag = 1")
 	public List<Document> findByCreditDocCustomer(@Param("creditId") Integer creditId);
 
+	@Query(nativeQuery = true, value = "select dt.id as type_document, case when COALESCE(d.number_request,true) = true then false else true end as status from documents_type dt " +
+			"left join documents d on dt.id = d.type_document_id and d.number_request = :creditId and d.status_flag = 1 " +
+			"order by dt.id")
+	public List<DocStatusMap> findByCreditDocumentStatus(@Param("creditId") Integer creditId);
+
 	@Query(nativeQuery = true, value = "SELECT * FROM documents WHERE number_request=:creditId" +
 			" and type_document_id in (12,13,14) and status_flag = 1")
 	public List<Document> findByCreditDocCoacredit(@Param("creditId") Integer creditId);
+
+
 }

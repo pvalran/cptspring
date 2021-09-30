@@ -93,9 +93,9 @@ public class PersistenceLocationImp implements IPersistenceLocation {
 				
 				LocationSuburb.setStatus_flag(1);
 				
-				LocationSuburb.setZipCode(Integer.parseInt( location.getZipCode()));			
+				//LocationSuburb.setZipCode(Integer.parseInt( location.getZipCode()));
 				
-			    LocationSuburb.setMunicipality_id(locationCityCreated.getIdMunicipality());
+			    //LocationSuburb.setMunicipality_id(locationCityCreated.getIdMunicipality());
 
 				lstLocationSuburb.add(LocationSuburb);
 			}
@@ -121,7 +121,7 @@ public class PersistenceLocationImp implements IPersistenceLocation {
 
 			locationCity.setName(location.getCity());
 
-			locationCity.setState(locationStateCreated);
+			//locationCity.setState(locationStateCreated);
 		} else {
 			locationCity = lstCitysExist.stream().filter(locationExist -> locationExist.getName().equals(location.getCity()))
 					.findFirst().orElse(null);
