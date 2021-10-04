@@ -8,9 +8,12 @@ import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.utils.DocumentUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.digester.ArrayStack;
 import org.hibernate.transform.Transformers;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +60,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     ICocreditedAdditionalDao cocreditedAdditionalDao;
     @Autowired
     ICocreditedWorkDao cocreditedWorkDao;
+    @Autowired
+    IDocumentTypeDao documentTypeDao;
 
     PdfDTO pdfDTO;
     DocumentUtil ObjDocUtil;
@@ -68,22 +73,21 @@ public class DetalleCreditoImpl implements IDetalleCredito {
 
     @PersistenceUnit
     private EntityManagerFactory emf;
-
+    private final Logger log = LoggerFactory.getLogger(DetalleCreditoImpl.class);
 
     @Override
     public DetalleCredito findByCreditID(Integer creditID) {
+
         detalleCredito = new DetalleCredito();
         Boolean solicitud = false;
         String base64File;
         Customer customer;
-        EntityManager em = emf.createEntityManager();
+        List<DocStatusMap> items = new ArrayList<DocStatusMap>();
+        //EntityManager em = emf.createEntityManager();
 
-        Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {
-        }.getType();
-        Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {
-        }.getType();
-        Type lstTypeReference = new TypeToken<List<ReferenceDTO>>() {
-        }.getType();
+        Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {}.getType();
+        Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {}.getType();
+        Type lstTypeReference = new TypeToken<List<ReferenceDTO>>() {}.getType();
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
         CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
         if (creditApplication != null) {
@@ -114,13 +118,32 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
+        List<DocumentType> listDocType = documentTypeDao.findAllActive();
+        for (DocumentType docType:listDocType){
+            Document doc = documentDao.findAllIds(creditID,docType.getIdTypeDocument());
+            DocStatusMap docStatus = new DocStatusMap();
+            if (doc == null) {
+                docStatus.setTypeDocument(docType.getIdTypeDocument());
+                docStatus.setStatus(0);
+            } else {
+                docStatus.setTypeDocument(docType.getIdTypeDocument());
+                docStatus.setStatus(1);
+            }
+            items.add(docStatus);
+        }
+        /*try {
+            items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
+                            "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
+                            "order by dt.id").setParameter("creditID", creditID)
+                    .unwrap(org.hibernate.query.NativeQuery.class)
+                    .setResultTransformer(Transformers.aliasToBean(DocStatusMap.class))
+                    .setHint("javax.persistence.query.timeout", 100000)
+                    .getResultList();
+        } catch (Exception ex) {
+            log.info("Error en consulta de DocStatus: "+ ex.getCause());
+            items = new ArrayList<DocStatusMap>();
+        }*/
 
-        List<DocStatusMap> items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
-                "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
-                "order by dt.id").setParameter("creditID",creditID)
-                .unwrap(org.hibernate.query.NativeQuery.class)
-                .setResultTransformer(Transformers.aliasToBean(DocStatusMap.class))
-                .getResultList();
 
 
 
