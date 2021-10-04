@@ -373,15 +373,16 @@
         <tr>
             <td>
                 <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <td style="font-weight: bold">Escolaridad:</td>
-                        <td>Primaria <font th:utext="${creditId.additionalies.scholarship eq 0} ? '( X )' : '( )'"></font></td>
-                        <td>Secundaria <font th:utext="${creditId.additionalies.scholarship eq 1} ? '( X )' : '( )'"></font></td>
-                        <td>Preparatoria <font th:utext="${creditId.additionalies.scholarship eq 2} ? '( X )' : '( )'"></font></td>
-                        <td>Técnico <font th:utext="${creditId.additionalies.scholarship eq 3} ? '( X )' : '( )'"></font></td>
-                        <td>Licenciatura <font th:utext="${creditId.additionalies.scholarship eq 4} ? '( X )' : '( )'"></font></td>
-                        <td>Posgrado <font th:utext="${creditId.additionalies.scholarship eq 5} ? '( X )' : '( )'"></font></td>
-                        <td>Sin Estudios <font th:utext="${creditId.additionalies.scholarship eq 6} ? '( X )' : '( )'"></font></td>
+                        <td>Primaria <font th:utext="${creditId.additionalies.scholarship eq 0} ? '( X )' : '(  )'"></font></td>
+                        <td>Secundaria <font th:utext="${creditId.additionalies.scholarship eq 1} ? '( X )' : '(  )'"></font></td>
+                        <td>Preparatoria <font th:utext="${creditId.additionalies.scholarship eq 2} ? '( X )' : '(  )'"></font></td>
+                        <td>Técnico <font th:utext="${creditId.additionalies.scholarship eq 3} ? '( X )' : '(  )'"></font></td>
+                        <td>Licenciatura <font th:utext="${creditId.additionalies.scholarship eq 4} ? '( X )' : '(  )'"></font></td>
+                        <td>Posgrado <font th:utext="${creditId.additionalies.scholarship eq 5} ? '( X )' : '(  )'"></font></td>
+                        <td>Sin Estudios <font th:utext="${creditId.additionalies.scholarship eq 6} ? '( X )' : '(  )'"></font></td>
                         <td style="font-weight: bold">Correo electrónico:</td>
                         <td style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${creditId.customer.email}"></font></td>
                     </tr>

@@ -8,18 +8,15 @@ import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionService;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.TransactionDTO;
-import com.Xoot.CreditoParaTi.utils.TransactionUtil;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.json.*;
 import java.util.*;
 
 @Service
@@ -43,6 +40,12 @@ public class TransactionImpl implements ITransactionService {
 
     @Autowired
     ICreditApplicationDao creditApplicationDao;
+
+    @Autowired
+    ICocreditedCustomersDao cocreditedCustomersDao;
+
+    @Autowired
+    ICocreditedAdditionalDao cocreditedAdditionalDao;
 
     @Autowired
     ModelMapper modelMapper;
@@ -135,7 +138,10 @@ public class TransactionImpl implements ITransactionService {
 
     @Override
     public  List<CustomerTransactionDTO> filterDate(FilterTransacionDTO filterTransacionDTO) {
-        TransactionUtil ObjTransUtil = new TransactionUtil();
+        String email;
+        String mobile;
+        TransactionUtilImpl ObjTransUtil = new TransactionUtilImpl();
+        CustomerTransactionDTO customerTransactionDTO;
         List<CreditApplication> creditApplications = creditApplicationDao.getCreditTransDate(
                 filterTransacionDTO.getStartdate(),
                 filterTransacionDTO.getEnddate());
@@ -145,21 +151,13 @@ public class TransactionImpl implements ITransactionService {
                 (filterTransacionDTO.getStatus() == null)) {
             filterTransacionDTO.setStatus("A,R,P");
         }
-        customerTransactions = new ArrayList<CustomerTransactionDTO>();
-        for(CreditApplication creditApplication:creditApplications){
-            if (creditApplication.getCustomer() != null ){
-                CustomerTransactionDTO customerTransactionDTO = customerTransaction(filterTransacionDTO,creditApplication);
-                if (customerTransactionDTO != null) {
-                    customerTransactions.add(customerTransactionDTO);
-                }
-            }
-        }
+        customerTransactions = creditTransaction(creditApplications,filterTransacionDTO);
         return customerTransactions;
     }
 
     @Override
     public  List<CustomerTransactionDTO> filterSearch(FilterTransacionDTO filterTransacionDTO) {
-        TransactionUtil ObjTransUtil = new TransactionUtil();
+        TransactionUtilImpl ObjTransUtil = new TransactionUtilImpl();
         List<CreditApplication> creditApplications = creditApplicationDao.getCreditTransSearch(
                 filterTransacionDTO.getSearch());
 
@@ -172,61 +170,7 @@ public class TransactionImpl implements ITransactionService {
                 (filterTransacionDTO.getStatus() == null)) {
             filterTransacionDTO.setStatus("A,R,P");
         }
-
-        customerTransactions = new ArrayList<CustomerTransactionDTO>();
-        for(CreditApplication creditApplication:creditApplications){
-            if (creditApplication.getCustomer() != null ){
-
-                CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
-                customerTransactionDTO.setCreditId(creditApplication.getCreditId());
-                Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
-                customerTransactionDTO.setCustomer(
-                        modelMapper.map(customer, CustomerDTO.class)
-                );
-                AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
-                List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
-                customerTransactionDTO.setLayerDocument("");
-                customerTransactionDTO.setLayerBiometric("");
-                customerTransactionDTO.setLayerGobernment("");
-                for (transaction Transaction : transactions) {
-                    switch (Transaction.getTransactionType()) {
-                        case 1:
-                            customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
-                            break;
-                        case 2:
-                            customerTransactionDTO.setLayerBiometric(map.get(Transaction.getTransactionStatus()));
-                            break;
-                        case 3:
-                            customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
-                            break;
-                    }
-                }
-
-                if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
-                    customerTransactionDTO.setStatus("R");
-                } else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
-                    if (customerTransactionDTO.getLayerGobernment() == "A") {
-                        customerTransactionDTO.setStatus("A");
-                    } else {
-                        customerTransactionDTO.setStatus("P");
-                    }
-                } else {
-                    customerTransactionDTO.setStatus("R");
-                }
-                if (additional != null) {
-                    customerTransactionDTO.setMobile(additional.getMobile());
-                } else {
-                    customerTransactionDTO.setMobile("");
-                }
-                Usuario userCreated = userDao.findById(creditApplication.getUser()).orElse(new Usuario());
-                customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
-                customerTransactionDTO.setCrtd_by(userCreated.getCrtd_by());
-                if (filterTransacionDTO.getStatus().toLowerCase().contains(customerTransactionDTO.getStatus().toLowerCase())) {
-                    customerTransactions.add(customerTransactionDTO);
-                }
-            }
-        }
-
+        customerTransactions = creditTransaction(creditApplications,filterTransacionDTO);
         return customerTransactions;
     }
 
@@ -253,11 +197,67 @@ public class TransactionImpl implements ITransactionService {
         }
     }
 
+
+    private  List<CustomerTransactionDTO> creditTransaction (List<CreditApplication> creditApplications,FilterTransacionDTO filterTransacionDTO){
+        List<CustomerTransactionDTO> customerTransactions = new ArrayList<CustomerTransactionDTO>();
+        CustomerTransactionDTO customerTransactionDTO;
+        String email;
+        String mobile;
+        for(CreditApplication creditApplication:creditApplications){
+            if (creditApplication.getCustomer() != null ){
+                List<Integer> typeTransaction = new ArrayList<Integer>();
+                typeTransaction.add(1);
+                typeTransaction.add(2);
+                typeTransaction.add(3);
+                customerTransactionDTO = customerTransaction(filterTransacionDTO,
+                        creditApplication,
+                        typeTransaction);
+                if (customerTransactionDTO != null) {
+                    customerTransactionDTO.setEnrolment("Acreditado");
+                    customerTransactions.add(customerTransactionDTO);
+                }
+                typeTransaction.clear();
+                typeTransaction.add(4);
+                typeTransaction.add(5);
+                typeTransaction.add(6);
+                customerTransactionDTO = customerTransaction(filterTransacionDTO,
+                        creditApplication,
+                        typeTransaction);
+                if (customerTransactionDTO != null) {
+                    customerTransactionDTO.setEmail("");
+                    customerTransactionDTO.setMobile("");
+                    customerTransactionDTO.setEnrolment("Cónyuge");
+                    customerTransactions.add(customerTransactionDTO);
+                }
+                typeTransaction.clear();
+                typeTransaction.add(7);
+                typeTransaction.add(8);
+                customerTransactionDTO = customerTransaction(filterTransacionDTO,
+                        creditApplication,
+                        typeTransaction);
+                if (customerTransactionDTO != null) {
+                    CocreditedCustomers cocreditedCustomers = cocreditedCustomersDao.findByCreditId(creditApplication.getCreditId());
+                    CocreditedAdditional cocreditedAdditional = cocreditedAdditionalDao.findByCreditId(creditApplication.getCreditId());
+                    email = (cocreditedCustomers != null)? cocreditedCustomers.getEmail() : null;
+                    mobile = (cocreditedAdditional != null)? cocreditedAdditional.getMobile() : null;
+                    customerTransactionDTO.setEmail(email);
+                    customerTransactionDTO.setMobile(mobile);
+                    customerTransactionDTO.setEnrolment("Coacreditado");
+                    customerTransactions.add(customerTransactionDTO);
+                }
+            }
+        }
+        return customerTransactions;
+    }
+
     private CustomerTransactionDTO customerTransaction(
         FilterTransacionDTO filterTransacionDTO,
-        CreditApplication creditApplication
+        CreditApplication creditApplication,
+        List<Integer> typeTransaction
     ) {
         HashMap<Integer,String> map = new HashMap<>();
+        String email;
+        String mobile;
         map.put (1, "A");
         map.put (2, "R");
 
@@ -268,19 +268,31 @@ public class TransactionImpl implements ITransactionService {
                 modelMapper.map(customer, CustomerDTO.class)
         );
         AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
-        List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
+        List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId(),typeTransaction);
+        if (transactions.size() == 0) {
+            return null;
+        }
+        email = (customer != null)? customer.getEmail() : null;
+        mobile = (additional != null)? additional.getMobile() : null;
+        customerTransactionDTO.setEmail(email);
+        customerTransactionDTO.setMobile(mobile);
         customerTransactionDTO.setLayerDocument("");
         customerTransactionDTO.setLayerBiometric("");
         customerTransactionDTO.setLayerGobernment("");
         for (transaction Transaction : transactions) {
             switch (Transaction.getTransactionType()) {
                 case 1:
+                case 4:
+                case 7:
                     customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
                     break;
                 case 2:
+                case 5:
                     customerTransactionDTO.setLayerBiometric(map.get(Transaction.getTransactionStatus()));
                     break;
                 case 3:
+                case 6:
+                case 8:
                     customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
                     break;
             }
@@ -311,5 +323,4 @@ public class TransactionImpl implements ITransactionService {
             return  null;
         }
     }
-
 }

@@ -97,10 +97,7 @@ public class PdfController {
                                                        final HttpServletRequest request,
                                                        final HttpServletResponse response) throws DocumentException {
 
-        ByteArrayOutputStream byteArrayOutputStreamPDF = pdfGenerator.createPdf(
-                templateName,
-                request,
-                response, creditId);
+        ByteArrayOutputStream byteArrayOutputStreamPDF = pdfGenerator.createPdf(templateName, request, response, creditId);
         ByteArrayResource inputStreamResourcePDF = new ByteArrayResource(byteArrayOutputStreamPDF.toByteArray());
 
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName).contentType(MediaType.APPLICATION_PDF)
@@ -292,10 +289,14 @@ public class PdfController {
 
 
                 lstState = stateDao.findAll();
+                typeStates.put(0,"");
                 for (LocationState state : lstState) {
                     typeStates.put(state.getIdState(), state.getName());
                 }
 
+
+                CustomerDTO customer = new CustomerDTO();
+                AdditionalInformationDTO additional = new AdditionalInformationDTO();
                 SpouseDTO spouse = new SpouseDTO();
                 WorkDTO work = new WorkDTO();
                 CocreditedCustomersDTO cocreditedCustomers = new CocreditedCustomersDTO();
@@ -308,25 +309,57 @@ public class PdfController {
                 context.setVariable("typeStates", typeStates);
                 context.setVariable("typePosition", typePosition);
                 context.setVariable("typeActivity", typeActivity);
-                context.setVariable("product", "Fovisste Tradicional Individual");
+                context.setVariable("product", "Fovisste para todos");
                 DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
 
                 DetalleCredito creditID = detalleCredito.findByCreditID(creditId);
+
+                customer.setState_id(-1);
+                customer.setStateOfBirth_id(-1);
+
+                additional.setState("-1");
+                additional.setScholarship(-1);
+                additional.setMaritalStatus(-1);
+                additional.setCountryOfBirth(-1);
+                additional.setCountryOfResidence(-1);
+                additional.setCountry("-1");
+
+                work.setState("-1");
+                work.setPosition(-1);
+                work.setTypeContract(-1);
+                work.setLaboral_activity(-1);
+
+                cocreditedWork.setState("-1");
+                cocreditedWork.setPosition(-1);
+                cocreditedWork.setTypeContract(-1);
+                cocreditedWork.setLaboralActivity(-1);
+
+
+
                 if (creditID != null) {
+                    if (creditID.getCustomer() == null){
+                        creditID.setCustomer(customer);
+                    }
+
+                    if(creditID.getAdditionalies() == null) {
+                        creditID.setAdditionalies(additional);
+                    }
+
+
                     context.setVariable("creditId", creditID);
                     if (creditID.getSpouse() != null) {
                         spouse = creditID.getSpouse();
                     }
                     context.setVariable("spouse", spouse);
+
                     if (creditID.getWork() != null) {
                         work = creditID.getWork();
+
                     }
                     context.setVariable("work", work);
-                    if (creditID.getWork() != null) {
-                        work = creditID.getWork();
-                    }
-                    context.setVariable("work", work);
+
+
                     if (creditID.getCocreditedCustomers() != null) {
                         cocreditedCustomers = creditID.getCocreditedCustomers();
                     }

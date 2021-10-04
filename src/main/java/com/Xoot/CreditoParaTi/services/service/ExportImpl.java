@@ -111,6 +111,7 @@ public class ExportImpl {
         titles.add("FOLIO");
         titles.add("FECHA DE SOLICITUD");
         titles.add("PROMOTOR");
+        titles.add("ENROLAMIENTO");
         titles.add("NOMBRES");
         titles.add("APELLIDO PATERNO");
         titles.add("APELLIDO MATERNO");
@@ -132,6 +133,7 @@ public class ExportImpl {
 
             createCell(row, columnCount++, dateFormatter.format(customer.getCrtd_on()), style);
             createCell(row, columnCount++, customer.getCrtd_by(), style);
+            createCell(row, columnCount++, customer.getEnrolment(), style);
             createCell(row, columnCount++, customer.getCustomer().getName(), style);
             createCell(row, columnCount++, customer.getCustomer().getPaternalLastName(), style);
             createCell(row, columnCount++, customer.getCustomer().getMotherLastName(), style);
@@ -153,6 +155,7 @@ public class ExportImpl {
         titles.add("PROMOTOR");
         titles.add("EMAIL");
         titles.add("CELULAR");
+        titles.add("ENROLAMIENTO");
         titles.add("ESTATUS");
         titles.add("CAPA DE DOCUMENTO");
         titles.add("CAPA DE SELFIE");
@@ -173,6 +176,7 @@ public class ExportImpl {
             createCell(row, columnCount++, dateFormatter.format(customer.getCrtd_on()), style);
             createCell(row, columnCount++, customer.getCustomer().getEmail(), style);
             createCell(row, columnCount++, customer.getMobile(), style);
+            createCell(row, columnCount++, customer.getEnrolment(), style);
             createCell(row, columnCount++, customer.getStatus(), style);
             createCell(row, columnCount++, customer.getLayerDocument(), style);
             createCell(row, columnCount++, customer.getLayerBiometric(), style);

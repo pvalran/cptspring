@@ -1,16 +1,14 @@
 package com.Xoot.CreditoParaTi.services.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.dto.DocumentDTO;
 import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
-import com.Xoot.CreditoParaTi.utils.DocumentUtil;
-import com.Xoot.CreditoParaTi.utils.TransactionUtil;
+import com.Xoot.CreditoParaTi.services.interfaces.ITransactionUtilService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +23,6 @@ public class CustomerImpl implements ICustomerService {
 	public Object data = null;
 	public Boolean result = false;
 	public String message;
-	public TransactionUtil transactionUtil;
-
 	@Autowired
 	private ICustomerDao _customerDao;
 	@Autowired
@@ -45,6 +41,9 @@ public class CustomerImpl implements ICustomerService {
 	private IEmployeeDao employeeDao;
 	@Autowired
 	private IUserDao userDao;
+	@Autowired
+	private ITransactionUtilService transactionUtil;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -84,127 +83,31 @@ public class CustomerImpl implements ICustomerService {
 
 	@Transactional(readOnly = true)
 	public List<CustomerTransactionDTO> getByCustomerTransaction() {
-		TransactionUtil ObjTransUtil = new TransactionUtil();
+		FilterTransacionDTO filterTransacionDTO = new FilterTransacionDTO();
+
 		List<CreditApplication> creditApplications = creditApplicationDao.findAllActive();
 
 		List<CustomerTransactionDTO> customerTransactions;
 		HashMap<Integer,String> map = new HashMap<>();
 		map.put (1, "A");
 		map.put (2, "R");
-
-		customerTransactions = new ArrayList<CustomerTransactionDTO>();
-		for(CreditApplication creditApplication:creditApplications){
-			if (creditApplication.getCustomer() != null ){
-				CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
-				Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
-				customerTransactionDTO.setCustomer(
-						modelMapper.map(customer, CustomerDTO.class)
-				);
-				AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
-				List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
-				customerTransactionDTO.setLayerDocument("");
-				customerTransactionDTO.setLayerBiometric("");
-				customerTransactionDTO.setLayerGobernment("");
-				for (transaction Transaction : transactions) {
-					switch (Transaction.getTransactionType()) {
-						case 1:
-							customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
-							break;
-						case 2:
-							customerTransactionDTO.setLayerBiometric(map.get(Transaction.getTransactionStatus()));
-							break;
-						case 3:
-							customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
-							break;
-					}
-				}
-
-				if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
-					customerTransactionDTO.setStatus("R");
-				} else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
-					if (customerTransactionDTO.getLayerGobernment() == "A") {
-						customerTransactionDTO.setStatus("A");
-					} else {
-						customerTransactionDTO.setStatus("P");
-					}
-				} else {
-					customerTransactionDTO.setStatus("R");
-				}
-
-				if (additional != null) {
-					customerTransactionDTO.setMobile(additional.getMobile());
-				} else {
-					customerTransactionDTO.setMobile("");
-				}
-				Usuario userCreated = userDao.findById(creditApplication.getUser()).orElse(new Usuario());
-				customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
-				customerTransactionDTO.setCrtd_by(userCreated.getCrtd_by());
-				customerTransactions.add(customerTransactionDTO);
-			}
-		}
+		filterTransacionDTO.setStatus("A,R,P");
+		customerTransactions = transactionUtil.creditTransaction(creditApplications,filterTransacionDTO);
 		return customerTransactions;
 	}
 
 	@Transactional(readOnly = true)
 	public List<CustomerTransactionDTO> getByCustomerTransaction(Integer UserID) {
-		TransactionUtil ObjTransUtil = new TransactionUtil();
+		FilterTransacionDTO filterTransacionDTO = new FilterTransacionDTO();
+		TransactionUtilImpl ObjTransUtil = new TransactionUtilImpl();
 		Employee employee = employeeDao.findById(UserID).orElse(null);
-
 		List<CreditApplication> creditApplications = creditApplicationDao.FindByCreditEmployee(employee.getEmail());
-
 		List<CustomerTransactionDTO> customerTransactions;
 		HashMap<Integer,String> map = new HashMap<>();
 		map.put (1, "A");
 		map.put (2, "R");
-
-		customerTransactions = new ArrayList<CustomerTransactionDTO>();
-		for(CreditApplication creditApplication:creditApplications){
-			if (creditApplication.getCustomer() != null ){
-				CustomerTransactionDTO customerTransactionDTO = new CustomerTransactionDTO();
-				Customer customer = _customerDao.findById(creditApplication.getCustomer()).orElse(null);
-				customerTransactionDTO.setCustomer(
-						modelMapper.map(customer, CustomerDTO.class)
-				);
-				AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
-				List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId());
-				customerTransactionDTO.setLayerDocument("");
-				customerTransactionDTO.setLayerBiometric("");
-				customerTransactionDTO.setLayerGobernment("");
-				for (transaction Transaction : transactions) {
-					switch (Transaction.getTransactionType()) {
-						case 1:
-							customerTransactionDTO.setLayerDocument(map.get(Transaction.getTransactionStatus()));
-							break;
-						case 2:
-							customerTransactionDTO.setLayerBiometric(map.get(Transaction.getTransactionStatus()));
-							break;
-						case 3:
-							customerTransactionDTO.setLayerGobernment(map.get(Transaction.getTransactionStatus()));
-							break;
-					}
-				}
-
-				if (customerTransactionDTO.getLayerDocument() == "R" || customerTransactionDTO.getLayerBiometric() == "R") {
-					customerTransactionDTO.setStatus("R");
-				} else if (customerTransactionDTO.getLayerDocument() == "A" && customerTransactionDTO.getLayerBiometric() == "A") {
-					if (customerTransactionDTO.getLayerGobernment() == "A") {
-						customerTransactionDTO.setStatus("A");
-					} else {
-						customerTransactionDTO.setStatus("P");
-					}
-				} else {
-					customerTransactionDTO.setStatus("R");
-				}
-
-				if (additional != null) {
-					customerTransactionDTO.setMobile(additional.getMobile());
-				} else {
-					customerTransactionDTO.setMobile("");
-				}
-				customerTransactionDTO.setCrtd_on(creditApplication.getCrtd_on());
-				customerTransactions.add(customerTransactionDTO);
-			}
-		}
+		filterTransacionDTO.setStatus("A,R,P");
+		customerTransactions = ObjTransUtil.creditTransaction(creditApplications,filterTransacionDTO);
 		return customerTransactions;
 	}
 

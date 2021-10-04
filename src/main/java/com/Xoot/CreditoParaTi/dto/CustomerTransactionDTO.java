@@ -14,6 +14,8 @@ public class CustomerTransactionDTO {
     private String crtd_by;
     private Integer creditId;
     private String mobile;
+    private String email;
+    private String enrolment;
 
 
     public CustomerDTO getCustomer() {
@@ -92,5 +94,21 @@ public class CustomerTransactionDTO {
 
     public void setCrtd_by(String crtd_by) {
         this.crtd_by = crtd_by;
+    }
+
+    public String getEnrolment() {
+        return enrolment;
+    }
+
+    public void setEnrolment(String enrolment) {
+        this.enrolment = enrolment;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
