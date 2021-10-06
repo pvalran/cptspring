@@ -404,7 +404,7 @@ public class PdfController {
                         context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
                     }
                     context.setVariable("medicquestionnario", medicquestionnario);
-                    String processedHtml = templateEngine.process("solcred", context);
+                    String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
                     converterProperties.setBaseUri("http://localhost:8080");

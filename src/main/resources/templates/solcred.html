@@ -744,7 +744,8 @@
         <tr>
             <td>
                 <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <td style="background-color: #747473; font-family: sans-serif; color: #FFFFFF;">Ingreso Bruto Mensual FIjo:</td>
                         <td style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${work.grossIncome}"></font></td>
                         <td>Otros Ingresos:</td>
@@ -760,7 +761,8 @@
                         <td colspan="3" style="font-weight: bold" align="left">Egresos por Créditos:</td>
                         <td>&nbsp;</td>
                     </tr>
-                    </tbody></table>
+                    </tbody>
+                </table>
             </td>
         </tr>
         <tr>
@@ -1054,7 +1056,7 @@
                                                 <td><font  th:utext="${cocreditedAdditional.civilState eq 0} ? '( X )' : '( )'"></font></td>
                                                 <td>&nbsp;</td>
                                                 <td>Bienes Mancomunados:</td>
-                                                <td><font  th:utext="${cocreditedAdditional.maritalStatus eq 1} ? '( X )' : '( )'"></font></td>
+                                                <td><font th:utext="${cocreditedAdditional.maritalStatus eq 1} ? '( X )' : '( )'"></font></td>
                                             </tr>
                                             <tr>
                                                 <td>Extranjera:</td>
@@ -1062,7 +1064,7 @@
                                                 <td>Especifique:</td>
                                                 <td><font  th:utext="${cocreditedAdditional.specifyNationality}"></font></td>
                                                 <td>Femenino</td>
-                                                <td><font  th:utext="${cocreditedCustomers.gender eq 1} ? '( X )' : '( )'"></font></td>
+                                                <td><font th:utext="${cocreditedCustomers.gender eq 1} ? '( X )' : '( )'"></font></td>
                                                 <td>Casado:</td>
                                                 <td><font  th:utext="${cocreditedAdditional.civilState eq 1} ? '( X )' : '( )'"></font></td>
                                                 <td>Otro <font  th:utext="${cocreditedAdditional.civilState eq 2} ? '( X )' : '( )'"></font></td>
@@ -1690,7 +1692,8 @@
                                     <tr>
                                         <td style="font-size: 12px">Página 1</td>
                                     </tr>
-                                    </tbody></table>
+                                    </tbody>
+                                </table>
 
 
                                 <br>
