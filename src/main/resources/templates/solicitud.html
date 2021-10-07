@@ -18,6 +18,17 @@
             margin: 0px;
             padding: 0px;
         }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .valign-center {
+            vertical-align: center;
+        }
+        .valign-top {
+             vertical-align: top;
+        }
         .seccion_title {
             background: #E52713;
             color: #FFFFFF;
@@ -44,6 +55,10 @@
         }
         .d-block{
             display: block;
+        }
+        .space {
+            margin-top:4px;
+            margin-bottom:4px;
         }
         .d-grid {
             display: grid;
@@ -120,10 +135,10 @@
         </tr>
         </tbody>
     </table>
-    <div class="seccion_title">
+    <div class="seccion_title space">
         <span><b>INFORMACIÓN PERSONAL DEL SOLICITANTE</b></span>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-5">
             <span><b>Nombre:</b></span>
         </div>
@@ -141,7 +156,7 @@
         </div>
 
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-35">
             <span><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
         </div>
@@ -158,20 +173,20 @@
             <span>Nombre(s) sin abreviaturas</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-15">
             <span><b>RFC: </b></span>
             <span th:text="${creditId.customer.rfc}" class="bdr-bottom d-inline-block" style="width: 72%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-15">
             <span><b>Homoclave: </b></span>
-            <span th:text="${#strings.substring(creditId.customer.rfc,10,13)}" class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+            <span th:text="${#strings.substring(creditId.customer.rfc,10,13)}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
-        <div class="d-inline-block w-20">
+        <div class="d-inline-block w-25">
             <span><b>Fecha de nacimiento:</b></span>
             <span th:text="${#dates.format(creditId.customer.birthday,'yyyy-MM-dd')}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
-        <div class="d-inline-block w-25">
+        <div class="d-inline-block w-20">
             <span><b>País de nacimiento:</b></span>
             <span th:text="${creditId.additionalies.countryOfBirth}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
@@ -180,7 +195,7 @@
             <span th:text="${creditId.additionalies.countryOfResidence}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-15" style="width: 15%">
             <span><b>Edad:</b></span>
             <span th:text="${creditId.customer.age}" class="bdr-bottom d-inline-block" style="width: 65%">&nbsp;</span>
@@ -198,7 +213,7 @@
             <span class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-45">
             <span class="d-block"><b>Nacionalidad:</b></span>
             <div class="d-block">
@@ -232,7 +247,7 @@
             <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 2} ? '( X )' : '( )'"></font></span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-60">
             <span><b>Número de Serie de Firma Electrónica Avanzada (si cuenta con ella):</b></span>
             <span class="bdr-bottom d-inline-block" style="width: 28%">&nbsp;</span>
@@ -242,7 +257,7 @@
             <span th:utext="${creditId.additionalies.numberImss}" class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <span><b>Escolaridad:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Primaria <font th:utext="${creditId.additionalies.scholarship eq 0} ? '( X )' : '(  )'"></font></span>
         <span>Secundaria <font th:utext="${creditId.additionalies.scholarship eq 1} ? '( X )' : '(  )'"></font></span>
         <span>Preparatoria <font th:utext="${creditId.additionalies.scholarship eq 2} ? '( X )' : '(  )'"></font></span>
@@ -253,7 +268,7 @@
         <span><b>Correo electrónico:</b></span>
         <span th:text="${creditId.customer.email}" class="bdr-bottom d-inline-block" style="width: 19%">&nbsp;</span>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-20">
             <span style="width: 100%"><b>Domicilio particular en México:</b></span>
 
@@ -275,7 +290,7 @@
             <span>Colonia/Urbanización</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
@@ -293,7 +308,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30" style="width: 32%">
             <span><b>Teléfono Casa 01:</b></span>
             <div class="d-inline-block w-75">
@@ -319,7 +334,7 @@
             </div>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-100">
             <span><b>Antigüedad en el domicilio:</b></span>
             <span>
@@ -331,7 +346,7 @@
 
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <span><b>Domicilio en el país de origen en caso de ser extranjero:</b></span>
         <div class="d-inline-block w-25">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -350,7 +365,7 @@
             <span>Colonia/Urbanización</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
@@ -369,7 +384,7 @@
         </div>
     </div>
     <span><b>Dependientes Económicos</b></span>
-    <table class="table">
+    <table class="table space">
         <tbody>
         <tr>
             <td><span><b>Edad</b></span></td>
@@ -400,7 +415,7 @@
     <div class="seccion_title">
         <span><b>Información adicional cónyuge del solicitante</b></span>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-70">
             <span><b>Nombre:</b></span>
             <div class="d-inline-block w-30">
@@ -418,8 +433,8 @@
         </div>
         <div class="d-inline-block w-25">
             <div class="d-block w-100">
-                <span th:text="${spouse.curp}" class="d-inline"><b>CURP:</b></span>
-                <span class="bdr-bottom d-inline-block" style="width: 82%">&nbsp;</span>
+                <span class="d-inline"><b>CURP:</b></span>
+                <span th:text="${spouse.curp}" class="bdr-bottom d-inline-block" style="width: 82%">&nbsp;</span>
             </div>
             <div class="d-block w-100">
                 <span class="d-inline"><b>&nbsp;&nbsp;RFC:</b></span>
@@ -428,7 +443,7 @@
             <span>con homoclave: <font th:text="${#strings.substring(spouse.rfc,10,13)}"></font></span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-35">
             <span><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
         </div>
@@ -445,45 +460,45 @@
             <span>Nombre(s) sin abreviaturas</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-60">
             <span class="d-block"><b>Nacionalidad:</b></span>
             <div class="d-block w-100">
-                <span>Mexicana&nbsp;&nbsp;<font th:text="${spouse.nationality eq 0} ? '( X )' : '( )'"></font></span>
+                <span>Mexicana&nbsp;&nbsp;<font th:text="${spouse.nationality eq 0} ? '( X )' : '(  )'"></font></span>
                 <span>Entidad Federativa de nacimiento</span>
                 <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
             </div>
             <div class="d-block  w-100">
-                <span>Extranjera&nbsp;<font th:text="${spouse.nationality eq 1} ? '( X )' : '( )'"></font></span>
+                <span>Extranjera&nbsp;<font th:text="${spouse.nationality eq 1} ? '( X )' : '(      )'"></font></span>
                 <span>Especifique</span>
                 <span th:text="${spouse.speticNationality}" class="bdr-bottom d-inline-block" style="width: 73%">&nbsp;</span>
             </div>
         </div>
         <div class="d-inline-block w-10">
             <span class="d-block"><b>Género:</b></span>
-            <span class="d-block w-100">Masculino&nbsp;<font th:text="${spouse.gender eq 0} ? '( X )' : '( )'"></font></span>
-            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:text="${spouse.gender eq 1} ? '( X )' : '( )'"></font></span>
+            <span class="d-block w-100">Masculino&nbsp;<font th:text="${spouse.gender eq 0} ? '( X )' : '(  )'"></font></span>
+            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:text="${spouse.gender eq 1} ? '( X )' : '(  )'"></font></span>
         </div>
         <div class="d-inline-block w-20">
             <span class="d-inline-block">
                 <span>Pais de Residencia</span>
-                <span th:text="${spouse.countryOfResidence}"></span>
+                <span th:text="${spouse.countryOfResidence}" class="bdr-bottom"></span>
             </span>
             <span class="d-inline-block">
                 <span>Fecha de nacimiento</span>
-                <span th:text="${#dates.format(spouse.dateOfBirth,'yyyy-MM-dd')}"></span>
+                <span th:text="${#dates.format(spouse.dateOfBirth,'yyyy-MM-dd')}" class="bdr-bottom"></span>
             </span>
         </div>
     </div>
-    <div class="seccion_title">
+    <div class="seccion space_title">
         <span><b>INFORMACIÓN LABORAL DEL SOLICITANTE</b></span>
     </div>
-    <div class="d-inline-block w-100">
+    <div class="d-inline-block space w-100">
         <span class="seccion_subtitle d-inline"><b>Nombre o razón social de la empresa:</b></span>
         <span th:text="${work.companyName}" class="bdr-bottom d-inline-block" style="width: 75%">&nbsp;</span>
     </div>
-    <div class="d-block w-100">
-        <div class="d-inline-block w-50">
+    <div class="d-block space w-100">
+        <div class="d-inline-block w-50" style="width: 53%;">
             <div class="d-block">
                 <span><b>Tipo de contrato:</b></span>
                 <span>Temporal&nbsp;&nbsp;&nbsp;&nbsp;<font th:text="${work.typeContract eq 0} ? '( X )' : '( )'"></font></span>
@@ -504,19 +519,19 @@
         <div class="d-inline-block w-45">
             <div class="d-block">
                 <span class="seccion_subtitle"><b>Actividad/Giro:</b></span>
-                <span>Comercio<font th:text="${work.laboral_activity eq 0} ? '( X )' : '( )'"></font></span>
-                <span>Industria<font th:text="${work.laboral_activity eq 1} ? '( X )' : '( )'"></font></span>
-                <span>Servicios<font th:text="${work.laboral_activity eq 2} ? '( X )' : '( )'"></font></span>
-                <span>Agropecuario<font th:text="${work.laboral_activity eq 3} ? '( X )' : '( )'"></font></span>
-                <span>Construcción<font th:text="${work.laboral_activity eq 4} ? '( X )' : '( )'"></font></span>
+                <span>Comercio<font th:text="${work.laboral_activity eq 0} ? '( X )' : '(  )'"></font></span>
+                <span>Industria<font th:text="${work.laboral_activity eq 1} ? '( X )' : '(  )'"></font></span>
+                <span>Servicios<font th:text="${work.laboral_activity eq 2} ? '( X )' : '(  )'"></font></span>
+                <span>Agropecuario<font th:text="${work.laboral_activity eq 3} ? '( X )' : '(  )'"></font></span>
+                <span>Construcción<font th:text="${work.laboral_activity eq 4} ? '( X )' : '(  )'"></font></span>
             </div>
             <div class="d-block">
                 <span class="seccion_subtitle d-inline"><b>Actividad específica</b></span>
-                <span th:text="${work.specifyLaboralActivity}" class="bdr-bottom d-inline-block" style="width: 70%">&nbsp;</span>
+                <span th:text="${work.specifyLaboralActivity}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
             </div>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-20">
             <span style="width: 100%"><b>Domicilio laboral en México:</b></span>
 
@@ -538,7 +553,7 @@
             <span>Colonia/Urbanización</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span th:text="${work.municipality}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
@@ -556,7 +571,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
                 <span class="seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
@@ -580,13 +595,13 @@
             <span th:text="${work.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
         </div>
     </div>
-    <div class="seccion_title">
+    <div class="seccion_title space">
         <span><b>INFORMACIÓN FINANCIERA Y BANCARIA DEL SOLICITANTE</b></span>
     </div>
-    <table class="table">
+    <table class="table space">
         <tbody>
         <tr>
-            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b>&nbsp;&nbsp;<font th:text="${work.grossIncome}"></font></span></td>
+            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span>&nbsp&nbsp<font th:text="${work.grossIncome}"></font></td>
             <td><span>Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.otherIncome}"></font></span></td>
         </tr>
         <tr>
@@ -745,7 +760,7 @@
         garante hipotecario; si el solicitante está casado por bienes mancomunados y su cónyuge participa con ingresos, éste último deberá firmar la solicitud de crédito y contrato
         como coacreditado; en caso de tener edad menor a 25 años, se deberá contar con un obligado solidario Mexicano entre 25 y 65 años, y si el obligado solidario está casado por bienes </p>
 
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-5">
             <span><b>Nombre:</b></span>
         </div>
@@ -763,7 +778,7 @@
         </div>
 
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-35">
             <span><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
         </div>
@@ -780,7 +795,7 @@
             <span>Nombre(s) sin abreviaturas</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-25">
             <span><b>RFC: </b></span>
             <span th:text="${cocreditedCustomers.rfc}" class="bdr-bottom d-inline-block" style="width: 72%">&nbsp;</span>
@@ -789,7 +804,7 @@
             <span><b>Homoclave: </b></span>
             <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
-        <div class="d-inline-block w-20">
+        <div class="d-inline-block w-25">
             <span><b>Fecha de nacimiento:</b></span>
             <span th:text="${#dates.format(cocreditedCustomers.birthday,'yyyy-MM-dd')}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
@@ -799,7 +814,7 @@
         </div>
 
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-15" style="width: 15%">
             <span><b>Edad:</b></span>
             <span th:text="${cocreditedCustomers.age}" class="bdr-bottom d-inline-block" style="width: 65%">&nbsp;</span>
@@ -817,7 +832,7 @@
             <span class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-45">
             <span class="d-block"><b>Nacionalidad:</b></span>
             <div class="d-block">
@@ -851,7 +866,7 @@
             <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${cocreditedAdditional.maritalStatus eq 1} ? '( X )' : '( )'"></font></span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-60">
             <span><b>Número de Serie de Firma Electrónica Avanzada (si cuenta con ella):</b></span>
             <span class="bdr-bottom d-inline-block" style="width: 28%">&nbsp;</span>
@@ -861,7 +876,7 @@
             <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <span><b>Escolaridad:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Primaria (  )</span>
         <span>Secundaria (  )</span>
         <span>Preparatoria (  )</span>
@@ -872,7 +887,7 @@
         <span><b>Correo electrónico:</b></span>
         <span class="bdr-bottom d-inline-block" style="width: 19%">&nbsp;</span>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-20">
             <span style="width: 100%"><b>Domicilio particular en México:</b></span>
 
@@ -894,7 +909,7 @@
             <span>Colonia/Urbanización</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
@@ -912,7 +927,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30" style="width: 32%">
             <span><b>Teléfono Casa 01:</b></span>
             <div class="d-inline-block w-75">
@@ -938,14 +953,14 @@
             </div>
         </div>
     </div>
-    <div class="seccion_title">
+    <div class="seccion_title space">
         <span><b>INFORMACIÓN LABORAL</b></span>
     </div>
-    <div class="d-inline-block w-100">
+    <div class="d-inline-block space w-100">
         <span class="seccion_subtitle d-inline"><b>Nombre o razón social de la empresa:</b></span>
         <span class="bdr-bottom d-inline-block" style="width: 75%">&nbsp;</span>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-block">
                 <span><b>Tipo de contrato:</b></span>
@@ -979,7 +994,7 @@
             </div>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-15">
             <span style="width: 100%"><b>Domicilio laboral en México:</b></span>
 
@@ -1001,7 +1016,7 @@
             <span>Colonia/Urbanización</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span th:utext="${cocreditedWork.county}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
@@ -1019,7 +1034,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
                 <span class="seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
@@ -1043,10 +1058,10 @@
             <span th:utext="${cocreditedWork.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
         </div>
     </div>
-    <div class="seccion_title">
+    <div class="seccion_title space">
         <span><b>INFORMACIÓN FINANCIERA Y BANCARIA DEL SOLICITANTE</b></span>
     </div>
-    <table class="table">
+    <table class="table space">
         <tbody>
         <tr>
             <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span></td>
@@ -1148,15 +1163,25 @@
     <p>El (Los) solicitante(s) manifiesta(n) bajo protesta que para efectos de la presente Solicitud actúa(n) a nombre y por cuenta propia y que al firmarla certifica (n)
         la veracidad de la información contenida en la misma. Así mismo, mediante su firma el (los) solicitante(s) manifiesta(n) conocer y entender los alcances de la
         presente solicitud así como los términos y condiciones del crédito solicitado.</p>
-    <div class="d-block">
-        Nombre y firma
-        del solicitante
-        Nombre y firma del cónyuge
-        (en caso de participar como garante)
-        Nombre y firma
-        del coacreditado
-        Nombre y firma del
-        obligado solidario
+    <div class="d-block text-center">
+        <div class="d-block w-20 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del solicitante</b></span>
+        </div>
+        <div class="d-block w-20 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del cónyuge</b></span>
+            <span class="text-center"><b>(en caso de participar como garante)</b></span>
+        </div>
+        <div class="d-block w-25 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del coacreditado</b></span>
+        </div>
+
+        <div class="d-block w-30 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del obligado solidario</b></span>
+        </div>
     </div>
     <div class="seccion_title"><p>AUTORIZACIÓN DE MERCADEO</p></div>
     <p>Autorizo (autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC, a compartir documentación e información financiera, comercial,
@@ -1167,14 +1192,23 @@
         al público en general, así como para que la información contenida en la presente Solicitud se utilice con fines de mercadeo o publicidad.
         Sí ( )No ( )</p>
     <div class="d-block">
-        Nombre y firma
-        del solicitante
-        Nombre y firma
-        del coacreditado
-        Nombre y firma del cónyuge
-        (en caso de participar como garante)
-        Nombre y firma del
-        obligado solidario
+        <div class="d-block w-20 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span><b>Nombre y firma del solicitante</b></span>
+        </div>
+        <div class="d-block w-25 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del coacreditado</b></span>
+        </div>
+        <div class="d-block w-20 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del cónyuge</b></span>
+            <span class="text-center"><b>(en caso de participar como garante)</b></span>
+        </div>
+        <div class="d-block w-30 text-center">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del obligado solidario</b></span>
+        </div>
     </div>
     <div class="d-block"><p>AUTORIZACIÓN BURÓ DE CRÉDITO</p></div>
     <p>Autorizo (Autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC y a los demás miembros del Grupo Financiero HSBC para que
@@ -1184,10 +1218,19 @@
         conforme a lo establecido en el artículo 28 de la Ley para Regular las Sociedades de Información Crediticia a que deban sujetarse las mencionadas Sociedades de
         Información Crediticia. La presente autorización tendrá el carácter de irrevocable y se encontrará vigente por tres años o por más tiempo mientras exista una
         relación jurídica entre ambos o existan obligaciones pendientes a mi (nuestro) cargo derivada de dicha(s) operación(es).</p>
-    <div class="d-block">
-        Nombre y firma del solicitante
-        Nombre y firma del coacreditado
-        Nombre y firma del obligado solidario
+    <div class="d-block text-center">
+        <div class="d-block w-30">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del solicitante</b></span>
+        </div>
+        <div class="d-block w-30">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del coacreditado</b></span>
+        </div>
+        <div class="d-block w-35">
+            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span class="text-center"><b>Nombre y firma del obligado solidario</b></span>
+        </div>
     </div>
     <div class="seccion_title"><p>OFERTA VINCULANTE</p></div>
     <p>Para la expedición de una Oferta Vinculante no se requerirá de la presentación de los documentos necesarios para la contratación de Crédito Garantizado a la Vivienda,
@@ -1200,8 +1243,9 @@
         Con base en la información señalada en la presente solicitud, ¿está interesado en que la entidad le extienda una Oferta Vinculante? Sí
         En caso de que su respuesta sea positiva, para obtener su formato de Oferta Vinculante deberá solicitarla al Ejecutivo de Sucursal y/o Centro Hipotecario de forma impresa.</p>
 
-    <div class="d-block">
-        Nombre y firma del solicitante
+    <div class="d-block text-center">
+        <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+        <span><b>Nombre y firma del solicitante</b></span>
     </div>
     <div class="seccion_title">INFORMACIÓN GENERAL DEL CRÉDITO</div>
     <span class="d-block">El Banco se reserva el derecho de no conceder el crédito en cualquier etapa del trámite.</span>
@@ -1212,16 +1256,16 @@
         explicar las causas que motivaron la declinación de la solicitud.</span>
     <div class="seccion_title">DATOS DEL INMUEBLE A FINANCIAR (EN CASO DE QUE ESTÉ DISPONIBLE)</div>
     <div class="d-block">
-        <div class="d-inline-block w-75">
-            <span><b>Uso del inmueble:</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Casa Habitación (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Vacacional/Descanso (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Renta (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Oficinas (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Comercial (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>Otro (   )</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="d-inline-block w-65">
+            <span><b>Uso del inmueble:</b></span>
+            <span>Casa Habitación (   )</span>
+            <span>Vacacional/Descanso (   )</span>
+            <span>Renta (   )</span>
+            <span>Oficinas (   )</span>
+            <span>Comercial (   )</span>
+            <span>Otro (   )</span>
         </div>
-        <div class="d-inline-block w-20">
+        <div class="d-inline-block w-30">
             <span><b>Tipo de inmuble:</b></span>
             <span>Nuevo (   )</span>
             <span>Usado (   )</span>
@@ -1230,15 +1274,15 @@
     <div class="d-block">
         <div class="d-inline-block w-25">
             <span><b>Valor estimado del inmueble:</b></span>
-            <span class="bdr-bottom d-inline-block" style="width: 45%">&nbsp;</span>
+            <span class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span><b>Superficie (m2): Terreno</b></span>
-            <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+            <span><b>Superficie del terreno(m2):</b></span>
+            <span class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span><b>(m2) de Construcción:</b></span>
-            <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+            <span class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-20">
             <span><b>Porcentaje de Financiamiento:</b></span>
@@ -1328,7 +1372,7 @@
         </tbody>
     </table>
     <div class="seccion_title"><p>PARA USO EXCLUSIVO DE HSBC</p></div>
-    <div class="d-block w-100">
+    <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span class="d-inline-block"><b>Nombre:</b></span>
             <div class="d-inline-block" style="width: 85%">
@@ -1346,8 +1390,8 @@
 
         </div>
     </div>
-    <div class="d-block w-100">
-        <div class="d-inline-block w-30">
+    <div class="d-block space w-100">
+        <div class="d-inline-block w-35">
             <span class="d-inline-block"><b>Teléfono 01:</b></span>
             <div class="d-inline-block" style="width: 80%;">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -1366,8 +1410,8 @@
             <span class="bdr-bottom w-60 d-inline-block">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block w-100">
-        <div class="d-inline-block w-30">
+    <div class="d-block space w-100">
+        <div class="d-inline-block w-35">
             <span><b>Correo electrónico:</b></span>
             <span class="bdr-bottom d-inline-block" style="width: 70%;">&nbsp;</span>
         </div>
@@ -1380,14 +1424,14 @@
             <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block">
-        <div class="d-inline-block w-30">
+    <div class="d-block space">
+        <div class="d-inline-block w-35">
             <span><b>Fecha:</b></span>
             <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
         </div>
     </div>
-    <div class="d-block">
-        <div class="d-inline-block w-30">
+    <div class="d-block space">
+        <div class="d-inline-block w-35">
             <span class="w-10"><b>Firma:</b></span>
             <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
         </div>

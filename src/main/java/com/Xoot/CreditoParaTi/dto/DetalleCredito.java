@@ -1,5 +1,7 @@
 package com.Xoot.CreditoParaTi.dto;
 
+import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
+
 import java.util.List;
 
 public class DetalleCredito {
@@ -16,8 +18,8 @@ public class DetalleCredito {
     private CocreditedAdditionalDTO cocreditedAdditional;
     private CocreditedWorkDTO cocreditedWork;
     private PdfDTO pdf;
-
-
+    private Boolean solicitud;
+    private List<DocStatusMap> documentStatus;
 
     public List<DocumentDTO> getDocuments() {
         return documents;
@@ -121,5 +123,22 @@ public class DetalleCredito {
 
     public void setPdf(PdfDTO pdf) {
         this.pdf = pdf;
+    }
+
+
+    public Boolean getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Boolean solicitud) {
+        this.solicitud = solicitud;
+    }
+
+    public List<DocStatusMap> getDocumentStatus() {
+        return documentStatus;
+    }
+
+    public void setDocumentStatus(List<DocStatusMap> documentStatus) {
+        this.documentStatus = documentStatus;
     }
 }

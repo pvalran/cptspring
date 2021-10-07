@@ -205,6 +205,11 @@ public class PdfController {
         return "errorPDF";
     }
 
+    @GetMapping("/apk")
+    public String ViewApk() {
+        return "downloadapk.html";
+    }
+
     @GetMapping("/identidadreportPDF/{creditId}")
     public ResponseEntity<?> getPDF(@PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         byte[] pdfResponse = pdfGenerator.createPdfItext(request, response, templateName, creditId);
@@ -223,12 +228,26 @@ public class PdfController {
                 .body(pdfResponse);
     }
 
-    @GetMapping("/pdf/solicitud/{userId}/{creditId}")
-    public ResponseEntity<?> getPDFSolicitud(@PathVariable("userId") Integer userId,
+    @GetMapping("/pdf/solicitud/{creditId}")
+    public ResponseEntity<?> getPDFSolicitud(
         @PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject resp = new JSONObject();
         try {
-            Usuario user = userService.findById(userId);
+            CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+
+            if (userCredit == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("El número de credito no existe");
+            }
+
+            if (userCredit.getUser() == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("El número de credito no existe");
+            }
+
+            Usuario user = userService.findById(userCredit.getUser());
             if (user != null) {
                 WebContext context = new WebContext(request, response, servletContext);
                 List<EconomicDependientiesDto> lstEconomic = new ArrayList<EconomicDependientiesDto>();
@@ -338,6 +357,9 @@ public class PdfController {
 
 
                 if (creditID != null) {
+
+
+
                     if (creditID.getCustomer() == null){
                         creditID.setCustomer(customer);
                     }

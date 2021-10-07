@@ -16,7 +16,7 @@ public class CustomerTransactionDTO {
     private String mobile;
     private String email;
     private String enrolment;
-
+    private Integer solicitud;
 
     public CustomerDTO getCustomer() {
         return customer;
@@ -110,5 +110,13 @@ public class CustomerTransactionDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Integer solicitud) {
+        this.solicitud = solicitud;
     }
 }

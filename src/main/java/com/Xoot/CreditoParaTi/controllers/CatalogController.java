@@ -231,4 +231,13 @@ public class CatalogController {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
+	@GetMapping("/getSolicitud/{id}")
+	public ResponseDTO getSolicitud(@PathVariable Integer id) {
+		try {
+			return new ResponseDTO(detalleCreditoService.findBySolictud(id), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
 }

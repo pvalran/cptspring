@@ -4,6 +4,7 @@ import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 
 
+import com.Xoot.CreditoParaTi.dto.DetalleCredito;
 import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 
@@ -50,6 +51,9 @@ public class TransactionUtilImpl implements ITransactionUtilService {
     ICocreditedAdditionalDao cocreditedAdditionalDao;
 
     @Autowired
+    DetalleCreditoImpl detalleCredito;
+
+    @Autowired
     ModelMapper modelMapper;
 
 
@@ -70,6 +74,11 @@ public class TransactionUtilImpl implements ITransactionUtilService {
                         typeTransaction);
                 if (customerTransactionDTO != null) {
                     customerTransactionDTO.setEnrolment("Acreditado");
+                    if (detalleCredito.findBySolictud(creditApplication.getCreditId())) {
+                        customerTransactionDTO.setSolicitud(1);
+                    } else {
+                        customerTransactionDTO.setSolicitud(0);
+                    }
                     customerTransactions.add(customerTransactionDTO);
                 }
                 typeTransaction.clear();
@@ -119,6 +128,7 @@ public class TransactionUtilImpl implements ITransactionUtilService {
                     customerTransactionDTO.setEmail(email);
                     customerTransactionDTO.setMobile(mobile);
                     customerTransactionDTO.setEnrolment("Coacreditado");
+                    customerTransactionDTO.setSolicitud(0);
                     customerTransactions.add(customerTransactionDTO);
                 }
             }

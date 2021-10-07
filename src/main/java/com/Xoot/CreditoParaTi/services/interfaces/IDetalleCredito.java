@@ -4,4 +4,5 @@ import com.Xoot.CreditoParaTi.dto.DetalleCredito;
 
 public interface IDetalleCredito {
     DetalleCredito findByCreditID(Integer creditID);
+    Boolean findBySolictud(Integer creditID);
 }

@@ -114,10 +114,7 @@ public class FormController {
             ResponseDTO responseDTO = customerService.save(customer);
             customerResponse = (Customer) responseDTO.getData();
             Integer IdCustomer = customerResponse.getIdCustomer();
-
-
             CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(customer.getCreditId());
-
             if (creditApplication != null) {
                 creditApplicationDTO = modelMapper.map(creditApplication,CreditApplicationDTO.class);
                 creditApplicationDTO.setCustomer(IdCustomer);
@@ -132,7 +129,6 @@ public class FormController {
                 creditApplicationDTO.setCreditId(customer.getCreditId());
                 creditApplicationService.save(creditApplicationDTO);
             }
-
             return responseDTO;
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
@@ -210,8 +206,7 @@ public class FormController {
 
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(file);
-            String base64File = Base64.getEncoder()
-                    .encodeToString(fileContent);
+            String base64File = Base64.getEncoder().encodeToString(fileContent);
             return new ResponseDTO(base64File, "Descarga de archivo.", true);
         } catch (IOException e) {
             return new ResponseDTO(e.getMessage(), "Ocurrió un error en la descargar.", false);
@@ -258,9 +253,7 @@ public class FormController {
         Resource recurso = null;
         Document document = documentService.findAllIds(creditId,idType);
         Path rutaArchivo = Paths.get("/srv/www/upload").resolve(document.getName()).toAbsolutePath();
-
         File file = rutaArchivo.toFile();
-
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String base64File = Base64.getEncoder()
@@ -271,14 +264,11 @@ public class FormController {
         }
     }
 
-
-
     @GetMapping("/downfilename/{name}")
     public ResponseDTO viewFile(@PathVariable String name) {
         Resource recurso = null;
         Path rutaArchivo = Paths.get("/srv/www/upload").resolve(name).toAbsolutePath();
         File file = rutaArchivo.toFile();
-
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String base64File = Base64.getEncoder().encodeToString(fileContent);
