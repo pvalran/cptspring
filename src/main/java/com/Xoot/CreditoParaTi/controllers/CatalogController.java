@@ -231,9 +231,6 @@ public class CatalogController {
 		}
 	}
 
-
-
-
 	@GetMapping("/getDirectionToCp/{zipcode}")
 	public ResponseDTO getDirectionToCp(@PathVariable Integer zipcode) {
 		try {
