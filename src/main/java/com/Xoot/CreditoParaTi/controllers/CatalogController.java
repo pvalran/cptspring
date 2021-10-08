@@ -1,7 +1,14 @@
 package com.Xoot.CreditoParaTi.controllers;
 
+import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.mapper.RfcDTO;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
+import com.josketres.rfcfacil.Rfc;
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.Employee;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +18,7 @@ import java.util.List;
 import java.lang.reflect.Type;
 
 import org.modelmapper.TypeToken;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -25,7 +33,7 @@ public class CatalogController {
 	@Autowired
 	private ILocationCityService locationCityService;
 	@Autowired
-	private ILocationColoniesService locationColoniesService;
+	private ILocationCountiesService locationCountiesService;
 	@Autowired
 	private ILocationSuburbService locationSuburbService;
 	@Autowired
@@ -58,14 +66,20 @@ public class CatalogController {
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
-	@Autowired
-	private IEmployeeService employeeService;
-	@Autowired
-	private IUserService userService;
-
 
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private ILocationStateDao stateDao;
+
+	@Autowired
+	private ILocationsCountiesDao countiesDao;
+
+	@Autowired
+	private ILocationCityDao cityDao;
+
+
 	@GetMapping("/catalogy/{catalog}")
 	public ResponseDTO allActive(@PathVariable String catalog) {
 		Type listType;
@@ -78,11 +92,11 @@ public class CatalogController {
 					listType = new TypeToken<List<LocationsStatesDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(locationStateService.findAllActive(),listType), "Exito", true);
 				case "municipality":
+					listType = new TypeToken<List<LocationsCountiesDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(locationCountiesService.findAllActive(),listType), "Exito", true);
+				case "city":
 					listType = new TypeToken<List<LocationsCitiesDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(locationCityService.findAllActive(),listType), "Exito", true);
-				case "city":
-					listType = new TypeToken<List<LocationsColoniesDTO>>() {}.getType();
-					return new ResponseDTO(modelMapper.map(locationColoniesService.findAllActive(),listType), "Exito", true);
 				case "colony":
 					listType = new TypeToken<List<LocationsSuburbDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(locationSuburbService.findAllActive(),listType), "Exito", true);
@@ -122,6 +136,9 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
+				case "customerstransacion":
+					return customerService.getByCustomerTransaction();
+
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
@@ -137,34 +154,77 @@ public class CatalogController {
 			e.printStackTrace();
 			return new ResponseDTO(null, e.getMessage(), false);
 		}
-
 	}
 
-
-	@GetMapping("/getMunToState/{id}")
-	public ResponseDTO getMuntoState(@PathVariable Integer id) {
+	@GetMapping("/getState")
+	public ResponseDTO getState() {
+		Type listType;
 		try {
-			return new ResponseDTO(locationCityService.getMuntoState(id), "Exito", true);
+			listType = new TypeToken<List<LocationsStatesDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(locationStateService.findAllActive(),listType), "Exito", true);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
 
-	@GetMapping("/getCityToMun/{id}")
-	public ResponseDTO getCityToMun(@PathVariable Integer id) {
+	@GetMapping("/getMunByState/{id}")
+	public ResponseDTO getMunByState(@PathVariable Integer id) {
 		try {
-			Type listType = new TypeToken<List<LocationsColoniesDTO>>() {}.getType();
-			return new ResponseDTO(modelMapper.map(locationColoniesService.getCityToMun(id),listType), "Exito", true);
+			return new ResponseDTO(locationCountiesService.getMuntoState(id), "Exito", true);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
 
-	@GetMapping("/getColonyToMun/{id}")
+	@GetMapping("/getCityByMun/{id}")
+	public ResponseDTO getCityByMun(@PathVariable Integer id) {
+		try {
+			Type listType = new TypeToken<List<LocationsCitiesDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(locationCityService.getCityByMun(id),listType), "Exito", true);
+		} catch (Exception e) {
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getCityByMun/{state}/{counties}")
+	public ResponseDTO getCityByMun(@PathVariable String state,@PathVariable String counties) {
+		try {
+			Type listType = new TypeToken<List<LocationsCitiesDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(locationCityService.getCityToMun(state,counties),listType), "Exito", true);
+		} catch (Exception e) {
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getColonyByMun/{id}")
 	public ResponseDTO getColonyToMun(@PathVariable Integer id) {
 		try {
 			Type listType = new TypeToken<List<LocationsSuburbDTO>>() {}.getType();
-			return new ResponseDTO(modelMapper.map(locationSuburbService.getColonyToMun(id),listType), "Exito", true);
+			return new ResponseDTO(modelMapper.map(locationSuburbService.getSuburbByMun(id),listType), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getColonyToCity/{id}")
+	public ResponseDTO getColonyToCity(@PathVariable Integer id) {
+		try {
+			Type listType = new TypeToken<List<LocationsSuburbDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(locationSuburbService.getSuburbByCity(id),listType), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getColonyToCity/{state}/{counties}/{cities}")
+	public ResponseDTO getColonyToCity(@PathVariable String state,
+									   @PathVariable String counties,
+									   @PathVariable String cities) {
+		try {
+			Type listType = new TypeToken<List<LocationsSuburbDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(locationSuburbService.getSuburbToCity(state,counties,cities),listType), "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
@@ -174,7 +234,29 @@ public class CatalogController {
 	@GetMapping("/getDirectionToCp/{zipcode}")
 	public ResponseDTO getDirectionToCp(@PathVariable Integer zipcode) {
 		try {
-			return new ResponseDTO(locationSuburbService.getDirectionToCp(zipcode), "Exito", true);
+			List<LocationsSuburbDTO> suburbDTOS = locationSuburbService.getDirectionToCp(zipcode);
+			for (LocationsSuburbDTO suburbDTO:suburbDTOS){
+				Integer stateId = Integer.valueOf(suburbDTO.getStateCode());
+				LocationState state = stateDao.findById(stateId).orElse(null);
+				if (state != null) {
+					suburbDTO.setState(state.getName());
+				}
+
+				if (suburbDTO.getCountiesId() != null) {
+					LocationCounty county = countiesDao.findById(suburbDTO.getCountiesId()).orElse(null);
+					if (county != null) {
+						suburbDTO.setCounty(county.getName());
+					}
+				}
+
+				if (suburbDTO.getCityId()!= null) {
+					LocationCity city = cityDao.findById(suburbDTO.getCityId()).orElse(null);
+					if (city != null) {
+						suburbDTO.setCity(city.getName());
+					}
+				}
+			}
+			return new ResponseDTO(suburbDTOS, "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
@@ -203,41 +285,17 @@ public class CatalogController {
 		}
 	}
 
-	@GetMapping("/getCustomersUser/{id}")
-	public ResponseDTO getCustomersUser(@PathVariable Integer id) {
-		Object data;
+	@PostMapping("/getRFC")
+	public ResponseDTO getRFC(@RequestBody RfcDTO rfc) {
 		try {
-			Employee employee = employeeService.findById(id);
-			if (employee.getProfileId().equals("2")) {
-				data = customerService.getByCustomerTransaction(employee.getIdUser());
-			} else {
-				data = customerService.getByCustomerTransaction();
-			}
-			return new ResponseDTO(data, "Exito", true);
+			Integer day = rfc.getDateBirthday().getDate();
+			Integer month = rfc.getDateBirthday().getMonth() + 1;
+			Integer year = rfc.getDateBirthday().getYear();
+			Rfc rd = new Rfc.Builder().name(rfc.getName()).firstLastName(rfc.getLastName()).secondLastName(rfc.getLastSecondName()).birthday(day, month, year).build();
+			return new ResponseDTO(rd.toString(), "Rfc generado", true);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
-		}
-	}
-
-	@GetMapping("/getLeafletUser/{id}")
-	public ResponseDTO getLeafletUser(@PathVariable Integer id) {
-		try {
-			Employee employee = employeeService.findById(id);
-			Type listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
-			return new ResponseDTO(modelMapper.map(userService.findLeafletUser(employee.getUsername()),listType), "Exito", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
-		}
-	}
-	@GetMapping("/getSolicitud/{id}")
-	public ResponseDTO getSolicitud(@PathVariable Integer id) {
-		try {
-			return new ResponseDTO(detalleCreditoService.findBySolictud(id), "Exito", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+			return new ResponseDTO(null, "Rfc no encontrado .", false);
 		}
 	}
 }

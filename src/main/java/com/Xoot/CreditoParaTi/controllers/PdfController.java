@@ -429,7 +429,7 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("http://localhost:8080");
+                    converterProperties.setBaseUri("https://pimaid.dev:8443/CreditoParaTi/");
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
                     byte[] bytes = target.toByteArray();
                     if (bytes.equals(null)) {
@@ -448,7 +448,7 @@ public class PdfController {
                     }
                     File filename = pathFile.toFile();
                     FileUtils.writeByteArrayToFile(filename, bytes);
-                    /*Mail mail = new Mail();
+                    Mail mail = new Mail();
                     mail.setMailFrom("envios@creditoparati.com.mx");
                     mail.setMailTo(user.getEmail());
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
@@ -457,7 +457,7 @@ public class PdfController {
                     prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);*/
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
