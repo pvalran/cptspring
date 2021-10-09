@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.LocationsSuburbDTO;
 import com.Xoot.CreditoParaTi.entity.LocationSuburb;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 public interface ILocationSuburbService {
@@ -22,5 +23,4 @@ public interface ILocationSuburbService {
 	List<LocationSuburb> getSuburbToCity(String state,String counties,String cities);
 
 	List<LocationsSuburbDTO> getDirectionToCp(Integer zipcode);
-
 }

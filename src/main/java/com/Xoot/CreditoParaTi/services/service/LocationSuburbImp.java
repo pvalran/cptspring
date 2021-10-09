@@ -54,7 +54,6 @@ public class LocationSuburbImp implements ILocationSuburbService {
 		return locationsSuburbDTO;
 	}
 
-
 	@Override
 	public List<LocationSuburb> findByListName(List<String> lstNameSuburb) {
 		
