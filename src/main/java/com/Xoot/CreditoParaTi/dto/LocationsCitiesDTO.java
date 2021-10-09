@@ -3,43 +3,58 @@ package com.Xoot.CreditoParaTi.dto;
 import com.Xoot.CreditoParaTi.entity.LocationState;
 
 public class LocationsCitiesDTO {
-    private Integer idMunicipality;
-    private String Name;
-    private Integer state;
-    private Integer municipality_code;
+    private Integer idCity;
+    private String code;
+    private String name;
+    private Integer countiesId;
+    private String stateCode;
+    private String countiesCode;
 
+    public Integer getIdCity() {
+        return idCity;
+    }
 
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-
-    public Integer getState() {
-        return state;
+    public Integer getCountiesId() {
+        return countiesId;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setCountiesId(Integer countiesId) {
+        this.countiesId = countiesId;
     }
 
-    public Integer getIdMunicipality() {
-        return idMunicipality;
+    public String getStateCode() {
+        return stateCode;
     }
 
-    public void setIdMunicipality(Integer idMunicipality) {
-        this.idMunicipality = idMunicipality;
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
     }
 
-    public Integer getMunicipality_code() {
-        return municipality_code;
+    public String getCountiesCode() {
+        return countiesCode;
     }
 
-    public void setMunicipality_code(Integer municipality_code) {
-        this.municipality_code = municipality_code;
+    public void setCountiesCode(String countiesCode) {
+        this.countiesCode = countiesCode;
     }
 }

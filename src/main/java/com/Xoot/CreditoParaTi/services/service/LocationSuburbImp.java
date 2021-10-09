@@ -35,7 +35,15 @@ public class LocationSuburbImp implements ILocationSuburbService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<LocationSuburb> getColonyToMun(Integer id) { return iLocationSuburbDao.getColonyToMun(id);  }
+	public List<LocationSuburb> getSuburbByMun(Integer id) { return iLocationSuburbDao.getSuburbByMun(id);  }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<LocationSuburb> getSuburbByCity(Integer id) { return iLocationSuburbDao.getSuburbByCity(id);  }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<LocationSuburb> getSuburbToCity(String state, String counties, String cities) { return iLocationSuburbDao.getSuburbToCity(state,counties,cities);  }
 
 	@Override
 	@Transactional(readOnly = true)
@@ -46,11 +54,10 @@ public class LocationSuburbImp implements ILocationSuburbService {
 		return locationsSuburbDTO;
 	}
 
-
 	@Override
 	public List<LocationSuburb> findByListName(List<String> lstNameSuburb) {
 		
-		return iLocationSuburbDao.findByListName(lstNameSuburb);
+		return null;
 	}
 
 }

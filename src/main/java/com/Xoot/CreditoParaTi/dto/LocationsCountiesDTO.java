@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.dto;
 
-public class LocationsColoniesDTO {
+public class LocationsCountiesDTO {
     private Integer idCity;
     private String name;
     private Integer municipality_id;

@@ -10,14 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.stream.Collectors;
 
-import com.Xoot.CreditoParaTi.services.interfaces.ILocationCityService;
 import com.Xoot.CreditoParaTi.services.interfaces.ILocationService;
-import com.Xoot.CreditoParaTi.services.interfaces.ILocationStateService;
-import com.Xoot.CreditoParaTi.services.interfaces.ILocationSuburbService;
 import com.Xoot.CreditoParaTi.services.interfaces.IPersistenceLocation;
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationState;
-import com.Xoot.CreditoParaTi.entity.LocationSuburb;
 import com.Xoot.CreditoParaTi.dto.LocationDTO;
 import com.Xoot.CreditoParaTi.dto.SuburbDTO;
 

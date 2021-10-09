@@ -1,8 +1,5 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
-import com.Xoot.CreditoParaTi.entity.LocationState;
 import com.Xoot.CreditoParaTi.mapper.RfcDTO;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
@@ -138,8 +135,7 @@ public class CatalogController {
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
 				case "customerstransacion":
 					return customerService.getByCustomerTransaction();
-
-			}
+            }
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);

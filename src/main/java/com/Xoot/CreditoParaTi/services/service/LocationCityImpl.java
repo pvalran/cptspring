@@ -23,7 +23,7 @@ public class LocationCityImpl implements ILocationCityService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	public LocationCity save(LocationCity locationCity) {
 		return locationCitydao.save(locationCity);
@@ -31,18 +31,27 @@ public class LocationCityImpl implements ILocationCityService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<LocationCity> findAllActive() { return locationCitydao.findAll(); }
+	public List<LocationCity> findAllActive() {
+		return locationCitydao.findAll();
+	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<LocationsCitiesDTO> getMuntoState(Integer id) {
+	public List<LocationsCitiesDTO> getCityByMun(Integer id) {
+		Type listType = new TypeToken<List<LocationsCitiesDTO>>() {
+		}.getType();
+		return modelMapper.map(locationCitydao.getCityByMun(id), listType);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<LocationsCitiesDTO> getCityToMun(String state,String counties) {
 		Type listType = new TypeToken<List<LocationsCitiesDTO>>() {}.getType();
-		return modelMapper.map(locationCitydao.getMuntoState(id),listType);
+		return modelMapper.map(locationCitydao.getCityToMun(state,counties), listType);
 	}
 
 	@Override
 	public List<LocationCity> findByListName(List<String> lstNameCity) {
-		
-		return locationCitydao.findByListName(lstNameCity);
+		return null;
 	}
 }

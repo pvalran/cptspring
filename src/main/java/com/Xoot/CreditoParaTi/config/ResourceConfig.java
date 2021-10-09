@@ -12,16 +12,17 @@ public class ResourceConfig implements WebMvcConfigurer {
                     "classpath:/resources/",
                     "classpath:/static/",
                     "classpath:/public/",
-                    "classpath:/custom/",
-                    "file:/srv/www/upload/"
+                    "classpath:/custom/"
             };
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
-        registry.addResourceHandler("/Cpttablero/**")
+        registry.addResourceHandler("/storage/**")
+                .addResourceLocations("file:/srv/www/upload/");
+
+        registry.addResourceHandler("/**")
                 .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS)
-                .setCachePeriod(3600)
-                .resourceChain(true);
+                .setCachePeriod(3000);
     }
 }

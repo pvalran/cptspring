@@ -6,53 +6,52 @@ import java.util.Date;
 
 @Entity
 @Table(name = "locations_counties")
-public class LocationColonies implements Serializable {
+public class LocationCounty implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer idCity;
+	private Integer idCounty;
 
-	@Column(name = "name", length = 50)
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "code")
+	private String code;
+
+	@Column(name = "state_id")
+	private Integer stateId;
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
-
-	//@OneToOne
-	//@JoinColumn(name = "city_id", referencedColumnName = "id")
-	@Column(name = "city_id")
-	private Integer municipality_id;
-
-	@Column(name = "city_code")
-	private Integer city_code;
-
 
 	@Column(name = "crtd_on")
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date crtd_on;
 
-	@Column(name = "crtd_by", length = 50)
+	@Column(name = "crtd_by")
 	private String crtd_by;
 
 	@Column(name = "mdfd_on")
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date mdfd_on;
 
-	@Column(name = "mdfd_by", length = 50)
+	@Column(name = "mdfd_by")
 	private String mdfd_by;
 
 	@PrePersist
 	public void prePersist() {
 		crtd_on = new java.util.Date();
 		mdfd_on = new java.util.Date();
+		status_flag = 1;
 	}
 
-	public Integer getIdCity() {
-		return idCity;
+
+	public Integer getIdCounty() {
+		return idCounty;
 	}
 
-	public void setIdCity(Integer idCity) {
-		this.idCity = idCity;
+	public void setIdCounty(Integer IdCounty) {
+		this.idCounty = IdCounty;
 	}
 
 	public String getName() {
@@ -63,16 +62,28 @@ public class LocationColonies implements Serializable {
 		this.name = name;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Integer getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(Integer stateId) {
+		this.stateId = stateId;
+	}
+
 	public Integer getStatus_flag() {
 		return status_flag;
 	}
 
-	public Integer getMunicipality_id() {
-		return municipality_id;
-	}
-
-	public void setMunicipality_id(Integer municipality_id) {
-		this.municipality_id = municipality_id;
+	public void setStatus_flag(Integer status_flag) {
+		this.status_flag = status_flag;
 	}
 
 	public Date getCrtd_on() {
@@ -105,18 +116,5 @@ public class LocationColonies implements Serializable {
 
 	public void setMdfd_by(String mdfd_by) {
 		this.mdfd_by = mdfd_by;
-	}
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public Integer getCity_code() {
-		return city_code;
-	}
-
-	public void setCity_code(Integer city_code) {
-		this.city_code = city_code;
 	}
 }

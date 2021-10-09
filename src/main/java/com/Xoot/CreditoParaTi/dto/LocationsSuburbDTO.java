@@ -1,21 +1,42 @@
 package com.Xoot.CreditoParaTi.dto;
 
+import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class LocationsSuburbDTO {
-    private Integer idColony;
-    private Integer zipCode;
+    private Integer idSuburb;
+    private String code;
     private String name;
-    private Integer municipality_id;
-    private Integer colony_code;
-    private Integer municipality_code;
+    private String zipCode;
+    private String typeSuburb;
+    private Integer countiesId;
+    private Integer cityId;
+    private String stateCode;
+    private String countiesCode;
+    private String citiesCode;
+    private String state;
+    private String county;
+    private String city;
 
-
-
-    public Integer getZipCode() {
-        return zipCode;
+    public Integer getIdSuburb() {
+        return idSuburb;
     }
 
-    public void setZipCode(Integer zipCode) {
-        this.zipCode = zipCode;
+    public void setIdSuburb(Integer idSuburb) {
+        this.idSuburb = idSuburb;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -26,35 +47,85 @@ public class LocationsSuburbDTO {
         this.name = name;
     }
 
-    public Integer getIdColony() {
-        return idColony;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setIdColony(Integer idColony) {
-        this.idColony = idColony;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public Integer getMunicipality_id() {
-        return municipality_id;
+    public String getTypeSuburb() {
+        return typeSuburb;
     }
 
-    public void setMunicipality_id(Integer municipality_id) {
-        this.municipality_id = municipality_id;
+    public void setTypeSuburb(String typeSuburb) {
+        this.typeSuburb = typeSuburb;
     }
 
-    public Integer getColony_code() {
-        return colony_code;
+    public Integer getCountiesId() {
+        return countiesId;
     }
 
-    public void setColony_code(Integer colony_code) {
-        this.colony_code = colony_code;
+    public void setCountiesId(Integer countiesId) {
+        this.countiesId = countiesId;
     }
 
-    public Integer getMunicipality_code() {
-        return municipality_code;
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setMunicipality_code(Integer municipality_code) {
-        this.municipality_code = municipality_code;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getCountiesCode() {
+        return countiesCode;
+    }
+
+    public void setCountiesCode(String countiesCode) {
+        this.countiesCode = countiesCode;
+    }
+
+    public String getCitiesCode() {
+        return citiesCode;
+    }
+
+    public void setCitiesCode(String citiesCode) {
+        this.citiesCode = citiesCode;
+    }
+
+
+    public String getState() {
+
+        return this.state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCounty() {
+        return this.county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
