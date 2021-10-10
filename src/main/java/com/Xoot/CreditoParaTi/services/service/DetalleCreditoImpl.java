@@ -83,7 +83,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         String base64File;
         Customer customer;
         List<DocStatusMap> items = new ArrayList<DocStatusMap>();
-        //EntityManager em = emf.createEntityManager();
+        EntityManager em = emf.createEntityManager();
 
         Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {}.getType();
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {}.getType();
@@ -144,10 +144,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             log.info("Error en consulta de DocStatus: "+ ex.getCause());
             items = new ArrayList<DocStatusMap>();
         }*/
-
-
-
-
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
