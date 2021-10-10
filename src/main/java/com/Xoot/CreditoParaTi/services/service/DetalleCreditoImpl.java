@@ -131,6 +131,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             }
             items.add(docStatus);
         }
+
         /*try {
             items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
                             "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
