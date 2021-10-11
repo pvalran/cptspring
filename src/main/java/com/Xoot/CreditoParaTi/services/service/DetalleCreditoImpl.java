@@ -1,6 +1,8 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+
 import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
+import com.Xoot.CreditoParaTi.repositories.stores.DocumentStatusRequestStore;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.dto.*;
@@ -62,6 +64,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     ICocreditedWorkDao cocreditedWorkDao;
     @Autowired
     IDocumentTypeDao documentTypeDao;
+    @Autowired
+    DocumentStatusRequestStore DocStatusStore;
 
     PdfDTO pdfDTO;
     DocumentUtil ObjDocUtil;
@@ -118,32 +122,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
-        List<DocumentType> listDocType = documentTypeDao.findAllActive();
-        for (DocumentType docType:listDocType){
-            Document doc = documentDao.findAllIds(creditID,docType.getIdTypeDocument());
-            DocStatusMap docStatus = new DocStatusMap();
-            if (doc == null) {
-                docStatus.setTypeDocument(docType.getIdTypeDocument());
-                docStatus.setStatus(0);
-            } else {
-                docStatus.setTypeDocument(docType.getIdTypeDocument());
-                docStatus.setStatus(1);
-            }
-            items.add(docStatus);
-        }
-
-        /*try {
-            items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
-                            "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
-                            "order by dt.id").setParameter("creditID", creditID)
-                    .unwrap(org.hibernate.query.NativeQuery.class)
-                    .setResultTransformer(Transformers.aliasToBean(DocStatusMap.class))
-                    .setHint("javax.persistence.query.timeout", 100000)
-                    .getResultList();
-        } catch (Exception ex) {
-            log.info("Error en consulta de DocStatus: "+ ex.getCause());
-            items = new ArrayList<DocStatusMap>();
-        }*/
+        items = DocStatusStore.storeProduce(creditID);
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));

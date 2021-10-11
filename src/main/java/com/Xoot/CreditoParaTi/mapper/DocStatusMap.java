@@ -1,9 +1,9 @@
 package com.Xoot.CreditoParaTi.mapper;
+import java.io.Serializable;
 
-public class DocStatusMap {
+public class DocStatusMap  {
     private Integer typeDocument;
     private Integer status;
-
 
     public Integer getTypeDocument() {
         return typeDocument;

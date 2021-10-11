@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.lang.reflect.Type;
 
@@ -301,7 +302,6 @@ public class CatalogController {
 	@GetMapping("/findDocStatusMap/{id}")
 	public ResponseDTO 	findDocStatusMap(@PathVariable Integer id) {
 		try {
-			QueryData queryData = new QueryData();
 			return new ResponseDTO(queryData.findDocStatusMap(id), "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
