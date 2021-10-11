@@ -1,5 +1,15 @@
-package com.Xoot.CreditoParaTi.mapper;
+package com.Xoot.CreditoParaTi.entity;
+
+import javax.persistence.*;
 import java.io.Serializable;
+
+@NamedStoredProcedureQuery(
+    name = "DocumentStatus",
+    procedureName = "getDocumentStatusRequest",
+    resultClasses = { DocStatusMap.class },
+    parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "request_number", type = Integer.class),
+   })
 
 public class DocStatusMap  {
     private Integer typeDocument;

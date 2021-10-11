@@ -3,8 +3,7 @@
 import java.util.List;
 
 
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
+import com.Xoot.CreditoParaTi.entity.DocStatusMap;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

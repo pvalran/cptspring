@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.dto;
 
-import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
+import com.Xoot.CreditoParaTi.entity.DocStatusMap;
 
 import java.util.List;
 

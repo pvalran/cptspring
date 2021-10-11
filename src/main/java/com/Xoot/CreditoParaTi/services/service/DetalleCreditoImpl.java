@@ -1,17 +1,11 @@
 package com.Xoot.CreditoParaTi.services.service;
 
-
-import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
-import com.Xoot.CreditoParaTi.repositories.stores.DocumentStatusRequestStore;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.utils.DocumentUtil;
-import org.apache.commons.io.FileUtils;
-import org.apache.tomcat.util.digester.ArrayStack;
-import org.hibernate.transform.Transformers;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
@@ -19,21 +13,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
-import java.io.File;
-import java.io.IOException;
+import javax.persistence.*;
 import java.lang.reflect.Type;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Service
 public class DetalleCreditoImpl implements IDetalleCredito {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     ICreditApplicationDao creditApplicationDao;
     @Autowired
@@ -64,8 +53,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     ICocreditedWorkDao cocreditedWorkDao;
     @Autowired
     IDocumentTypeDao documentTypeDao;
-    @Autowired
-    DocumentStatusRequestStore DocStatusStore;
+
 
     PdfDTO pdfDTO;
     DocumentUtil ObjDocUtil;
@@ -75,8 +63,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
 
     private DetalleCredito detalleCredito;
 
-    @PersistenceUnit
-    private EntityManagerFactory emf;
     private final Logger log = LoggerFactory.getLogger(DetalleCreditoImpl.class);
 
     @Override
@@ -86,8 +72,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Boolean solicitud = false;
         String base64File;
         Customer customer;
-        List<DocStatusMap> items = new ArrayList<DocStatusMap>();
-        EntityManager em = emf.createEntityManager();
 
         Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {}.getType();
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {}.getType();
@@ -122,7 +106,9 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
-        items = DocStatusStore.storeProduce(creditID);
+        List<DocStatusMap> items = entityManager.createNamedStoredProcedureQuery("DocumentStatus")
+                .setParameter("request_number",creditID)
+                .getResultList();
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));

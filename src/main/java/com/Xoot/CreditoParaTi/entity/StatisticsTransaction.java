@@ -3,7 +3,6 @@ package com.Xoot.CreditoParaTi.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 @NamedStoredProcedureQuery(
     name = "DataRequest",
     procedureName = "getDataRequest",

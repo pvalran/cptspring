@@ -1,7 +1,6 @@
 package com.Xoot.CreditoParaTi.repositories.stores;
 
-import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
-import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
+import com.Xoot.CreditoParaTi.entity.DocStatusMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
