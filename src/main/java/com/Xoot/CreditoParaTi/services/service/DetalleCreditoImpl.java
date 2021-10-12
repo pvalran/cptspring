@@ -77,6 +77,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {}.getType();
         Type lstTypeReference = new TypeToken<List<ReferenceDTO>>() {}.getType();
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
+
+
         CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
         if (creditApplication != null) {
             if (creditApplication.getCreditId() != null) {
@@ -105,6 +107,10 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         CocreditedWork cocreditedWork = cocreditedWorkDao.findByCreditId(creditID);
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
+
+
+
+
 
         List<DocStatusMap> items = entityManager.createNamedStoredProcedureQuery("DocumentStatus")
                 .setParameter("request_number",creditID)
