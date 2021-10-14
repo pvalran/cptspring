@@ -1,14 +1,12 @@
 package com.Xoot.CreditoParaTi.services.service;
 
-import com.Xoot.CreditoParaTi.entity.EconomicDependents;
+
+import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerQuestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IFreeQuestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IMedicalQuestionnaireService;
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.AnswerQuestionnaire;
-import com.Xoot.CreditoParaTi.entity.FreeQuestionnaire;
-import com.Xoot.CreditoParaTi.entity.MedicalQuestionnaire;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IAnswerQuestionnaireDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IFreeQuestionnaireDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.IMedicalQuestionnaireDao;
@@ -18,6 +16,10 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import java.util.List;
 
 @Service
 public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnaireService {
+    @PersistenceUnit
+    private EntityManagerFactory emf;
     @Autowired
     private IMedicalQuestionnaireDao medicalQuestionnaireDao;
     @Autowired
@@ -61,9 +65,16 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
     public MedicalQuestionnaireAnswerDTO findByCreditID(Integer creditID) {
         Type lstTypeAnswer;
         Type lstTypeFree;
+        EntityManager em= emf.createEntityManager();
+        em.clear();
+
 
         MedicalQuestionnaireAnswerDTO medicalAnswerDTO = new MedicalQuestionnaireAnswerDTO();
-        MedicalQuestionnaire medicalQuestionn = medicalQuestionnaireDao.findByCreditID(creditID);
+
+        Query qryMedicalQuestionnaire = em.createNativeQuery("select * from medical_questionnaire where number_request = :creditID limit 1", MedicalQuestionnaire.class)
+                .setParameter("creditID",creditID);
+        MedicalQuestionnaire medicalQuestionn = (MedicalQuestionnaire) qryMedicalQuestionnaire.getResultStream()
+                .findFirst().orElse(null);
 
         if (medicalQuestionn != null) {
             medicalAnswerDTO.setIdMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
@@ -76,8 +87,14 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             lstTypeFree = new TypeToken<List<FreeQuestionnaireDTO>>() {
             }.getType();
 
-            List<AnswerQuestionnaire> lstAnswer = answerQuestionnaireDao.findByMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
-            List<FreeQuestionnaire> lstFree = freeQuestionnaireDao.findByMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
+
+            Query qryAnswerQuestionnaire = em.createNativeQuery("select * from answer_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", AnswerQuestionnaire.class)
+                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
+            List<AnswerQuestionnaire> lstAnswer = qryAnswerQuestionnaire.getResultList();
+
+            Query qryFreeQuestionnaire = em.createNativeQuery("select * from free_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", FreeQuestionnaire.class)
+                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
+            List<FreeQuestionnaire> lstFree = qryFreeQuestionnaire.getResultList();
 
             medicalAnswerDTO.setAnswerQuestionnairies(modelMapper.map(lstAnswer, lstTypeAnswer));
             medicalAnswerDTO.setFreeQuestionnairies(modelMapper.map(lstFree, lstTypeFree));

@@ -5,18 +5,33 @@
     <title></title>
     <style type="text/css">
         html, body {
-            width: 800px;
-            height: 1200px;
             font: 10px 'Arial';
             margin: 0px;
             padding: 0px;
 
         }
+
+        @page {
+            size: 21.0cm 29.7cm ;
+            margin: 0.5cm 0.5cm;
+        }
+
+        table {
+            width: 100%;
+            border: medium transparent;
+            border-collapse: collapse;
+        }
+
+        tr td {
+            border: medium transparent;
+        }
+
         .page {
             width: 100%;
             height: 100%;
             margin: 0px;
             padding: 0px;
+            page-break-after: always;
         }
 
         .text-center {
@@ -38,15 +53,24 @@
             background: #747474;
             color: #FFFFFF;
         }
-        .table {
+        .tbl {
             width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tbl tr td {
             border: black solid 1px;
             border-collapse: collapse;
         }
 
-        .table table, th, td {
-            border: 1px solid black;
+        .tblTitle {
+            width: 100%;
+            font-size: 9px;
+            color: #000000;
+            font-family: arial, Helvetica, sans-serif;
+            border: none;
         }
+
         .d-table {
             display: table;
         }
@@ -117,28 +141,27 @@
         .w-5 {
             width: 5%;
         }
-
-
-
     </style>
 </head>
 <body>
 <!-- Pagina 1-->
 <div class="page">
-    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+    <table class="tblTitle">
         <tbody>
-        <tr>
-            <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100"></td>
-            <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-        </tr>
-        <tr>
-            <td colspan="2">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
+            <tr>
+                <td align="left">&nbsp;
+                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                </td>
+                <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
+            </tr>
+            <tr>
+                <td>HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
         </tbody>
     </table>
     <div class="seccion_title space">
@@ -146,7 +169,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-5">
-            <span><b>Nombre:</b></span>
+            <span class="d-block"><b>Nombre:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-30">
             <span th:text="${creditId.customer.paternalLastName}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -164,7 +188,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-35">
-            <span><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
+            <span class="d-block"><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-15">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -276,11 +301,11 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-20">
-            <span style="width: 100%"><b>Domicilio particular en México:</b></span>
-
+            <span class="d-block" style="width: 100%"><b>Domicilio particular en México:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span th:text="${creditId.customer.streetAndNumber}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${direccion.get(0)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Calle/Avenida/Vía</span>
         </div>
         <div class="d-inline-block w-15">
@@ -292,39 +317,45 @@
             <span>Número Interior</span>
         </div>
         <div class="d-inline-block w-20">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${direccion.get(1)}"  class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Colonia/Urbanización</span>
         </div>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span  th:utext="${direccion.get(4)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${direccion.get(3)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${direccion.get(5)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${direccion.get(2)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Código Postal</span>
         </div>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30" style="width: 32%">
-            <span><b>Teléfono Casa 01:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Teléfono Casa 01:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-75">
-                <span th:text="${creditId.additionalies.phone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                <span th:text="${creditId.additionalies.phone}" class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
         </div>
         <div class="d-inline-block w-30">
-            <span><b>Celular:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Celular:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-80">
                 <span th:text="${creditId.additionalies.mobile}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
@@ -332,7 +363,10 @@
             </div>
         </div>
         <div class="d-inline-block w-30" style="width: 32%">
-            <span><b>Otro teléfono 01:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Otro teléfono 01:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-70" style="width: 76%">
                 <span th:text="${creditId.additionalies.otherPhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
@@ -353,7 +387,10 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <span><b>Domicilio en el país de origen en caso de ser extranjero:</b></span>
+        <div class="d-inline-block">
+            <span class="d-block"><b>Domicilio en el país de origen en caso de ser extranjero:</b></span>
+            <span class="d-block">&nbsp;</span>
+        </div>
         <div class="d-inline-block w-25">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Calle/Avenida/Vía</span>
@@ -390,15 +427,15 @@
         </div>
     </div>
     <span><b>Dependientes Económicos</b></span>
-    <table class="table space">
+    <table class="tbl space">
         <tbody>
         <tr>
-            <td><span><b>Edad</b></span></td>
-            <td><span><b>Parentesco</b></span></td>
-            <td><span><b>Ocupación</b></span></td>
-            <td><span><b>Edad</b></span></td>
-            <td><span><b>Parentesco</b></span></td>
-            <td><span><b>Ocupación</b></span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Edad</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Parentesco</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Ocupación</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Edad</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Parentesco</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Ocupación</span></td>
         </tr>
         <tr>
             <td><span><b>1.</b><font th:text="${economics.get(0).age}"></font></span></td>
@@ -423,7 +460,10 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-70">
-            <span><b>Nombre:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Nombre:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-30">
                 <span th:text="${spouse.paternalLastName}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>Apellido paterno</span>
@@ -539,8 +579,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-20">
-            <span style="width: 100%"><b>Domicilio laboral en México:</b></span>
-
+            <span class="d-block" style="width: 100%"><b>Domicilio laboral en México:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span th:text="${work.address}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -580,7 +620,10 @@
     <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
-                <span class="seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
+                <div class="d-inline-block">
+                    <span class="d-block seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
+                    <span class="d-block">&nbsp;</span>
+                </div>
                 <div class="d-inline-block">
                     <span th:text="${work.officePhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                     <div class="d-inline">
@@ -592,136 +635,181 @@
             <div class="d-inline-block w-45">
                 <span class="d-inline seccion_subtitle"><b>Extensión:</b></span>
                 <span th:text="${work.officePhoneExtension}" class="bdr-bottom d-inline-block" style="width: 70%">&nbsp;</span>
+                <span class="d-block">&nbsp;</span>
             </div>
         </div>
         <div class="d-inline-block w-45">
-            <span class="seccion_subtitle"><b>Antigüedad en el empleo: Actual (años):</b></span>
-            <span th:text="${work.nowWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 13%">&nbsp;</span>
-            <span class="seccion_subtitle"><b>Anterior (años):</b></span>
-            <span th:text="${work.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
+            <div class="d-block">
+                <span class="seccion_subtitle"><b>Antigüedad en el empleo: Actual (años):</b></span>
+                <span th:text="${work.nowWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 13%">&nbsp;</span>
+                <span class="seccion_subtitle"><b>Anterior (años):</b></span>
+                <span th:text="${work.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
+            </div>
+            <span class="d-block">&nbsp;</span>
         </div>
     </div>
     <div class="seccion_title space">
         <span><b>INFORMACIÓN FINANCIERA Y BANCARIA DEL SOLICITANTE</b></span>
     </div>
-    <table class="table space">
+    <table class="tbl space">
         <tbody>
-        <tr>
-            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span>&nbsp&nbsp<font th:text="${work.grossIncome}"></font></td>
-            <td><span>Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.otherIncome}"></font></span></td>
-        </tr>
-        <tr>
-            <td><span>Fuente de Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.sourceIncome}"></font></span></td>
-            <td><span>Total Ingresos:&nbsp;&nbsp;<font th:text="${work.totalIncome}"></font></span></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <span><b>Egresos por Créditos:</b></span>
-                <table class="table">
-                    <tr>
-                        <td>Institución</td>
-                        <td>Tipo de Crédito</td>
-                        <td>No. de Cuenta</td>
-                        <td>Fecha de Apertura</td>
-                        <td>Saldo Actual</td>
-                        <td>Pago Mensual</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <span><b>Referencias Comerciales y/o Bancarias:</b></span>
-                <table class="table">
-                    <tr>
-                        <td>Tipo de Crédito</td>
-                        <td>Compañía o Banco</td>
-                        <td>No. de Cuenta</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+            <tr>
+                <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span>&nbsp&nbsp<font th:text="${work.grossIncome}"></font></td>
+                <td><span>Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.otherIncome}"></font></span></td>
+            </tr>
+            <tr>
+                <td><span>Fuente de Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.sourceIncome}"></font></span></td>
+                <td><span>Total Ingresos:&nbsp;&nbsp;<font th:text="${work.totalIncome}"></font></span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Egresos por Créditos:</b></span>
+                    <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
+                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                    </table>
+                    <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Referencias Comerciales y/o Bancarias:</b></span>
+                    <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
+                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
 <!-- Pagina 2-->
 <div class="page">
-    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+    <table class="tblTitle">
         <tbody>
-        <tr>
-            <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100"></td>
-            <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-        </tr>
-        <tr>
-            <td colspan="2">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
+            <tr>
+                <td align="left">&nbsp;
+                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                </td>
+                <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
+            </tr>
+            <tr>
+                <td>HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
         </tbody>
     </table>
-    <span><b>Bien inmueble distinto al actual:</b></span>
-    <span>Casa</span>
-    <span>Departamento</span>
-    <span>Local</span>
-    <span>Terreno</span>
-    <span>Sin bien</span>
-    <span>Otro</span>
-    <span>Totalmente Pagado</span>
-    <span>Parcialmente Pagado</span>
-
-
-    <span><b>Vehículos:</b> Marca</span>
-    <span>Año</span>
-    <span>Tota</span>
-    <span>Marca</span>
-    <span>Año</span>
-    <span>lmente Pagado</span>
-    <span>Parcialmente Pagado</span>
-    <span>lmente Pagado</span>
-    <span>Parcialmente Pagado</span>
+    <div class="d-block space w-100">
+        <div class="d-inline-block w-45">
+            <div class="d-inline-block" style="margin-top: 8px;">
+                <span class="seccion_subtitle"><b>Bien Inmueble distinto al actual:</b></span>
+                <span>Casa: (   )</span>
+                <span>Departamento: (   )</span>
+                <span>Local: (   )</span>
+                <span>Terreno: (   )</span>
+                <span>Sin Bien: (   )</span>
+                <span>Otro: (   )</span>
+                <span>Totalmente Pagado (   )</span>
+                <span>Parcialmente pagado (   )</span>
+            </div>
+        </div>
+        <div class="d-inline-block w-50">
+            <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
+                <span class="block" style="margin-top: 8px;">Vehículos:</span>
+                <span class="block">&nbsp;</span>
+            </div>
+            <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
+                <div class="d-inline-block">
+                    <div class="d-inline-block">
+                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-block">&nbsp;</span>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                        <div class="d-inline">
+                            <span>Totalmente Pagado (   )</span>
+                            <span>Parcialmente Pagado(   )</span>
+                        </div>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="d-inline-block">Año</span>
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline">&nbsp;</span>
+                    </div>
+                </div>
+                <div class="d-inline-block">
+                    <div class="d-inline-block">
+                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-block">&nbsp;</span>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                        <div class="d-inline">
+                            <span>Totalmente Pagado (   )</span>
+                            <span>Parcialmente Pagado(   )</span>
+                        </div>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="d-inline-block">Año</span>
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="seccion_title">
         <span><b>REFERENCIAS PERSONALES</b></span>
     </div>
-    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+    <table class="tbl">
         <tbody>
             <tr>
-                <td>Tipo de<br>
-                    Referencia</td>
-                <td>Apellido Paterno</td>
-                <td>Apellido Materno</td>
-                <td>Nombre(s) sin<br>abreviaturas</td>
-                <td>Correo eléctronico</td>
-                <td>Tel, casa con lada</td>
-                <td>Celular</td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Tipo de<br>
+                    Referencia</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Apellido Paterno</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Apellido Materno</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Nombre(s) sin<br>abreviaturas</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Correo eléctronico</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Tel, casa con lada</span></td>
+                <td class="seccion_subtitle" style="text-align: center"><span>Celular</span></td>
             </tr>
             <tr>
-                <td>Familiar 1</td>
+                <td><span class="seccion_subtitle">Familiar 1</span></td>
                 <td><font th:text="${references.get(0).paternalLastName}"></font></td>
                 <td><font th:text="${references.get(0).maternalLastName}"></font></td>
                 <td><font th:text="${references.get(0).name}"></font></td>
@@ -739,7 +827,7 @@
                 <td><font th:text="${references.get(1).mobile}"></font></td>
             </tr>
             <tr>
-                <td>No Familiar 1</td>
+                <td><span class="seccion_subtitle">No Familiar 1</span></td>
                 <td><font th:text="${references.get(2).paternalLastName}"></font></td>
                 <td><font th:text="${references.get(2).maternalLastName}"></font></td>
                 <td><font th:text="${references.get(2).name}"></font></td>
@@ -768,7 +856,8 @@
 
     <div class="d-block space w-100">
         <div class="d-inline-block w-5">
-            <span><b>Nombre:</b></span>
+            <span class="seccion_subtitle d-block"><b>Nombre:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-30">
             <span th:text="${cocreditedCustomers.paternalLastName}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -786,7 +875,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-35">
-            <span><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
+            <span class="d-block"><b>En caso de haber tenido otro nombre anteriormente, favor de indicarlo:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-15">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -803,19 +893,19 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-25">
-            <span><b>RFC: </b></span>
+            <span class="seccion_subtitle"><b>RFC: </b></span>
             <span th:text="${cocreditedCustomers.rfc}" class="bdr-bottom d-inline-block" style="width: 72%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-15">
-            <span><b>Homoclave: </b></span>
+            <span class="seccion_subtitle"><b>Homoclave: </b></span>
             <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span><b>Fecha de nacimiento:</b></span>
+            <span class="seccion_subtitle"><b>Fecha de nacimiento:</b></span>
             <span th:text="${#dates.format(cocreditedCustomers.birthday,'yyyy-MM-dd')}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span><b>País de nacimiento:</b></span>
+            <span class="seccion_subtitle"><b>País de nacimiento:</b></span>
             <span th:text="${cocreditedAdditional.countryBirth}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
 
@@ -839,8 +929,8 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-45">
-            <span class="d-block"><b>Nacionalidad:</b></span>
+        <div class="d-inline-block w-40">
+            <span class="seccion_subtitle d-inline-block"><b>Nacionalidad:</b></span>
             <div class="d-block">
                 <span>Mexicana&nbsp;&nbsp;<font  th:utext="${cocreditedAdditional.nationality eq 0} ? '( X )' : '( )'"></font></span>
                 <span>Entidad Federativa de nacimiento</span>
@@ -853,12 +943,12 @@
             </div>
         </div>
         <div class="d-inline-block w-10">
-            <span class="d-block"><b>Género:</b></span>
+            <span class="seccion_subtitle d-block"><b>Género:</b></span>
             <span class="d-block w-100">Masculino&nbsp;<font  th:utext="${cocreditedCustomers.gender eq 0} ? '( X )' : '( )'"></font></span>
             <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:utext="${cocreditedCustomers.gender eq 1} ? '( X )' : '( )'"></font></span>
         </div>
         <div class="d-inline-block w-20">
-            <span class="d-block"><b>Estado civil:</b></span>
+            <span class="seccion_subtitle d-block"><b>Estado civil:</b></span>
             <span class="d-block w-100">Soltero <font  th:utext="${cocreditedAdditional.civilState eq 0} ? '( X )' : '( )'"></font></span>
             <div class="d-block  w-100">
                 <span>Casado <font  th:utext="${cocreditedAdditional.civilState eq 1} ? '( X )' : '( )'"></font></span>
@@ -866,8 +956,8 @@
                 <span class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-15">
-            <span class="d-block"><b>Régimen matrimonial:</b></span>
+        <div class="d-inline-block w-20">
+            <span class="seccion_subtitle d-block"><b>Régimen matrimonial:</b></span>
             <span class="d-block">Bienes mancomunados&nbsp;<font th:utext="${cocreditedAdditional.maritalStatus eq 0} ? '( X )' : '( )'"></font></span>
             <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${cocreditedAdditional.maritalStatus eq 1} ? '( X )' : '( )'"></font></span>
         </div>
@@ -895,8 +985,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-20">
-            <span style="width: 100%"><b>Domicilio particular en México:</b></span>
-
+            <span class="seccion_subtitle d-block" style="width: 100%"><b>Domicilio particular en México:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -935,15 +1025,21 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30" style="width: 32%">
-            <span><b>Teléfono Casa 01:</b></span>
+            <div class="d-inline-block">
+                <span class="seccion_subtitle d-block"><b>Teléfono Casa 01:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-75">
-                <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                <span class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
                 <span>(Número)</span>
                 <span>(LADA)</span>
             </div>
         </div>
         <div class="d-inline-block w-30">
-            <span><b>Celular:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Celular:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-80">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(Número)</span>
@@ -951,7 +1047,10 @@
             </div>
         </div>
         <div class="d-inline-block w-30" style="width: 32%">
-            <span><b>Otro teléfono 01:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Otro teléfono 01:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block w-70" style="width: 76%">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(Número)</span>
@@ -1002,8 +1101,8 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-15">
-            <span style="width: 100%"><b>Domicilio laboral en México:</b></span>
-
+            <span class="seccion_subtitle d-block" style="width: 100%"><b>Domicilio laboral en México:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span th:utext="${cocreditedWork.address}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -1043,7 +1142,10 @@
     <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
-                <span class="seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
+                <div class="d-inline-block">
+                    <span class="d-block seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
+                    <span class="d-block">&nbsp;</span>
+                </div>
                 <div class="d-inline-block">
                     <span th:utext="${cocreditedWork.officePhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                     <div class="d-inline">
@@ -1055,109 +1157,157 @@
             <div class="d-inline-block w-45">
                 <span class="d-inline seccion_subtitle"><b>Extensión:</b></span>
                 <span th:utext="${cocreditedWork.officePhoneExtension}" class="bdr-bottom d-inline-block" style="width: 70%">&nbsp;</span>
+                <span class="d-block">&nbsp;</span>
             </div>
         </div>
         <div class="d-inline-block w-45">
-            <span class="seccion_subtitle"><b>Antigüedad en el empleo: Actual (años):</b></span>
-            <span th:utext="${cocreditedWork.nowWorkWeniority}" class="bdr-bottom d-inline-block" style="width: 13%">&nbsp;</span>
-            <span class="seccion_subtitle"><b>Anterior (años):</b></span>
-            <span th:utext="${cocreditedWork.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
+            <div class="d-block">
+                <span class="seccion_subtitle"><b>Antigüedad en el empleo: Actual (años):</b></span>
+                <span th:utext="${cocreditedWork.nowWorkWeniority}" class="bdr-bottom d-inline-block" style="width: 13%">&nbsp;</span>
+                <span class="seccion_subtitle"><b>Anterior (años):</b></span>
+                <span th:utext="${cocreditedWork.previousWorkSeniority}" class="bdr-bottom d-inline-block" style="width: 10%">&nbsp;</span>
+            </div>
+            <span class="d-block">&nbsp;</span>
         </div>
     </div>
     <div class="seccion_title space">
         <span><b>INFORMACIÓN FINANCIERA Y BANCARIA DEL SOLICITANTE</b></span>
     </div>
-    <table class="table space">
+    <table class="tbl space">
         <tbody>
-        <tr>
-            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span></td>
-            <td><span>Otros Ingresos:</span></td>
-        </tr>
-        <tr>
-            <td><span>Fuente de Otros Ingresos:</span></td>
-            <td><span>Total Ingresos:</span></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <span><b>Egresos por Créditos:</b></span>
-                <table class="table">
-                    <tr>
-                        <td>Institución</td>
-                        <td>Tipo de Crédito</td>
-                        <td>No. de Cuenta</td>
-                        <td>Fecha de Apertura</td>
-                        <td>Saldo Actual</td>
-                        <td>Pago Mensual</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <span><b>Referencias Comerciales y/o Bancarias:</b></span>
-                <table class="table">
-                    <tr>
-                        <td>Tipo de Crédito</td>
-                        <td>Compañía o Banco</td>
-                        <td>No. de Cuenta</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+            <tr>
+                <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span></td>
+                <td><span>Otros Ingresos:</span></td>
+            </tr>
+            <tr>
+                <td><span>Fuente de Otros Ingresos:</span></td>
+                <td><span>Total Ingresos:</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Egresos por Créditos:</b></span>
+                    <table class="tbl" style="width: 90%; margin-left: auto; margin-right: auto; ">
+                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                    </table>
+                    <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Referencias Comerciales y/o Bancarias:</b></span>
+                    <table class="tbl"  style="width: 90%; margin-left: auto; margin-right: auto; ">
+                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
+                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                            <td><span>&nbsp;</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
         </tbody>
     </table>
-    <span><b>Bien inmueble distinto al actual:</b></span>
-    <span>Casa</span>
-    <span>Departamento</span>
-    <span>Local</span>
-    <span>Terreno</span>
-    <span>Sin bien</span>
-    <span>Otro</span>
-    <span>Totalmente Pagado</span>
-    <span>Parcialmente Pagado</span>
-    <span><b>Vehículos:</b> Marca</span>
-    <span>Año</span>
-    <span>Tota</span>
-    <span>Marca</span>
-    <span>Año</span>
-    <span>lmente Pagado</span>
-    <span>Parcialmente Pagado</span>
-    <span>lmente Pagado</span>
-    <span>Parcialmente Pagado</span>
+    <div class="d-block space w-100">
+        <div class="d-inline-block w-45">
+            <div class="d-inline-block" style="margin-top: 8px;">
+                <span class="seccion_subtitle"><b>Bien Inmueble distinto al actual:</b></span>
+                <span>Casa: (   )</span>
+                <span>Departamento: (   )</span>
+                <span>Local: (   )</span>
+                <span>Terreno: (   )</span>
+                <span>Sin Bien: (   )</span>
+                <span>Otro: (   )</span>
+                <span>Totalmente Pagado (   )</span>
+                <span>Parcialmente pagado (   )</span>
+            </div>
+        </div>
+        <div class="d-inline-block w-50">
+            <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
+                <span class="block" style="margin-top: 8px;">Vehículos:</span>
+                <span class="block">&nbsp;</span>
+            </div>
+            <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
+                <div class="d-inline-block">
+                    <div class="d-inline-block">
+                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-block">&nbsp;</span>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                        <div class="d-inline">
+                            <span>Totalmente Pagado (   )</span>
+                            <span>Parcialmente Pagado(   )</span>
+                        </div>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="d-inline-block">Año</span>
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline">&nbsp;</span>
+                    </div>
+                </div>
+                <div class="d-inline-block">
+                    <div class="d-inline-block">
+                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-block">&nbsp;</span>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+                        <div class="d-inline">
+                            <span>Totalmente Pagado (   )</span>
+                            <span>Parcialmente Pagado(   )</span>
+                        </div>
+                    </div>
+                    <div class="d-inline-block">
+                        <span class="d-inline-block">Año</span>
+                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!-- Pagina 3-->
 <div class="page">
-    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+    <table class="tblTitle">
         <tbody>
         <tr>
             <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100"></td>
+                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+            </td>
             <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
         </tr>
         <tr>
-            <td colspan="2">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+            <td>HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+            <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -1173,22 +1323,20 @@
     <div class="d-inline-block w-100" style="padding-top: 8px; padding-bottom: 8px;">
         <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del solicitante</b></span>
-            <span class="d-block text-center"><b>&nbsp;</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del solicitante</b></span>
         </div>
         <div class="d-inline-block w-25 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;" >
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
-            <span class="d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
+            <span class="seccion_subtitle d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
+            <span class="seccion_subtitle d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
         </div>
         <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del coacreditado</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del coacreditado</b></span>
         </div>
         <div class="d-inline-block w-30 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del obligado solidario</b></span>
-            <span class="d-block text-center"><b>&nbsp;</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del obligado solidario</b></span>
         </div>
     </div>
     <div class="seccion_title"><p>AUTORIZACIÓN DE MERCADEO</p></div>
@@ -1203,25 +1351,23 @@
     <div class="d-inline-block w-100" style="padding-top: 8px; padding-bottom: 8px;">
         <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del solicitante</b></span>
-            <span class="d-block text-center"><b>&nbsp;</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br /> del solicitante</b></span>
         </div>
         <div class="d-inline-block w-25 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;" >
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
-            <span class="d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
+            <span class="seccion_subtitle d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
+            <span class="seccion_subtitle d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
         </div>
         <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del coacreditado</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br /> del coacreditado</b></span>
         </div>
         <div class="d-inline-block w-30 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="d-block text-center"><b>Nombre y firma del obligado solidario</b></span>
-            <span class="d-block text-center"><b>&nbsp;</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br /> del obligado solidario</b></span>
         </div>
     </div>
-    <div class="d-block"><p>AUTORIZACIÓN BURÓ DE CRÉDITO</p></div>
+    <div class="seccion_title d-block"><p>AUTORIZACIÓN BURÓ DE CRÉDITO</p></div>
     <p>Autorizo (Autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC y a los demás miembros del Grupo Financiero HSBC para que
         directamente o por conducto de cualquier Sociedad de Información Crediticia solicite(n), obtenga(n) o verifique(n) en el presente o en el futuro y cuantas veces
         considere necesario toda la información crediticia de el (los) suscrito(s). Hago (hacemos) constar que tengo (tenemos) pleno conocimiento de la naturaleza y alcance
@@ -1233,15 +1379,15 @@
     <div class="d-inline-block text-center w-100">
         <div class="d-inline-block w-30">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="text-center"><b>Nombre y firma del solicitante</b></span>
+            <span class="seccion_subtitle text-center"><b>Nombre y firma del solicitante</b></span>
         </div>
         <div class="d-inline-block w-30">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="text-center"><b>Nombre y firma del coacreditado</b></span>
+            <span class="seccion_subtitle text-center"><b>Nombre y firma del coacreditado</b></span>
         </div>
         <div class="d-inline-block w-35">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="text-center"><b>Nombre y firma del obligado solidario</b></span>
+            <span class="seccion_subtitle text-center"><b>Nombre y firma del obligado solidario</b></span>
         </div>
     </div>
     <div class="seccion_title"><p>OFERTA VINCULANTE</p></div>
@@ -1255,9 +1401,9 @@
         Con base en la información señalada en la presente solicitud, ¿está interesado en que la entidad le extienda una Oferta Vinculante? Sí
         En caso de que su respuesta sea positiva, para obtener su formato de Oferta Vinculante deberá solicitarla al Ejecutivo de Sucursal y/o Centro Hipotecario de forma impresa.</p>
     <p style="height: 25px">&nbsp;</p>
-    <div class="d-block text-center">
-        <span class="bdr-bottom d-inline-block text-center" style="width: 50%">&nbsp;</span>
-        <span class="text-center d-block"><b>Nombre y firma del solicitante</b></span>
+    <div class="d-block text-center w-25" style="width: 25%; margin-left: auto; margin-right: auto;">
+        <span class="bdr-bottom d-block text-center" style="width: 100%">&nbsp;</span>
+        <span class="seccion_subtitle text-center d-block" style="width: 100%"><b>Nombre y firma del solicitante</b></span>
     </div>
     <div class="seccion_title">INFORMACIÓN GENERAL DEL CRÉDITO</div>
     <span class="d-block">El Banco se reserva el derecho de no conceder el crédito en cualquier etapa del trámite.</span>
@@ -1303,14 +1449,15 @@
     </div>
     <div class="d-block">
         <div class="d-inline-block w-75">
-            <div class="d-inline-block w-15">
-                <span style="width: 100%"><b>Nombre del vendedor:</b></span>
+            <div class="d-inline-block w-20">
+                <span class="d-block" style="width: 100%"><b>Nombre del vendedor:</b></span>
+                <span class="d-block">&nbsp;</span>
             </div>
             <div class="d-inline-block w-30">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>Apellido paterno</span>
             </div>
-            <div class="d-inline-block w-20">
+            <div class="d-inline-block w-15">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>Apellido materno</span>
             </div>
@@ -1322,11 +1469,13 @@
         <div class="d-inline-block w-20" style="width: 23%;">
             <span><b>Teléfono Casa 01:</b></span>
             <span class="bdr-bottom d-inline-block" style="width: 60%">&nbsp;</span>
+            <span class="d-block">&nbsp;</span>
         </div>
     </div>
     <div class="d-block w-100">
         <div class="d-inline-block w-15">
-            <span style="width: 100%"><b>Domicilio del vendedor:</b></span>
+            <span class="d-block" style="width: 100%"><b>Domicilio del vendedor:</b></span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -1366,15 +1515,16 @@
 </div>
 <!-- Pagina 4-->
 <div class="page">
-    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+    <table class="tblTitle">
         <tbody>
         <tr>
             <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100"></td>
+                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+            </td>
             <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
         </tr>
         <tr>
-            <td colspan="2">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+            <td>HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -1386,7 +1536,10 @@
     <div class="seccion_title"><p>PARA USO EXCLUSIVO DE HSBC</p></div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="d-inline-block"><b>Nombre:</b></span>
+            <div class="d-inline-block">
+                <span class="seccion_subtitle d-block"><b>Nombre:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block" style="width: 85%">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span >Apellido paterno</span>
@@ -1404,7 +1557,10 @@
 
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="d-inline-block"><b>Teléfono 01:</b></span>
+            <div class="d-inline-block">
+                <span class="d-block"><b>Teléfono 01:</b></span>
+                <span class="d-block">&nbsp;</span>
+            </div>
             <div class="d-inline-block" style="width: 65%">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span class="d-inline-block"><span>(Número)</span><span>(LADA)</span></span>
@@ -1413,10 +1569,12 @@
         <div class="d-inline-block w-30">
             <span><b>No. de Promotor:</b></span>
             <span class="bdr-bottom w-60 d-inline-block">&nbsp;</span>
+            <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-30">
             <span><b>Nombre sucursal /CH:</b></span>
             <span class="bdr-bottom w-60 d-inline-block">&nbsp;</span>
+            <span class="d-block">&nbsp;</span>
         </div>
     </div>
 
@@ -1443,7 +1601,7 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="w-10"><b>Firma:</b></span>
+            <span class="seccion_subtitle w-10"><b>Firma:</b></span>
             <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
         </div>
     </div>
@@ -1505,222 +1663,216 @@
 </div>
 <!-- Pagina 5 -->
 <div class="page">
-    <table style="width: 100%; font-size: 12px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-        <tbody><tr>
-            <td align="left" class="auto-style33">&nbsp;
-                <img alt="" height="100" src="/images/hsbc.png" width="128"></td>
-            <td colspan="4" align="right" class="auto-style33" style="font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
-        </tr>
-        <tr>
-            <td colspan="4" style="border-style: solid; border-width: thin">Nombre del contratante:</td>
-            <td style="border-style: solid; border-width: thin">Solicitud No.:</td>
-        </tr>
-        <tr>
-            <td colspan="4" style="border-style: solid; border-width: thin"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
-            <td style="border-style: solid; border-width: thin"><font th:text="${creditId.customer.creditId}"></font></td>
-        </tr>
-        <tr>
-            <td colspan="4" style="border-style: solid; border-width: thin">Nombre del asegurado propuesto:</td>
-            <td style="border-style: solid; border-width: thin">Estado Civil:</td>
-        </tr>
-        <tr>
-            <td colspan="4" style="border-style: solid; border-width: thin"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
-            <td style="border-style: solid; border-width: thin"><font th:utext="${creditId.additionalies.civilState eq 0}? 'SOLTERO' : 'CASADO'"></font></td>
-        </tr>
-        <tr>
-            <td colspan="2" class="auto-style35" style="border-style: solid; border-width: thin">Fecha de Nacimiento:</td>
-            <td class="auto-style34" style="border-style: solid; border-width: thin">Lugar de nacimiento (ciudad, estado):</td>
-            <td colspan="2" style="border-style: solid; border-width: thin">Sexo:</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="auto-style35" style="border-style: solid; border-width: thin"><font th:text="${#dates.format(creditId.customer.birthday,'yyyy-MM-dd')}"></font></td>
-            <td class="auto-style34" style="border-style: solid; border-width: thin"><font th:utext="${typeStates.get(creditId.customer.stateOfBirth_id+1)}"></font></td>
-            <td colspan="2" style="border-style: solid; border-width: thin"><font th:utext="${creditId.customer.gender_id eq 0} ? 'MASCULINO' : 'FEMENINO'"></font></td>
-        </tr>
-        <tr>
-            <td colspan="3" style="border-style: solid; border-width: thin">Ocupación Actividad:</td>
-            <td colspan="2" style="border-style: solid; border-width: thin">Descripción de Ocupación o Actividad:</td>
-        </tr>
-        <tr>
-            <td colspan="3" style="border-style: solid; border-width: thin"><font th:text="${typePosition.get(work.position + 1)}"></font></td>
-            <td colspan="2" style="border-style: solid; border-width: thin">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="5" style="border-style: solid; border-width: thin">Nombre de la Empresa:</td>
-        </tr>
-        <tr>
-            <td colspan="5" style="border-style: solid; border-width: thin"><font th:text="${work.companyName}"></font></td>
-        </tr>
-        <tr>
-            <td colspan="3" style="border-style: solid; border-width: thin">Giro de la empresa:</td>
-            <td colspan="2" style="border-style: solid; border-width: thin">Ingresos Anuales:</td>
-        </tr>
-        <tr>
-            <td colspan="3" style="border-style: solid; border-width: thin"><font th:text="${typeActivity.get(work.laboral_activity+1)}"></font></td>
-            <td colspan="2" style="border-style: solid; border-width: thin"><font th:text="${work.totalIncome}"></font></td>
-        </tr>
-        </tbody></table>
-    <table style="width: 100%; font-size: 12px;">
-        <tbody><tr>
-            <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
-            <td colspan="2" style="border-style: solid; border-width: thin">Peso <font th:text="${medicquestionnario.get('weight')}"></font> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <font th:text="${medicquestionnario.get('height')}"></font> cm.</td>
-        </tr>
-        <tr>
-            <td align="center" class="auto-style36" rowspan="9" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">2</td>
-            <td style="border-style: solid; border-width: thin">¿Se le ha diagnosticado o ha sido tratado por:</td>
-            <td style="border-style: solid; border-width: thin">&nbsp;</td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">a) Infarto, angina de pecho, trastornos de válvulas cardiacas, soplo y/o cualquier otro
-                <br>
-                problema cardíaco y/o padece o ha padecido de hipertensión o hipotensión arterial?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">b) Convulsiones y/o epilepsias, derrame cerebral, esclerosis cualquier otro problema cerebral o del sistema nervioso?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">c) Tumores malignos (cáncer), leucemia, melanoma o linfoma?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">d) Cualquier enfermedad renal y/o trastorno hepático?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">e) Asma, enfisema pulmonar, tuberculosis y/o cualquier otra enfermedad pulmonar?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">f) SIDA, resultados positivos en la prueba de VIH, Lupus?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">g) Diabetes y/o por niveles elevados de azúcar en la sangre, enfermedades
-                <br>
-                tiroideas (excepto hipotiroidismo) y/o cualquier problema endocrino?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin">h) Trastornos de columna vertebral, enfermedades de los huesos (excepto<br>
-                fractura de extremidades), de oídos o de ojos (excepto miopía, astigmatismo<br>
-                o hipermetropía) o de la sangre?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">3</td>
-            <td style="border-style: solid; border-width: thin">¿A la fecha de firma de este cuestionario médico, tiene el conocimiento de tener<br>
-                programada alguna intervención quirúrgica u hospitalización o proyectada alguna cita<br>
-                para practicar pruebas médicas o ya le fueron practicadas para la detección o sospecha de<br>
-                alguna enfermedad de la que aún no tenga el diagnóstico exacto?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">4</td>
-            <td style="border-style: solid; border-width: thin">¿Tiene alguna enfermedad o limitación física (como la falta de un miembro o algún tipo de<br>
-                invalidez) que le impida o pudiera impedir en el futuro el desempeñar su actividad,<br>
-                profesión u ocupación actual?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-        </tr>
-        <tr>
-            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">5</td>
-            <td style="border-style: solid; border-width: thin">¿Es usted bombero, minero, obrero petrolero o trabajador en plataforma marina, o por<br>
-                algún motivo está usted expuesto o maneja: explosivos, armas de fuego, material biológico<br>
-                de riesgo, sustancias químicas peligrosas, maquinaria pesada, maquinaria ligera de riesgo,<br>
-                radiaciones, alto voltaje, riesgo por altura, transporte en motocicleta o actividades aéreas?</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
-                Especifique:</td>
-        </tr>
-        <tr>
-            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">6</td>
-            <td style="border-style: solid; border-width: thin">¿Practica de manera profesional algún deporte de alto riesgo y/o planea practicarlo<br>
-                en los próximos 12 meses? Se consideran deportes de alto riesgo: carreras de autos,<br>
-                motociclismo, motonáutica, alpinismo, buceo, espeleología, montañismo, paracaidismo,<br>
-                vuelo de ala delta, esquí en agua o nieve, rafting o cualquier similar.</td>
-            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
-                Especifique:</td>
-        </tr>
-        <tr>
-            <td style="border-style: solid; border-width: thin;" colspan="3">En caso afirmativo para cualquiera de las preguntas 2 a 4, proporcionar la siguiente información:</td>
-        </tr>
-        </tbody></table>
+    <table class="tbl">
+        <tbody>
+            <tr style="border: medium transparent;">
+                <td align="left" class="auto-style33"style="border: medium transparent;">&nbsp;
+                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="128">
+                </td>
+                <td colspan="4" align="right" class="auto-style33" style="border: transparent;font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-bottom: transparent;">Nombre del contratante:</td>
+                <td  style="border-bottom: transparent;">Solicitud No.:</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
+                <td style="border-top: transparent;"><font th:text="${creditId.customer.creditId}"></font></td>
+            </tr>
+            <tr>
+                <td colspan="4"  style="border-bottom: transparent;">Nombre del asegurado propuesto:</td>
+                <td  style="border-bottom: transparent;">Estado Civil:</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
+                <td style="border-top: transparent;"><font th:utext="${creditId.additionalies.civilState eq 0}? 'SOLTERO' : 'CASADO'"></font></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="auto-style35"  style="border-bottom: transparent;">Fecha de Nacimiento:</td>
+                <td class="auto-style34"  style="border-bottom: transparent;">Lugar de nacimiento (ciudad, estado):</td>
+                <td colspan="2"  style="border-bottom: transparent;">Sexo:</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="auto-style35" style="border-top: transparent;"><font th:text="${#dates.format(creditId.customer.birthday,'yyyy-MM-dd')}"></font></td>
+                <td class="auto-style34" style="border-top: transparent;"><font th:utext="${typeStates.get(creditId.customer.stateOfBirth_id+1)}"></font></td>
+                <td colspan="2" style="border-top: transparent;"><font th:utext="${creditId.customer.gender_id eq 0} ? 'MASCULINO' : 'FEMENINO'"></font></td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="border-bottom: transparent;">Ocupación Actividad:</td>
+                <td colspan="2"  style="border-bottom: transparent;">Descripción de Ocupación o Actividad:</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="border-top: transparent;"><font th:text="${typePosition.get(work.position + 1)}"></font></td>
+                <td colspan="2" style="border-top: transparent;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="5"  style="border-bottom: transparent;">Nombre de la Empresa:</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="border-top: transparent;"><font th:text="${work.companyName}"></font></td>
+            </tr>
+            <tr>
+                <td colspan="3"  style="border-bottom: transparent;">Giro de la empresa:</td>
+                <td colspan="2"  style="border-bottom: transparent;">Ingresos Anuales:</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="border-top: transparent;"><font th:text="${typeActivity.get(work.laboral_activity+1)}"></font></td>
+                <td colspan="2" style="border-top: transparent;"><font th:text="${work.totalIncome}"></font></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tbl">
+        <tbody>
+            <tr>
+                <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
+                <td colspan="2" style="border-style: solid; border-width: thin">Peso <font th:text="${medicquestionnario.get('weight')}"></font> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <font th:text="${medicquestionnario.get('height')}"></font> cm.</td>
+            </tr>
+            <tr>
+                <td align="center" class="auto-style36" rowspan="9" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">2</td>
+                <td style="border-style: solid; border-width: thin">¿Se le ha diagnosticado o ha sido tratado por:</td>
+                <td style="border-style: solid; border-width: thin">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">a) Infarto, angina de pecho, trastornos de válvulas cardiacas, soplo y/o cualquier otro
+                    <br>
+                    problema cardíaco y/o padece o ha padecido de hipertensión o hipotensión arterial?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">b) Convulsiones y/o epilepsias, derrame cerebral, esclerosis cualquier otro problema cerebral o del sistema nervioso?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">c) Tumores malignos (cáncer), leucemia, melanoma o linfoma?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">d) Cualquier enfermedad renal y/o trastorno hepático?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">e) Asma, enfisema pulmonar, tuberculosis y/o cualquier otra enfermedad pulmonar?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">f) SIDA, resultados positivos en la prueba de VIH, Lupus?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">g) Diabetes y/o por niveles elevados de azúcar en la sangre, enfermedades
+                    <br>
+                    tiroideas (excepto hipotiroidismo) y/o cualquier problema endocrino?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin">h) Trastornos de columna vertebral, enfermedades de los huesos (excepto<br>
+                    fractura de extremidades), de oídos o de ojos (excepto miopía, astigmatismo<br>
+                    o hipermetropía) o de la sangre?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">3</td>
+                <td style="border-style: solid; border-width: thin">¿A la fecha de firma de este cuestionario médico, tiene el conocimiento de tener<br>
+                    programada alguna intervención quirúrgica u hospitalización o proyectada alguna cita<br>
+                    para practicar pruebas médicas o ya le fueron practicadas para la detección o sospecha de<br>
+                    alguna enfermedad de la que aún no tenga el diagnóstico exacto?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">4</td>
+                <td style="border-style: solid; border-width: thin">¿Tiene alguna enfermedad o limitación física (como la falta de un miembro o algún tipo de<br>
+                    invalidez) que le impida o pudiera impedir en el futuro el desempeñar su actividad,<br>
+                    profesión u ocupación actual?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">5</td>
+                <td style="border-style: solid; border-width: thin">¿Es usted bombero, minero, obrero petrolero o trabajador en plataforma marina, o por<br>
+                    algún motivo está usted expuesto o maneja: explosivos, armas de fuego, material biológico<br>
+                    de riesgo, sustancias químicas peligrosas, maquinaria pesada, maquinaria ligera de riesgo,<br>
+                    radiaciones, alto voltaje, riesgo por altura, transporte en motocicleta o actividades aéreas?</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
+                    Especifique:</td>
+            </tr>
+            <tr>
+                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">6</td>
+                <td style="border-style: solid; border-width: thin">¿Practica de manera profesional algún deporte de alto riesgo y/o planea practicarlo<br>
+                    en los próximos 12 meses? Se consideran deportes de alto riesgo: carreras de autos,<br>
+                    motociclismo, motonáutica, alpinismo, buceo, espeleología, montañismo, paracaidismo,<br>
+                    vuelo de ala delta, esquí en agua o nieve, rafting o cualquier similar.</td>
+                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
+                    Especifique:</td>
+            </tr>
+            <tr>
+                <td style="border-style: solid; border-width: thin;" colspan="3">En caso afirmativo para cualquiera de las preguntas 2 a 4, proporcionar la siguiente información:</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <!-- Pagina 6 -->
 <div class="page">
-    <table style="width: 100%; font-size: 12px;">
-    <tbody><tr>
-        <td align="left" class="auto-style38">&nbsp;
-            <img alt="" height="100" src="/images/hsbc.png" width="128"></td>
-        <td colspan="4" align="right" class="auto-style33" style="font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
-    </tr>
-    <tr>
-        <td class="auto-style39" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Pregunta No.:</td>
-        <td class="auto-style37" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Nombre de las enfermedades, lesiones,<br>
-            estudios o tramtamientos.</td>
-        <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Fecha en la que las<br>
-            sufrió o se le<br>
-            practicaron</td>
-        <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Duración</td>
-        <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Condiciones Actuales</td>
-    </tr>
-    <th:block th:each="freeAnswer : ${lstFreeAnswer}">
-        <tr>
-            <td class="auto-style39" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></td>
-            <td class="auto-style37" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></td>
-            <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></td>
-            <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></td>
-            <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></td>
-        </tr>
-    </th:block>
-    <tr>
-        <td colspan="5">
-            Hago constar que me he informado que tanto los datos proporcionados en este cuestionario médico, así como  los  requisitos  médicos  que  la  Institución  considere  necesarios,  formarán  parte  de  la  misma.  Para  todos  los  efectos que pueda tener esta declaración, ratifico que todas las respuestas a las preguntas contenidas en el  mismo, las he dado personalmente, que son verídicas tal y como las conozco en el momento de firmar este  documento; así mismo de que cualquier omisión o falsa declaración, serán causa de rescisión de contrato sin  responsabilidad  para  la  Institución. Además  autorizo  a  los  médicos  o  personas  que  me  hayan  asistido  o  examinado, o a los hospitales o clínicas en los que haya ingresado para diagnóstico y tratamiento de cualquiera  enfermedad para que proporcione a HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, todos los informe  que  se  refieren  a  mi  salud,  inclusive  todos  los  datos  de  enfermedades  anteriores,  y  que  a  su  vez  HSBC  Seguros,  S.A.  de  C.V.,  Grupo  Financiero  HSBC,  proporcione  a  cualquier  otra  Institución  de  Seguros, la  información que se derive de este cuestionario médico y de otras que sean de su conocimiento u efecto de  que  pueda  evaluar  cualquier  propuesta  de  contratación  del  seguro  del  ramo  que  le  sea  solicitada  por  mi  persona. Asimismo, los libero expresamente de cualquier responsabilidad por secreto profesional. Este cuestionario tendrá una vigencia de 30 días a partir de la fecha de suscripción.</td>
-    </tr>
-    <tr>
-        <td colspan="5">
-            CLÁUSULA DE CARÁCTER GENERAL CONSENTIMIENTO DE DATOS PERSONALES De conformidad con la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su Reglamento y enterado del alcance del aviso de privacidad, autorizo expresamente para que los datos personales, sensibles y financieros o patrimoniales proporcionados, puedan ser utilizados por HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, o por cualquiera de las empresas afiliadas y subsidiarias del Grupo HSBC, para los fines descritos, en el aviso de privacidad. Así mismo manifiesto que HSBC puso a mi disposición su aviso de privacidad, el cual declaro conocer y aceptar en todos sus términos.<br>
-            <br>
-            <font th:text="${medicquestionnario.get('answer13') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-    </tr>
-    <tr>
-        <td colspan="5">
-            <br>
-            Lugar y fecha ____________________________________________________________
-            <br>
-            <br>
-            <br>
-            Firma de asegurado propuesto _____________________________________</td>
-    </tr>
-    <tr>
-        <td colspan="5">
-            &nbsp;</td>
-    </tr>
-    <tr>
-        <td colspan="5">La presente documentación no será válida si presenta tachaduras, enmendaduras, adiciones o modificaciones<br>
-            de cualquier tipo, mismas que se tendrán por no puestas y no surtirán efecto alguno en perjuicio de la Institución.<br>
-            <br>
-            HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC. Paseo de la Reforma 347, piso 6, Colonia<br>
-            Cuauhtémoc, Alcaldía Cuauhtémoc, Código Postal 06500, México, Ciudad de México.</td>
-    </tr>
-    <tr>
-        <td class="auto-style39">&nbsp;</td>
-        <td class="auto-style37">&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td colspan="5">Página 2</td>
-    </tr>
-    <tr>
-        <td class="auto-style39">&nbsp;</td>
-        <td class="auto-style37">&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-    </tbody></table>
+    <table class="tbl">
+        <tbody>
+            <tr style="border: medium transparent;">
+                <td align="left" class="auto-style38" style="border: transparent;">&nbsp;
+                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="128">
+                </td>
+                <td colspan="4" align="right" class="auto-style33" style="border: transparent; font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
+            </tr>
+            <tr>
+                <td class="auto-style39" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Pregunta No.:</td>
+                <td class="auto-style37" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Nombre de las enfermedades, lesiones,<br>
+                    estudios o tramtamientos.</td>
+                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Fecha en la que las<br>
+                    sufrió o se le<br>
+                    practicaron</td>
+                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Duración</td>
+                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Condiciones Actuales</td>
+            </tr>
+            <th:block th:each="freeAnswer : ${lstFreeAnswer}">
+                <tr>
+                    <td class="auto-style39" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></td>
+                    <td class="auto-style37" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></td>
+                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></td>
+                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></td>
+                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></td>
+                </tr>
+            </th:block>
+            <tr>
+                <td colspan="5">
+                    Hago constar que me he informado que tanto los datos proporcionados en este cuestionario médico, así como  los  requisitos  médicos  que  la  Institución  considere  necesarios,  formarán  parte  de  la  misma.  Para  todos  los  efectos que pueda tener esta declaración, ratifico que todas las respuestas a las preguntas contenidas en el  mismo, las he dado personalmente, que son verídicas tal y como las conozco en el momento de firmar este  documento; así mismo de que cualquier omisión o falsa declaración, serán causa de rescisión de contrato sin  responsabilidad  para  la  Institución. Además  autorizo  a  los  médicos  o  personas  que  me  hayan  asistido  o  examinado, o a los hospitales o clínicas en los que haya ingresado para diagnóstico y tratamiento de cualquiera  enfermedad para que proporcione a HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, todos los informe  que  se  refieren  a  mi  salud,  inclusive  todos  los  datos  de  enfermedades  anteriores,  y  que  a  su  vez  HSBC  Seguros,  S.A.  de  C.V.,  Grupo  Financiero  HSBC,  proporcione  a  cualquier  otra  Institución  de  Seguros, la  información que se derive de este cuestionario médico y de otras que sean de su conocimiento u efecto de  que  pueda  evaluar  cualquier  propuesta  de  contratación  del  seguro  del  ramo  que  le  sea  solicitada  por  mi  persona. Asimismo, los libero expresamente de cualquier responsabilidad por secreto profesional. Este cuestionario tendrá una vigencia de 30 días a partir de la fecha de suscripción.</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    CLÁUSULA DE CARÁCTER GENERAL CONSENTIMIENTO DE DATOS PERSONALES De conformidad con la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su Reglamento y enterado del alcance del aviso de privacidad, autorizo expresamente para que los datos personales, sensibles y financieros o patrimoniales proporcionados, puedan ser utilizados por HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, o por cualquiera de las empresas afiliadas y subsidiarias del Grupo HSBC, para los fines descritos, en el aviso de privacidad. Así mismo manifiesto que HSBC puso a mi disposición su aviso de privacidad, el cual declaro conocer y aceptar en todos sus términos.<br>
+                    <br>
+                    <font th:text="${medicquestionnario.get('answer13') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <br>
+                    Lugar y fecha ____________________________________________________________
+                    <br>
+                    <br>
+                    Firma de asegurado propuesto _____________________________________</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    &nbsp;</td>
+            </tr>
+            <tr style="border: transparent">
+                <td colspan="5"  style="border: transparent">La presente documentación no será válida si presenta tachaduras, enmendaduras, adiciones o modificaciones<br>
+                    de cualquier tipo, mismas que se tendrán por no puestas y no surtirán efecto alguno en perjuicio de la Institución.<br>
+                    <br>
+                    HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC. Paseo de la Reforma 347, piso 6, Colonia<br>
+                    Cuauhtémoc, Alcaldía Cuauhtémoc, Código Postal 06500, México, Ciudad de México.
+                </td>
+            </tr>
+            <tr style="border: medium transparent;">
+                <td colspan="5" style="border: medium transparent;">Página 2</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

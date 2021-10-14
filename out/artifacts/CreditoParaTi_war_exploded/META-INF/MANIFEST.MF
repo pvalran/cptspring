@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: prangel
-Build-Jdk: Amazon Corretto version 11.0.11
-Implementation-Title: CreditoParaTi
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: com.Xoot.CreditoParaTi
-Main-Class: ${start-class}
-

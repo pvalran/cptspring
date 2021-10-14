@@ -17,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -89,7 +86,13 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Type lstTypeEconomic = new TypeToken<List<EconomicDependientiesDto>>() {}.getType();
         Type lstTypeReference = new TypeToken<List<ReferenceDTO>>() {}.getType();
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
-        CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
+        EntityManager em= emf.createEntityManager();
+        em.clear();
+        Query qryCreditApplication = em.createNativeQuery("select * from credits_aplications where number_request = :creditID limit 1",CreditApplication.class)
+                .setParameter("creditID",creditID);
+        CreditApplication creditApplication = (CreditApplication) qryCreditApplication.getResultList()
+                .stream().findFirst().orElse(null);
+
         if (creditApplication != null) {
             if (creditApplication.getCreditId() != null) {
                 if (creditApplication.getCustomer() != null) {
@@ -103,50 +106,80 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         } else {
             customer = customerDao.findByCreditId(creditID);
         }
-        List<Document> documents = documentDao.findByCreditId(creditID);
-        List<Document> docSpouse = documentDao.findByCreditIdSpouse(creditID);
-        AdditionalInformation additionalInformation = additionalInformationDao.findByCreditId(creditID);
-        List<EconomicDependents> dependents = economicDependientiesDAO.findByCreditId(creditID);
-        Spouse spouse = spouseDao.findByCreditId(creditID);
-        Work work = workDao.findByCreditId(creditID);
-        List<Reference> references = referenceDao.findByCreditId(creditID);
-        Property property = propertyDao.findByCreditId(creditID);
+
+
+        Query qryDocuments= em.createNativeQuery("select * from documents where number_request = :creditID",Document.class)
+                .setParameter("creditID",creditID);
+        List<Document> documents = qryDocuments.getResultList();
+
+        Query qryDocSpouse = em.createNativeQuery("SELECT * FROM documents WHERE number_request=:creditID" +
+                        " and type_document_id in (12,13,14) and status_flag = 1",Document.class)
+                .setParameter("creditID",creditID);
+        List<Document> docSpouse = qryDocSpouse.getResultList();
+
+        Query qryAdditional= em.createNativeQuery("select * from additional_information where number_request = :creditID limit 1",AdditionalInformation.class)
+                .setParameter("creditID",creditID);
+        AdditionalInformation additionalInformation = (AdditionalInformation) qryAdditional.getResultList()
+                .stream().findFirst().orElse(null);
+
+        Query qrydependents= em.createNativeQuery("select * from economic_dependents where number_request = :creditID",EconomicDependents.class)
+                .setParameter("creditID",creditID);
+        List<EconomicDependents> dependents = qrydependents.getResultList();
+
+        Query qrySpouse= em.createNativeQuery("select * from spouse where number_request = :creditID limit 1",Spouse.class)
+                .setParameter("creditID",creditID);
+        Spouse spouse = (Spouse) qrySpouse.getResultList()
+                .stream().findFirst().orElse(null);
+
+        Query qryWork= em.createNativeQuery("SELECT * FROM `work` where number_request = :creditID limit 1",Work.class)
+                .setParameter("creditID",creditID);
+        Work work = (Work) qryWork.getResultList()
+                .stream().findFirst().orElse(null);
+
+        Query qryReference = em.createNativeQuery("select * from economic_dependents where number_request = :creditID",EconomicDependents.class)
+                .setParameter("creditID",creditID);
+        List<Reference> references = qryReference.getResultList();
+
+        Query qryProperty= em.createNativeQuery("SELECT * FROM property where number_request = :creditID limit 1",Property.class)
+                .setParameter("creditID",creditID);
+        Property property = (Property) qryProperty.getResultList()
+                .stream().findFirst().orElse(null);
+
         MedicalQuestionnaireAnswerDTO MedicalQuestion = answerMedicalDao.findByCreditID(creditID);
-        CocreditedCustomers cocreditedCustomers = cocreditedCustomersDao.findByCreditId(creditID);
-        CocreditedAdditional cocreditedAdditional = cocreditedAdditionalDao.findByCreditId(creditID);
-        CocreditedWork cocreditedWork = cocreditedWorkDao.findByCreditId(creditID);
-        Document Pdfexpediente = documentDao.findAllIds(creditID,10);
-        Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
-        List<DocumentType> listDocType = documentTypeDao.findAllActive();
-        for (DocumentType docType:listDocType){
-            Document doc = documentDao.findAllIds(creditID,docType.getIdTypeDocument());
-            DocStatusMap docStatus = new DocStatusMap();
-            if (doc == null) {
-                docStatus.setTypeDocument(docType.getIdTypeDocument());
-                docStatus.setStatus(0);
-            } else {
-                docStatus.setTypeDocument(docType.getIdTypeDocument());
-                docStatus.setStatus(1);
-            }
-            items.add(docStatus);
-        }
-        /*try {
-            items = em.createNativeQuery("select dt.id as typeDocument, case when COALESCE(d.number_request,1) = 1 then 0 else 1 end as status from documents_type dt " +
-                            "left join documents d on dt.id = d.type_document_id and d.number_request = :creditID and d.status_flag = 1 " +
-                            "order by dt.id").setParameter("creditID", creditID)
-                    .unwrap(org.hibernate.query.NativeQuery.class)
-                    .setResultTransformer(Transformers.aliasToBean(DocStatusMap.class))
-                    .setHint("javax.persistence.query.timeout", 100000)
-                    .getResultList();
-        } catch (Exception ex) {
-            log.info("Error en consulta de DocStatus: "+ ex.getCause());
-            items = new ArrayList<DocStatusMap>();
-        }*/
+        Query qryCocreditedCustomers= em.createNativeQuery("SELECT * FROM cocredited_customers where number_request = :creditID limit 1",CocreditedCustomers.class)
+                .setParameter("creditID",creditID);
+        CocreditedCustomers cocreditedCustomers = (CocreditedCustomers) qryCocreditedCustomers.getResultList()
+                .stream().findFirst().orElse(null);
 
+        Query qryCocreditedAdditional= em.createNativeQuery("SELECT * FROM cocredited_additional where number_request = :creditID limit 1",CocreditedAdditional.class)
+                .setParameter("creditID",creditID);
+        CocreditedAdditional cocreditedAdditional = (CocreditedAdditional) qryCocreditedAdditional.getResultList()
+                .stream().findFirst().orElse(null);
 
+        Query qryCocreditedWork= em.createNativeQuery("SELECT * FROM cocredited_work where number_request = :creditID limit 1",CocreditedWork.class)
+                .setParameter("creditID",creditID);
+        CocreditedWork cocreditedWork = (CocreditedWork) qryCocreditedWork.getResultList()
+                .stream().findFirst().orElse(null);
 
+        Query qryPdfexpediente = em.createNativeQuery("SELECT * FROM documents "
+                        + "WHERE number_request=:creditID "
+                        + "AND type_document_id=:idTypeDocument "
+                        + "AND status_flag = 1 LIMIT 1",Document.class)
+                .setParameter("creditID",creditID)
+                .setParameter("idTypeDocument",10);
+        Document Pdfexpediente = (Document) qryPdfexpediente.getResultList().stream().findFirst().orElse(null);
 
+        Query qryPdfSubcuenta = em.createNativeQuery("SELECT * FROM documents "
+                        + "WHERE number_request=:creditID "
+                        + "AND type_document_id=:idTypeDocument "
+                        + "AND status_flag = 1 LIMIT 1",Document.class)
+                .setParameter("creditID",creditID)
+                .setParameter("idTypeDocument",11);
+        Document Pdfsubcuenta = (Document) qryPdfSubcuenta.getResultList().stream().findFirst().orElse(null);
+
+        items = em.createNamedStoredProcedureQuery("DocumentStatus")
+                .setParameter("request_number",creditID).getResultList();
 
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
@@ -227,7 +260,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 }
             }
         }
-
         detalleCredito.setDocumentStatus(items);
         detalleCredito.setSolicitud(solicitud);
         return detalleCredito;

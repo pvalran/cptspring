@@ -99,7 +99,6 @@ public class CustomerImpl implements ICustomerService {
 	@Transactional(readOnly = true)
 	public List<CustomerTransactionDTO> getByCustomerTransaction(Integer UserID) {
 		FilterTransacionDTO filterTransacionDTO = new FilterTransacionDTO();
-		TransactionUtilImpl ObjTransUtil = new TransactionUtilImpl();
 		Employee employee = employeeDao.findById(UserID).orElse(null);
 		List<CreditApplication> creditApplications = creditApplicationDao.FindByCreditEmployee(employee.getEmail());
 		List<CustomerTransactionDTO> customerTransactions;
@@ -107,7 +106,7 @@ public class CustomerImpl implements ICustomerService {
 		map.put (1, "A");
 		map.put (2, "R");
 		filterTransacionDTO.setStatus("A,R,P");
-		customerTransactions = ObjTransUtil.creditTransaction(creditApplications,filterTransacionDTO);
+		customerTransactions = transactionUtil.creditTransaction(creditApplications,filterTransacionDTO);
 		return customerTransactions;
 	}
 

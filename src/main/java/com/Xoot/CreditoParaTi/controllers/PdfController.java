@@ -232,8 +232,46 @@ public class PdfController {
     public ResponseEntity<?> getPDFSolicitud(
         @PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject resp = new JSONObject();
+        HashMap<Integer, String> direccion = new HashMap<Integer, String>();
+        HashMap<Integer, String> direccionWork = new HashMap<Integer, String>();
+
+        HashMap<Integer, String> direccionCoacreditado = new HashMap<Integer, String>();
+        HashMap<Integer, String> direccionWorkCoacreditado = new HashMap<Integer, String>();
+
         try {
             CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            direccion.put(0,"");
+            direccion.put(1,"");
+            direccion.put(2,"");
+            direccion.put(3,"");
+            direccion.put(4,"");
+            direccion.put(5,"");
+            direccion.put(6,"");
+
+            direccionWork.put(0,"");
+            direccionWork.put(1,"");
+            direccionWork.put(2,"");
+            direccionWork.put(3,"");
+            direccionWork.put(4,"");
+            direccionWork.put(5,"");
+            direccionWork.put(6,"");
+
+            direccionCoacreditado.put(0,"");
+            direccionCoacreditado.put(1,"");
+            direccionCoacreditado.put(2,"");
+            direccionCoacreditado.put(3,"");
+            direccionCoacreditado.put(4,"");
+            direccionCoacreditado.put(5,"");
+            direccionCoacreditado.put(6,"");
+
+            direccionWorkCoacreditado.put(0,"");
+            direccionWorkCoacreditado.put(1,"");
+            direccionWorkCoacreditado.put(2,"");
+            direccionWorkCoacreditado.put(3,"");
+            direccionWorkCoacreditado.put(4,"");
+            direccionWorkCoacreditado.put(5,"");
+            direccionWorkCoacreditado.put(6,"");
+
 
             if (userCredit == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -313,7 +351,6 @@ public class PdfController {
                     typeStates.put(state.getIdState(), state.getName());
                 }
 
-
                 CustomerDTO customer = new CustomerDTO();
                 AdditionalInformationDTO additional = new AdditionalInformationDTO();
                 SpouseDTO spouse = new SpouseDTO();
@@ -362,13 +399,22 @@ public class PdfController {
 
                     if (creditID.getCustomer() == null){
                         creditID.setCustomer(customer);
+                    } else {
+                        String[] strDireccion = creditID.getCustomer().getStreetAndNumber().split(",");
+                        for (Integer idx=0; idx<strDireccion.length;idx++){
+                            if (strDireccion[idx].contains("-")) {
+                                direccion.put(idx, strDireccion[idx].split("-")[1]);
+                            } else {
+                                direccion.put(idx, strDireccion[idx]);
+                            }
+                        }
                     }
 
                     if(creditID.getAdditionalies() == null) {
                         creditID.setAdditionalies(additional);
                     }
 
-
+                    context.setVariable("direccion",direccion);
                     context.setVariable("creditId", creditID);
                     if (creditID.getSpouse() != null) {
                         spouse = creditID.getSpouse();
@@ -377,10 +423,25 @@ public class PdfController {
 
                     if (creditID.getWork() != null) {
                         work = creditID.getWork();
+                        work.setAddress(creditID.getWork().getAddress().split(",")[0]);
 
+                        if (creditID.getWork().getSuburb().contains("-")) {
+                            work.setSuburb(creditID.getWork().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getWork().getCity().contains("-")) {
+                            work.setCity(creditID.getWork().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getWork().getMunicipality().contains("-")) {
+                            work.setMunicipality(creditID.getWork().getMunicipality().split("-")[1]);
+                        }
+
+                        if (creditID.getWork().getState().contains("-")) {
+                            work.setState(creditID.getWork().getState().split("-")[1]);
+                        }
                     }
                     context.setVariable("work", work);
-
 
                     if (creditID.getCocreditedCustomers() != null) {
                         cocreditedCustomers = creditID.getCocreditedCustomers();
@@ -388,10 +449,45 @@ public class PdfController {
                     context.setVariable("cocreditedCustomers", cocreditedCustomers);
                     if (creditID.getCocreditedAdditional() != null) {
                         cocreditedAdditional = creditID.getCocreditedAdditional();
+
+                        cocreditedAdditional.setAddress(creditID.getCocreditedAdditional().getAddress().split(",")[0]);
+
+                        if (creditID.getCocreditedAdditional().getSuburb().contains("-")) {
+                            cocreditedAdditional.setSuburb(creditID.getCocreditedAdditional().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedAdditional().getCity().contains("-")) {
+                            cocreditedAdditional.setCity(creditID.getCocreditedAdditional().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedAdditional().getCounty().contains("-")) {
+                            cocreditedAdditional.setCounty(creditID.getCocreditedAdditional().getCounty().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedAdditional().getState().contains("-")) {
+                            cocreditedAdditional.setState(creditID.getCocreditedAdditional().getState().split("-")[1]);
+                        }
                     }
                     context.setVariable("cocreditedAdditional", cocreditedAdditional);
                     if (creditID.getCocreditedWork() != null) {
                         cocreditedWork = creditID.getCocreditedWork();
+                        cocreditedWork.setAddress(creditID.getCocreditedWork().getAddress().split(",")[0]);
+
+                        if (creditID.getCocreditedWork().getSuburb().contains("-")) {
+                            cocreditedWork.setSuburb(creditID.getCocreditedWork().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedWork().getCity().contains("-")) {
+                            cocreditedWork.setCity(creditID.getCocreditedWork().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedWork().getCounty().contains("-")) {
+                            cocreditedWork.setCounty(creditID.getCocreditedWork().getCounty().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedWork().getState().contains("-")) {
+                            cocreditedWork.setState(creditID.getCocreditedWork().getState().split("-")[1]);
+                        }
                     }
                     context.setVariable("cocreditedWork", cocreditedWork);
                     for (EconomicDependientiesDto economic : creditID.getDependents()) {
@@ -429,7 +525,9 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("https://pimaid.dev:8443/CreditoParaTi/");
+                    converterProperties.setBaseUri("https://pimaid.dev:8443/Cpttablero");
+                    /*ConverterProperties props = new ConverterProperties();
+                    props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
                     byte[] bytes = target.toByteArray();
                     if (bytes.equals(null)) {
@@ -462,15 +560,15 @@ public class PdfController {
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
                     return ResponseEntity.ok()
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body("Enviado");
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(resp.toString());
                 } else {
                     resp.put("data", "");
                     resp.put("message", "Correo no enviado, El número de credito no existe");
                     resp.put("result", false);
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body(resp);
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(resp);
                 }
             } else {
                 resp.put("data", "");

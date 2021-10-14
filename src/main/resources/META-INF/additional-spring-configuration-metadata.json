@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "server.servlet-path",
-      "type": "java.lang.String",
-      "description": "Description for server.servlet-path."
-  }
-] }

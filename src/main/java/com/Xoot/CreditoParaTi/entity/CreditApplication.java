@@ -44,7 +44,7 @@ public class CreditApplication implements Serializable {
 	@Column(name = "status_flag")
 	private Integer status_flag;
 
-	@Column(name = "crtd_on")
+	@Column(name = "crtd_on", columnDefinition= "TIMESTAMP WITH TIME ZONE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private java.util.Date crtd_on;
 

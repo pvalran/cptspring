@@ -1,5 +1,9 @@
 package com.Xoot.CreditoParaTi.controllers;
 
+import com.Xoot.CreditoParaTi.entity.Employee;
+import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.LocationState;
 import com.Xoot.CreditoParaTi.mapper.RfcDTO;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
@@ -28,9 +32,9 @@ public class CatalogController {
 	@Autowired
 	private ILocationStateService locationStateService;
 	@Autowired
-	private ILocationCityService locationCityService;
-	@Autowired
 	private ILocationCountiesService locationCountiesService;
+	@Autowired
+	private ILocationCityService locationCityService;
 	@Autowired
 	private ILocationSuburbService locationSuburbService;
 	@Autowired
@@ -63,19 +67,18 @@ public class CatalogController {
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
-
 	@Autowired
-	private ModelMapper modelMapper;
-
+	private IEmployeeService employeeService;
+	@Autowired
+	private IUserService userService;
 	@Autowired
 	private ILocationStateDao stateDao;
-
 	@Autowired
 	private ILocationsCountiesDao countiesDao;
-
 	@Autowired
 	private ILocationCityDao cityDao;
-
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping("/catalogy/{catalog}")
 	public ResponseDTO allActive(@PathVariable String catalog) {
@@ -133,9 +136,7 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
-				case "customerstransacion":
-					return customerService.getByCustomerTransaction();
-            }
+			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
@@ -292,6 +293,44 @@ public class CatalogController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseDTO(null, "Rfc no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getCustomersUser/{id}")
+	public ResponseDTO getCustomersUser(@PathVariable Integer id) {
+		Object data;
+		try {
+			Employee employee = employeeService.findById(id);
+			if (employee.getProfileId().equals("2")) {
+				data = customerService.getByCustomerTransaction(employee.getIdUser());
+			} else {
+				data = customerService.getByCustomerTransaction();
+			}
+			return new ResponseDTO(data, "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getLeafletUser/{id}")
+	public ResponseDTO getLeafletUser(@PathVariable Integer id) {
+		try {
+			Employee employee = employeeService.findById(id);
+			Type listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(userService.findLeafletUser(employee.getUsername()),listType), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+	@GetMapping("/getSolicitud/{id}")
+	public ResponseDTO getSolicitud(@PathVariable Integer id) {
+		try {
+			return new ResponseDTO(detalleCreditoService.findBySolictud(id), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
 }

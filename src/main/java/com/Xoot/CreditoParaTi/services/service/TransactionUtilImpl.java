@@ -98,7 +98,6 @@ public class TransactionUtilImpl implements ITransactionUtilService {
                         customerTransactionDTO.getCustomer().setName("");
                         customerTransactionDTO.getCustomer().setPaternalLastName("");
                         customerTransactionDTO.getCustomer().setMotherLastName("");
-
                     }
                     customerTransactionDTO.setEmail("");
                     customerTransactionDTO.setMobile("");
@@ -156,9 +155,7 @@ public class TransactionUtilImpl implements ITransactionUtilService {
             customer = null;
         }
 
-        customerTransactionDTO.setCustomer(
-                modelMapper.map(customer, CustomerDTO.class)
-        );
+        customerTransactionDTO.setCustomer(modelMapper.map(customer, CustomerDTO.class));
         AdditionalInformation additional =  additionalInformationDao.findByCreditId(creditApplication.getCreditId());
 
         List<transaction> transactions = transactionDao.findByCreditID(creditApplication.getCreditId(),typeTransaction);

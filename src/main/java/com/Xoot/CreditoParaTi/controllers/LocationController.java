@@ -26,7 +26,7 @@ public class LocationController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<ResponseMessage> importLocations(@RequestParam("file") MultipartFile reapExcelDataFile) {
 		String message = "";
-		try {
+		try {  
 			persitenceLocation.persistLocation(reapExcelDataFile);
 			message = "Se importo correctamente la información del archivo: " + reapExcelDataFile.getOriginalFilename();
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(0, message, null, null, null));

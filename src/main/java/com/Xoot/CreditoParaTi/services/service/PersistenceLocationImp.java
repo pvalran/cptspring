@@ -3,6 +3,10 @@ package com.Xoot.CreditoParaTi.services.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.entity.LocationSuburb;
+import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.stream.Collectors;
 
-import com.Xoot.CreditoParaTi.services.interfaces.ILocationService;
-import com.Xoot.CreditoParaTi.services.interfaces.IPersistenceLocation;
 import com.Xoot.CreditoParaTi.dto.LocationDTO;
 import com.Xoot.CreditoParaTi.dto.SuburbDTO;
 
@@ -87,9 +89,9 @@ public class PersistenceLocationImp implements IPersistenceLocation {
 				
 				LocationSuburb.setStatus_flag(1);
 				
-				LocationSuburb.setZipCode(Integer.parseInt( location.getZipCode()));			
+				LocationSuburb.setZipCode(location.getZipCode());
 				
-			    LocationSuburb.setMunicipality_id(locationCityCreated.getIdMunicipality());
+			    LocationSuburb.setCountiesId(locationCityCreated.getCountiesId());
 
 				lstLocationSuburb.add(LocationSuburb);
 			}
@@ -114,8 +116,6 @@ public class PersistenceLocationImp implements IPersistenceLocation {
 			locationCity.setStatus_flag(1);
 
 			locationCity.setName(location.getCity());
-
-			locationCity.setState(locationStateCreated);
 		} else {
 			locationCity = lstCitysExist.stream().filter(locationExist -> locationExist.getName().equals(location.getCity()))
 					.findFirst().orElse(null);
