@@ -56,7 +56,6 @@ public class WorkImpl implements IWorkService {
         return new ResponseDTO(ObjDTO,"Error en la modificación del registro",false);
     }
 
-
     @Override
     public ResponseDTO active(Integer id) {
         return null;

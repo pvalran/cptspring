@@ -78,7 +78,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Type lstTypeReference = new TypeToken<List<ReferenceDTO>>() {}.getType();
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
 
-
         CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(creditID);
         if (creditApplication != null) {
             if (creditApplication.getCreditId() != null) {
@@ -108,10 +107,6 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         Document Pdfexpediente = documentDao.findAllIds(creditID,10);
         Document Pdfsubcuenta = documentDao.findAllIds(creditID,11);
 
-
-
-
-
         List<DocStatusMap> items = entityManager.createNamedStoredProcedureQuery("DocumentStatus")
                 .setParameter("request_number",creditID)
                 .getResultList();
@@ -119,7 +114,9 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
         }
+
         detalleCredito.setDocuments(modelMapper.map(documents,lstTypeDocuments));
+
         if (additionalInformation != null) {
             detalleCredito.setAdditionalies(modelMapper.map(additionalInformation, AdditionalInformationDTO.class));
         }
@@ -187,12 +184,13 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 if (cocreditedAdditional != null && cocreditedWork != null && cocreditedCustomers != null) {
                     solicitud = true;
                 }
-            } else {
                 if (spouse != null) {
                     solicitud = true;
                 } else {
                     solicitud = false;
                 }
+            } else {
+                solicitud = true;
             }
         }
 
