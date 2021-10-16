@@ -18,6 +18,8 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -61,9 +63,16 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
     public MedicalQuestionnaireAnswerDTO findByCreditID(Integer creditID) {
         Type lstTypeAnswer;
         Type lstTypeFree;
+        EntityManager em= emf.createEntityManager();
+        em.clear();
+
 
         MedicalQuestionnaireAnswerDTO medicalAnswerDTO = new MedicalQuestionnaireAnswerDTO();
-        MedicalQuestionnaire medicalQuestionn = medicalQuestionnaireDao.findByCreditID(creditID);
+
+        Query qryMedicalQuestionnaire = em.createNativeQuery("select * from medical_questionnaire where number_request = :creditID limit 1", MedicalQuestionnaire.class)
+                .setParameter("creditID",creditID);
+        MedicalQuestionnaire medicalQuestionn = (MedicalQuestionnaire) qryMedicalQuestionnaire.getResultStream()
+                .findFirst().orElse(null);
 
         if (medicalQuestionn != null) {
             medicalAnswerDTO.setIdMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
@@ -76,8 +85,14 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
             lstTypeFree = new TypeToken<List<FreeQuestionnaireDTO>>() {
             }.getType();
 
-            List<AnswerQuestionnaire> lstAnswer = answerQuestionnaireDao.findByMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
-            List<FreeQuestionnaire> lstFree = freeQuestionnaireDao.findByMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
+
+            Query qryAnswerQuestionnaire = em.createNativeQuery("select * from answer_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", AnswerQuestionnaire.class)
+                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
+            List<AnswerQuestionnaire> lstAnswer = qryAnswerQuestionnaire.getResultList();
+
+            Query qryFreeQuestionnaire = em.createNativeQuery("select * from free_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", FreeQuestionnaire.class)
+                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
+            List<FreeQuestionnaire> lstFree = qryFreeQuestionnaire.getResultList();
 
             medicalAnswerDTO.setAnswerQuestionnairies(modelMapper.map(lstAnswer, lstTypeAnswer));
             medicalAnswerDTO.setFreeQuestionnairies(modelMapper.map(lstFree, lstTypeFree));
