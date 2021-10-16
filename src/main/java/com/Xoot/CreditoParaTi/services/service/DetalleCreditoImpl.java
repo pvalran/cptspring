@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.File;
@@ -73,6 +74,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     private final Logger log = LoggerFactory.getLogger(DetalleCreditoImpl.class);
 
     @Override
+    @Transactional(readOnly = true)
     public DetalleCredito findByCreditID(Integer creditID) {
 
         detalleCredito = new DetalleCredito();
@@ -108,14 +110,20 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         }
 
 
-        Query qryDocuments= em.createNativeQuery("select * from documents where number_request = :creditID",Document.class)
-                .setParameter("creditID",creditID);
-        List<Document> documents = qryDocuments.getResultList();
+        Query qryDocuments= em.createNativeQuery("select id as idDocument, name,type_document_id as typeDocumentId" +
+                        ", number_request as creditAplication,class_document_id as classDocumentId, user_id as userId,status_flag from documents where number_request = :creditID")
+            .setParameter("creditID",creditID)
+            .unwrap( org.hibernate.query.Query.class )
+            .setResultTransformer( Transformers.aliasToBean( DocumentDTO.class ) );
 
-        Query qryDocSpouse = em.createNativeQuery("SELECT * FROM documents WHERE number_request=:creditID" +
-                        " and type_document_id in (12,13,14) and status_flag = 1",Document.class)
-                .setParameter("creditID",creditID);
-        List<Document> docSpouse = qryDocSpouse.getResultList();
+        List<DocumentDTO> documents = qryDocuments.getResultList();
+
+        Query qryDocSpouse = em.createNativeQuery("SELECT id as idDocument, name,type_document_id as typeDocumentId" +
+                        ", number_request as creditAplication,class_document_id as classDocumentId, user_id as userId,status_flag  FROM documents WHERE number_request=:creditID" +
+                        " and type_document_id in (12,13,14) and status_flag = 1")
+                .setParameter("creditID",creditID).unwrap( org.hibernate.query.Query.class )
+                .setResultTransformer( Transformers.aliasToBean( DocumentDTO.class ) );
+        List<DocumentDTO> docSpouse = qryDocSpouse.getResultList();
 
         Query qryAdditional= em.createNativeQuery("select * from additional_information where number_request = :creditID limit 1",AdditionalInformation.class)
                 .setParameter("creditID",creditID);
@@ -162,21 +170,21 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         CocreditedWork cocreditedWork = (CocreditedWork) qryCocreditedWork.getResultList()
                 .stream().findFirst().orElse(null);
 
-        Query qryPdfexpediente = em.createNativeQuery("SELECT * FROM documents "
+        Query qryPdfexpediente = em.createNativeQuery("SELECT true FROM documents "
                         + "WHERE number_request=:creditID "
                         + "AND type_document_id=:idTypeDocument "
-                        + "AND status_flag = 1 LIMIT 1",Document.class)
+                        + "AND status_flag = 1 LIMIT 1")
                 .setParameter("creditID",creditID)
                 .setParameter("idTypeDocument",10);
-        Document Pdfexpediente = (Document) qryPdfexpediente.getResultList().stream().findFirst().orElse(null);
+        Boolean Pdfexpediente =  !qryPdfexpediente.getResultList().isEmpty();
 
-        Query qryPdfSubcuenta = em.createNativeQuery("SELECT * FROM documents "
+        Query qryPdfSubcuenta = em.createNativeQuery("SELECT true FROM documents "
                         + "WHERE number_request=:creditID "
                         + "AND type_document_id=:idTypeDocument "
                         + "AND status_flag = 1 LIMIT 1",Document.class)
                 .setParameter("creditID",creditID)
                 .setParameter("idTypeDocument",11);
-        Document Pdfsubcuenta = (Document) qryPdfSubcuenta.getResultList().stream().findFirst().orElse(null);
+        Boolean Pdfsubcuenta =  !qryPdfSubcuenta.getResultList().isEmpty();
 
         items = em.createNamedStoredProcedureQuery("DocumentStatus")
                 .setParameter("request_number",creditID).getResultList();
@@ -184,7 +192,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         if (customer != null) {
             detalleCredito.setCustomer(modelMapper.map(customer, CustomerDTO.class));
         }
-        detalleCredito.setDocuments(modelMapper.map(documents,lstTypeDocuments));
+        detalleCredito.setDocuments(documents);
         if (additionalInformation != null) {
             detalleCredito.setAdditionalies(modelMapper.map(additionalInformation, AdditionalInformationDTO.class));
         }
@@ -196,16 +204,16 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             spouseDTO.setImg1(new DocumentDTO());
             spouseDTO.setImg2(new DocumentDTO());
             spouseDTO.setImg3(new DocumentDTO());
-            for (Document doc:docSpouse) {
+            for (DocumentDTO doc:docSpouse) {
                 switch (doc.getTypeDocumentId()){
                      case 12:
-                         spouseDTO.setImg1(modelMapper.map(doc,DocumentDTO.class));
+                         spouseDTO.setImg1(doc);
                          break;
                      case 13:
-                         spouseDTO.setImg2(modelMapper.map(doc,DocumentDTO.class));
+                         spouseDTO.setImg2(doc);
                          break;
                      case 14:
-                         spouseDTO.setImg3(modelMapper.map(doc,DocumentDTO.class));
+                         spouseDTO.setImg3(doc);
                          break;
                  }
             }
@@ -234,12 +242,10 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         }
         pdfDTO = new PdfDTO();
         ObjDocUtil = new DocumentUtil();
-        if (Pdfexpediente != null) {
-            pdfDTO.setExpediente(true);
-        }
-        if (Pdfsubcuenta != null) {
-            pdfDTO.setSubcuenta(true);
-        }
+
+        pdfDTO.setExpediente(Pdfexpediente);
+        pdfDTO.setSubcuenta(Pdfsubcuenta);
+
         detalleCredito.setPdf(pdfDTO);
 
         if ( customer != null &&
@@ -252,12 +258,13 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 if (cocreditedAdditional != null && cocreditedWork != null && cocreditedCustomers != null) {
                     solicitud = true;
                 }
-            } else {
                 if (spouse != null) {
                     solicitud = true;
                 } else {
                     solicitud = false;
                 }
+            } else {
+               solicitud = true;
             }
         }
         detalleCredito.setDocumentStatus(items);

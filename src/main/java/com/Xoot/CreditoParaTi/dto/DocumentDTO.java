@@ -2,6 +2,8 @@ package com.Xoot.CreditoParaTi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+
 public class DocumentDTO {
 
 	private Integer idDocument;
@@ -14,6 +16,7 @@ public class DocumentDTO {
 	@JsonIgnore
 	private byte[] document;
 
+	public DocumentDTO(){}
 
 	public String getName() {
 		return name;

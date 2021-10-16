@@ -546,7 +546,7 @@ public class PdfController {
                     }
                     File filename = pathFile.toFile();
                     FileUtils.writeByteArrayToFile(filename, bytes);
-                    Mail mail = new Mail();
+                    /*Mail mail = new Mail();
                     mail.setMailFrom("envios@creditoparati.com.mx");
                     mail.setMailTo(user.getEmail());
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
@@ -555,7 +555,7 @@ public class PdfController {
                     prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);*/
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
@@ -568,7 +568,7 @@ public class PdfController {
                     resp.put("result", false);
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp);
+                        .body(resp.toString());
                 }
             } else {
                 resp.put("data", "");
@@ -576,7 +576,7 @@ public class PdfController {
                 resp.put("result", false);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp);
+                        .body(resp.toString());
             }
         } catch (Exception ex) {
             resp.put("data", "");
@@ -584,7 +584,7 @@ public class PdfController {
             resp.put("result", false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(resp);
+                    .body(resp.toString());
         }
     }
 
