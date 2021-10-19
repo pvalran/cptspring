@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 import com.Xoot.CreditoParaTi.dto.DocumentDTO;
 import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
@@ -17,11 +18,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
 import com.Xoot.CreditoParaTi.entity.Customer;
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
+import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
+
 
 @Service
 public class CustomerImpl implements ICustomerService {

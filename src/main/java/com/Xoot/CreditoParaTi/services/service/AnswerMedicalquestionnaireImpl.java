@@ -17,10 +17,11 @@ import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import javax.persistence.*;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,8 @@ import java.util.List;
 
 @Service
 public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnaireService {
+    @PersistenceUnit
+    private EntityManagerFactory emf;
     @Autowired
     private IMedicalQuestionnaireDao medicalQuestionnaireDao;
     @Autowired
@@ -60,11 +63,13 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MedicalQuestionnaireAnswerDTO findByCreditID(Integer creditID) {
         Type lstTypeAnswer;
         Type lstTypeFree;
         EntityManager em= emf.createEntityManager();
         em.clear();
+
 
 
         MedicalQuestionnaireAnswerDTO medicalAnswerDTO = new MedicalQuestionnaireAnswerDTO();
