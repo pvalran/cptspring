@@ -36,17 +36,21 @@ public class Document implements Serializable {
 	private java.util.Date crtd_on;
 
 	@Column(name = "crtd_by", length = 50)
+	@Basic(fetch = FetchType.LAZY)
 	private String crtd_by;
 
 	@Column(name = "mdfd_on")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Basic(fetch = FetchType.LAZY)
 	private java.util.Date mdfd_on;
 
 	@Column(name = "mdfd_by", length = 50)
+	@Basic(fetch = FetchType.LAZY)
 	private String mdfd_by;
 
 	@Lob
 	@Column(name = "document")
+	@Basic(fetch = FetchType.LAZY)
 	private byte[] document;
 
 

@@ -329,7 +329,7 @@ public class FormController {
 
     @PutMapping("/economicdependenty/{creditId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormEconomicDependentyRemove(@PathVariable Integer creditId,EconomicDependientiesDto economicDto) {
+    public ResponseDTO FormEconomicDependentyRemove(@PathVariable Integer creditId,@RequestBody EconomicDependientiesDto economicDto) {
         try {
             return economicDependientiesService.remove(creditId);
         } catch (Exception e) {
@@ -423,7 +423,7 @@ public class FormController {
 
     @PutMapping("/reference/{creditId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseDTO FormReferenceRemove(@PathVariable Integer creditId, ReferenceDTO referenceDTO) {
+    public ResponseDTO FormReferenceRemove(@PathVariable Integer creditId,@RequestBody ReferenceDTO referenceDTO) {
         try {
             return referenceService.remove(creditId);
         } catch (Exception e) {

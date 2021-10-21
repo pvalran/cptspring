@@ -69,13 +69,14 @@ public class DetalleCreditoImpl implements IDetalleCredito {
     private final Logger log = LoggerFactory.getLogger(DetalleCreditoImpl.class);
 
     @Override
-    @Transactional(readOnly = true)
     public DetalleCredito findByCreditID(Integer creditID) {
         detalleCredito = new DetalleCredito();
         Boolean solicitud = false;
         String base64File;
         Customer customer;
         List<DocStatusMap> items = new ArrayList<DocStatusMap>();
+        Integer sizeDepedents = 0;
+        Integer sizeRerefeces = 0;
         //EntityManager em = emf.createEntityManager();
 
         Type lstTypeDocuments = new TypeToken<List<DocumentDTO>>() {}.getType();
@@ -84,7 +85,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
         List<DocumentDTO> listDocDTO = new ArrayList<DocumentDTO>();
         EntityManager em= emf.createEntityManager();
         try {
-            em.clear();
+
             //em.getTransaction().begin();
             Query qryCreditApplication = em.createNativeQuery("select * from credits_aplications where number_request = :creditID limit 1",CreditApplication.class)
                     .setParameter("creditID",creditID);
@@ -138,7 +139,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             Work work = (Work) qryWork.getResultList()
                     .stream().findFirst().orElse(null);
 
-            Query qryReference = em.createNativeQuery("select * from economic_dependents where number_request = :creditID",EconomicDependents.class)
+            Query qryReference = em.createNativeQuery("select * from reference where number_request = :creditID",Reference.class)
                     .setParameter("creditID",creditID);
             List<Reference> references = qryReference.getResultList();
 
@@ -191,7 +192,10 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 detalleCredito.setAdditionalies(modelMapper.map(additionalInformation, AdditionalInformationDTO.class));
             }
             if (dependents != null ) {
-                detalleCredito.setDependents(modelMapper.map(dependents, lstTypeEconomic));
+                if (dependents.size() > 0) {
+                    detalleCredito.setDependents(modelMapper.map(dependents, lstTypeEconomic));
+                    sizeDepedents = dependents.size();
+                }
             }
             if (spouse != null) {
                 SpouseDTO spouseDTO = modelMapper.map(spouse, SpouseDTO.class);
@@ -217,7 +221,10 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                 detalleCredito.setWork(modelMapper.map(work, WorkDTO.class));
             }
             if (references != null) {
-                detalleCredito.setReferences(modelMapper.map(references, lstTypeReference));
+                if (references.size() > 0) {
+                    detalleCredito.setReferences(modelMapper.map(references, lstTypeReference));
+                    sizeRerefeces = references.size();
+                }
             }
             if (property != null) {
                 detalleCredito.setProperty(modelMapper.map(property,PropertyDTO.class));
@@ -242,11 +249,8 @@ public class DetalleCreditoImpl implements IDetalleCredito {
 
             detalleCredito.setPdf(pdfDTO);
 
-            if ( customer != null &&
-                    additionalInformation != null &&
-                    work != null &&
-                    dependents.stream().count() > 0 &&
-                    references.stream().count() > 0
+            if ( customer != null && additionalInformation != null &&
+                work != null && sizeDepedents > 0 && sizeRerefeces > 0
             ) {
                 if (additionalInformation.getCivilState() == 1) {
                     if (cocreditedAdditional != null && cocreditedWork != null && cocreditedCustomers != null) {
@@ -263,10 +267,12 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             }
             detalleCredito.setDocumentStatus(items);
             detalleCredito.setSolicitud(solicitud);
+            em.close();
             return detalleCredito;
         } catch (Exception Ex) {
             Ex.printStackTrace();
             //em.getTransaction().rollback();
+            em.close();
             return detalleCredito;
         }
     }
