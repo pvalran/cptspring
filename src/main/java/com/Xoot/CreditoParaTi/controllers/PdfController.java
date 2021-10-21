@@ -232,6 +232,8 @@ public class PdfController {
     public ResponseEntity<?> getPDFSolicitud(
         @PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject resp = new JSONObject();
+        HashMap<Integer, String> countryOfBirth = new HashMap<Integer, String>();
+        HashMap<Integer, String> countryOfResidence = new HashMap<Integer, String>();
         HashMap<Integer, String> direccion = new HashMap<Integer, String>();
         HashMap<Integer, String> direccionWork = new HashMap<Integer, String>();
 
@@ -240,6 +242,16 @@ public class PdfController {
 
         try {
             CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            countryOfBirth.put(0,"México");
+            countryOfBirth.put(1,"Otro");
+
+            countryOfResidence.put(0,"México");
+            countryOfResidence.put(1,"Otro");
+
+
+
+
+
             direccion.put(0,"");
             direccion.put(1,"");
             direccion.put(2,"");
@@ -365,7 +377,10 @@ public class PdfController {
                 context.setVariable("typeStates", typeStates);
                 context.setVariable("typePosition", typePosition);
                 context.setVariable("typeActivity", typeActivity);
+                context.setVariable("countryOfBirth", countryOfBirth);
+                context.setVariable("countryOfResidence", countryOfResidence);
                 context.setVariable("product", "Fovisste para todos");
+
                 DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
 
@@ -390,6 +405,9 @@ public class PdfController {
                 cocreditedWork.setPosition(-1);
                 cocreditedWork.setTypeContract(-1);
                 cocreditedWork.setLaboralActivity(-1);
+
+                cocreditedAdditional.setCountryBirth(0);
+                cocreditedAdditional.setCountryResidence(0);
 
 
 

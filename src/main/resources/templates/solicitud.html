@@ -222,11 +222,11 @@
         </div>
         <div class="d-inline-block w-20">
             <span><b>País de nacimiento:</b></span>
-            <span th:text="${creditId.additionalies.countryOfBirth}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
+            <span th:text="${countryOfBirth.get(creditId.additionalies.countryOfBirth)}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-20">
             <span><b>País de Residencia:</b></span>
-            <span th:text="${creditId.additionalies.countryOfResidence}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
+            <span th:text="${countryOfResidence.get(creditId.additionalies.countryOfResidence)}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
         </div>
     </div>
     <div class="d-block space w-100">
@@ -275,7 +275,7 @@
                 <span class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-15">
+        <div class="d-inline-block w-15" style="width: 18%;">
             <span class="d-block"><b>Régimen matrimonial:</b></span>
             <span class="d-block">Bienes mancomunados&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 1} ? '( X )' : '( )'"></font></span>
             <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 2} ? '( X )' : '( )'"></font></span>
@@ -531,7 +531,7 @@
         <div class="d-inline-block w-20">
             <span class="d-inline-block">
                 <span>Pais de Residencia</span>
-                <span th:text="${spouse.countryOfResidence}" class="bdr-bottom"></span>
+                <span th:text="${countryOfResidence.get(spouse.countryOfResidence)}" class="bdr-bottom"></span>
             </span>
             <span class="d-inline-block">
                 <span>Fecha de nacimiento</span>
@@ -909,7 +909,7 @@
         </div>
         <div class="d-inline-block w-25">
             <span class="seccion_subtitle"><b>País de nacimiento:</b></span>
-            <span th:text="${cocreditedAdditional.countryBirth}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
+            <span th:text="${countryOfBirth.get(cocreditedAdditional.countryBirth)}" class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
         </div>
 
     </div>
@@ -937,7 +937,7 @@
             <div class="d-block">
                 <span>Mexicana&nbsp;&nbsp;<font  th:utext="${cocreditedAdditional.nationality eq 0} ? '( X )' : '( )'"></font></span>
                 <span>Entidad Federativa de nacimiento</span>
-                <span th:text="${cocreditedAdditional.state}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
+                <span th:text="${typeStates.get(cocreditedAdditional.state)}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
             </div>
             <div class="d-block">
                 <span>Extranjera&nbsp;<font  th:utext="${cocreditedAdditional.nationality eq 1} ? '( X )' : '( )'"></font></span>
