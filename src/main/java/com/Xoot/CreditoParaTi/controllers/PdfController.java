@@ -490,17 +490,21 @@ public class PdfController {
                         }
                     }
                     context.setVariable("cocreditedWork", cocreditedWork);
-                    for (EconomicDependientiesDto economic : creditID.getDependents()) {
-                        lstEconomic.add(economic);
+                    if (creditID.getDependents() != null) {
+                        for (EconomicDependientiesDto economic : creditID.getDependents()) {
+                            lstEconomic.add(economic);
+                        }
                     }
                     lstReference.add(new ReferenceDTO());
                     lstReference.add(new ReferenceDTO());
                     lstReference.add(new ReferenceDTO());
                     lstReference.add(new ReferenceDTO());
                     Integer idxRef = 0;
-                    for (ReferenceDTO reference : creditID.getReferences()) {
-                        lstReference.set(idxRef, reference);
-                        idxRef++;
+                    if (creditID.getReferences() != null) {
+                        for (ReferenceDTO reference : creditID.getReferences()) {
+                            lstReference.set(idxRef, reference);
+                            idxRef++;
+                        }
                     }
                     for (Integer idx = lstEconomic.size(); idx <= 4; idx++) {
                         EconomicDependientiesDto economicDependient = new EconomicDependientiesDto();
@@ -525,7 +529,7 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("https://pimaid.dev:8443/Cpttablero");
+                    converterProperties.setBaseUri("http://localhost:8080/Cpttablero");
                     /*ConverterProperties props = new ConverterProperties();
                     props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
@@ -579,8 +583,9 @@ public class PdfController {
                         .body(resp.toString());
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             resp.put("data", "");
-            resp.put("message", "Correo no enviado, error en el envio");
+            resp.put("message", ex.getMessage());
             resp.put("result", false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.APPLICATION_JSON)

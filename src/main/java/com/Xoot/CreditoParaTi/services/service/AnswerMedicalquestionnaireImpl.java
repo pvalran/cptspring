@@ -66,41 +66,46 @@ public class AnswerMedicalquestionnaireImpl implements IAnswerMedicalquestionnai
         Type lstTypeAnswer;
         Type lstTypeFree;
         EntityManager em= emf.createEntityManager();
-        em.clear();
 
 
-        MedicalQuestionnaireAnswerDTO medicalAnswerDTO = new MedicalQuestionnaireAnswerDTO();
+        try {
+            MedicalQuestionnaireAnswerDTO medicalAnswerDTO = new MedicalQuestionnaireAnswerDTO();
 
-        Query qryMedicalQuestionnaire = em.createNativeQuery("select * from medical_questionnaire where number_request = :creditID limit 1", MedicalQuestionnaire.class)
-                .setParameter("creditID",creditID);
-        MedicalQuestionnaire medicalQuestionn = (MedicalQuestionnaire) qryMedicalQuestionnaire.getResultStream()
-                .findFirst().orElse(null);
+            Query qryMedicalQuestionnaire = em.createNativeQuery("select * from medical_questionnaire where number_request = :creditID limit 1", MedicalQuestionnaire.class)
+                    .setParameter("creditID", creditID);
+            MedicalQuestionnaire medicalQuestionn = (MedicalQuestionnaire) qryMedicalQuestionnaire.getResultStream()
+                    .findFirst().orElse(null);
 
-        if (medicalQuestionn != null) {
-            medicalAnswerDTO.setIdMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
-            medicalAnswerDTO.setWeight(medicalQuestionn.getWeight());
-            medicalAnswerDTO.setHeight(medicalQuestionn.getHeight());
-            medicalAnswerDTO.setCreaditApplication(medicalQuestionn.getCreaditApplication());
+            if (medicalQuestionn != null) {
+                medicalAnswerDTO.setIdMedicalQuestionnaire(medicalQuestionn.getIdMedicalQuestionnaire());
+                medicalAnswerDTO.setWeight(medicalQuestionn.getWeight());
+                medicalAnswerDTO.setHeight(medicalQuestionn.getHeight());
+                medicalAnswerDTO.setCreaditApplication(medicalQuestionn.getCreaditApplication());
 
-            lstTypeAnswer = new TypeToken<List<AnswerQuestionnaireDTO>>() {
-            }.getType();
-            lstTypeFree = new TypeToken<List<FreeQuestionnaireDTO>>() {
-            }.getType();
+                lstTypeAnswer = new TypeToken<List<AnswerQuestionnaireDTO>>() {
+                }.getType();
+                lstTypeFree = new TypeToken<List<FreeQuestionnaireDTO>>() {
+                }.getType();
 
 
-            Query qryAnswerQuestionnaire = em.createNativeQuery("select * from answer_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", AnswerQuestionnaire.class)
-                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
-            List<AnswerQuestionnaire> lstAnswer = qryAnswerQuestionnaire.getResultList();
+                Query qryAnswerQuestionnaire = em.createNativeQuery("select * from answer_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", AnswerQuestionnaire.class)
+                        .setParameter("medicalId", medicalQuestionn.getIdMedicalQuestionnaire());
+                List<AnswerQuestionnaire> lstAnswer = qryAnswerQuestionnaire.getResultList();
 
-            Query qryFreeQuestionnaire = em.createNativeQuery("select * from free_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", FreeQuestionnaire.class)
-                    .setParameter("medicalId",medicalQuestionn.getIdMedicalQuestionnaire());
-            List<FreeQuestionnaire> lstFree = qryFreeQuestionnaire.getResultList();
+                Query qryFreeQuestionnaire = em.createNativeQuery("select * from free_questionnaire where medical_questionnaire_id = :medicalId order by answer_numer", FreeQuestionnaire.class)
+                        .setParameter("medicalId", medicalQuestionn.getIdMedicalQuestionnaire());
+                List<FreeQuestionnaire> lstFree = qryFreeQuestionnaire.getResultList();
 
-            medicalAnswerDTO.setAnswerQuestionnairies(modelMapper.map(lstAnswer, lstTypeAnswer));
-            medicalAnswerDTO.setFreeQuestionnairies(modelMapper.map(lstFree, lstTypeFree));
-
-            return medicalAnswerDTO;
-        } else {
+                medicalAnswerDTO.setAnswerQuestionnairies(modelMapper.map(lstAnswer, lstTypeAnswer));
+                medicalAnswerDTO.setFreeQuestionnairies(modelMapper.map(lstFree, lstTypeFree));
+                em.close();
+                return medicalAnswerDTO;
+            } else {
+                em.close();
+                return null;
+            }
+        } catch(Exception ex) {
+            em.close();
             return null;
         }
     }

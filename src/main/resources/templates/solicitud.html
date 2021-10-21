@@ -717,7 +717,6 @@
     </table>
 </div>
 <!-- Pagina 2-->
-<div class="page-break"></div>
 <div class="page space">
     <table class="tblTitle">
         <tbody>
@@ -1297,10 +1296,9 @@
             </div>
         </div>
     </div>
-
+    <div class="d-block space w-100" style="height: 100px;"><p>&nbsp;</p></div>
 </div>
 <!-- Pagina 3-->
-<div class="page-break"></div>
 <div class="page space">
     <table class="tblTitle">
         <tbody>
@@ -1517,6 +1515,8 @@
             <span>Código Postal</span>
         </div>
     </div>
+    <div class="d-block space w-100" style="height: 50px;"><p>&nbsp;</p></div>
+
 </div>
 <!-- Pagina 4-->
 <div class="page-break"></div>
@@ -1666,9 +1666,9 @@
     <span class="d-block">- Incumplir sus obligaciones le puede generar comisiones.</span>
     <span class="d-block">- Contratar créditos que excedan su capacidad de pago afecta su historial crediticio.</span>
     <span class="d-block">- El obligado solidario o coacreditado responderá como obligado principal por el total del pago frente a la Institución Financiero.</span>
+    <div class="d-block space w-100" style="height: 150px;"><p>&nbsp;</p></div>
 </div>
 <!-- Pagina 5 -->
-<div class="page-break"></div>
 <div class="page space">
     <table class="tbl">
         <tbody>
@@ -1815,9 +1815,9 @@
             </tr>
         </tbody>
     </table>
+    <div class="d-block space w-100" style="height: 400px;"><p>&nbsp;</p></div>
 </div>
 <!-- Pagina 6 -->
-<div class="page-break"></div>
 <div class="page space">
     <table class="tbl">
         <tbody>
@@ -1839,11 +1839,11 @@
             </tr>
             <th:block th:each="freeAnswer : ${lstFreeAnswer}">
                 <tr>
-                    <td class="auto-style39" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></td>
-                    <td class="auto-style37" style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></td>
-                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></td>
-                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></td>
-                    <td style="border-style: solid; border-width: thin"><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></td>
+                    <td class="auto-style39" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></p></td>
+                    <td class="auto-style37" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></p></td>
+                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></p></td>
+                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></p></td>
+                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></p></td>
                 </tr>
             </th:block>
             <tr>
