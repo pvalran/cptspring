@@ -547,7 +547,7 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("http://localhost:8080/Cpttablero");
+                    converterProperties.setBaseUri("https://pimaid.dev:8443/Cpttablero");
                     /*ConverterProperties props = new ConverterProperties();
                     props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
