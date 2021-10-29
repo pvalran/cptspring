@@ -425,6 +425,7 @@ public class PdfController {
                             } else {
                                 direccion.put(idx, strDireccion[idx]);
                             }
+
                         }
                     }
 
@@ -454,17 +455,33 @@ public class PdfController {
                         if (creditID.getWork().getMunicipality().contains("-")) {
                             work.setMunicipality(creditID.getWork().getMunicipality().split("-")[1]);
                         }
-
-                        if (creditID.getWork().getState().contains("-")) {
-                            work.setState(creditID.getWork().getState().split("-")[1]);
-                        }
                     }
-                    context.setVariable("work", work);
 
+                    context.setVariable("work", work);
+                    context.setVariable( "StateWork",Integer.parseInt(work.getState()));
                     if (creditID.getCocreditedCustomers() != null) {
                         cocreditedCustomers = creditID.getCocreditedCustomers();
+
+                        cocreditedCustomers.setAddressNumber(creditID.getCocreditedCustomers().getAddressNumber().split(",")[0]);
+
+                        if (creditID.getCocreditedCustomers().getSuburb().contains("-")) {
+                            cocreditedCustomers.setSuburb(creditID.getCocreditedCustomers().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedCustomers().getCity().contains("-")) {
+                            cocreditedCustomers.setCity(creditID.getCocreditedCustomers().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedCustomers().getCounty().contains("-")) {
+                            cocreditedCustomers.setCounty(creditID.getCocreditedCustomers().getCounty().split("-")[1]);
+                        }
                     }
+
+
+
+
                     context.setVariable("cocreditedCustomers", cocreditedCustomers);
+                    context.setVariable("StateCoCustomers",Integer.parseInt(cocreditedCustomers.getState()));
                     if (creditID.getCocreditedAdditional() != null) {
                         cocreditedAdditional = creditID.getCocreditedAdditional();
 
@@ -482,11 +499,11 @@ public class PdfController {
                             cocreditedAdditional.setCounty(creditID.getCocreditedAdditional().getCounty().split("-")[1]);
                         }
 
-                        if (creditID.getCocreditedAdditional().getState().contains("-")) {
-                            cocreditedAdditional.setState(creditID.getCocreditedAdditional().getState().split("-")[1]);
-                        }
+
                     }
                     context.setVariable("cocreditedAdditional", cocreditedAdditional);
+
+
                     if (creditID.getCocreditedWork() != null) {
                         cocreditedWork = creditID.getCocreditedWork();
                         cocreditedWork.setAddress(creditID.getCocreditedWork().getAddress().split(",")[0]);
@@ -502,12 +519,9 @@ public class PdfController {
                         if (creditID.getCocreditedWork().getCounty().contains("-")) {
                             cocreditedWork.setCounty(creditID.getCocreditedWork().getCounty().split("-")[1]);
                         }
-
-                        if (creditID.getCocreditedWork().getState().contains("-")) {
-                            cocreditedWork.setState(creditID.getCocreditedWork().getState().split("-")[1]);
-                        }
                     }
                     context.setVariable("cocreditedWork", cocreditedWork);
+                    context.setVariable( "StateCoWork",Integer.parseInt(cocreditedWork.getState()));
                     if (creditID.getDependents() != null) {
                         for (EconomicDependientiesDto economic : creditID.getDependents()) {
                             lstEconomic.add(economic);
@@ -547,7 +561,7 @@ public class PdfController {
                     String processedHtml = templateEngine.process("solicitud", context);
                     ByteArrayOutputStream target = new ByteArrayOutputStream();
                     ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("https://pimaid.dev:8443/Cpttablero");
+                    converterProperties.setBaseUri("https://pimaid.dev:8443/apk");
                     /*ConverterProperties props = new ConverterProperties();
                     props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
                     HtmlConverter.convertToPdf(processedHtml, target, converterProperties);

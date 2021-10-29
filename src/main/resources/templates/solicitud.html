@@ -37,6 +37,30 @@
             page-break-before: auto;
         }
 
+        .auto-style2 {
+            width: 122px;
+            background-color: #747473;
+            color: #FFFFFF;
+        }
+        .RedStyle {
+            background-color: #e52713;
+            color: #FFFFFF;
+        }
+        .auto-style4 {
+            width: 47px;
+        }
+        .auto-style5 {
+            width: 116px;
+        }
+        .auto-style9 {
+            height: 18px;
+        }
+        .auto-style10 {
+            width: 116px;
+            background-color: #747473;
+            color: #FFFFFF;
+        }
+
         .text-center {
             text-align: center;
         }
@@ -153,7 +177,7 @@
         <tbody>
             <tr>
                 <td align="left">&nbsp;
-                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
                 </td>
                 <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
             </tr>
@@ -164,6 +188,32 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                        <tbody>
+                        <tr>
+                            <td style="text-align: center" class="auto-style10">Lugar y Fecha:</td>
+                            <td colspan="6" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${dateRequest}"></font></td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style5">Producto:</td>
+                            <td colspan="2" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${product}"></font></td>
+                            <td class="auto-style4">Folio:</td>
+                            <td colspan="3" style="border-style: none none solid none; border-bottom-width: thin;"><font th:text="${creditId.customer.creditId}"></font></td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style2" colspan="2">Monto de crédito solicitado:&nbsp;&nbsp; </td>
+                            <td style="border-style: none none solid none; border-bottom-width: thin">&nbsp;</td>
+                            <td class="auto-style4">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -251,12 +301,12 @@
         <div class="d-inline-block w-45">
             <span class="d-block"><b>Nacionalidad:</b></span>
             <div class="d-block">
-                <span>Mexicana&nbsp;&nbsp;<span th:utext="${creditId.additionalies.nationality eq 0} ? '( X )' : '( )'"></span></span>
+                <span>Mexicana&nbsp;&nbsp;<span th:utext="${creditId.additionalies.nationality eq 1} ? '( X )' : '( )'"></span></span>
                 <span>Entidad Federativa de nacimiento</span>
                 <span th:utext="${typeStates.get(creditId.customer.stateOfBirth_id + 1)}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
             </div>
             <div class="d-block">
-                <span>Extranjera&nbsp;<font th:utext="${creditId.additionalies.nationality eq 0} ? '( X )' : '( )'"></font></span>
+                <span>Extranjera&nbsp;<font th:utext="${creditId.additionalies.nationality eq 2} ? '( X )' : '( )'"></font></span>
                 <span>Especifique</span>
                 <span th:utext="${creditId.additionalies.specifyNationality}" class="bdr-bottom d-inline-block" style="width: 65%">&nbsp;</span>
             </div>
@@ -334,7 +384,7 @@
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span th:utext="${direccion.get(5)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${typeStates.get(creditId.customer.state_id)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15">
@@ -385,8 +435,7 @@
                     <span th:text="${creditId.additionalies.nowResidenceSeniority}" class="bdr-bottom d-inline-block" style="width: 15%">&nbsp;</span>
                     Anterior (años)
                     <span th:text="${creditId.additionalies.previousResidenceSeniority}" class="bdr-bottom d-inline-block" style="width: 15%">&nbsp;</span>
-                </span>
-
+            </span>
         </div>
     </div>
     <div class="d-block space w-100">
@@ -395,37 +444,37 @@
             <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.address}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Calle/Avenida/Vía</span>
         </div>
         <div class="d-inline-block w-10">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.external_number}"  class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Número Exterior</span>
         </div>
         <div class="d-inline-block w-10">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.interior_number}"  class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Número Interior</span>
         </div>
         <div class="d-inline-block w-20">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.suburb}"  class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Colonia/Urbanización</span>
         </div>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.municipality}"  class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span  th:text="${creditId.additionalies.city}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.postal_code}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Código Postal</span>
         </div>
         <div class="d-inline-block w-15">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${creditId.additionalies.country}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>País</span>
         </div>
     </div>
@@ -561,7 +610,7 @@
                 <span>Socio/Dueño/Propietario<font th:text="${work.position eq 3} ? '( X )' : '( )'"></font></span>
                 <span>Profesionista independiente<font th:text="${work.position eq 4} ? '( X )' : '( )'"></font></span>
                 <span>Pensionado/Jubilado<font th:text="${work.position eq 5} ? '( X )' : '( )'"></font></span>
-                <span>Otro<font th:text="${work.position eq 4} ? '( X )' : '( )'"></font></span>
+                <span>Otro<font th:text="${work.position eq 6} ? '( X )' : '( )'"></font></span>
                 <span class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
             </div>
         </div>
@@ -612,7 +661,7 @@
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span th:text="${typeStates.get(work.state + 1)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:text="${typeStates.get(StateWork)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15">
@@ -722,7 +771,7 @@
         <tbody>
             <tr>
                 <td align="left">&nbsp;
-                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
                 </td>
                 <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
             </tr>
@@ -733,6 +782,24 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="CENTER">
+                    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                        <tbody>
+                        <tr>
+                            <td align="Center" class="auto-style10">Lugar y Fecha:</td>
+                            <td colspan="6" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${dateRequest}"></font></td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style5">Producto:</td>
+                            <td colspan="2" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${product}"></font></td>
+                            <td class="auto-style4">Folio:</td>
+                            <td colspan="3" style="border-style: none none solid none; border-bottom-width: thin;"><font th:text="${creditId.customer.creditId}"></font></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -749,11 +816,25 @@
                 <span>Totalmente Pagado (   )</span>
                 <span>Parcialmente pagado (   )</span>
             </div>
+            <div class="d-block">
+                <span>&nbsp;</span>
+            </div>
+            <div class="d-block">
+                <span>&nbsp;</span>
+            </div>
         </div>
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
-                <span class="block" style="margin-top: 8px;">Vehículos:</span>
-                <span class="block">&nbsp;</span>
+                <span class="d-block" style="margin-top: 8px;">Vehículos:</span>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
             </div>
             <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
                 <div class="d-inline-block">
@@ -901,7 +982,7 @@
         </div>
         <div class="d-inline-block w-15">
             <span class="seccion_subtitle"><b>Homoclave: </b></span>
-            <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+            <span th:text="${#strings.substring(cocreditedCustomers.rfc,10,13)}"class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
             <span class="seccion_subtitle"><b>Fecha de nacimiento:</b></span>
@@ -976,15 +1057,15 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <span><b>Escolaridad:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Primaria (  )</span>
-        <span>Secundaria (  )</span>
-        <span>Preparatoria (  )</span>
-        <span>Técnico (  )</span>
-        <span>Licenciatura (  )</span>
-        <span>Posgrado (  )</span>
-        <span>Sin estudios (  )</span>
+        <span><b>Escolaridad:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Primaria <font  th:utext="${cocreditedAdditional.scholarship eq 0} ? '( X )' : '(  )'"></font></span>
+        <span>Secundaria <font  th:utext="${cocreditedAdditional.scholarship eq 1} ? '( X )' : '(  )'"></font></span>
+        <span>Preparatoria <font  th:utext="${cocreditedAdditional.scholarship eq 2} ? '( X )' : '(  )'"></font></span>
+        <span>Técnico <font  th:utext="${cocreditedAdditional.scholarship eq 3} ? '( X )' : '(  )'"></font></span>
+        <span>Licenciatura <font  th:utext="${cocreditedAdditional.scholarship eq 4} ? '( X )' : '(  )'"></font></span>
+        <span>Posgrado <font  th:utext="${cocreditedAdditional.scholarship eq 5} ? '( X )' : '(  )'"></font></span>
+        <span>Sin estudios <font  th:utext="${cocreditedAdditional.scholarship eq 6} ? '( X )' : '(  )'"></font></span>
         <span><b>Correo electrónico:</b></span>
-        <span class="bdr-bottom d-inline-block" style="width: 19%">&nbsp;</span>
+        <span th:utext="${ cocreditedCustomers.email }" class="bdr-bottom d-inline-block" style="width: 19%">&nbsp;</span>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-20">
@@ -992,7 +1073,7 @@
             <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ cocreditedCustomers.addressNumber }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Calle/Avenida/Vía</span>
         </div>
         <div class="d-inline-block w-15">
@@ -1004,25 +1085,25 @@
             <span>Número Interior</span>
         </div>
         <div class="d-inline-block w-20">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ cocreditedCustomers.county }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Colonia/Urbanización</span>
         </div>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ cocreditedCustomers.suburb }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Delegación/Municipio/Demarcación Política</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ cocreditedCustomers.city }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ typeStates.get(StateCoCustomers) }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15">
-            <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${ cocreditedCustomers.postalCode }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Código Postal</span>
         </div>
     </div>
@@ -1033,9 +1114,9 @@
                 <span class="d-block">&nbsp;</span>
             </div>
             <div class="d-inline-block w-75">
-                <span class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
-                <span>(Número)</span>
+                <span th:utext="${ cocreditedAdditional.phone }" class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
                 <span>(LADA)</span>
+                <span>(Número)</span>
             </div>
         </div>
         <div class="d-inline-block w-30">
@@ -1044,9 +1125,9 @@
                 <span class="d-block">&nbsp;</span>
             </div>
             <div class="d-inline-block w-80">
-                <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                <span>(Número)</span>
+                <span th:utext="${ cocreditedAdditional.mobile }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
+                <span>(Número)</span>
             </div>
         </div>
         <div class="d-inline-block w-30" style="width: 32%">
@@ -1055,9 +1136,9 @@
                 <span class="d-block">&nbsp;</span>
             </div>
             <div class="d-inline-block w-70" style="width: 76%">
-                <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                <span>(Número)</span>
+                <span th:utext="${ cocreditedAdditional.otherPhone }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
+                <span>(Número)</span>
             </div>
         </div>
     </div>
@@ -1066,7 +1147,7 @@
     </div>
     <div class="d-inline-block space w-100">
         <span class="seccion_subtitle d-inline"><b>Nombre o razón social de la empresa:</b></span>
-        <span class="bdr-bottom d-inline-block" style="width: 75%">&nbsp;</span>
+        <span th:utext="${cocreditedWork.name}" class="bdr-bottom d-inline-block" style="width: 75%">&nbsp;</span>
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-50">
@@ -1134,7 +1215,7 @@
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span th:utext="${cocreditedWork.state}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${typeStates.get(StateCoWork)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15">
@@ -1250,11 +1331,25 @@
                 <span>Totalmente Pagado (   )</span>
                 <span>Parcialmente pagado (   )</span>
             </div>
+            <div class="d-block">
+                <span>&nbsp;</span>
+            </div>
+            <div class="d-block">
+                <span>&nbsp;</span>
+            </div>
         </div>
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
-                <span class="block" style="margin-top: 8px;">Vehículos:</span>
-                <span class="block">&nbsp;</span>
+                <span class="d-block" style="margin-top: 8px;">Vehículos:</span>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
+                <div class="d-block">
+                    <span>&nbsp;</span>
+                </div>
             </div>
             <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
                 <div class="d-inline-block">
@@ -1304,7 +1399,7 @@
         <tbody>
         <tr>
             <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
             </td>
             <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
         </tr>
@@ -1315,6 +1410,24 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="CENTER">
+                <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                    <tbody>
+                    <tr>
+                        <td align="Center" class="auto-style10">Lugar y Fecha:</td>
+                        <td colspan="6" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${dateRequest}"></font></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style5">Producto:</td>
+                        <td colspan="2" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${product}"></font></td>
+                        <td class="auto-style4">Folio:</td>
+                        <td colspan="3" style="border-style: none none solid none; border-bottom-width: thin;"><font th:text="${creditId.customer.creditId}"></font></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -1515,7 +1628,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <div class="d-block space w-100" style="height: 50px;"><p>&nbsp;</p></div>
+
 
 </div>
 <!-- Pagina 4-->
@@ -1525,17 +1638,33 @@
         <tbody>
         <tr>
             <td align="left">&nbsp;
-                <img alt="" height="64" th:src="@{/images/hsbc.png}" width="100">
+                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
             </td>
             <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
         </tr>
         <tr>
-            <td>HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+            <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                    <tbody>
+                    <tr>
+                        <td align="Center" class="auto-style10">Lugar y Fecha:</td>
+                        <td colspan="6" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${dateRequest}"></font></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style5">Producto:</td>
+                        <td colspan="2" style="border-style: none none solid none; border-bottom-width: thin"><font th:text="${product}"></font></td>
+                        <td class="auto-style4">Folio:</td>
+                        <td colspan="3" style="border-style: none none solid none; border-bottom-width: thin;"><font th:text="${creditId.customer.creditId}"></font></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -1674,7 +1803,7 @@
         <tbody>
             <tr style="border: medium transparent;">
                 <td align="left" class="auto-style33"style="border: medium transparent;">&nbsp;
-                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="128">
+                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
                 </td>
                 <td colspan="4" align="right" class="auto-style33" style="border: transparent;font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
             </tr>
@@ -1815,7 +1944,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="d-block space w-100" style="height: 400px;"><p>&nbsp;</p></div>
+    <div class="d-block space w-100" style="height: 425px;"><p>&nbsp;</p></div>
 </div>
 <!-- Pagina 6 -->
 <div class="page space">
@@ -1823,7 +1952,7 @@
         <tbody>
             <tr style="border: medium transparent;">
                 <td align="left" class="auto-style38" style="border: transparent;">&nbsp;
-                    <img alt="" height="64" th:src="@{/images/hsbc.png}" width="128">
+                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
                 </td>
                 <td colspan="4" align="right" class="auto-style33" style="border: transparent; font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
             </tr>
