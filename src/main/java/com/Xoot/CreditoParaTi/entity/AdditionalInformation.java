@@ -102,6 +102,12 @@ public class AdditionalInformation {
     @Column(name = "mdfd_by", length = 50)
     private String mdfd_by;
 
+    @Column(name = "specify_country_birth")
+    private String specifyCountryBirth;
+
+    @Column(name = "income_spouse")
+    private String incomeSpouse;
+
     @PrePersist
     public void prePersist() {
         crtd_on = new java.util.Date();
@@ -348,5 +354,21 @@ public class AdditionalInformation {
 
     public void setSpecifyNationality(String specifyNationality) {
         this.specifyNationality = specifyNationality;
+    }
+
+    public String getIncomeSpouse() {
+        return incomeSpouse;
+    }
+
+    public void setIncomeSpouse(String incomeSpouse) {
+        this.incomeSpouse = incomeSpouse;
+    }
+
+    public String getSpecifyCountryBirth() {
+        return specifyCountryBirth;
+    }
+
+    public void setSpecifyCountryBirth(String specifyCountryBirth) {
+        this.specifyCountryBirth = specifyCountryBirth;
     }
 }

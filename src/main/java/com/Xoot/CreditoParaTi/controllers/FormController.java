@@ -201,9 +201,7 @@ public class FormController {
         Resource recurso = null;
         Document document = documentService.findById(id);
         Path rutaArchivo = Paths.get("/srv/www/upload").resolve(document.getName()).toAbsolutePath();
-
         File file = rutaArchivo.toFile();
-
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String base64File = Base64.getEncoder().encodeToString(fileContent);

@@ -69,7 +69,7 @@
             vertical-align: center;
         }
         .valign-top {
-             vertical-align: top;
+            vertical-align: top;
         }
         .seccion_title {
             background: #E52713;
@@ -173,51 +173,67 @@
         .w-5 {
             width: 5%;
         }
+        @media print {
+            @page {
+                size: 21.0cm 29.7cm ;
+                margin: 0.5cm 0.5cm;
+            }
+
+            @top-left {
+                content: element(tblTitle);
+                height: 2.5cm;
+            }
+
+            .tblTitle {
+                position: fixed;
+                top: 0cm;
+                height: 2.5cm;
+            }
+        }
+
     </style>
 </head>
 <body>
-<!-- Pagina 1-->
-<div class="page">
     <table class="tblTitle">
         <tbody>
-            <tr>
-                <td align="left">&nbsp;
-                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
-                </td>
-                <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-            </tr>
-            <tr>
-                <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="6" style="width: 100%;">
-                    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                        <tbody>
-                        <tr>
-                            <td style="text-align: center" class="auto-style10">Lugar y Fecha:</td>
-                            <td colspan="6" class="bdr-bottom"><font th:text="${dateRequest}"></font></td>
-                        </tr>
-                        <tr>
-                            <td class="auto-style5">Producto:</td>
-                            <td colspan="2" class="bdr-bottom"><font th:text="${product}"></font></td>
-                            <td class="auto-style4">Folio:</td>
-                            <td colspan="3" class="bdr-bottom"><font th:text="${creditId.customer.creditId}"></font></td>
-                        </tr>
-                        <tr>
-                            <td class="auto-style2" colspan="2">Monto de crédito solicitado:&nbsp;&nbsp; </td>
-                            <td class="bdr-bottom">&nbsp;</td>
-                            <td class="auto-style4">&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        </tr>
+        <tr>
+            <td align="left">&nbsp;
+                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
+            </td>
+            <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
+        </tr>
+        <tr>
+            <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="width: 100%;">
+                <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
+                    <tbody>
+                    <tr>
+                        <td style="text-align: center" class="auto-style10">Lugar y Fecha:</td>
+                        <td colspan="6" class="bdr-bottom"><font th:text="${dateRequest}"></font></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style5">Producto:</td>
+                        <td colspan="2" class="bdr-bottom"><font th:text="${product}"></font></td>
+                        <td class="auto-style4">Folio:</td>
+                        <td colspan="3" class="bdr-bottom"><font th:text="${creditId.customer.creditId}"></font></td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style2" colspan="2">Monto de crédito solicitado:&nbsp;&nbsp; </td>
+                        <td class="bdr-bottom">&nbsp;</td>
+                        <td class="auto-style4">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
                     </tbody>
-                    </table>
-                </td>
-            </tr>
+                </table>
+            </td>
+        </tr>
         </tbody>
     </table>
     <div class="seccion_title space">
@@ -708,103 +724,66 @@
     </div>
     <table class="tbl space">
         <tbody>
-            <tr>
-                <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span>&nbsp&nbsp<font th:text="${work.grossIncome}"></font></td>
-                <td><span>Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.otherIncome}"></font></span></td>
-            </tr>
-            <tr>
-                <td><span>Fuente de Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.sourceIncome}"></font></span></td>
-                <td><span>Total Ingresos:&nbsp;&nbsp;<font th:text="${work.totalIncome}"></font></span></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Egresos por Créditos:</b></span>
-                    <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
-                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                    </table>
-                    <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Referencias Comerciales y/o Bancarias:</b></span>
-                    <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
-                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <tr>
+            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span>&nbsp&nbsp<font th:text="${work.grossIncome}"></font></td>
+            <td><span>Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.otherIncome}"></font></span></td>
+        </tr>
+        <tr>
+            <td><span>Fuente de Otros Ingresos:&nbsp;&nbsp;<font th:text="${work.sourceIncome}"></font></span></td>
+            <td><span>Total Ingresos:&nbsp;&nbsp;<font th:text="${work.totalIncome}"></font></span></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Egresos por Créditos:</b></span>
+                <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
+                    <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                </table>
+                <span style="width: 90%; margin-right: auto; margin-left: auto;"><b>Referencias Comerciales y/o Bancarias:</b></span>
+                <table class="tbl" style="width: 90%; margin-right: auto; margin-left: auto;">
+                    <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
         </tbody>
     </table>
-</div>
-<!-- Pagina 2-->
-<div class="page space">
-    <table class="tblTitle">
-        <tbody>
-            <tr>
-                <td align="left">&nbsp;
-                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
-                </td>
-                <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-            </tr>
-            <tr>
-                <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
 
-            </tr>
-            <tr>
-                <td colspan="6" style="width: 100%;">
-                    <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                        <tbody>
-                        <tr>
-                            <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                            <td colspan="6" class="bdr-bottom"><font th:text="${dateRequest}"></font></td>
-                        </tr>
-                        <tr>
-                            <td class="auto-style5">Producto:</td>
-                            <td colspan="2" class="bdr-bottom"><font th:text="${product}"></font></td>
-                            <td class="auto-style4">Folio:</td>
-                            <td colspan="3" class="bdr-bottom"><font th:text="${creditId.customer.creditId}"></font></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <div class="d-block space w-100">
         <div class="d-inline-block w-45">
             <div class="d-inline-block" style="margin-top: 8px;">
@@ -878,61 +857,59 @@
             </div>
         </div>
     </div>
-
     <div class="seccion_title">
         <span><b>REFERENCIAS PERSONALES</b></span>
     </div>
     <table class="tbl">
         <tbody>
-            <tr>
-                <td class="seccion_subtitle" style="text-align: center"><span>Tipo de<br>
+        <tr>
+            <td class="seccion_subtitle" style="text-align: center"><span>Tipo de<br>
                     Referencia</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Apellido Paterno</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Apellido Materno</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Nombre(s) sin<br>abreviaturas</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Correo eléctronico</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Tel, casa con lada</span></td>
-                <td class="seccion_subtitle" style="text-align: center"><span>Celular</span></td>
-            </tr>
-            <tr>
-                <td><span class="seccion_subtitle">Familiar 1</span></td>
-                <td><font th:text="${references.get(0).paternalLastName}"></font></td>
-                <td><font th:text="${references.get(0).maternalLastName}"></font></td>
-                <td><font th:text="${references.get(0).name}"></font></td>
-                <td><font th:text="${references.get(0).email}"></font></td>
-                <td><font th:text="${references.get(0).phone}"></font></td>
-                <td><font th:text="${references.get(0).mobile}"></font></td>
-            </tr>
-            <tr>
-                <td>Familiar 2</td>
-                <td><font th:text="${references.get(1).paternalLastName}"></font></td>
-                <td><font th:text="${references.get(1).maternalLastName}"></font></td>
-                <td><font th:text="${references.get(1).name}"></font></td>
-                <td><font th:text="${references.get(1).email}"></font></td>
-                <td><font th:text="${references.get(1).phone}"></font></td>
-                <td><font th:text="${references.get(1).mobile}"></font></td>
-            </tr>
-            <tr>
-                <td><span class="seccion_subtitle">No Familiar 1</span></td>
-                <td><font th:text="${references.get(2).paternalLastName}"></font></td>
-                <td><font th:text="${references.get(2).maternalLastName}"></font></td>
-                <td><font th:text="${references.get(2).name}"></font></td>
-                <td><font th:text="${references.get(2).email}"></font></td>
-                <td><font th:text="${references.get(2).phone}"></font></td>
-                <td><font th:text="${references.get(2).mobile}"></font></td>
-            </tr>
-            <tr>
-                <td>No Familiar 2</td>
-                <td><font th:text="${references.get(3).paternalLastName}"></font></td>
-                <td><font th:text="${references.get(3).maternalLastName}"></font></td>
-                <td><font th:text="${references.get(3).name}"></font></td>
-                <td><font th:text="${references.get(3).email}"></font></td>
-                <td><font th:text="${references.get(3).phone}"></font></td>
-                <td><font th:text="${references.get(3).mobile}"></font></td>
-            </tr>
+            <td class="seccion_subtitle" style="text-align: center"><span>Apellido Paterno</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Apellido Materno</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Nombre(s) sin<br>abreviaturas</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Correo eléctronico</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Tel, casa con lada</span></td>
+            <td class="seccion_subtitle" style="text-align: center"><span>Celular</span></td>
+        </tr>
+        <tr>
+            <td><span class="seccion_subtitle">Familiar 1</span></td>
+            <td><font th:text="${references.get(0).paternalLastName}"></font></td>
+            <td><font th:text="${references.get(0).maternalLastName}"></font></td>
+            <td><font th:text="${references.get(0).name}"></font></td>
+            <td><font th:text="${references.get(0).email}"></font></td>
+            <td><font th:text="${references.get(0).phone}"></font></td>
+            <td><font th:text="${references.get(0).mobile}"></font></td>
+        </tr>
+        <tr>
+            <td>Familiar 2</td>
+            <td><font th:text="${references.get(1).paternalLastName}"></font></td>
+            <td><font th:text="${references.get(1).maternalLastName}"></font></td>
+            <td><font th:text="${references.get(1).name}"></font></td>
+            <td><font th:text="${references.get(1).email}"></font></td>
+            <td><font th:text="${references.get(1).phone}"></font></td>
+            <td><font th:text="${references.get(1).mobile}"></font></td>
+        </tr>
+        <tr>
+            <td><span class="seccion_subtitle">No Familiar 1</span></td>
+            <td><font th:text="${references.get(2).paternalLastName}"></font></td>
+            <td><font th:text="${references.get(2).maternalLastName}"></font></td>
+            <td><font th:text="${references.get(2).name}"></font></td>
+            <td><font th:text="${references.get(2).email}"></font></td>
+            <td><font th:text="${references.get(2).phone}"></font></td>
+            <td><font th:text="${references.get(2).mobile}"></font></td>
+        </tr>
+        <tr>
+            <td>No Familiar 2</td>
+            <td><font th:text="${references.get(3).paternalLastName}"></font></td>
+            <td><font th:text="${references.get(3).maternalLastName}"></font></td>
+            <td><font th:text="${references.get(3).name}"></font></td>
+            <td><font th:text="${references.get(3).email}"></font></td>
+            <td><font th:text="${references.get(3).phone}"></font></td>
+            <td><font th:text="${references.get(3).mobile}"></font></td>
+        </tr>
         </tbody>
     </table>
-
     <div class="seccion_title">
         <span><b>INFORMACIÓN PERSONAL DEL (marque con una X según aplique)</b>
             COACREDITADO <font th:text="${coacreditado eq 1} ? '( X )' : '(  )'"></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -942,7 +919,6 @@
     <p>En caso de que el solicitante esté casado por bienes mancomunados y su cónyuge no participe con ingresos, éste último deberá firmar la solicitud de crédito y contrato como
         garante hipotecario; si el solicitante está casado por bienes mancomunados y su cónyuge participa con ingresos, éste último deberá firmar la solicitud de crédito y contrato
         como coacreditado; en caso de tener edad menor a 25 años, se deberá contar con un obligado solidario Mexicano entre 25 y 65 años, y si el obligado solidario está casado por bienes </p>
-
     <div class="d-block space w-100">
         <div class="d-inline-block w-5">
             <span class="seccion_subtitle d-block"><b>Nombre:</b></span>
@@ -1264,63 +1240,63 @@
     </div>
     <table class="tbl space">
         <tbody>
-            <tr>
-                <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span></td>
-                <td><span>Otros Ingresos:</span></td>
-            </tr>
-            <tr>
-                <td><span>Fuente de Otros Ingresos:</span></td>
-                <td><span>Total Ingresos:</span></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Egresos por Créditos:</b></span>
-                    <table class="tbl" style="width: 90%; margin-left: auto; margin-right: auto; ">
-                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                    </table>
-                    <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Referencias Comerciales y/o Bancarias:</b></span>
-                    <table class="tbl"  style="width: 90%; margin-left: auto; margin-right: auto; ">
-                        <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
-                            <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <tr>
+            <td><span class="seccion_subtitle"><b>Ingreso Bruto Mensual Fijo:</b></span></td>
+            <td><span>Otros Ingresos:</span></td>
+        </tr>
+        <tr>
+            <td><span>Fuente de Otros Ingresos:</span></td>
+            <td><span>Total Ingresos:</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Egresos por Créditos:</b></span>
+                <table class="tbl" style="width: 90%; margin-left: auto; margin-right: auto; ">
+                    <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Institución</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Fecha de Apertura</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Saldo Actual</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Pago Mensual</td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                </table>
+                <span class="d-block" style="width: 90%; margin-left: auto; margin-right: auto; "><b>Referencias Comerciales y/o Bancarias:</b></span>
+                <table class="tbl"  style="width: 90%; margin-left: auto; margin-right: auto; ">
+                    <tr style="border-left: transparent; border-right: transparent; border-top: transparent;">
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Tipo de Crédito</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">Compañía o Banco</td>
+                        <td style="text-align:center; border-left: transparent; border-right: transparent; border-top: transparent;">No. de Cuenta</td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>&nbsp;</span></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
         </tbody>
     </table>
     <div class="d-block space w-100">
@@ -1396,44 +1372,7 @@
             </div>
         </div>
     </div>
-    <div class="d-block space w-100" style="height: 150px;"><p>&nbsp;</p></div>
-</div>
-<!-- Pagina 3-->
-<div class="page space">
-    <table class="tblTitle">
-        <tbody>
-        <tr>
-            <td align="left">&nbsp;
-                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
-            </td>
-            <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-        </tr>
-        <tr>
-            <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="6" style="width: 100%;">
-                <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                    <tbody>
-                    <tr>
-                        <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                        <td colspan="6" class="bdr-bottom"><font th:text="${dateRequest}"></font></td>
-                    </tr>
-                    <tr>
-                        <td class="auto-style5">Producto:</td>
-                        <td colspan="2" class="bdr-bottom"><font th:text="${product}"></font></td>
-                        <td class="auto-style4">Folio:</td>
-                        <td colspan="3" class="bdr-bottom"><font th:text="${creditId.customer.creditId}"></font></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
     <div class="seccion_title"><p>DECLARACIÓN DEL SOLICITANTE DE CRÉDITO</p></div>
     <p>El (Los) solicitante(s) manifiesta(n) bajo protesta que para efectos de la presente Solicitud actúa(n) a nombre y por cuenta propia y que al firmarla certifica (n)
         la veracidad de la información contenida en la misma. Así mismo, mediante su firma el (los) solicitante(s) manifiesta(n) conocer y entender los alcances de la
@@ -1631,45 +1570,7 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <p>&nbsp;</p>
-</div>
-<!-- Pagina 4-->
-<div class="page-break"></div>
-<div class="page space">
-    <table class="tblTitle">
-        <tbody>
-        <tr>
-            <td align="left">&nbsp;
-                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="100">
-            </td>
-            <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
-        </tr>
-        <tr>
-            <td colspan="3">HSBC México, S.A. INSTITUCIÓN DE BANCA MÚLTIPLE GRUPO FINANCIERO HSBC</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="6" style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                <table style="width: 100%; font-size: 9px; color: #000000; font-family: arial, Helvetica, sans-serif;">
-                    <tbody>
-                    <tr>
-                        <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                        <td colspan="6" class="bdr-bottom"><font th:text="${dateRequest}"></font></td>
-                    </tr>
-                    <tr>
-                        <td class="auto-style5">Producto:</td>
-                        <td colspan="2" class="bdr-bottom"><font th:text="${product}"></font></td>
-                        <td class="auto-style4">Folio:</td>
-                        <td colspan="3" class="bdr-bottom"><font th:text="${creditId.customer.creditId}"></font></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
     <div class="seccion_title"><p>PARA USO EXCLUSIVO DE HSBC</p></div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
@@ -1691,7 +1592,6 @@
             <span>Nombre(s) sin abreviaturas</span>
         </div>
     </div>
-
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <div class="d-inline-block">
@@ -1714,7 +1614,6 @@
             <span class="d-block">&nbsp;</span>
         </div>
     </div>
-
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span class="d-inline-block"><b>Correo electrónico:</b></span>
@@ -1729,7 +1628,6 @@
             <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
         </div>
     </div>
-
     <div class="d-block space w-100">
         <div class="d-inline-block w-30">
             <span><b>Fecha:</b></span>
@@ -1797,222 +1695,213 @@
     <span class="d-block">- Incumplir sus obligaciones le puede generar comisiones.</span>
     <span class="d-block">- Contratar créditos que excedan su capacidad de pago afecta su historial crediticio.</span>
     <span class="d-block">- El obligado solidario o coacreditado responderá como obligado principal por el total del pago frente a la Institución Financiero.</span>
-    <div class="d-block space w-100" style="height: 150px;"><p>&nbsp;</p></div>
-</div>
-<!-- Pagina 5 -->
-<div class="page space">
     <table class="tbl">
         <tbody>
-            <tr style="border: medium transparent;">
-                <td align="left" class="auto-style33"style="border: medium transparent;">&nbsp;
-                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
-                </td>
-                <td colspan="4" align="right" class="auto-style33" style="border: transparent;font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="border-bottom: transparent;">Nombre del contratante:</td>
-                <td  style="border-bottom: transparent;">Solicitud No.:</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
-                <td style="border-top: transparent;"><font th:text="${creditId.customer.creditId}"></font></td>
-            </tr>
-            <tr>
-                <td colspan="4"  style="border-bottom: transparent;">Nombre del asegurado propuesto:</td>
-                <td  style="border-bottom: transparent;">Estado Civil:</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
-                <td style="border-top: transparent;"><font th:utext="${creditId.additionalies.civilState eq 0}? 'SOLTERO' : 'CASADO'"></font></td>
-            </tr>
-            <tr>
-                <td colspan="2" class="auto-style35"  style="border-bottom: transparent;">Fecha de Nacimiento:</td>
-                <td class="auto-style34"  style="border-bottom: transparent;">Lugar de nacimiento (ciudad, estado):</td>
-                <td colspan="2"  style="border-bottom: transparent;">Sexo:</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="auto-style35" style="border-top: transparent;"><font th:text="${#dates.format(creditId.customer.birthday,'yyyy-MM-dd')}"></font></td>
-                <td class="auto-style34" style="border-top: transparent;"><font th:utext="${typeStates.get(creditId.customer.stateOfBirth_id+1)}"></font></td>
-                <td colspan="2" style="border-top: transparent;"><font th:utext="${creditId.customer.gender_id eq 0} ? 'MASCULINO' : 'FEMENINO'"></font></td>
-            </tr>
-            <tr>
-                <td colspan="3"  style="border-bottom: transparent;">Ocupación Actividad:</td>
-                <td colspan="2"  style="border-bottom: transparent;">Descripción de Ocupación o Actividad:</td>
-            </tr>
-            <tr>
-                <td colspan="3" style="border-top: transparent;"><font th:text="${typePosition.get(work.position + 1)}"></font></td>
-                <td colspan="2" style="border-top: transparent;">&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="5"  style="border-bottom: transparent;">Nombre de la Empresa:</td>
-            </tr>
-            <tr>
-                <td colspan="5" style="border-top: transparent;"><font th:text="${work.companyName}"></font></td>
-            </tr>
-            <tr>
-                <td colspan="3"  style="border-bottom: transparent;">Giro de la empresa:</td>
-                <td colspan="2"  style="border-bottom: transparent;">Ingresos Anuales:</td>
-            </tr>
-            <tr>
-                <td colspan="3" style="border-top: transparent;"><font th:text="${typeActivity.get(work.laboral_activity+1)}"></font></td>
-                <td colspan="2" style="border-top: transparent;"><font th:text="${work.totalIncome}"></font></td>
-            </tr>
+        <tr style="border: medium transparent;">
+            <td align="left" class="auto-style33"style="border: medium transparent;">&nbsp;
+                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
+            </td>
+            <td colspan="4" align="right" class="auto-style33" style="border: transparent;font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="border-bottom: transparent;">Nombre del contratante:</td>
+            <td  style="border-bottom: transparent;">Solicitud No.:</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
+            <td style="border-top: transparent;"><font th:text="${creditId.customer.creditId}"></font></td>
+        </tr>
+        <tr>
+            <td colspan="4"  style="border-bottom: transparent;">Nombre del asegurado propuesto:</td>
+            <td  style="border-bottom: transparent;">Estado Civil:</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="border-top: transparent;"><font th:text="${creditId.customer.paternalLastName}"></font>&nbsp;<font th:text="${creditId.customer.motherLastName}"></font>&nbsp;<font th:text="${creditId.customer.name}"></font></td>
+            <td style="border-top: transparent;"><font th:utext="${creditId.additionalies.civilState eq 0}? 'SOLTERO' : 'CASADO'"></font></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="auto-style35"  style="border-bottom: transparent;">Fecha de Nacimiento:</td>
+            <td class="auto-style34"  style="border-bottom: transparent;">Lugar de nacimiento (ciudad, estado):</td>
+            <td colspan="2"  style="border-bottom: transparent;">Sexo:</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="auto-style35" style="border-top: transparent;"><font th:text="${#dates.format(creditId.customer.birthday,'yyyy-MM-dd')}"></font></td>
+            <td class="auto-style34" style="border-top: transparent;"><font th:utext="${typeStates.get(creditId.customer.stateOfBirth_id+1)}"></font></td>
+            <td colspan="2" style="border-top: transparent;"><font th:utext="${creditId.customer.gender_id eq 0} ? 'MASCULINO' : 'FEMENINO'"></font></td>
+        </tr>
+        <tr>
+            <td colspan="3"  style="border-bottom: transparent;">Ocupación Actividad:</td>
+            <td colspan="2"  style="border-bottom: transparent;">Descripción de Ocupación o Actividad:</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-top: transparent;"><font th:text="${typePosition.get(work.position + 1)}"></font></td>
+            <td colspan="2" style="border-top: transparent;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="5"  style="border-bottom: transparent;">Nombre de la Empresa:</td>
+        </tr>
+        <tr>
+            <td colspan="5" style="border-top: transparent;"><font th:text="${work.companyName}"></font></td>
+        </tr>
+        <tr>
+            <td colspan="3"  style="border-bottom: transparent;">Giro de la empresa:</td>
+            <td colspan="2"  style="border-bottom: transparent;">Ingresos Anuales:</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-top: transparent;"><font th:text="${typeActivity.get(work.laboral_activity+1)}"></font></td>
+            <td colspan="2" style="border-top: transparent;"><font th:text="${work.totalIncome}"></font></td>
+        </tr>
         </tbody>
     </table>
     <table class="tbl">
         <tbody>
-            <tr>
-                <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
-                <td colspan="2" style="border-style: solid; border-width: thin">Peso <font th:text="${medicquestionnario.get('weight')}"></font> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <font th:text="${medicquestionnario.get('height')}"></font> cm.</td>
-            </tr>
-            <tr>
-                <td align="center" class="auto-style36" rowspan="9" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">2</td>
-                <td style="border-style: solid; border-width: thin">¿Se le ha diagnosticado o ha sido tratado por:</td>
-                <td style="border-style: solid; border-width: thin">&nbsp;</td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">a) Infarto, angina de pecho, trastornos de válvulas cardiacas, soplo y/o cualquier otro
-                    <br>
-                    problema cardíaco y/o padece o ha padecido de hipertensión o hipotensión arterial?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">b) Convulsiones y/o epilepsias, derrame cerebral, esclerosis cualquier otro problema cerebral o del sistema nervioso?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">c) Tumores malignos (cáncer), leucemia, melanoma o linfoma?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">d) Cualquier enfermedad renal y/o trastorno hepático?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">e) Asma, enfisema pulmonar, tuberculosis y/o cualquier otra enfermedad pulmonar?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">f) SIDA, resultados positivos en la prueba de VIH, Lupus?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">g) Diabetes y/o por niveles elevados de azúcar en la sangre, enfermedades
-                    <br>
-                    tiroideas (excepto hipotiroidismo) y/o cualquier problema endocrino?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin">h) Trastornos de columna vertebral, enfermedades de los huesos (excepto<br>
-                    fractura de extremidades), de oídos o de ojos (excepto miopía, astigmatismo<br>
-                    o hipermetropía) o de la sangre?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">3</td>
-                <td style="border-style: solid; border-width: thin">¿A la fecha de firma de este cuestionario médico, tiene el conocimiento de tener<br>
-                    programada alguna intervención quirúrgica u hospitalización o proyectada alguna cita<br>
-                    para practicar pruebas médicas o ya le fueron practicadas para la detección o sospecha de<br>
-                    alguna enfermedad de la que aún no tenga el diagnóstico exacto?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">4</td>
-                <td style="border-style: solid; border-width: thin">¿Tiene alguna enfermedad o limitación física (como la falta de un miembro o algún tipo de<br>
-                    invalidez) que le impida o pudiera impedir en el futuro el desempeñar su actividad,<br>
-                    profesión u ocupación actual?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">5</td>
-                <td style="border-style: solid; border-width: thin">¿Es usted bombero, minero, obrero petrolero o trabajador en plataforma marina, o por<br>
-                    algún motivo está usted expuesto o maneja: explosivos, armas de fuego, material biológico<br>
-                    de riesgo, sustancias químicas peligrosas, maquinaria pesada, maquinaria ligera de riesgo,<br>
-                    radiaciones, alto voltaje, riesgo por altura, transporte en motocicleta o actividades aéreas?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
-                    Especifique:</td>
-            </tr>
-            <tr>
-                <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">6</td>
-                <td style="border-style: solid; border-width: thin">¿Practica de manera profesional algún deporte de alto riesgo y/o planea practicarlo<br>
-                    en los próximos 12 meses? Se consideran deportes de alto riesgo: carreras de autos,<br>
-                    motociclismo, motonáutica, alpinismo, buceo, espeleología, montañismo, paracaidismo,<br>
-                    vuelo de ala delta, esquí en agua o nieve, rafting o cualquier similar.</td>
-                <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
-                    Especifique:</td>
-            </tr>
-            <tr>
-                <td style="border-style: solid; border-width: thin;" colspan="3">En caso afirmativo para cualquiera de las preguntas 2 a 4, proporcionar la siguiente información:</td>
-            </tr>
+        <tr>
+            <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
+            <td colspan="2" style="border-style: solid; border-width: thin">Peso <font th:text="${medicquestionnario.get('weight')}"></font> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <font th:text="${medicquestionnario.get('height')}"></font> cm.</td>
+        </tr>
+        <tr>
+            <td align="center" class="auto-style36" rowspan="9" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">2</td>
+            <td style="border-style: solid; border-width: thin">¿Se le ha diagnosticado o ha sido tratado por:</td>
+            <td style="border-style: solid; border-width: thin">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">a) Infarto, angina de pecho, trastornos de válvulas cardiacas, soplo y/o cualquier otro
+                <br>
+                problema cardíaco y/o padece o ha padecido de hipertensión o hipotensión arterial?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">b) Convulsiones y/o epilepsias, derrame cerebral, esclerosis cualquier otro problema cerebral o del sistema nervioso?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">c) Tumores malignos (cáncer), leucemia, melanoma o linfoma?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">d) Cualquier enfermedad renal y/o trastorno hepático?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">e) Asma, enfisema pulmonar, tuberculosis y/o cualquier otra enfermedad pulmonar?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">f) SIDA, resultados positivos en la prueba de VIH, Lupus?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">g) Diabetes y/o por niveles elevados de azúcar en la sangre, enfermedades
+                <br>
+                tiroideas (excepto hipotiroidismo) y/o cualquier problema endocrino?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin">h) Trastornos de columna vertebral, enfermedades de los huesos (excepto<br>
+                fractura de extremidades), de oídos o de ojos (excepto miopía, astigmatismo<br>
+                o hipermetropía) o de la sangre?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">3</td>
+            <td style="border-style: solid; border-width: thin">¿A la fecha de firma de este cuestionario médico, tiene el conocimiento de tener<br>
+                programada alguna intervención quirúrgica u hospitalización o proyectada alguna cita<br>
+                para practicar pruebas médicas o ya le fueron practicadas para la detección o sospecha de<br>
+                alguna enfermedad de la que aún no tenga el diagnóstico exacto?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">4</td>
+            <td style="border-style: solid; border-width: thin">¿Tiene alguna enfermedad o limitación física (como la falta de un miembro o algún tipo de<br>
+                invalidez) que le impida o pudiera impedir en el futuro el desempeñar su actividad,<br>
+                profesión u ocupación actual?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">5</td>
+            <td style="border-style: solid; border-width: thin">¿Es usted bombero, minero, obrero petrolero o trabajador en plataforma marina, o por<br>
+                algún motivo está usted expuesto o maneja: explosivos, armas de fuego, material biológico<br>
+                de riesgo, sustancias químicas peligrosas, maquinaria pesada, maquinaria ligera de riesgo,<br>
+                radiaciones, alto voltaje, riesgo por altura, transporte en motocicleta o actividades aéreas?</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
+                Especifique:</td>
+        </tr>
+        <tr>
+            <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">6</td>
+            <td style="border-style: solid; border-width: thin">¿Practica de manera profesional algún deporte de alto riesgo y/o planea practicarlo<br>
+                en los próximos 12 meses? Se consideran deportes de alto riesgo: carreras de autos,<br>
+                motociclismo, motonáutica, alpinismo, buceo, espeleología, montañismo, paracaidismo,<br>
+                vuelo de ala delta, esquí en agua o nieve, rafting o cualquier similar.</td>
+            <td align="center" style="border-style: solid; border-width: thin"><font th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font><br>
+                Especifique:</td>
+        </tr>
+        <tr>
+            <td style="border-style: solid; border-width: thin;" colspan="3">En caso afirmativo para cualquiera de las preguntas 2 a 4, proporcionar la siguiente información:</td>
+        </tr>
         </tbody>
     </table>
-    <div class="d-block space w-100" style="height: 425px;"><p>&nbsp;</p></div>
-</div>
-<!-- Pagina 6 -->
-<div class="page space">
     <table class="tbl">
         <tbody>
-            <tr style="border: medium transparent;">
-                <td align="left" class="auto-style38" style="border: transparent;">&nbsp;
-                    <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
-                </td>
-                <td colspan="4" align="right" class="auto-style33" style="border: transparent; font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
-            </tr>
+        <tr style="border: medium transparent;">
+            <td align="left" class="auto-style38" style="border: transparent;">&nbsp;
+                <img alt="" height="64" src="https://pimaid.dev:8443/apk/images/hsbc.png" width="128">
+            </td>
+            <td colspan="4" align="right" class="auto-style33" style="border: transparent; font-size: 16px">SEGURO DE VIDA DE <br>OPERACINOES FINANCIERAS <br>CUESTIONARIO MÉDICO</td>
+        </tr>
+        <tr>
+            <td class="auto-style39" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Pregunta No.:</td>
+            <td class="auto-style37" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Nombre de las enfermedades, lesiones,<br>
+                estudios o tramtamientos.</td>
+            <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Fecha en la que las<br>
+                sufrió o se le<br>
+                practicaron</td>
+            <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Duración</td>
+            <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Condiciones Actuales</td>
+        </tr>
+        <th:block th:each="freeAnswer : ${lstFreeAnswer}">
             <tr>
-                <td class="auto-style39" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Pregunta No.:</td>
-                <td class="auto-style37" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Nombre de las enfermedades, lesiones,<br>
-                    estudios o tramtamientos.</td>
-                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Fecha en la que las<br>
-                    sufrió o se le<br>
-                    practicaron</td>
-                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Duración</td>
-                <td style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">Condiciones Actuales</td>
+                <td class="auto-style39" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></p></td>
+                <td class="auto-style37" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></p></td>
+                <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></p></td>
+                <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></p></td>
+                <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></p></td>
             </tr>
-            <th:block th:each="freeAnswer : ${lstFreeAnswer}">
-                <tr>
-                    <td class="auto-style39" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.answerNumer}"></font></p></td>
-                    <td class="auto-style37" style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.disease}"></font></p></td>
-                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${#dates.format(freeAnswer.date_disease,'yyyy-MM-dd')}"></font></p></td>
-                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.duration}"></font></p></td>
-                    <td style="border-style: solid; border-width: thin"><p><font th:utext="${freeAnswer.disease eq 'no'} ? '&nbsp;' : ${freeAnswer.actualConditions}"></font></p></td>
-                </tr>
-            </th:block>
-            <tr>
-                <td colspan="5">
-                    Hago constar que me he informado que tanto los datos proporcionados en este cuestionario médico, así como  los  requisitos  médicos  que  la  Institución  considere  necesarios,  formarán  parte  de  la  misma.  Para  todos  los  efectos que pueda tener esta declaración, ratifico que todas las respuestas a las preguntas contenidas en el  mismo, las he dado personalmente, que son verídicas tal y como las conozco en el momento de firmar este  documento; así mismo de que cualquier omisión o falsa declaración, serán causa de rescisión de contrato sin  responsabilidad  para  la  Institución. Además  autorizo  a  los  médicos  o  personas  que  me  hayan  asistido  o  examinado, o a los hospitales o clínicas en los que haya ingresado para diagnóstico y tratamiento de cualquiera  enfermedad para que proporcione a HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, todos los informe  que  se  refieren  a  mi  salud,  inclusive  todos  los  datos  de  enfermedades  anteriores,  y  que  a  su  vez  HSBC  Seguros,  S.A.  de  C.V.,  Grupo  Financiero  HSBC,  proporcione  a  cualquier  otra  Institución  de  Seguros, la  información que se derive de este cuestionario médico y de otras que sean de su conocimiento u efecto de  que  pueda  evaluar  cualquier  propuesta  de  contratación  del  seguro  del  ramo  que  le  sea  solicitada  por  mi  persona. Asimismo, los libero expresamente de cualquier responsabilidad por secreto profesional. Este cuestionario tendrá una vigencia de 30 días a partir de la fecha de suscripción.</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    CLÁUSULA DE CARÁCTER GENERAL CONSENTIMIENTO DE DATOS PERSONALES De conformidad con la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su Reglamento y enterado del alcance del aviso de privacidad, autorizo expresamente para que los datos personales, sensibles y financieros o patrimoniales proporcionados, puedan ser utilizados por HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, o por cualquiera de las empresas afiliadas y subsidiarias del Grupo HSBC, para los fines descritos, en el aviso de privacidad. Así mismo manifiesto que HSBC puso a mi disposición su aviso de privacidad, el cual declaro conocer y aceptar en todos sus términos.<br>
-                    <br>
-                    <font th:text="${medicquestionnario.get('answer13') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <br>
-                    Lugar y fecha ____________________________________________________________
-                    <br>
-                    <br>
-                    Firma de asegurado propuesto _____________________________________</td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    &nbsp;</td>
-            </tr>
-            <tr style="border: transparent">
-                <td colspan="5"  style="border: transparent">La presente documentación no será válida si presenta tachaduras, enmendaduras, adiciones o modificaciones<br>
-                    de cualquier tipo, mismas que se tendrán por no puestas y no surtirán efecto alguno en perjuicio de la Institución.<br>
-                    <br>
-                    HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC. Paseo de la Reforma 347, piso 6, Colonia<br>
-                    Cuauhtémoc, Alcaldía Cuauhtémoc, Código Postal 06500, México, Ciudad de México.
-                </td>
-            </tr>
-            <tr style="border: medium transparent;">
-                <td colspan="5" style="border: medium transparent;">Página 2</td>
-            </tr>
+        </th:block>
+        <tr>
+            <td colspan="5">
+                Hago constar que me he informado que tanto los datos proporcionados en este cuestionario médico, así como  los  requisitos  médicos  que  la  Institución  considere  necesarios,  formarán  parte  de  la  misma.  Para  todos  los  efectos que pueda tener esta declaración, ratifico que todas las respuestas a las preguntas contenidas en el  mismo, las he dado personalmente, que son verídicas tal y como las conozco en el momento de firmar este  documento; así mismo de que cualquier omisión o falsa declaración, serán causa de rescisión de contrato sin  responsabilidad  para  la  Institución. Además  autorizo  a  los  médicos  o  personas  que  me  hayan  asistido  o  examinado, o a los hospitales o clínicas en los que haya ingresado para diagnóstico y tratamiento de cualquiera  enfermedad para que proporcione a HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, todos los informe  que  se  refieren  a  mi  salud,  inclusive  todos  los  datos  de  enfermedades  anteriores,  y  que  a  su  vez  HSBC  Seguros,  S.A.  de  C.V.,  Grupo  Financiero  HSBC,  proporcione  a  cualquier  otra  Institución  de  Seguros, la  información que se derive de este cuestionario médico y de otras que sean de su conocimiento u efecto de  que  pueda  evaluar  cualquier  propuesta  de  contratación  del  seguro  del  ramo  que  le  sea  solicitada  por  mi  persona. Asimismo, los libero expresamente de cualquier responsabilidad por secreto profesional. Este cuestionario tendrá una vigencia de 30 días a partir de la fecha de suscripción.</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                CLÁUSULA DE CARÁCTER GENERAL CONSENTIMIENTO DE DATOS PERSONALES De conformidad con la Ley Federal de Protección de Datos Personales en Posesión de Particulares y su Reglamento y enterado del alcance del aviso de privacidad, autorizo expresamente para que los datos personales, sensibles y financieros o patrimoniales proporcionados, puedan ser utilizados por HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC, o por cualquiera de las empresas afiliadas y subsidiarias del Grupo HSBC, para los fines descritos, en el aviso de privacidad. Así mismo manifiesto que HSBC puso a mi disposición su aviso de privacidad, el cual declaro conocer y aceptar en todos sus términos.<br>
+                <br>
+                <font th:text="${medicquestionnario.get('answer13') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></font></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <br>
+                Lugar y fecha ____________________________________________________________
+                <br>
+                <br>
+                Firma de asegurado propuesto _____________________________________</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                &nbsp;</td>
+        </tr>
+        <tr style="border: transparent">
+            <td colspan="5"  style="border: transparent">La presente documentación no será válida si presenta tachaduras, enmendaduras, adiciones o modificaciones<br>
+                de cualquier tipo, mismas que se tendrán por no puestas y no surtirán efecto alguno en perjuicio de la Institución.<br>
+                <br>
+                HSBC Seguros, S.A. de C.V., Grupo Financiero HSBC. Paseo de la Reforma 347, piso 6, Colonia<br>
+                Cuauhtémoc, Alcaldía Cuauhtémoc, Código Postal 06500, México, Ciudad de México.
+            </td>
+        </tr>
+        <tr style="border: medium transparent;">
+            <td colspan="5" style="border: medium transparent;">Página 2</td>
+        </tr>
         </tbody>
     </table>
-</div>
 </body>
 </html>
 

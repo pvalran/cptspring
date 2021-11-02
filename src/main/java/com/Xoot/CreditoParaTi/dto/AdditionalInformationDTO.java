@@ -32,6 +32,9 @@ public class AdditionalInformationDTO {
     private Integer creaditApplication;
     private String specifyNationality;
     private Integer otherCivilState;
+    private String specifyCountryBirth;
+    private String incomeSpouse;
+
 
 
     public Integer getIdAdditionalInformaction() {
@@ -233,4 +236,22 @@ public class AdditionalInformationDTO {
     public void setOtherCivilState(Integer otherCivilState) {
         this.otherCivilState = otherCivilState;
     }
+
+    public String getIncomeSpouse() {
+        return incomeSpouse;
+    }
+
+    public void setIncomeSpouse(String incomeSpouse) {
+        this.incomeSpouse = incomeSpouse;
+    }
+
+    public String getSpecifyCountryBirth() {
+        return specifyCountryBirth;
+    }
+
+    public void setSpecifyCountryBirth(String specifyCountryBirth) {
+        this.specifyCountryBirth = specifyCountryBirth;
+    }
+
+
 }

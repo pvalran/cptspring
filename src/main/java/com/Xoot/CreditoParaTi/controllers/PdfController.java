@@ -248,10 +248,6 @@ public class PdfController {
             countryOfResidence.put(0,"México");
             countryOfResidence.put(1,"Otro");
 
-
-
-
-
             direccion.put(0,"");
             direccion.put(1,"");
             direccion.put(2,"");
@@ -283,7 +279,6 @@ public class PdfController {
             direccionWorkCoacreditado.put(4,"");
             direccionWorkCoacreditado.put(5,"");
             direccionWorkCoacreditado.put(6,"");
-
 
             if (userCredit == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -370,7 +365,7 @@ public class PdfController {
                 CocreditedCustomersDTO cocreditedCustomers = new CocreditedCustomersDTO();
                 CocreditedAdditionalDTO cocreditedAdditional = new CocreditedAdditionalDTO();
                 CocreditedWorkDTO cocreditedWork = new CocreditedWorkDTO();
-
+                PropertyDTO property = new PropertyDTO();
 
                 context.setVariable("typeDependent", typeDependent);
                 context.setVariable("typeOccupation", typeOccupation);
@@ -477,8 +472,441 @@ public class PdfController {
                         }
                     }
 
+                    context.setVariable("cocreditedCustomers", cocreditedCustomers);
+                    context.setVariable("StateCoCustomers",Integer.parseInt(cocreditedCustomers.getState()));
+                    if (creditID.getCocreditedAdditional() != null) {
+                        cocreditedAdditional = creditID.getCocreditedAdditional();
+
+                        cocreditedAdditional.setAddress(creditID.getCocreditedAdditional().getAddress().split(",")[0]);
+
+                        if (creditID.getCocreditedAdditional().getSuburb().contains("-")) {
+                            cocreditedAdditional.setSuburb(creditID.getCocreditedAdditional().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedAdditional().getCity().contains("-")) {
+                            cocreditedAdditional.setCity(creditID.getCocreditedAdditional().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedAdditional().getCounty().contains("-")) {
+                            cocreditedAdditional.setCounty(creditID.getCocreditedAdditional().getCounty().split("-")[1]);
+                        }
 
 
+                    }
+                    context.setVariable("cocreditedAdditional", cocreditedAdditional);
+
+
+                    if (creditID.getCocreditedWork() != null) {
+                        cocreditedWork = creditID.getCocreditedWork();
+                        cocreditedWork.setAddress(creditID.getCocreditedWork().getAddress().split(",")[0]);
+
+                        if (creditID.getCocreditedWork().getSuburb().contains("-")) {
+                            cocreditedWork.setSuburb(creditID.getCocreditedWork().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedWork().getCity().contains("-")) {
+                            cocreditedWork.setCity(creditID.getCocreditedWork().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedWork().getCounty().contains("-")) {
+                            cocreditedWork.setCounty(creditID.getCocreditedWork().getCounty().split("-")[1]);
+                        }
+                    }
+                    context.setVariable("cocreditedWork", cocreditedWork);
+                    context.setVariable( "StateCoWork",Integer.parseInt(cocreditedWork.getState()));
+                    if (creditID.getDependents() != null) {
+                        for (EconomicDependientiesDto economic : creditID.getDependents()) {
+                            lstEconomic.add(economic);
+                        }
+                    }
+                    lstReference.add(new ReferenceDTO());
+                    lstReference.add(new ReferenceDTO());
+                    lstReference.add(new ReferenceDTO());
+                    lstReference.add(new ReferenceDTO());
+                    Integer idxRef = 0;
+                    if (creditID.getReferences() != null) {
+                        for (ReferenceDTO reference : creditID.getReferences()) {
+                            lstReference.set(idxRef, reference);
+                            idxRef++;
+                        }
+                    }
+                    for (Integer idx = lstEconomic.size(); idx <= 4; idx++) {
+                        EconomicDependientiesDto economicDependient = new EconomicDependientiesDto();
+                        economicDependient.setTypeDependent(-1);
+                        economicDependient.setTypeOccupation(-1);
+                        lstEconomic.add(economicDependient);
+                    }
+                    context.setVariable("economics", lstEconomic);
+                    context.setVariable("references", lstReference);
+                    context.setVariable("lstFreeAnswer", lstFreeAnswer);
+                    if (creditID.getMedicalquestionnaire() != null) {
+                        MedicalQuestionnaireAnswerDTO medical = creditID.getMedicalquestionnaire();
+                        medicquestionnario.put("weight", medical.getWeight());
+                        medicquestionnario.put("height", medical.getHeight());
+                        for (AnswerQuestionnaireDTO answer : medical.getanswerQuestionnairies()) {
+                            String key = "answer" + answer.getAnswerNumer();
+                            medicquestionnario.put(key, answer.getAnswer());
+                        }
+                        context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
+                    }
+                    context.setVariable("medicquestionnario", medicquestionnario);
+
+                    if (creditID.getProperty() != null){
+                        property = creditID.getProperty();
+                    }
+
+                    context.setVariable("property",property);
+
+                    String Name = creditID.getCustomer().getName();
+                    String lastName = creditID.getCustomer().getPaternalLastName();
+                    String secondLastName = creditID.getCustomer().getMotherLastName();
+                    String firmaSolicitante = Name + " " + lastName + " " + secondLastName;
+
+                    String firmaCoyunge = "";
+                    if (spouse == null) {
+                        firmaCoyunge = "";
+                    } else {
+                        String SpouseName = (spouse.getName() == null) ? "" : spouse.getName();
+                        String SpouseLastName = (spouse.getPaternalLastName() == null) ? "" : spouse.getPaternalLastName();
+                        String SpouseSecondLastName = (spouse.getMaternalLastName() == null) ? "" : spouse.getMaternalLastName();
+                        firmaCoyunge = SpouseName + " " + SpouseLastName + " " + SpouseSecondLastName;
+                    }
+
+                    String firmaCoacreditado = "";
+                    if(cocreditedCustomers == null) {
+                        firmaCoacreditado = "";
+                    } else {
+                        String CoacreditadoName = (cocreditedCustomers.getName() == null) ? "" : cocreditedCustomers.getName();
+                        String CoacreditadoLastName = (cocreditedCustomers.getPaternalLastName() == null) ? "" : cocreditedCustomers.getPaternalLastName();
+                        String CoacreditadoSecondLastName = (cocreditedCustomers.getMotherLastName() == null) ? "" : cocreditedCustomers.getMotherLastName();
+                        firmaCoacreditado = CoacreditadoName + " " + CoacreditadoLastName + " " + CoacreditadoSecondLastName;
+                    }
+                    String firmaObligado = "";
+                    Integer coacreditado = 1;
+                    if (creditID.getAdditionalies().getCivilState() == 1) {
+                        if (creditID.getAdditionalies().getIncomeSpouse().equals("false")) {
+                            firmaObligado = firmaCoyunge;
+                            coacreditado = 0;
+                            firmaCoacreditado = "";
+                        }
+                    }
+
+                    context.setVariable("coacreditado", coacreditado);
+                    context.setVariable("firmaSolicitante", firmaSolicitante);
+                    context.setVariable("firmaCoyunge", firmaCoyunge);
+                    context.setVariable("firmaCoacreditado", firmaCoacreditado);
+                    context.setVariable("firmaObligado", firmaObligado);
+
+                    String processedHtml = templateEngine.process("solicitud", context);
+                    ByteArrayOutputStream target = new ByteArrayOutputStream();
+                    ConverterProperties converterProperties = new ConverterProperties();
+                    converterProperties.setBaseUri("http://localhost:8080");
+                    /*ConverterProperties props = new ConverterProperties();
+                    props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
+                    HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
+                    byte[] bytes = target.toByteArray();
+                    if (bytes.equals(null)) {
+                        resp.put("data", "");
+                        resp.put("message", "Correo no enviado, Error al generar el archivo de la solicitud");
+                        resp.put("result", false);
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(resp.toString());
+                    }
+
+                    Path pathFile = this.root.resolve("solicitud_" + creditId + ".pdf");
+                    if (Files.exists(pathFile)) {
+                        File filename = pathFile.toFile();
+                        filename.delete();
+                    }
+                    File filename = pathFile.toFile();
+                    FileUtils.writeByteArrayToFile(filename, bytes);
+                    /*Mail mail = new Mail();
+                    mail.setMailFrom("envios@creditoparati.com.mx");
+                    mail.setMailTo(user.getEmail());
+                    mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
+                    mail.setMailContent("");
+                    Map<String, Object> prop = new HashMap<String, Object>();
+                    prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
+                    HashMap<String, byte[]> file = new HashMap<String, byte[]>();
+                    file.put("solicitud_" + creditId + ".pdf", bytes);
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);*/
+                    resp.put("data", "");
+                    resp.put("message", "Correo enviado");
+                    resp.put("result", true);
+                    return ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(resp.toString());
+                } else {
+                    resp.put("data", "");
+                    resp.put("message", "Correo no enviado, El número de credito no existe");
+                    resp.put("result", false);
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(resp.toString());
+                }
+            } else {
+                resp.put("data", "");
+                resp.put("message", "Correo no enviado, el usuario no existe");
+                resp.put("result", false);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(resp.toString());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            resp.put("data", "");
+            resp.put("message", ex.getMessage());
+            resp.put("result", false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(resp.toString());
+        }
+    }
+
+    @GetMapping("/pdf/solicitud/view/{creditId}")
+    public ResponseEntity<?> getPDFViewSolicitud(
+            @PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        JSONObject resp = new JSONObject();
+        HashMap<Integer, String> countryOfBirth = new HashMap<Integer, String>();
+        HashMap<Integer, String> countryOfResidence = new HashMap<Integer, String>();
+        HashMap<Integer, String> direccion = new HashMap<Integer, String>();
+        HashMap<Integer, String> direccionWork = new HashMap<Integer, String>();
+
+        HashMap<Integer, String> direccionCoacreditado = new HashMap<Integer, String>();
+        HashMap<Integer, String> direccionWorkCoacreditado = new HashMap<Integer, String>();
+
+        try {
+            CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            countryOfBirth.put(0,"México");
+            countryOfBirth.put(1,"Otro");
+
+            countryOfResidence.put(0,"México");
+            countryOfResidence.put(1,"Otro");
+
+            direccion.put(0,"");
+            direccion.put(1,"");
+            direccion.put(2,"");
+            direccion.put(3,"");
+            direccion.put(4,"");
+            direccion.put(5,"");
+            direccion.put(6,"");
+
+            direccionWork.put(0,"");
+            direccionWork.put(1,"");
+            direccionWork.put(2,"");
+            direccionWork.put(3,"");
+            direccionWork.put(4,"");
+            direccionWork.put(5,"");
+            direccionWork.put(6,"");
+
+            direccionCoacreditado.put(0,"");
+            direccionCoacreditado.put(1,"");
+            direccionCoacreditado.put(2,"");
+            direccionCoacreditado.put(3,"");
+            direccionCoacreditado.put(4,"");
+            direccionCoacreditado.put(5,"");
+            direccionCoacreditado.put(6,"");
+
+            direccionWorkCoacreditado.put(0,"");
+            direccionWorkCoacreditado.put(1,"");
+            direccionWorkCoacreditado.put(2,"");
+            direccionWorkCoacreditado.put(3,"");
+            direccionWorkCoacreditado.put(4,"");
+            direccionWorkCoacreditado.put(5,"");
+            direccionWorkCoacreditado.put(6,"");
+
+            if (userCredit == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("El número de credito no existe");
+            }
+
+            if (userCredit.getUser() == null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("El número de credito no existe");
+            }
+
+            Usuario user = userService.findById(userCredit.getUser());
+            if (user != null) {
+                WebContext context = new WebContext(request, response, servletContext);
+                List<EconomicDependientiesDto> lstEconomic = new ArrayList<EconomicDependientiesDto>();
+                List<ReferenceDTO> lstReference = new ArrayList<ReferenceDTO>();
+                List<FreeQuestionnaireDTO> lstFreeAnswer = new ArrayList<FreeQuestionnaireDTO>();
+                List<LocationState> lstState;
+                HashMap<String, Object> medicquestionnario = new HashMap<String, Object>();
+                HashMap<Integer, Object> typeDependent = new HashMap<Integer, Object>();
+                HashMap<Integer, Object> typeOccupation = new HashMap<Integer, Object>();
+                HashMap<Integer, Object> typeStates = new HashMap<Integer, Object>();
+                HashMap<Integer, Object> typePosition = new HashMap<Integer, Object>();
+                HashMap<Integer, Object> typeActivity = new HashMap<Integer, Object>();
+
+
+                medicquestionnario.put("weight", 0.00);
+                medicquestionnario.put("height", 0.00);
+                medicquestionnario.put("answer1", 1);
+                medicquestionnario.put("answer2", 1);
+                medicquestionnario.put("answer3", 1);
+                medicquestionnario.put("answer4", 1);
+                medicquestionnario.put("answer5", 1);
+                medicquestionnario.put("answer6", 1);
+                medicquestionnario.put("answer7", 1);
+                medicquestionnario.put("answer8", 1);
+                medicquestionnario.put("answer9", 1);
+                medicquestionnario.put("answer10", 1);
+                medicquestionnario.put("answer11", 1);
+                medicquestionnario.put("answer13", 0);
+
+                typeDependent.put(0, "");
+                typeDependent.put(1, "Esposo(a)");
+                typeDependent.put(2, "Hijo(a)");
+                typeDependent.put(3, "Primo(a)");
+                typeDependent.put(4, "Tio¡(a)");
+                typeDependent.put(5, "Otro (a)");
+
+                typeOccupation.put(0, "");
+                typeOccupation.put(1, "Ama(o) de casa");
+                typeOccupation.put(2, "Empleado(a)");
+                typeOccupation.put(3, "Estudiante");
+
+
+                typePosition.put(1, "Empleado");
+                typePosition.put(2, "Funcionario");
+                typePosition.put(3, "Directivo");
+                typePosition.put(4, "Socio, dueño, propietario");
+                typePosition.put(5, "Profesionista independiente");
+                typePosition.put(6, "Pensionado");
+                typePosition.put(7, "Jubilado");
+                typePosition.put(8, "Otro");
+
+                typeActivity.put(1, "Comercio");
+                typeActivity.put(2, "Industria");
+                typeActivity.put(3, "Servicios");
+                typeActivity.put(4, "Agropecuario");
+                typeActivity.put(5, "Construccion");
+                typeActivity.put(6, "Otro");
+
+
+                lstState = stateDao.findAll();
+                typeStates.put(0,"");
+                for (LocationState state : lstState) {
+                    typeStates.put(state.getIdState(), state.getName());
+                }
+
+                CustomerDTO customer = new CustomerDTO();
+                AdditionalInformationDTO additional = new AdditionalInformationDTO();
+                SpouseDTO spouse = new SpouseDTO();
+                WorkDTO work = new WorkDTO();
+                CocreditedCustomersDTO cocreditedCustomers = new CocreditedCustomersDTO();
+                CocreditedAdditionalDTO cocreditedAdditional = new CocreditedAdditionalDTO();
+                CocreditedWorkDTO cocreditedWork = new CocreditedWorkDTO();
+                PropertyDTO property = new PropertyDTO();
+
+                context.setVariable("typeDependent", typeDependent);
+                context.setVariable("typeOccupation", typeOccupation);
+                context.setVariable("typeStates", typeStates);
+                context.setVariable("typePosition", typePosition);
+                context.setVariable("typeActivity", typeActivity);
+                context.setVariable("countryOfBirth", countryOfBirth);
+                context.setVariable("countryOfResidence", countryOfResidence);
+                context.setVariable("product", "Fovisste para todos");
+
+                DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
+
+                DetalleCredito creditID = detalleCredito.findByCreditID(creditId);
+
+                customer.setState_id(-1);
+                customer.setStateOfBirth_id(-1);
+
+                additional.setState("-1");
+                additional.setScholarship(-1);
+                additional.setMaritalStatus(-1);
+                additional.setCountryOfBirth(-1);
+                additional.setCountryOfResidence(-1);
+                additional.setCountry("-1");
+
+                work.setState("-1");
+                work.setPosition(-1);
+                work.setTypeContract(-1);
+                work.setLaboral_activity(-1);
+
+                cocreditedWork.setState("-1");
+                cocreditedWork.setPosition(-1);
+                cocreditedWork.setTypeContract(-1);
+                cocreditedWork.setLaboralActivity(-1);
+
+                cocreditedAdditional.setCountryBirth(0);
+                cocreditedAdditional.setCountryResidence(0);
+
+
+
+                if (creditID != null) {
+
+
+
+                    if (creditID.getCustomer() == null){
+                        creditID.setCustomer(customer);
+                    } else {
+                        String[] strDireccion = creditID.getCustomer().getStreetAndNumber().split(",");
+                        for (Integer idx=0; idx<strDireccion.length;idx++){
+                            if (strDireccion[idx].contains("-")) {
+                                direccion.put(idx, strDireccion[idx].split("-")[1]);
+                            } else {
+                                direccion.put(idx, strDireccion[idx]);
+                            }
+
+                        }
+                    }
+
+                    if(creditID.getAdditionalies() == null) {
+                        creditID.setAdditionalies(additional);
+                    }
+
+                    context.setVariable("direccion",direccion);
+                    context.setVariable("creditId", creditID);
+                    if (creditID.getSpouse() != null) {
+                        spouse = creditID.getSpouse();
+                    }
+                    context.setVariable("spouse", spouse);
+
+                    if (creditID.getWork() != null) {
+                        work = creditID.getWork();
+                        work.setAddress(creditID.getWork().getAddress().split(",")[0]);
+
+                        if (creditID.getWork().getSuburb().contains("-")) {
+                            work.setSuburb(creditID.getWork().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getWork().getCity().contains("-")) {
+                            work.setCity(creditID.getWork().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getWork().getMunicipality().contains("-")) {
+                            work.setMunicipality(creditID.getWork().getMunicipality().split("-")[1]);
+                        }
+                    }
+
+                    context.setVariable("work", work);
+                    context.setVariable( "StateWork",Integer.parseInt(work.getState()));
+                    if (creditID.getCocreditedCustomers() != null) {
+                        cocreditedCustomers = creditID.getCocreditedCustomers();
+
+                        cocreditedCustomers.setAddressNumber(creditID.getCocreditedCustomers().getAddressNumber().split(",")[0]);
+
+                        if (creditID.getCocreditedCustomers().getSuburb().contains("-")) {
+                            cocreditedCustomers.setSuburb(creditID.getCocreditedCustomers().getSuburb().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedCustomers().getCity().contains("-")) {
+                            cocreditedCustomers.setCity(creditID.getCocreditedCustomers().getCity().split("-")[1]);
+                        }
+
+                        if (creditID.getCocreditedCustomers().getCounty().contains("-")) {
+                            cocreditedCustomers.setCounty(creditID.getCocreditedCustomers().getCounty().split("-")[1]);
+                        }
+                    }
 
                     context.setVariable("cocreditedCustomers", cocreditedCustomers);
                     context.setVariable("StateCoCustomers",Integer.parseInt(cocreditedCustomers.getState()));
@@ -558,53 +986,66 @@ public class PdfController {
                         context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
                     }
                     context.setVariable("medicquestionnario", medicquestionnario);
-                    String processedHtml = templateEngine.process("solicitud", context);
-                    ByteArrayOutputStream target = new ByteArrayOutputStream();
-                    ConverterProperties converterProperties = new ConverterProperties();
-                    converterProperties.setBaseUri("https://pimaid.dev:8443/apk");
-                    /*ConverterProperties props = new ConverterProperties();
-                    props.setMediaDeviceDescription(new MediaDeviceDescription(MediaType.PRINT));*/
-                    HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
-                    byte[] bytes = target.toByteArray();
-                    if (bytes.equals(null)) {
-                        resp.put("data", "");
-                        resp.put("message", "Correo no enviado, Error al generar el archivo de la solicitud");
-                        resp.put("result", false);
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .body(resp);
+
+                    if (creditID.getProperty() != null){
+                        property = creditID.getProperty();
                     }
 
-                    Path pathFile = this.root.resolve("solicitud_" + creditId + ".pdf");
-                    if (Files.exists(pathFile)) {
-                        File filename = pathFile.toFile();
-                        filename.delete();
+                    context.setVariable("property",property);
+
+                    String Name = creditID.getCustomer().getName();
+                    String lastName = creditID.getCustomer().getPaternalLastName();
+                    String secondLastName = creditID.getCustomer().getMotherLastName();
+                    String firmaSolicitante = Name + " " + lastName + " " + secondLastName;
+
+                    String firmaCoyunge = "";
+                    if (spouse == null) {
+                        firmaCoyunge = "";
+                    } else {
+                        String SpouseName = (spouse.getName() == null) ? "" : spouse.getName();
+                        String SpouseLastName = (spouse.getPaternalLastName() == null) ? "" : spouse.getPaternalLastName();
+                        String SpouseSecondLastName = (spouse.getMaternalLastName() == null) ? "" : spouse.getMaternalLastName();
+                        firmaCoyunge = SpouseName + " " + SpouseLastName + " " + SpouseSecondLastName;
                     }
-                    File filename = pathFile.toFile();
-                    FileUtils.writeByteArrayToFile(filename, bytes);
-                    /*Mail mail = new Mail();
-                    mail.setMailFrom("envios@creditoparati.com.mx");
-                    mail.setMailTo(user.getEmail());
-                    mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
-                    mail.setMailContent("");
-                    Map<String, Object> prop = new HashMap<String, Object>();
-                    prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
-                    HashMap<String, byte[]> file = new HashMap<String, byte[]>();
-                    file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);*/
-                    resp.put("data", "");
-                    resp.put("message", "Correo enviado");
-                    resp.put("result", true);
+
+                    String firmaCoacreditado = "";
+                    if(cocreditedCustomers == null) {
+                        firmaCoacreditado = "";
+                    } else {
+                        String CoacreditadoName = (cocreditedCustomers.getName() == null) ? "" : cocreditedCustomers.getName();
+                        String CoacreditadoLastName = (cocreditedCustomers.getPaternalLastName() == null) ? "" : cocreditedCustomers.getPaternalLastName();
+                        String CoacreditadoSecondLastName = (cocreditedCustomers.getMotherLastName() == null) ? "" : cocreditedCustomers.getMotherLastName();
+                        firmaCoacreditado = CoacreditadoName + " " + CoacreditadoLastName + " " + CoacreditadoSecondLastName;
+                    }
+                    String firmaObligado = "";
+                    Integer coacreditado = 1;
+                    if (creditID.getAdditionalies().getCivilState() == 1) {
+                        if (creditID.getAdditionalies().getIncomeSpouse().equals("false")) {
+                            firmaObligado = firmaCoyunge;
+                            coacreditado = 0;
+                            firmaCoacreditado = "";
+                        }
+                    }
+
+                    context.setVariable("coacreditado", coacreditado);
+                    context.setVariable("firmaSolicitante", firmaSolicitante);
+                    context.setVariable("firmaCoyunge", firmaCoyunge);
+                    context.setVariable("firmaCoacreditado", firmaCoacreditado);
+                    context.setVariable("firmaObligado", firmaObligado);
+
+                    String processedHtml = templateEngine.process("solictudview", context);
+
+
                     return ResponseEntity.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp.toString());
+                            .contentType(MediaType.TEXT_HTML)
+                            .body(processedHtml);
                 } else {
                     resp.put("data", "");
                     resp.put("message", "Correo no enviado, El número de credito no existe");
                     resp.put("result", false);
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp.toString());
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(resp.toString());
                 }
             } else {
                 resp.put("data", "");
