@@ -316,8 +316,8 @@
         </div>
         <div class="d-inline-block w-10">
             <span class="d-block"><b>Género:</b></span>
-            <span class="d-block w-100">Masculino&nbsp;<font th:utext="${creditId.customer.gender_id eq 0} ? '( X )' : '( )'"></font></span>
-            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:utext="${creditId.customer.gender_id eq 1} ? '( X )' : '( )'"></font></span>
+            <span class="d-block w-100">Masculino&nbsp;<font th:utext="${creditId.customer.gender_id eq 1} ? '( X )' : '( )'"></font></span>
+            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:utext="${creditId.customer.gender_id eq 2} ? '( X )' : '( )'"></font></span>
         </div>
         <div class="d-inline-block w-20">
             <span class="d-block"><b>Estado civil:</b></span>
@@ -330,8 +330,8 @@
         </div>
         <div class="d-inline-block w-15" style="width: 18%;">
             <span class="d-block"><b>Régimen matrimonial:</b></span>
-            <span class="d-block">Bienes mancomunados&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 1} ? '( X )' : '( )'"></font></span>
-            <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 2} ? '( X )' : '( )'"></font></span>
+            <span class="d-block">Bienes mancomunados&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 0} ? '( X )' : '( )'"></font></span>
+            <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font th:utext="${creditId.additionalies.maritalStatus eq 1} ? '( X )' : '( )'"></font></span>
         </div>
     </div>
     <div class="d-block space w-100">
@@ -577,8 +577,8 @@
         </div>
         <div class="d-inline-block w-10">
             <span class="d-block"><b>Género:</b></span>
-            <span class="d-block w-100">Masculino&nbsp;<font th:text="${spouse.gender eq 0} ? '( X )' : '(  )'"></font></span>
-            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:text="${spouse.gender eq 1} ? '( X )' : '(  )'"></font></span>
+            <span class="d-block w-100">Masculino&nbsp;<font th:text="${spouse.gender eq 1} ? '( X )' : '(  )'"></font></span>
+            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:text="${spouse.gender eq 2} ? '( X )' : '(  )'"></font></span>
         </div>
         <div class="d-inline-block w-20">
             <span class="d-inline-block">
@@ -1023,7 +1023,7 @@
             <div class="d-block">
                 <span>Mexicana&nbsp;&nbsp;<font  th:utext="${cocreditedAdditional.nationality eq 0} ? '( X )' : '( )'"></font></span>
                 <span>Entidad Federativa de nacimiento</span>
-                <span th:text="${typeStates.get(cocreditedAdditional.state)}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
+                <span th:text="${typeStates.get(cocreditedCustomers.stateBirth)}" class="bdr-bottom d-inline-block" style="width: 35%">&nbsp;</span>
             </div>
             <div class="d-block">
                 <span>Extranjera&nbsp;<font  th:utext="${cocreditedAdditional.nationality eq 1} ? '( X )' : '( )'"></font></span>
@@ -1033,8 +1033,8 @@
         </div>
         <div class="d-inline-block w-10">
             <span class="seccion_subtitle d-block"><b>Género:</b></span>
-            <span class="d-block w-100">Masculino&nbsp;<font  th:utext="${cocreditedCustomers.gender eq 0} ? '( X )' : '( )'"></font></span>
-            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:utext="${cocreditedCustomers.gender eq 1} ? '( X )' : '( )'"></font></span>
+            <span class="d-block w-100">Masculino&nbsp;<font  th:utext="${cocreditedCustomers.gender eq 1} ? '( X )' : '( )'"></font></span>
+            <span class="d-block w-100">Femenino&nbsp;&nbsp;<font th:utext="${cocreditedCustomers.gender eq 2} ? '( X )' : '( )'"></font></span>
         </div>
         <div class="d-inline-block w-20">
             <span class="seccion_subtitle d-block"><b>Estado civil:</b></span>
@@ -1058,7 +1058,7 @@
         </div>
         <div class="d-inline-block" style="width: 30%">
             <span><b>No. IMSS del solicitante:</b></span>
-            <span class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
+            <span th:utext="${cocreditedAdditional.numberImss }" class="bdr-bottom d-inline-block" style="width: 50%">&nbsp;</span>
         </div>
     </div>
     <div class="d-block space w-100">
@@ -1260,7 +1260,7 @@
         </div>
     </div>
     <div class="seccion_title space">
-        <span><b>INFORMACIÓN FINANCIERA Y BANCARIA DEL SOLICITANTE</b></span>
+        <span><b>INFORMACIÓN FINANCIERA Y BANCARIA</b></span>
     </div>
     <table class="tbl space">
         <tbody>
