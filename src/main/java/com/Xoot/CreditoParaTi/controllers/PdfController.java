@@ -322,12 +322,11 @@ public class PdfController {
                 medicquestionnario.put("answer11", 1);
                 medicquestionnario.put("answer13", 0);
 
-                typeDependent.put(0, "");
-                typeDependent.put(1, "Esposo(a)");
-                typeDependent.put(2, "Hijo(a)");
-                typeDependent.put(3, "Primo(a)");
-                typeDependent.put(4, "Tio¡(a)");
-                typeDependent.put(5, "Otro (a)");
+
+
+
+
+
 
                 typeOccupation.put(0, "");
                 typeOccupation.put(1, "Ama(o) de casa");
@@ -408,8 +407,6 @@ public class PdfController {
 
                 if (creditID != null) {
 
-
-
                     if (creditID.getCustomer() == null){
                         creditID.setCustomer(customer);
                     } else {
@@ -426,6 +423,40 @@ public class PdfController {
 
                     if(creditID.getAdditionalies() == null) {
                         creditID.setAdditionalies(additional);
+                    }
+
+
+                    if (creditID.getAdditionalies().getCivilState() == 0)
+                    {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Hijo(a)");
+                        typeDependent.put(2, "Primo(a)");
+                        typeDependent.put(3, "Tio(a)");
+                        typeDependent.put(4, "Otro(a)");
+                    } else if (creditID.getAdditionalies().getCivilState() == 1) {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Esposo(a)");
+                        typeDependent.put(2, "Hijo(a)");
+                        typeDependent.put(3, "Primo(a)");
+                        typeDependent.put(4, "Tio(a)");
+                        typeDependent.put(5, "Otro(a)");
+                    } else if (creditID.getAdditionalies().getCivilState() == 2) {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Concubino(a)");
+                        typeDependent.put(2, "Pareja");
+                        typeDependent.put(3, "Hijo(a)");
+                        typeDependent.put(4, "Primo(a)");
+                        typeDependent.put(5, "Tio(a)");
+                        typeDependent.put(6, "Otro(a)");
+                    } else {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Concubino(a)");
+                        typeDependent.put(2, "Pareja");
+                        typeDependent.put(3, "Esposo (a)");
+                        typeDependent.put(4, "Hijo(a)");
+                        typeDependent.put(5, "Primo(a)");
+                        typeDependent.put(6, "Tio(a)");
+                        typeDependent.put(7, "Otro(a)");
                     }
 
                     context.setVariable("direccion",direccion);
@@ -621,7 +652,7 @@ public class PdfController {
                     }
                     File filename = pathFile.toFile();
                     FileUtils.writeByteArrayToFile(filename, bytes);
-                    /*Mail mail = new Mail();
+                    Mail mail = new Mail();
                     mail.setMailFrom("envios@creditoparati.com.mx");
                     mail.setMailTo(user.getEmail());
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
@@ -630,7 +661,7 @@ public class PdfController {
                     prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);*/
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
