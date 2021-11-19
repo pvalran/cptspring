@@ -377,6 +377,7 @@ public class PdfController {
 
                 DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
+                context.setVariable("numberRequest", userCredit.getCreditId());
 
                 DetalleCredito creditID = detalleCredito.findByCreditID(creditId);
 
@@ -661,7 +662,7 @@ public class PdfController {
                     prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
+                    //mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);

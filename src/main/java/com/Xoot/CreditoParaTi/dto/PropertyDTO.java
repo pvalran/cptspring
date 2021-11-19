@@ -50,6 +50,7 @@ public class PropertyDTO implements Serializable {
         return IdProperty;
     }
 
+
     public void setIdProperty(Integer idProperty) {
         this.IdProperty = idProperty;
     }
