@@ -700,6 +700,22 @@ public class PdfController {
     public ResponseEntity<?> getPDFViewSolicitud(
             @PathVariable("creditId") Integer creditId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         JSONObject resp = new JSONObject();
+        try {
+
+            String processedHtml = this.getViewSolicitud(creditId, request, response);
+            return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(processedHtml);
+        } catch (Exception ex) {
+            resp.put("data", "");
+            resp.put("message", ex.getMessage());
+            resp.put("result", false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(resp.toString());
+        }
+    }
+
+    private String getViewSolicitud(Integer creditId, HttpServletRequest request, HttpServletResponse response) {
+        JSONObject resp = new JSONObject();
         HashMap<Integer, String> countryOfBirth = new HashMap<Integer, String>();
         HashMap<Integer, String> countryOfResidence = new HashMap<Integer, String>();
         HashMap<Integer, String> direccion = new HashMap<Integer, String>();
@@ -748,7 +764,7 @@ public class PdfController {
             direccionWorkCoacreditado.put(5,"");
             direccionWorkCoacreditado.put(6,"");
 
-            if (userCredit == null) {
+            /*if (userCredit == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .contentType(MediaType.APPLICATION_JSON)
                         .body("El número de credito no existe");
@@ -758,7 +774,7 @@ public class PdfController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .contentType(MediaType.APPLICATION_JSON)
                         .body("El número de credito no existe");
-            }
+            }*/
 
             Usuario user = userService.findById(userCredit.getUser());
             if (user != null) {
@@ -790,12 +806,6 @@ public class PdfController {
                 medicquestionnario.put("answer11", 1);
                 medicquestionnario.put("answer13", 0);
 
-                typeDependent.put(0, "");
-                typeDependent.put(1, "Esposo(a)");
-                typeDependent.put(2, "Hijo(a)");
-                typeDependent.put(3, "Primo(a)");
-                typeDependent.put(4, "Tio¡(a)");
-                typeDependent.put(5, "Otro (a)");
 
                 typeOccupation.put(0, "");
                 typeOccupation.put(1, "Ama(o) de casa");
@@ -846,7 +856,7 @@ public class PdfController {
 
                 DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 context.setVariable("dateRequest", dtf2.format(LocalDateTime.now()));
-
+                context.setVariable("numberRequest", creditId);
                 DetalleCredito creditID = detalleCredito.findByCreditID(creditId);
 
                 customer.setState_id(-1);
@@ -876,8 +886,6 @@ public class PdfController {
 
                 if (creditID != null) {
 
-
-
                     if (creditID.getCustomer() == null){
                         creditID.setCustomer(customer);
                     } else {
@@ -894,6 +902,40 @@ public class PdfController {
 
                     if(creditID.getAdditionalies() == null) {
                         creditID.setAdditionalies(additional);
+                    }
+
+
+                    if (creditID.getAdditionalies().getCivilState() == 0)
+                    {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Hijo(a)");
+                        typeDependent.put(2, "Primo(a)");
+                        typeDependent.put(3, "Tio(a)");
+                        typeDependent.put(4, "Otro(a)");
+                    } else if (creditID.getAdditionalies().getCivilState() == 1) {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Esposo(a)");
+                        typeDependent.put(2, "Hijo(a)");
+                        typeDependent.put(3, "Primo(a)");
+                        typeDependent.put(4, "Tio(a)");
+                        typeDependent.put(5, "Otro(a)");
+                    } else if (creditID.getAdditionalies().getCivilState() == 2) {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Concubino(a)");
+                        typeDependent.put(2, "Pareja");
+                        typeDependent.put(3, "Hijo(a)");
+                        typeDependent.put(4, "Primo(a)");
+                        typeDependent.put(5, "Tio(a)");
+                        typeDependent.put(6, "Otro(a)");
+                    } else {
+                        typeDependent.put(0, "");
+                        typeDependent.put(1, "Concubino(a)");
+                        typeDependent.put(2, "Pareja");
+                        typeDependent.put(3, "Esposo (a)");
+                        typeDependent.put(4, "Hijo(a)");
+                        typeDependent.put(5, "Primo(a)");
+                        typeDependent.put(6, "Tio(a)");
+                        typeDependent.put(7, "Otro(a)");
                     }
 
                     context.setVariable("direccion",direccion);
@@ -1065,36 +1107,25 @@ public class PdfController {
                     context.setVariable("firmaCoacreditado", firmaCoacreditado);
                     context.setVariable("firmaObligado", firmaObligado);
 
-                    String processedHtml = templateEngine.process("solictudview", context);
-
-
-                    return ResponseEntity.ok()
-                            .contentType(MediaType.TEXT_HTML)
-                            .body(processedHtml);
+                    String processedHtml = templateEngine.process("solicitud", context);
+                    return processedHtml;
                 } else {
                     resp.put("data", "");
                     resp.put("message", "Correo no enviado, El número de credito no existe");
                     resp.put("result", false);
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body(resp.toString());
+                    return resp.toString();
                 }
             } else {
                 resp.put("data", "");
                 resp.put("message", "Correo no enviado, el usuario no existe");
                 resp.put("result", false);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp.toString());
+                return resp.toString();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             resp.put("data", "");
             resp.put("message", ex.getMessage());
             resp.put("result", false);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(resp.toString());
+            return resp.toString();
         }
     }
 
