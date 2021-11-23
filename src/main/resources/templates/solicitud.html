@@ -2,16 +2,19 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
     <title></title>
     <style type="text/css">
         html, body {
             font: 10px 'Arial';
-            margin: 0px;
+            width: 21.60cm;
+            margin: auto auto;
             padding: 0px;
+
         }
 
         @page {
-            size: 21.0cm 29.7cm ;
+            size: 21.60cm 27.80cm ;
             margin: 0.5cm 0.5cm;
         }
 
@@ -88,6 +91,8 @@
         .tbl {
             width: 100%;
             border-collapse: collapse;
+            font: 10px 'Arial';
+
         }
 
         .tbl tr td {
@@ -198,7 +203,7 @@
                         <tbody>
                         <tr>
                             <td style="text-align: center" class="auto-style10">Lugar y Fecha:</td>
-                            <td colspan="6" class="bdr-bottom"><span th:text="${dateRequest}"></span></td>
+                            <td colspan="6" class="bdr-bottom">Ciudad de México <span th:text="${dateRequest}"></span></td>
                         </tr>
                         <tr>
                             <td class="auto-style5">Producto:</td>
@@ -396,35 +401,35 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-30" style="width: 32%">
+        <div class="d-inline-block w-30" style="width: 35%">
             <div class="d-inline-block">
                 <span class="d-block"><b>Teléfono Casa 01:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-75">
-                <span th:text="${creditId.additionalies.phone}" class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
+            <div class="d-inline-block w-60">
+                <span th:text="${creditId.additionalies.phone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
         </div>
-        <div class="d-inline-block w-30">
+        <div class="d-inline-block w-30" style="width: 28%">
             <div class="d-inline-block">
                 <span class="d-block"><b>Celular:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-80">
+            <div class="d-inline-block w-70">
                 <span th:text="${creditId.additionalies.mobile}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
         </div>
-        <div class="d-inline-block w-30" style="width: 32%">
+        <div class="d-inline-block w-30" style="width: 35%">
             <div class="d-inline-block">
                 <span class="d-block"><b>Otro teléfono 01:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-70" style="width: 76%">
-                <span th:text="${creditId.additionalies.otherPhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <div class="d-inline-block w-60">
+                <span th:text="${creditId.additionalies.otherPhone}" class="bdr-bottom d-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
@@ -675,11 +680,11 @@
     <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
-                <div class="d-inline-block">
+                <div class="d-inline-block" style="width: 48%;">
                     <span class="d-block seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
                     <span class="d-block">&nbsp;</span>
                 </div>
-                <div class="d-inline-block">
+                <div class="d-inline-block" style="width: 48%;">
                     <span th:text="${work.officePhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                     <div class="d-inline">
                         <span>(LADA)</span>
@@ -791,7 +796,7 @@
                         <tbody>
                         <tr>
                             <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                            <td colspan="6" class="bdr-bottom"><span th:text="${dateRequest}"></span></td>
+                            <td colspan="6" class="bdr-bottom">Ciudad de México <span th:text="${dateRequest}"></span></td>
                         </tr>
                         <tr>
                             <td class="auto-style5">Producto:</td>
@@ -806,8 +811,8 @@
         </tbody>
     </table>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-45">
-            <div class="d-inline-block" style="margin-top: 8px;">
+        <div class="d-inline-block w-50" style="width: 48%;">
+            <div class="d-inline-block">
                 <span class="seccion_subtitle"><b>Bien Inmueble distinto al actual:</b></span>
                 <span>Casa: (   )</span>
                 <span>Departamento: (   )</span>
@@ -825,9 +830,9 @@
                 <span>&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-50">
-            <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
-                <span class="d-block" style="margin-top: 8px;">Vehículos:</span>
+        <div class="d-inline-block w-48" style="width: 48%;">
+            <div class="d-inline-block w-15">
+                <span class="d-block">Vehículos:</span>
                 <div class="d-block">
                     <span>&nbsp;</span>
                 </div>
@@ -838,41 +843,39 @@
                     <span>&nbsp;</span>
                 </div>
             </div>
-            <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
+            <div class="d-inline-block w-80">
                 <div class="d-inline-block">
                     <div class="d-inline-block">
-                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-inline-block seccion_subtitle"><b>Marca:</b></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                     <div class="d-inline-block">
                         <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                        <div class="d-inline">
+                        <div class="d-block">
                             <span>Totalmente Pagado (   )</span>
                             <span>Parcialmente Pagado(   )</span>
                         </div>
                     </div>
                     <div class="d-inline-block">
-                        <span class="d-inline-block">Año</span>
-                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <span class="d-inline">&nbsp;</span>
+                        <span class="d-inline-block">Año <span class="bdr-bottom d-inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+                        <span class="d-block">&nbsp;</span>
                     </div>
                 </div>
                 <div class="d-inline-block">
                     <div class="d-inline-block">
-                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-inline-block seccion_subtitle"><b>Marca:</b></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                     <div class="d-inline-block">
                         <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                        <div class="d-inline">
+                        <div class="d-block">
                             <span>Totalmente Pagado (   )</span>
                             <span>Parcialmente Pagado(   )</span>
                         </div>
                     </div>
                     <div class="d-inline-block">
-                        <span class="d-inline-block">Año</span>
-                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <span class="d-inline">&nbsp;</span>
+                        <span class="d-inline-block">Año <span class="bdr-bottom d-inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+                        <span class="d-block">&nbsp;</span>
                     </div>
                 </div>
             </div>
@@ -1028,7 +1031,7 @@
             <div class="d-block">
                 <span>Extranjera&nbsp;<span  th:utext="${cocreditedAdditional.nationality eq 1} ? '( X )' : '( )'"></span></span>
                 <span>Especifique</span>
-                <span th:utext="${cocreditedAdditional.specifyNationality}" class="bdr-bottom d-inline-block" style="width: 65">&nbsp;</span>
+                <span th:utext="${cocreditedAdditional.specifyNationality}" class="bdr-bottom d-inline-block" style="width: 65px;">&nbsp;</span>
             </div>
         </div>
         <div class="d-inline-block w-10">
@@ -1113,34 +1116,34 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-30" style="width: 32%">
+        <div class="d-inline-block w-30" style="width: 35%">
             <div class="d-inline-block">
                 <span class="seccion_subtitle d-block"><b>Teléfono Casa 01:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-75">
-                <span th:utext="${ cocreditedAdditional.phone }" class="bdr-bottom d-inline-block" style="width: 80%">&nbsp;</span>
+            <div class="d-inline-block w-60">
+                <span th:utext="${ cocreditedAdditional.phone }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
         </div>
-        <div class="d-inline-block w-30">
+        <div class="d-inline-block w-30" style="width: 28%">
             <div class="d-inline-block">
                 <span class="d-block"><b>Celular:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-80">
+            <div class="d-inline-block w-70">
                 <span th:utext="${ cocreditedAdditional.mobile }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
             </div>
         </div>
-        <div class="d-inline-block w-30" style="width: 32%">
+        <div class="d-inline-block w-30" style="width: 35%">
             <div class="d-inline-block">
                 <span class="d-block"><b>Otro teléfono 01:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block w-70" style="width: 76%">
+            <div class="d-inline-block w-60">
                 <span th:utext="${ cocreditedAdditional.otherPhone }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span>(LADA)</span>
                 <span>(Número)</span>
@@ -1231,11 +1234,11 @@
     <div class="d-block space w-100">
         <div class="d-inline-block w-50">
             <div class="d-inline-block w-50">
-                <div class="d-inline-block">
+                <div class="d-inline-block"  style="width: 48%;">
                     <span class="d-block seccion_subtitle"><b>Teléfono Laboral 01:</b></span>
                     <span class="d-block">&nbsp;</span>
                 </div>
-                <div class="d-inline-block">
+                <div class="d-inline-block" style="width: 48%;">
                     <span th:utext="${cocreditedWork.officePhone}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                     <div class="d-inline">
                         <span>(LADA)</span>
@@ -1324,8 +1327,8 @@
         </tbody>
     </table>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-45">
-            <div class="d-inline-block" style="margin-top: 8px;">
+        <div class="d-inline-block w-50" style="width: 48%;">
+            <div class="d-inline-block">
                 <span class="seccion_subtitle"><b>Bien Inmueble distinto al actual:</b></span>
                 <span>Casa: (   )</span>
                 <span>Departamento: (   )</span>
@@ -1343,9 +1346,9 @@
                 <span>&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-50">
-            <div class="d-inline-block w-15 valign-top" style="margin-top: 8px;">
-                <span class="d-block" style="margin-top: 8px;">Vehículos:</span>
+        <div class="d-inline-block w-48" style="width: 48%;">
+            <div class="d-inline-block w-15">
+                <span class="d-block">Vehículos:</span>
                 <div class="d-block">
                     <span>&nbsp;</span>
                 </div>
@@ -1356,40 +1359,38 @@
                     <span>&nbsp;</span>
                 </div>
             </div>
-            <div class="d-inline-block w-75 valign-top" style="margin-top: 8px;">
+            <div class="d-inline-block w-80">
                 <div class="d-inline-block">
                     <div class="d-inline-block">
-                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-inline-block seccion_subtitle"><b>Marca:</b></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                     <div class="d-inline-block">
                         <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                        <div class="d-inline">
+                        <div class="d-block">
                             <span>Totalmente Pagado (   )</span>
                             <span>Parcialmente Pagado(   )</span>
                         </div>
                     </div>
                     <div class="d-inline-block">
-                        <span class="d-inline-block">Año</span>
-                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline-block">Año <span class="bdr-bottom d-inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                 </div>
                 <div class="d-inline-block">
                     <div class="d-inline-block">
-                        <span class="d-block seccion_subtitle"><b>Marca:</b></span>
+                        <span class="d-inline-block seccion_subtitle"><b>Marca:</b></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                     <div class="d-inline-block">
                         <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-                        <div class="d-inline">
+                        <div class="d-block">
                             <span>Totalmente Pagado (   )</span>
                             <span>Parcialmente Pagado(   )</span>
                         </div>
                     </div>
                     <div class="d-inline-block">
-                        <span class="d-inline-block">Año</span>
-                        <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="d-inline-block">Año <span class="bdr-bottom d-inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
                         <span class="d-block">&nbsp;</span>
                     </div>
                 </div>
@@ -1420,7 +1421,7 @@
                     <tbody>
                     <tr>
                         <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                        <td colspan="6" class="bdr-bottom"><span th:text="${dateRequest}"></span></td>
+                        <td colspan="6" class="bdr-bottom">Ciudad de México <span th:text="${dateRequest}"></span></td>
                     </tr>
                     <tr>
                         <td class="auto-style5">Producto:</td>
@@ -1434,83 +1435,83 @@
         </tr>
         </tbody>
     </table>
-    <div class="seccion_title"><p>DECLARACIÓN DEL SOLICITANTE DE CRÉDITO</p></div>
-    <p>El (Los) solicitante(s) manifiesta(n) bajo protesta que para efectos de la presente Solicitud actúa(n) a nombre y por cuenta propia y que al firmarla certifica (n)
+    <div class="seccion_title">DECLARACIÓN DEL SOLICITANTE DE CRÉDITO</div>
+    <span>El (Los) solicitante(s) manifiesta(n) bajo protesta que para efectos de la presente Solicitud actúa(n) a nombre y por cuenta propia y que al firmarla certifica (n)
         la veracidad de la información contenida en la misma. Así mismo, mediante su firma el (los) solicitante(s) manifiesta(n) conocer y entender los alcances de la
-        presente solicitud así como los términos y condiciones del crédito solicitado.</p>
-    <p style="height: 25px">&nbsp;</p>
-    <div class="d-inline-block w-100" style="padding-top: 8px; padding-bottom: 8px;">
-        <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        presente solicitud así como los términos y condiciones del crédito solicitado.</span>
+    <p style="height: 15px">&nbsp;</p>
+    <div class="d-inline-block w-100" >
+        <div class="d-inline-block w-20 text-center">
             <span th:utext="${ firmaSolicitante }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del solicitante</b></span>
         </div>
-        <div class="d-inline-block w-25 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;" >
+        <div class="d-inline-block w-25 text-center">
             <span th:utext="${ firmaCoyunge }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
             <span class="seccion_subtitle d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
         </div>
-        <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        <div class="d-inline-block w-20 text-center">
             <span th:utext="${ firmaCoacreditado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del coacreditado</b></span>
         </div>
-        <div class="d-inline-block w-30 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        <div class="d-inline-block w-30 text-center">
             <span th:utext="${ firmaObligado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del obligado solidario</b></span>
         </div>
     </div>
-    <div class="seccion_title"><p>AUTORIZACIÓN DE MERCADEO</p></div>
-    <p>Autorizo (autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC, a compartir documentación e información financiera, comercial,
+    <div class="seccion_title">AUTORIZACIÓN DE MERCADEO</div>
+    <span>Autorizo (autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC, a compartir documentación e información financiera, comercial,
         operativa, de historial o información crediticia y de cualquier otra naturaleza que le sea proporcionada por mí (nosotros) o por terceros con mi (nuestra) autorización
         a cualquiera de las entidades financieras del Grupo Financiero HSBC, subsidiarias a nivel nacional e internacional siempre y cuando se trate de subsidiarias del
         Grupo HSBC, para fines mercadológicos, de evaluación crediticia y estadística. Autorizo (Autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo
         Financiero HSBC y a los demás miembros del Grupo Financiero HSBC para que envíen a mi (nuestro) domicilio, publicidad de los productos y servicios que ofrezcan
         al público en general, así como para que la información contenida en la presente Solicitud se utilice con fines de mercadeo o publicidad.
-        Sí ( )No ( )</p>
-    <p style="height: 25px">&nbsp;</p>
-    <div class="d-inline-block w-100" style="padding-top: 8px; padding-bottom: 8px;">
-        <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        Sí ( X )No ( )</span>
+    <p style="height: 15px">&nbsp;</p>
+    <div class="d-inline-block w-100">
+        <div class="d-inline-block w-20 text-center">
             <span th:utext="${ firmaSolicitante }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del solicitante</b></span>
         </div>
-        <div class="d-inline-block w-25 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;" >
+        <div class="d-inline-block w-25 text-center">
             <span th:utext="${ firmaCoyunge }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block" style="text-align: center;"><b>Nombre y firma del cónyuge</b></span>
             <span class="seccion_subtitle d-block" style="text-align: center;"><b>(en caso de participar como garante)</b></span>
         </div>
-        <div class="d-inline-block w-20 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        <div class="d-inline-block w-20 text-center">
             <span th:utext="${ firmaCoacreditado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del coacreditado</b></span>
         </div>
-        <div class="d-inline-block w-30 text-center valign-top" style="padding-top: 8px; padding-bottom: 8px;">
+        <div class="d-inline-block w-30 text-center">
             <span th:utext="${ firmaObligado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span class="seccion_subtitle d-block text-center"><b>Nombre y firma <br />del obligado solidario</b></span>
         </div>
     </div>
-    <div class="seccion_title d-block"><p>AUTORIZACIÓN BURÓ DE CRÉDITO</p></div>
-    <p>Autorizo (Autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC y a los demás miembros del Grupo Financiero HSBC para que
+    <div class="seccion_title">AUTORIZACIÓN BURÓ DE CRÉDITO</div>
+    <span>Autorizo (Autorizamos) a HSBC México, S.A. Institución de Banca Múltiple Grupo Financiero HSBC y a los demás miembros del Grupo Financiero HSBC para que
         directamente o por conducto de cualquier Sociedad de Información Crediticia solicite(n), obtenga(n) o verifique(n) en el presente o en el futuro y cuantas veces
         considere necesario toda la información crediticia de el (los) suscrito(s). Hago (hacemos) constar que tengo (tenemos) pleno conocimiento de la naturaleza y alcance
         de la información que se solicitará, del uso que se hará de tal información y del hecho de que se podrán realizar consultas periódicas de mi (nuestro) historial crediticio,
         conforme a lo establecido en el artículo 28 de la Ley para Regular las Sociedades de Información Crediticia a que deban sujetarse las mencionadas Sociedades de
         Información Crediticia. La presente autorización tendrá el carácter de irrevocable y se encontrará vigente por tres años o por más tiempo mientras exista una
-        relación jurídica entre ambos o existan obligaciones pendientes a mi (nuestro) cargo derivada de dicha(s) operación(es).</p>
-    <p style="height: 25px">&nbsp;</p>
-    <div class="d-inline-block text-center w-100">
-        <div class="d-inline-block w-30">
+        relación jurídica entre ambos o existan obligaciones pendientes a mi (nuestro) cargo derivada de dicha(s) operación(es).</span>
+    <p style="height: 15px">&nbsp;</p>
+    <div class="d-inline-block w-100" style="margin-left: auto;margin-right: auto;">
+        <div class="d-inline-block w-30 text-center">
             <span th:utext="${ firmaSolicitante }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="seccion_subtitle text-center"><b>Nombre y firma del solicitante</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma del solicitante</b></span>
         </div>
-        <div class="d-inline-block w-30">
+        <div class="d-inline-block w-30 text-center">
             <span th:utext="${ firmaCoacreditado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="seccion_subtitle text-center"><b>Nombre y firma del coacreditado</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma del coacreditado</b></span>
         </div>
-        <div class="d-inline-block w-35">
+        <div class="d-inline-block w-30 text-center">
             <span th:utext="${ firmaObligado }" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
-            <span class="seccion_subtitle text-center"><b>Nombre y firma del obligado solidario</b></span>
+            <span class="seccion_subtitle d-block text-center"><b>Nombre y firma del obligado solidario</b></span>
         </div>
     </div>
-    <div class="seccion_title"><p>OFERTA VINCULANTE</p></div>
-    <p>Para la expedición de una Oferta Vinculante no se requerirá de la presentación de los documentos necesarios para la contratación de Crédito Garantizado a la Vivienda,
+    <div class="seccion_title">OFERTA VINCULANTE</div>
+    <span>Para la expedición de una Oferta Vinculante no se requerirá de la presentación de los documentos necesarios para la contratación de Crédito Garantizado a la Vivienda,
         sino hasta el momento de la aceptación de la Oferta Vinculante correspondiente.
         HSBC México S. A. Institución de Banca Múltiple Grupo Financiero HSBC, estará obligada a otorgar el Crédito Garantizado a la Vivienda en los términos y condiciones
         que se establezcan en la Oferta Vinculante, siempre y cuando compruebe la identidad del solicitante, la veracidad y autenticidad de los datos que hubiese
@@ -1518,8 +1519,8 @@
         el cumplimiento de las demás formalidades que requiera la Ley.
 
         Con base en la información señalada en la presente solicitud, ¿está interesado en que la entidad le extienda una Oferta Vinculante? Sí
-        En caso de que su respuesta sea positiva, para obtener su formato de Oferta Vinculante deberá solicitarla al Ejecutivo de Sucursal y/o Centro Hipotecario de forma impresa.</p>
-    <p style="height: 25px">&nbsp;</p>
+        En caso de que su respuesta sea positiva, para obtener su formato de Oferta Vinculante deberá solicitarla al Ejecutivo de Sucursal y/o Centro Hipotecario de forma impresa.</span>
+    <p style="height: 15px">&nbsp;</p>
     <div class="d-block text-center w-25" style="width: 25%; margin-left: auto; margin-right: auto;">
         <span th:utext="${ firmaSolicitante }"  class="bdr-bottom d-block text-center" style="width: 100%">&nbsp;</span>
         <span class="seccion_subtitle text-center d-block" style="width: 100%"><b>Nombre y firma del solicitante</b></span>
@@ -1557,20 +1558,20 @@
             <span><b>Superficie del terreno(m2):</b></span>
             <span th:utext="${property.totalSurface}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
-        <div class="d-inline-block w-25">
+        <div class="d-inline-block w-20">
             <span><b>(m2) de Construcción:</b></span>
             <span th:utext="${property.constructionSurface}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
         <div class="d-inline-block w-20">
             <span><b>Porcentaje de Financiamiento:</b></span>
-            <span th:utext="${property.financingPercentage}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
+            <span th:utext="${property.financingPercentage}" class="bdr-bottom d-inline-block" style="width: 15%">&nbsp;</span>
         </div>
     </div>
     <div class="d-block">
         <div class="d-inline-block w-75">
             <div class="d-inline-block w-20">
                 <span class="d-block" style="width: 100%"><b>Nombre del vendedor:</b></span>
-                <span th:utext="${property.constructionSurface}" class="d-block">&nbsp;</span>
+                <span class="d-block">&nbsp;</span>
             </div>
             <div class="d-inline-block w-30">
                 <span th:utext="${property.paternalLastName}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
@@ -1587,7 +1588,7 @@
         </div>
         <div class="d-inline-block w-20" style="width: 23%;">
             <span><b>Teléfono Casa 01:</b></span>
-            <span th:utext="${property.phone}" class="bdr-bottom d-inline-block" style="width: 60%">&nbsp;</span>
+            <span th:utext="${property.phone}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
             <span class="d-block">&nbsp;</span>
         </div>
     </div>
@@ -1631,16 +1632,17 @@
             <span>Código Postal</span>
         </div>
     </div>
-    <p>&nbsp;</p>
 </div>
 <!-- Pagina 4-->
 <div class="page ">
     <table class="tblTitle">
         <tbody>
         <tr>
-            <td align="left">&nbsp;
-                <img alt="" height="64" src="http://3.211.231.97:8080/apk/images/hsbc.png" width="100">
+            <td>
+                <img alt="HSBC" height="64" src="http://3.211.231.97:8080/apk/images/hsbc.png" width="100">
+
             </td>
+
             <td colspan="5" align="right"><span class="markedContent"><span dir="ltr" role="presentation" style="font-size: 24.4632px; font-family: sans-serif; transform: scaleX(1.09365); color: #FF0000;">Solicitud de Crédito Hipotecario</span></span></td>
         </tr>
         <tr>
@@ -1655,7 +1657,7 @@
                     <tbody>
                     <tr>
                         <td align="Center" class="auto-style10">Lugar y Fecha:</td>
-                        <td colspan="6" class="bdr-bottom"><span th:text="${dateRequest}"></span></td>
+                        <td colspan="6" class="bdr-bottom">Ciudad de México <span th:text="${dateRequest}"></span></td>
                     </tr>
                     <tr>
                         <td class="auto-style5">Producto:</td>
@@ -1676,7 +1678,7 @@
                 <span class="seccion_subtitle d-block"><b>Nombre:</b></span>
                 <span class="d-block">&nbsp;</span>
             </div>
-            <div class="d-inline-block" style="width: 85%">
+            <div class="d-inline-block" style="width: 75%">
                 <span class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
                 <span >Apellido paterno</span>
             </div>
@@ -1709,7 +1711,7 @@
         </div>
         <div class="d-inline-block w-30">
             <span><b>Nombre sucursal /CH:</b></span>
-            <span class="bdr-bottom w-60 d-inline-block">&nbsp;</span>
+            <span class="bdr-bottom w-55 d-inline-block" style="width: 55%;">&nbsp;</span>
             <span class="d-block">&nbsp;</span>
         </div>
     </div>
@@ -1721,7 +1723,7 @@
         </div>
         <div class="d-inline-block w-30">
             <span><b>Subdirección:</b></span>
-            <span class="bdr-bottom w-75 d-inline-block">&nbsp;</span>
+            <span class="bdr-bottom w-70 d-inline-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-30">
             <span><b>Plaza:</b></span>
@@ -1860,11 +1862,12 @@
     </table>
     <table class="tbl">
         <tbody>
-            <tr>
-                <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
-                <td colspan="2" style="border-style: solid; border-width: thin">Peso <span th:text="${medicquestionnario.get('weight')}"></span> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <span th:text="${medicquestionnario.get('height')}"></span> cm.</td>
-            </tr>
-            <tr>
+        <tr>
+            <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
+            <td colspan="2" style="border-style: solid; border-width: thin">Peso <span th:text="${medicquestionnario.get('weight')}"></span> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <span th:text="${medicquestionnario.get('height')}"></span> cm.</td>
+        </tr>
+
+        <tr>
                 <td align="center" class="auto-style36" rowspan="9" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">2</td>
                 <td style="border-style: solid; border-width: thin">¿Se le ha diagnosticado o ha sido tratado por:</td>
                 <td style="border-style: solid; border-width: thin">&nbsp;</td>

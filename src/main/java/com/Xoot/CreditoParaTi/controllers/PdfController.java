@@ -307,8 +307,8 @@ public class PdfController {
                 HashMap<Integer, Object> typeActivity = new HashMap<Integer, Object>();
 
 
-                medicquestionnario.put("weight", 0.00);
-                medicquestionnario.put("height", 0.00);
+                medicquestionnario.put("weight", -1);
+                medicquestionnario.put("height", -1);
                 medicquestionnario.put("answer1", 1);
                 medicquestionnario.put("answer2", 1);
                 medicquestionnario.put("answer3", 1);
@@ -581,6 +581,21 @@ public class PdfController {
                         }
                         context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
                     }
+
+                    Double weight = (Double) medicquestionnario.get("weight");
+                    Double height = (Double) medicquestionnario.get("height");
+
+
+                    if ( weight > 0){
+                        medicquestionnario.put("weight",weight+40);
+                    }
+
+                    if ( height > 0){
+                        medicquestionnario.put("height",height+60);
+                    }
+
+
+
                     context.setVariable("medicquestionnario", medicquestionnario);
 
                     if (creditID.getProperty() != null){
@@ -659,10 +674,10 @@ public class PdfController {
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
                     mail.setMailContent("");
                     Map<String, Object> prop = new HashMap<String, Object>();
-                    prop.put("name", creditID.getCustomer().getName() + creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
+                    prop.put("name", creditID.getCustomer().getName() +" " +creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    //mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
@@ -791,8 +806,8 @@ public class PdfController {
                 HashMap<Integer, Object> typeActivity = new HashMap<Integer, Object>();
 
 
-                medicquestionnario.put("weight", 0.00);
-                medicquestionnario.put("height", 0.00);
+                medicquestionnario.put("weight", -1);
+                medicquestionnario.put("height", -1);
                 medicquestionnario.put("answer1", 1);
                 medicquestionnario.put("answer2", 1);
                 medicquestionnario.put("answer3", 1);
@@ -1059,6 +1074,19 @@ public class PdfController {
                         }
                         context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
                     }
+
+                    Double weight = (Double) medicquestionnario.get("weight");
+                    Double height = (Double) medicquestionnario.get("height");
+
+
+                    if ( weight > 0){
+                        medicquestionnario.put("weight",weight+40);
+                    }
+
+                    if ( height > 0){
+                        medicquestionnario.put("height",height+60);
+                    }
+
                     context.setVariable("medicquestionnario", medicquestionnario);
 
                     if (creditID.getProperty() != null){
