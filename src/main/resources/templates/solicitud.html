@@ -639,7 +639,7 @@
     </div>
     <div class="d-block space w-100">
         <div class="d-inline-block w-20">
-            <span class="d-block" style="width: 100%"><b>Domicilio laboral en México:</b></span>
+            <span class="seccion_subtitle d-block" style="width: 100%"><b>Domicilio laboral en México:</b></span>
             <span class="d-block">&nbsp;</span>
         </div>
         <div class="d-inline-block w-25">
@@ -1021,7 +1021,7 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-40">
+        <div class="d-inline-block w-45">
             <span class="seccion_subtitle d-inline-block"><b>Nacionalidad:</b></span>
             <div class="d-block">
                 <span>Mexicana&nbsp;&nbsp;<span  th:utext="${cocreditedAdditional.nationality eq 0} ? '( X )' : '( )'"></span></span>
@@ -1048,7 +1048,7 @@
                 <span class="bdr-bottom d-inline-block" style="width: 40%">&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-20">
+        <div class="d-inline-block w-15" style="width: 18%;">
             <span class="seccion_subtitle d-block"><b>Régimen matrimonial:</b></span>
             <span class="d-block">Bienes mancomunados&nbsp;<span th:utext="${cocreditedAdditional.maritalStatus eq 0} ? '( X )' : '( )'"></span></span>
             <span class="d-block">Bienes separados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:utext="${cocreditedAdditional.maritalStatus eq 1} ? '( X )' : '( )'"></span></span>
@@ -1176,7 +1176,7 @@
                 <span th:utext="${cocreditedWork.specifyPosition}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
             </div>
         </div>
-        <div class="d-inline-block w-45">
+        <div class="d-inline-block w-50" style="width: 48%;">
             <div class="d-block">
                 <span class="seccion_subtitle"><b>Actividad/Giro:</b></span>
                 <span>Comercio<span th:utext="${cocreditedWork.laboralActivity eq 0} ? '( X )' : '( )'"></span></span>
@@ -1192,7 +1192,7 @@
         </div>
     </div>
     <div class="d-block space w-100">
-        <div class="d-inline-block w-15">
+        <div class="d-inline-block w-20">
             <span class="seccion_subtitle d-block" style="width: 100%"><b>Domicilio laboral en México:</b></span>
             <span class="d-block">&nbsp;</span>
         </div>
@@ -1208,7 +1208,7 @@
             <span th:utext="${cocreditedWork.interiorNumber}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Número Interior</span>
         </div>
-        <div class="d-inline-block w-25">
+        <div class="d-inline-block w-20">
             <span th:utext="${cocreditedWork.suburb}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Colonia/Urbanización</span>
         </div>
@@ -1562,7 +1562,7 @@
             <span><b>(m2) de Construcción:</b></span>
             <span th:utext="${property.constructionSurface}" class="bdr-bottom d-inline-block" style="width: 30%">&nbsp;</span>
         </div>
-        <div class="d-inline-block w-20">
+        <div class="d-inline-block w-20" style="width: 23%;">
             <span><b>Porcentaje de Financiamiento:</b></span>
             <span th:utext="${property.financingPercentage}" class="bdr-bottom d-inline-block" style="width: 15%">&nbsp;</span>
         </div>
@@ -1624,7 +1624,7 @@
             <span>Ciudad/Población</span>
         </div>
         <div class="d-inline-block w-25">
-            <span th:utext="${property.state}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
+            <span th:utext="${typeStates.get(propertyState)}" class="bdr-bottom d-inline-block" style="width: 100%">&nbsp;</span>
             <span>Entidad Federativa/Estado/Provincia</span>
         </div>
         <div class="d-inline-block w-15" style="position: relative">

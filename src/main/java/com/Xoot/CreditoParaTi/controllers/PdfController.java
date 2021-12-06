@@ -1093,7 +1093,10 @@ public class PdfController {
                         property = creditID.getProperty();
                     }
 
+
+                    Integer propertyState = Integer.parseInt(property.getState().trim())+1;
                     context.setVariable("property",property);
+                    context.setVariable("propertyState",propertyState);
 
                     String Name = creditID.getCustomer().getName();
                     String lastName = creditID.getCustomer().getPaternalLastName();
