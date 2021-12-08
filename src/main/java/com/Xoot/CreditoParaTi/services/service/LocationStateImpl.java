@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ILocationStateService;
-import com.Xoot.CreditoParaTi.entity.LocationState;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
+import com.Xoot.CreditoParaTi.entity.app.LocationState;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationStateDao;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service

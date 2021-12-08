@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserBoardDTO;
-import com.Xoot.CreditoParaTi.entity.Usuario;
-import org.springframework.data.repository.query.Param;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
 
 public interface IUserService {
 

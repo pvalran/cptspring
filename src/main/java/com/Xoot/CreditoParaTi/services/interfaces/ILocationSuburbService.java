@@ -4,8 +4,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.LocationsSuburbDTO;
-import com.Xoot.CreditoParaTi.entity.LocationSuburb;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.Xoot.CreditoParaTi.entity.app.LocationSuburb;
 
 
 public interface ILocationSuburbService {

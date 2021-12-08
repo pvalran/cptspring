@@ -1,23 +1,21 @@
 package com.Xoot.CreditoParaTi.services.service;
 
-import com.Xoot.CreditoParaTi.entity.EconomicDependents;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerQuestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IFreeQuestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IMedicalQuestionnaireService;
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.AnswerQuestionnaire;
-import com.Xoot.CreditoParaTi.entity.FreeQuestionnaire;
-import com.Xoot.CreditoParaTi.entity.MedicalQuestionnaire;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IAnswerQuestionnaireDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IFreeQuestionnaireDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IMedicalQuestionnaireDao;
+import com.Xoot.CreditoParaTi.entity.app.AnswerQuestionnaire;
+import com.Xoot.CreditoParaTi.entity.app.FreeQuestionnaire;
+import com.Xoot.CreditoParaTi.entity.app.MedicalQuestionnaire;
+import com.Xoot.CreditoParaTi.repositories.app.IAnswerQuestionnaireDao;
+import com.Xoot.CreditoParaTi.repositories.app.IFreeQuestionnaireDao;
+import com.Xoot.CreditoParaTi.repositories.app.IMedicalQuestionnaireDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;

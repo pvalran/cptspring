@@ -4,20 +4,20 @@ import java.util.Date;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ICreditApplicationService;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
 import com.Xoot.CreditoParaTi.dto.CreditApplicationDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentTypeService;
-import com.Xoot.CreditoParaTi.entity.Document;
-import com.Xoot.CreditoParaTi.entity.DocumentType;
+import com.Xoot.CreditoParaTi.entity.app.Document;
+import com.Xoot.CreditoParaTi.entity.app.DocumentType;
 import com.Xoot.CreditoParaTi.dto.DocumentDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentDao;
 
 @Service
 public class DocumentImpl implements IDocumentService {

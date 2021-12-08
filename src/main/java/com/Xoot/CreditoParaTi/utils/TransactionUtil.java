@@ -2,14 +2,12 @@ package com.Xoot.CreditoParaTi.utils;
 
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.entity.transaction;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
+import com.Xoot.CreditoParaTi.entity.app.transaction;
+import com.Xoot.CreditoParaTi.repositories.app.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,15 +20,15 @@ public class TransactionUtil {
     public String message;
 
     @Autowired
-    private  ICustomerDao _customerDao;
+    private ICustomerDao _customerDao;
     @Autowired
-    private   ICustomerGenderDao _customerGenderDao;
+    private ICustomerGenderDao _customerGenderDao;
     @Autowired
-    private  ILocationStateDao _locationStateDao;
+    private ILocationStateDao _locationStateDao;
     @Autowired
-    private  ILocationSuburbDao _locationSuburbDao;
+    private ILocationSuburbDao _locationSuburbDao;
     @Autowired
-    private  ITransactionDao transactionDao;
+    private ITransactionDao transactionDao;
     @Autowired
     private  ICreditApplicationDao creditApplicationDao;
 

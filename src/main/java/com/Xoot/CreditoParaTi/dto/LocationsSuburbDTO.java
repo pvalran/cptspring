@@ -1,13 +1,5 @@
 package com.Xoot.CreditoParaTi.dto;
 
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
-import com.Xoot.CreditoParaTi.entity.LocationState;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class LocationsSuburbDTO {
     private Integer idSuburb;
     private String code;

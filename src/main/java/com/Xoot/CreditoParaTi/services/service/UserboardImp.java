@@ -2,8 +2,8 @@ package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserBoardDTO;
-import com.Xoot.CreditoParaTi.entity.Usuario;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IUserDao;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
+import com.Xoot.CreditoParaTi.repositories.app.IUserDao;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,18 +7,19 @@ import java.util.List;
 
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.dto.DocumentDTO;
-import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
-import com.Xoot.CreditoParaTi.entity.transaction;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
-import com.Xoot.CreditoParaTi.utils.DocumentUtil;
+import com.Xoot.CreditoParaTi.entity.app.AdditionalInformation;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.transaction;
+import com.Xoot.CreditoParaTi.entity.pima.PimaCustomer;
+import com.Xoot.CreditoParaTi.repositories.app.*;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaCustomerDao;
 import com.Xoot.CreditoParaTi.utils.TransactionUtil;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.Xoot.CreditoParaTi.entity.Customer;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
@@ -46,7 +47,8 @@ public class CustomerImpl implements ICustomerService {
 	@Autowired
 	private IAdditionalInformationDao additionalInformationDao;
 
-
+	@Autowired
+	private IPimaCustomerDao PimaCustomerDao;
 
 
 	@Autowired
@@ -246,7 +248,7 @@ public class CustomerImpl implements ICustomerService {
 	}
 
 	private Customer saveCustomer(Integer customer_flag, CustomerDTO customerDTO, Customer customer) {
-
+		PimaCustomer ObjPimaCustomer;
 		if (customerDTO != null) {
 			if (customerDTO.getName() != null && !customerDTO.getName().isEmpty()) {
 				customer.setName(customerDTO.getName());
@@ -295,10 +297,29 @@ public class CustomerImpl implements ICustomerService {
 		}
 
 		customer.setStatus_flag(customer_flag);
-
 		customer.setMdfd_on(new Date());
-
-		return _customerDao.save(customer);
+		Customer ObjCustomer = _customerDao.save(customer);
+		if (ObjCustomer != null) {
+			PimaCustomer pimaCustomerCredit = PimaCustomerDao.findByCreditId(customer.getCreditId());
+			if (pimaCustomerCredit == null) {
+				ObjPimaCustomer = PimaCustomerDao.save(modelMapper.map(customer, PimaCustomer.class));
+			} else {
+				Integer idPimaCustomer = pimaCustomerCredit.getIdCustomer();
+				modelMapper.getConfiguration().setSkipNullEnabled(true)
+						.setCollectionsMergeEnabled(false)
+						.setMatchingStrategy(MatchingStrategies.STRICT);
+				modelMapper.map(customer,pimaCustomerCredit);
+				pimaCustomerCredit.setIdCustomer(idPimaCustomer);
+				ObjPimaCustomer = PimaCustomerDao.save(pimaCustomerCredit);
+			}
+			if (ObjPimaCustomer == null){
+				_customerDao.delete(customer);
+				ObjCustomer = null;
+			}
+		} else {
+			ObjCustomer = null;
+		}
+		return ObjCustomer;
 	}
 
 	private boolean CheckDuplicatedCustomer(Integer id, Customer CustomerByCurp) {

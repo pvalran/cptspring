@@ -1,11 +1,10 @@
 package com.Xoot.CreditoParaTi.services.service;
 
-import com.Xoot.CreditoParaTi.entity.Reference;
 import com.Xoot.CreditoParaTi.services.interfaces.IEconomicDependientiesService;
 import com.Xoot.CreditoParaTi.dto.EconomicDependientiesDto;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.EconomicDependents;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IEconomicDependientiesDAO;
+import com.Xoot.CreditoParaTi.entity.app.EconomicDependents;
+import com.Xoot.CreditoParaTi.repositories.app.IEconomicDependientiesDAO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

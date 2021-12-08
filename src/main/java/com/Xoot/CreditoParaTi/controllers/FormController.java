@@ -1,25 +1,33 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.*;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
+import com.Xoot.CreditoParaTi.entity.app.Document;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentDao;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
+import com.google.gson.Gson;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,7 +94,7 @@ public class FormController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO FormCustomer(@PathVariable Integer id) {
         try {
-            return new ResponseDTO( modelMapper.map(customerService.findById(id),Customer.class),"Informacion de OCR",true);
+            return new ResponseDTO( modelMapper.map(customerService.findById(id), Customer.class),"Informacion de OCR",true);
         } catch (Exception e) {
             return new ResponseDTO(null, "Ocurrió un error al crear el cliente.", false);
         }
@@ -228,11 +236,27 @@ public class FormController {
     public ResponseDTO FormTransaction(@RequestBody TransactionDTO transactionDTO) {
         try {
             Integer userID;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             CreditApplication creditApplication = creditApplicationDao.FindByCreditUser(transactionDTO.getCreditApplication());
             if (creditApplication != null) {
                 userID = creditApplication.getUser();
             } else {
                 return new ResponseDTO(null, "El id del credito no existe", false);
+            }
+            try {
+                Path pathFile = this.root.resolve("LogTranstions.txt");
+                File filelog = pathFile.toFile();
+                Gson gjson = new Gson();
+                String jsonTransaction = gjson.toJson(transactionDTO);
+                String strDate = format.format(new Date());
+                jsonTransaction = "\n[" + strDate + "]: " + jsonTransaction;
+                FileWriter fileWriter = new FileWriter(filelog,true);
+                BufferedWriter bffWriter = new BufferedWriter(fileWriter);
+                bffWriter.write(jsonTransaction);
+                bffWriter.close();
+                fileWriter.close();
+            } catch (IOException ex) {
+
             }
             return transactionService.save(transactionDTO);
         } catch (Exception e) {

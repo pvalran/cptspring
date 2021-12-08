@@ -3,23 +3,29 @@ package com.Xoot.CreditoParaTi.services.service;
 import java.util.Date;
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.entity.pima.PimaCreditApplication;
+import com.Xoot.CreditoParaTi.entity.pima.PimaCustomer;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaCreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaCustomerDao;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ICreditApplicationService;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
-import com.Xoot.CreditoParaTi.entity.CreditApplicationProduct;
-import com.Xoot.CreditoParaTi.entity.CreditApplicationStatus;
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.entity.Usuario;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplicationProduct;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplicationStatus;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
 import com.Xoot.CreditoParaTi.dto.CreditApplicationDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationProductDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationStatusDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IUserDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationProductDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationStatusDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICustomerDao;
+import com.Xoot.CreditoParaTi.repositories.app.IUserDao;
 
 @Service
 public class CreditApplicationImpl implements ICreditApplicationService{
@@ -37,6 +43,15 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 	private ICustomerDao _customerDao;
 	@Autowired
 	private IUserDao _userDao;
+
+	@Autowired
+	private IPimaCreditApplicationDao PimaCreditApplicationDao;
+
+	@Autowired
+	private IPimaCustomerDao pimaCustomerDao;
+
+	@Autowired
+	private ModelMapper modelMapper;
 		
 	@Override
 	@Transactional(readOnly = true)
@@ -216,10 +231,40 @@ public class CreditApplicationImpl implements ICreditApplicationService{
 
 		creditApplication.setCreditId(creditApplicationDTO.getCreditId());
 		creditApplication.setStatus_flag(creditApplication_flag);
-
 		creditApplication.setMdfd_on(new Date());
-
-		return _creditApplicationDao.save(creditApplication);
+		CreditApplication ObjCredit = _creditApplicationDao.save(creditApplication);
+		if (ObjCredit != null) {
+			PimaCreditApplication PimaCredit = PimaCreditApplicationDao.FindByCreditUser(creditApplicationDTO.getCreditId());
+			if (PimaCredit != null) {
+				Integer PimaIdCredit = PimaCredit.getIdCreditAplication();
+				PimaCustomer pimaCustomer = pimaCustomerDao.findByCreditId(creditApplicationDTO.getCreditId());
+				if (pimaCustomer != null) {
+					modelMapper.getConfiguration().setSkipNullEnabled(true)
+							.setCollectionsMergeEnabled(false)
+							.setMatchingStrategy(MatchingStrategies.STRICT);
+					modelMapper.map(creditApplicationDTO, PimaCredit);
+					PimaCredit.setIdCreditAplication(PimaIdCredit);
+					PimaCredit.setCustomer(pimaCustomer.getIdCustomer());
+					PimaCreditApplication ObjPimaCredit = PimaCreditApplicationDao.save(PimaCredit);
+					if (ObjPimaCredit == null) {
+						_creditApplicationDao.delete(creditApplication);
+						ObjCredit = null;
+					}
+				} else {
+					ObjCredit = null;
+				}
+			} else {
+				PimaCredit = modelMapper.map(creditApplicationDTO, PimaCreditApplication.class);
+				PimaCreditApplication ObjPimaCredit = PimaCreditApplicationDao.save(PimaCredit);
+				if (ObjPimaCredit == null) {
+					_creditApplicationDao.delete(creditApplication);
+					ObjCredit = null;
+				}
+				ObjCredit = null;
+			}
+		} else {
+			ObjCredit = null;
+		}
+		return ObjCredit;
 	}
-
 }

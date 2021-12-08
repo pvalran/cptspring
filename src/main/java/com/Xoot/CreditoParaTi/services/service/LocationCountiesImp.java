@@ -1,8 +1,8 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ILocationCountiesService;
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
+import com.Xoot.CreditoParaTi.entity.app.LocationCounty;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationsCountiesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,13 +1,12 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.DocStatusMap;
-import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
+import com.Xoot.CreditoParaTi.entity.app.DocStatusMap;
+import com.Xoot.CreditoParaTi.entity.app.StatisticsTransaction;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;

@@ -1,15 +1,13 @@
 package com.Xoot.CreditoParaTi.utils;
 
-import com.Xoot.CreditoParaTi.entity.Document;
+import com.Xoot.CreditoParaTi.entity.app.Document;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.UUID;
 
 public class DocumentUtil {
     public DocumentUtil(){

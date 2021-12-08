@@ -1,7 +1,5 @@
 package com.Xoot.CreditoParaTi.dto;
 
-import com.Xoot.CreditoParaTi.entity.LocationState;
-
 public class LocationsCitiesDTO {
     private Integer idCity;
     private String code;

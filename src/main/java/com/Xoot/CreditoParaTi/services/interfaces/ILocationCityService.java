@@ -3,7 +3,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.LocationsCitiesDTO;
-import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.app.LocationCity;
 
 public interface ILocationCityService {
 		

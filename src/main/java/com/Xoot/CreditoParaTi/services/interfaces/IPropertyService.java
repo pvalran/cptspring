@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
-import com.Xoot.CreditoParaTi.entity.Property;
+import com.Xoot.CreditoParaTi.entity.app.Property;
 import com.Xoot.CreditoParaTi.dto.PropertyDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 

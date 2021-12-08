@@ -1,19 +1,18 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
-import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.entity.app.LocationCity;
+import com.Xoot.CreditoParaTi.entity.app.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.app.LocationState;
 import com.Xoot.CreditoParaTi.mapper.RfcDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
-import com.Xoot.CreditoParaTi.repositories.service.QueryData;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationCityDao;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationStateDao;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationsCountiesDao;
+import com.Xoot.CreditoParaTi.repositories.app.QueryData;
 import com.josketres.rfcfacil.Rfc;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,10 +21,8 @@ import java.lang.reflect.Type;
 
 import org.modelmapper.TypeToken;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
-import javax.sql.DataSource;
 
 
 @RestController

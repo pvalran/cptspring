@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
-import com.Xoot.CreditoParaTi.entity.Usuario;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
 
 import java.util.List;
 

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentTypeService;
-import com.Xoot.CreditoParaTi.entity.DocumentClass;
-import com.Xoot.CreditoParaTi.entity.DocumentType;
+import com.Xoot.CreditoParaTi.entity.app.DocumentClass;
+import com.Xoot.CreditoParaTi.entity.app.DocumentType;
 import com.Xoot.CreditoParaTi.dto.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentClassDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentTypeDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentClassDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentTypeDao;
 
 @Service
 public class DocumentTypeImpl implements IDocumentTypeService{

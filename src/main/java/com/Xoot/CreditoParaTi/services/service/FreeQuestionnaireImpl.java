@@ -1,10 +1,10 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IFreeQuestionnaireService;
-import com.Xoot.CreditoParaTi.entity.FreeQuestionnaire;
+import com.Xoot.CreditoParaTi.entity.app.FreeQuestionnaire;
 import com.Xoot.CreditoParaTi.dto.FreeQuestionnaireDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IFreeQuestionnaireDao;
+import com.Xoot.CreditoParaTi.repositories.app.IFreeQuestionnaireDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

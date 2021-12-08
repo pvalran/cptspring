@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IUserCategoryService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
-import com.Xoot.CreditoParaTi.entity.Usuario;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserDTO;
 

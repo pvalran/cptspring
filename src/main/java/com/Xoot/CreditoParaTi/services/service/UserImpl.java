@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.dto.SpouseDTO;
 import com.Xoot.CreditoParaTi.dto.UserBoardDTO;
-import com.Xoot.CreditoParaTi.entity.Spouse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
-import com.Xoot.CreditoParaTi.entity.Usuario;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IUserDao;
+import com.Xoot.CreditoParaTi.entity.app.Usuario;
+import com.Xoot.CreditoParaTi.repositories.app.IUserDao;
 
 @Service
 public class UserImpl  implements IUserService, UserDetailsService{

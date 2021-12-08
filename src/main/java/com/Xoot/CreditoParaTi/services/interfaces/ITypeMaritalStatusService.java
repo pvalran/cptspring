@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.TypeMaritalStatusDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.TypeMaritalStatus;
+import com.Xoot.CreditoParaTi.entity.app.TypeMaritalStatus;
 
 import java.util.List;
 

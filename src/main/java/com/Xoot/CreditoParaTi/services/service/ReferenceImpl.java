@@ -1,10 +1,10 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IReferenceService;
-import com.Xoot.CreditoParaTi.entity.Reference;
+import com.Xoot.CreditoParaTi.entity.app.Reference;
 import com.Xoot.CreditoParaTi.dto.ReferenceDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IReferenceDao;
+import com.Xoot.CreditoParaTi.repositories.app.IReferenceDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

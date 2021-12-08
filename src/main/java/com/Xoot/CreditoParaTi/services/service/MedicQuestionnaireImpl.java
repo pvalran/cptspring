@@ -1,10 +1,10 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IMedicalQuestionnaireService;
-import com.Xoot.CreditoParaTi.entity.MedicalQuestionnaire;
+import com.Xoot.CreditoParaTi.entity.app.MedicalQuestionnaire;
 import com.Xoot.CreditoParaTi.dto.MedicalQuestionnaireDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IMedicalQuestionnaireDao;
+import com.Xoot.CreditoParaTi.repositories.app.IMedicalQuestionnaireDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

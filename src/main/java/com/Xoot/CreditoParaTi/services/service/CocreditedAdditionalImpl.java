@@ -3,9 +3,9 @@ package com.Xoot.CreditoParaTi.services.service;
 import com.Xoot.CreditoParaTi.dto.CocreditedAdditionalDTO;
 
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.CocreditedAdditional;
+import com.Xoot.CreditoParaTi.entity.app.CocreditedAdditional;
 
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICocreditedAdditionalDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICocreditedAdditionalDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ICocreditedAdditionalService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
