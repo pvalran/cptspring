@@ -3,10 +3,8 @@ package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.BranchOfficeDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.BranchOffice;
-import com.Xoot.CreditoParaTi.entity.Property;
-import com.Xoot.CreditoParaTi.entity.transaction;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IBranchOfficeDao;
+import com.Xoot.CreditoParaTi.entity.pima.BranchOffice;
+import com.Xoot.CreditoParaTi.repositories.pima.IBranchOfficeDao;
 import com.Xoot.CreditoParaTi.services.interfaces.IBranchOfficeService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

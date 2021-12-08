@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentService;
-import com.Xoot.CreditoParaTi.entity.Document;
+import com.Xoot.CreditoParaTi.entity.app.Document;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentDao;
 
 @RestController
 @RequestMapping("/documents/file")

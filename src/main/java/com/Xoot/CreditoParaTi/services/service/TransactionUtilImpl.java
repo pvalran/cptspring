@@ -4,11 +4,12 @@ import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
 
 
-import com.Xoot.CreditoParaTi.dto.DetalleCredito;
-import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.entity.app.*;
+import com.Xoot.CreditoParaTi.entity.pima.Usuario;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.repositories.app.*;
+import com.Xoot.CreditoParaTi.repositories.pima.IUserDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionUtilService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

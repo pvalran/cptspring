@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.entity.Employee;
+import com.Xoot.CreditoParaTi.entity.pima.Employee;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.ICustomerService;
 import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;

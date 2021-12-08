@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.TypeReferenceDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.TypeReference;
+import com.Xoot.CreditoParaTi.entity.app.TypeReference;
 
 import java.util.List;
 

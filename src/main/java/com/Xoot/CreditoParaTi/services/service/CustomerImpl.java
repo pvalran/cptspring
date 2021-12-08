@@ -5,11 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
+import com.Xoot.CreditoParaTi.entity.pima.Employee;
+import com.Xoot.CreditoParaTi.entity.pima.PimaCustomer;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.repositories.app.*;
+import com.Xoot.CreditoParaTi.repositories.pima.IEmployeeDao;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaCustomerDao;
+import com.Xoot.CreditoParaTi.repositories.pima.IUserDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionUtilService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +50,10 @@ public class CustomerImpl implements ICustomerService {
 	private IUserDao userDao;
 	@Autowired
 	private ITransactionUtilService transactionUtil;
+
+	@Autowired
+	private IPimaCustomerDao PimaCustomerDao;
+
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -215,7 +226,7 @@ public class CustomerImpl implements ICustomerService {
 	}
 
 	private Customer saveCustomer(Integer customer_flag, CustomerDTO customerDTO, Customer customer) {
-
+		PimaCustomer ObjPimaCustomer;
 		if (customerDTO != null) {
 			if (customerDTO.getName() != null && !customerDTO.getName().isEmpty()) {
 				customer.setName(customerDTO.getName());
@@ -263,11 +274,31 @@ public class CustomerImpl implements ICustomerService {
 			}
 		}
 
+
 		customer.setStatus_flag(customer_flag);
-
 		customer.setMdfd_on(new Date());
-
-		return _customerDao.save(customer);
+		Customer ObjCustomer = _customerDao.save(customer);
+		if (ObjCustomer != null) {
+			PimaCustomer pimaCustomerCredit = PimaCustomerDao.findByCreditId(customer.getCreditId());
+			if (pimaCustomerCredit == null) {
+				ObjPimaCustomer = PimaCustomerDao.save(modelMapper.map(customer, PimaCustomer.class));
+			} else {
+				Integer idPimaCustomer = pimaCustomerCredit.getIdCustomer();
+				modelMapper.getConfiguration().setSkipNullEnabled(true)
+						.setCollectionsMergeEnabled(false)
+						.setMatchingStrategy(MatchingStrategies.STRICT);
+				modelMapper.map(customer,pimaCustomerCredit);
+				pimaCustomerCredit.setIdCustomer(idPimaCustomer);
+				ObjPimaCustomer = PimaCustomerDao.save(pimaCustomerCredit);
+			}
+			if (ObjPimaCustomer == null){
+				_customerDao.delete(customer);
+				ObjCustomer = null;
+			}
+		} else {
+			ObjCustomer = null;
+		}
+		return ObjCustomer;
 	}
 
 	private boolean CheckDuplicatedCustomer(Integer id, Customer CustomerByCurp) {

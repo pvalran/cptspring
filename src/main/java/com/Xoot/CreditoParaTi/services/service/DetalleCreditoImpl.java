@@ -1,11 +1,11 @@
 package com.Xoot.CreditoParaTi.services.service;
 
+import com.Xoot.CreditoParaTi.entity.app.*;
+import com.Xoot.CreditoParaTi.repositories.app.*;
 import com.Xoot.CreditoParaTi.services.interfaces.IAnswerMedicalquestionnaireService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.*;
 import com.Xoot.CreditoParaTi.mapper.DocStatusMap;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
 import com.Xoot.CreditoParaTi.utils.DocumentUtil;
 import org.hibernate.transform.Transformers;
 import org.modelmapper.ModelMapper;
@@ -14,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.lang.reflect.Type;
@@ -121,12 +119,12 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                     .setResultTransformer( Transformers.aliasToBean( DocumentDTO.class ) );
             List<DocumentDTO> docSpouse = qryDocSpouse.getResultList();
 
-            Query qryAdditional= em.createNativeQuery("select * from additional_information where number_request = :creditID limit 1",AdditionalInformation.class)
+            Query qryAdditional= em.createNativeQuery("select * from additional_information where number_request = :creditID limit 1", AdditionalInformation.class)
                     .setParameter("creditID",creditID);
             AdditionalInformation additionalInformation = (AdditionalInformation) qryAdditional.getResultList()
                     .stream().findFirst().orElse(null);
 
-            Query qrydependents= em.createNativeQuery("select * from economic_dependents where number_request = :creditID",EconomicDependents.class)
+            Query qrydependents= em.createNativeQuery("select * from economic_dependents where number_request = :creditID", EconomicDependents.class)
                     .setParameter("creditID",creditID);
             List<EconomicDependents> dependents = qrydependents.getResultList();
 
@@ -140,7 +138,7 @@ public class DetalleCreditoImpl implements IDetalleCredito {
             Work work = (Work) qryWork.getResultList()
                     .stream().findFirst().orElse(null);
 
-            Query qryReference = em.createNativeQuery("select * from reference where number_request = :creditID",Reference.class)
+            Query qryReference = em.createNativeQuery("select * from reference where number_request = :creditID", Reference.class)
                     .setParameter("creditID",creditID);
             List<Reference> references = qryReference.getResultList();
 
@@ -151,12 +149,12 @@ public class DetalleCreditoImpl implements IDetalleCredito {
 
             MedicalQuestionnaireAnswerDTO MedicalQuestion = answerMedicalDao.findByCreditID(creditID);
 
-            Query qryCocreditedCustomers= em.createNativeQuery("SELECT * FROM cocredited_customers where number_request = :creditID limit 1",CocreditedCustomers.class)
+            Query qryCocreditedCustomers= em.createNativeQuery("SELECT * FROM cocredited_customers where number_request = :creditID limit 1", CocreditedCustomers.class)
                     .setParameter("creditID",creditID);
             CocreditedCustomers cocreditedCustomers = (CocreditedCustomers) qryCocreditedCustomers.getResultList()
                     .stream().findFirst().orElse(null);
 
-            Query qryCocreditedAdditional= em.createNativeQuery("SELECT * FROM cocredited_additional where number_request = :creditID limit 1",CocreditedAdditional.class)
+            Query qryCocreditedAdditional= em.createNativeQuery("SELECT * FROM cocredited_additional where number_request = :creditID limit 1", CocreditedAdditional.class)
                     .setParameter("creditID",creditID);
             CocreditedAdditional cocreditedAdditional = (CocreditedAdditional) qryCocreditedAdditional.getResultList()
                     .stream().findFirst().orElse(null);

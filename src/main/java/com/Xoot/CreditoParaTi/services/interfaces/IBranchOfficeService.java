@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.BranchOfficeDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.BranchOffice;
+import com.Xoot.CreditoParaTi.entity.pima.BranchOffice;
 
 import java.util.List;
 

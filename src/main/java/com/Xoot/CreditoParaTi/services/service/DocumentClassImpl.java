@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentClassService;
-import com.Xoot.CreditoParaTi.entity.DocumentClass;
+import com.Xoot.CreditoParaTi.entity.app.DocumentClass;
 
 import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentClassDao;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentClassDao;
 
 @Service
 public class DocumentClassImpl implements IDocumentClassService{

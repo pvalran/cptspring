@@ -1,7 +1,7 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 
 import java.util.List;

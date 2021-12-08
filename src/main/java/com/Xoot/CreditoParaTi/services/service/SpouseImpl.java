@@ -1,13 +1,13 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.DocumentDTO;
-import com.Xoot.CreditoParaTi.entity.Document;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IDocumentDao;
+import com.Xoot.CreditoParaTi.entity.app.Document;
+import com.Xoot.CreditoParaTi.repositories.app.IDocumentDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ISpouseService;
-import com.Xoot.CreditoParaTi.entity.Spouse;
+import com.Xoot.CreditoParaTi.entity.app.Spouse;
 import com.Xoot.CreditoParaTi.dto.SpouseDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ISpouseDao;
+import com.Xoot.CreditoParaTi.repositories.app.ISpouseDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ICreditApplicationProductService;
 import com.Xoot.CreditoParaTi.services.interfaces.IDocumentTypeService;
-import com.Xoot.CreditoParaTi.entity.CreditApplicationProduct;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplicationProduct;
 import com.Xoot.CreditoParaTi.dto.CreditApplicationProductDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationProductDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationProductDao;
 
 @Service
 public class CreditApplicationProductImpl implements ICreditApplicationProductService {

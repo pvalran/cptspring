@@ -3,7 +3,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.EconomicDependientiesDto;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.EconomicDependents;
+import com.Xoot.CreditoParaTi.entity.app.EconomicDependents;
 
 import java.util.List;
 

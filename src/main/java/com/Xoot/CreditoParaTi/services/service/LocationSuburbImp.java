@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ILocationSuburbService;
-import com.Xoot.CreditoParaTi.entity.LocationSuburb;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationSuburbDao;
+import com.Xoot.CreditoParaTi.entity.app.LocationSuburb;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationSuburbDao;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service

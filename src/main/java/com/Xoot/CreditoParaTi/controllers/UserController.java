@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Xoot.CreditoParaTi.entity.Employee;
+import com.Xoot.CreditoParaTi.entity.pima.Employee;
 import com.Xoot.CreditoParaTi.mapper.Mail;
 import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;
 import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IUserCategoryService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
-import com.Xoot.CreditoParaTi.entity.Usuario;
+import com.Xoot.CreditoParaTi.entity.pima.Usuario;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserDTO;
 

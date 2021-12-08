@@ -1,6 +1,6 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
-import com.Xoot.CreditoParaTi.entity.AnswerQuestionnaire;
+import com.Xoot.CreditoParaTi.entity.app.AnswerQuestionnaire;
 import com.Xoot.CreditoParaTi.dto.AnswerQuestionnaireDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 

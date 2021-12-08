@@ -1,7 +1,7 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
+import com.Xoot.CreditoParaTi.entity.pima.StatisticsTransaction;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;

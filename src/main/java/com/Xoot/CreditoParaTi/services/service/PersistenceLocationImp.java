@@ -3,9 +3,9 @@ package com.Xoot.CreditoParaTi.services.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationState;
-import com.Xoot.CreditoParaTi.entity.LocationSuburb;
+import com.Xoot.CreditoParaTi.entity.app.LocationCity;
+import com.Xoot.CreditoParaTi.entity.app.LocationState;
+import com.Xoot.CreditoParaTi.entity.app.LocationSuburb;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.apache.xmlbeans.impl.piccolo.io.FileFormatException;
 import org.springframework.beans.factory.annotation.Autowired;

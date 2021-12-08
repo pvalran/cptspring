@@ -1,10 +1,10 @@
 package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IAdditionalInformationService;
-import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
+import com.Xoot.CreditoParaTi.entity.app.AdditionalInformation;
 import com.Xoot.CreditoParaTi.dto.AdditionalInformationDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IAdditionalInformationDao;
+import com.Xoot.CreditoParaTi.repositories.app.IAdditionalInformationDao;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

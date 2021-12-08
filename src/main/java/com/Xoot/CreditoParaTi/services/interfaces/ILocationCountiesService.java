@@ -1,7 +1,7 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 
 
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.app.LocationCounty;
 
 import java.util.List;
 

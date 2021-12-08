@@ -2,26 +2,19 @@ package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.UserBoardDTO;
-import com.Xoot.CreditoParaTi.entity.Employee;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IEmployeeDao;
+import com.Xoot.CreditoParaTi.entity.pima.Employee;
+import com.Xoot.CreditoParaTi.repositories.pima.IEmployeeDao;
 import com.Xoot.CreditoParaTi.services.interfaces.IEmployeeService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeImpl implements IEmployeeService {

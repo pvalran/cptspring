@@ -2,8 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import java.util.List;
 
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.entity.app.LocationState;
 
 public interface ILocationStateService {
 

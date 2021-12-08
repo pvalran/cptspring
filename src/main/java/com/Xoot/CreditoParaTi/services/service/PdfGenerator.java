@@ -3,20 +3,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.Xoot.CreditoParaTi.entity.AdditionalInformation;
-import com.Xoot.CreditoParaTi.entity.CreditApplication;
-import com.Xoot.CreditoParaTi.entity.Customer;
-import com.Xoot.CreditoParaTi.entity.transaction;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IAdditionalInformationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ITransactionDao;
+import com.Xoot.CreditoParaTi.entity.app.AdditionalInformation;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplication;
+import com.Xoot.CreditoParaTi.entity.app.Customer;
+import com.Xoot.CreditoParaTi.entity.app.transaction;
+import com.Xoot.CreditoParaTi.repositories.app.IAdditionalInformationDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICustomerDao;
+import com.Xoot.CreditoParaTi.repositories.app.ITransactionDao;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.itextpdf.html2pdf.ConverterProperties;
@@ -32,9 +31,6 @@ import org.thymeleaf.context.WebContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
-
-import java.io.*;
-import java.util.Objects;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 

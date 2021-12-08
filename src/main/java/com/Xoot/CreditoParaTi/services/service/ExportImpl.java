@@ -11,8 +11,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.entity.Employee;
-import com.Xoot.CreditoParaTi.entity.Usuario;
+import com.Xoot.CreditoParaTi.entity.pima.Usuario;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;

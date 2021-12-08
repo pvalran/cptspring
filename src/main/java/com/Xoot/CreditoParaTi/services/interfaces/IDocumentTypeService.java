@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import java.util.List;
 
-import com.Xoot.CreditoParaTi.entity.DocumentType;
+import com.Xoot.CreditoParaTi.entity.app.DocumentType;
 import com.Xoot.CreditoParaTi.dto.DocumentTypeDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 

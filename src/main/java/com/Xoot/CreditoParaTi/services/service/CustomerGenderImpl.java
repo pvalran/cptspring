@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ICustomerGenderService;
-import com.Xoot.CreditoParaTi.entity.CustomerGender;
+import com.Xoot.CreditoParaTi.entity.app.CustomerGender;
 import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICustomerGenderDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICustomerGenderDao;
 
 @Service
 public class CustomerGenderImpl implements ICustomerGenderService{

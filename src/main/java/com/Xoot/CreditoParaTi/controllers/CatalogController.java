@@ -1,13 +1,13 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.entity.Employee;
-import com.Xoot.CreditoParaTi.entity.LocationCity;
-import com.Xoot.CreditoParaTi.entity.LocationCounty;
-import com.Xoot.CreditoParaTi.entity.LocationState;
+import com.Xoot.CreditoParaTi.entity.pima.Employee;
+import com.Xoot.CreditoParaTi.entity.app.LocationCity;
+import com.Xoot.CreditoParaTi.entity.app.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.app.LocationState;
 import com.Xoot.CreditoParaTi.mapper.RfcDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationCityDao;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationStateDao;
+import com.Xoot.CreditoParaTi.repositories.app.ILocationsCountiesDao;
 import com.josketres.rfcfacil.Rfc;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.services.interfaces.*;

@@ -1,7 +1,7 @@
 package com.Xoot.CreditoParaTi.services.interfaces;
 import java.util.List;
 
-import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
+import com.Xoot.CreditoParaTi.entity.pima.UsuarioCategory;
 import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 

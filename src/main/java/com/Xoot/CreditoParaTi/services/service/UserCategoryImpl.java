@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.IUserCategoryService;
-import com.Xoot.CreditoParaTi.entity.UsuarioCategory;
+import com.Xoot.CreditoParaTi.entity.pima.UsuarioCategory;
 import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.IUserCategoryDao;
+import com.Xoot.CreditoParaTi.repositories.pima.IUserCategoryDao;
 
 
 @Service

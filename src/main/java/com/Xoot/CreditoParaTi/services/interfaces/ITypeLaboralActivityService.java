@@ -2,7 +2,7 @@ package com.Xoot.CreditoParaTi.services.interfaces;
 
 import com.Xoot.CreditoParaTi.dto.TypeLaboralActivityDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.entity.TypeLaboralActivity;
+import com.Xoot.CreditoParaTi.entity.app.TypeLaboralActivity;
 
 import java.util.List;
 

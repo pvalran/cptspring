@@ -2,9 +2,13 @@ package com.Xoot.CreditoParaTi.services.service;
 
 import com.Xoot.CreditoParaTi.dto.CustomerDTO;
 import com.Xoot.CreditoParaTi.dto.CustomerTransactionDTO;
-import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.entity.app.*;
+import com.Xoot.CreditoParaTi.entity.pima.PimaTransaction;
+import com.Xoot.CreditoParaTi.entity.pima.Usuario;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.repositories.app.*;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaTransactionDao;
+import com.Xoot.CreditoParaTi.repositories.pima.IUserDao;
 import com.Xoot.CreditoParaTi.services.interfaces.ITransactionService;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
 import com.Xoot.CreditoParaTi.dto.TransactionDTO;
@@ -48,6 +52,9 @@ public class TransactionImpl implements ITransactionService {
     ICocreditedAdditionalDao cocreditedAdditionalDao;
 
     @Autowired
+    IPimaTransactionDao PimaTransactionDao;
+
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
@@ -72,6 +79,8 @@ public class TransactionImpl implements ITransactionService {
         LinkedTreeMap transCode = ObjJson.fromJson(transactionDTO.getTransactionCode(), LinkedTreeMap.class);
         switch (transactionDTO.getTransactionType()){
             case 1:
+            case 4:
+            case 7:
                 if (transCode.containsKey("error")) {
                     status = 2;
                 } else {
@@ -79,15 +88,26 @@ public class TransactionImpl implements ITransactionService {
                 }
                 break;
             case 2:
-                if (transCode.get("estatus").toString().toLowerCase().equals("ok") ) {
-                    status = 1;
+            case 5:
+                if (transCode.containsKey("estatus")) {
+                    if (transCode.get("estatus").toString().toLowerCase().equals("ok")) {
+                        status = 1;
+                    } else {
+                        status = 2;
+                    }
                 } else {
                     status = 2;
                 }
                 break;
             case 3:
-                if (transCode.get("estatus").toString().toLowerCase().equals("ok") ) {
-                    status = 1;
+            case 6:
+            case 8:
+                if (transCode.containsKey("estatus")) {
+                    if (transCode.get("estatus").toString().toLowerCase().equals("ok")) {
+                        status = 1;
+                    } else {
+                        status = 2;
+                    }
                 } else {
                     status = 2;
                 }
@@ -96,7 +116,13 @@ public class TransactionImpl implements ITransactionService {
         transactionDTO.setTransactionStatus(status);
         transaction ObjTrans = transactionDao.save(modelMapper.map(transactionDTO,transaction.class));
         if (ObjTrans != null) {
-            return  new ResponseDTO(ObjTrans,"Registro creado",true);
+            PimaTransaction PimaTransPima = PimaTransactionDao.save(modelMapper.map(transactionDTO, PimaTransaction.class));
+            if (PimaTransPima != null) {
+                return new ResponseDTO(ObjTrans, "Registro creado", true);
+            } else {
+                transactionDao.delete(ObjTrans);
+                return  new ResponseDTO(ObjTrans,"Error en registro",false);
+            }
         }
         return  new ResponseDTO(ObjTrans,"Error en registro",false);
     }

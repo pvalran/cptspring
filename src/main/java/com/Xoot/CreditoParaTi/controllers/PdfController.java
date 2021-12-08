@@ -1,9 +1,12 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
-import com.Xoot.CreditoParaTi.entity.*;
+import com.Xoot.CreditoParaTi.entity.app.*;
+import com.Xoot.CreditoParaTi.entity.pima.PimaCreditApplication;
+import com.Xoot.CreditoParaTi.entity.pima.Usuario;
 import com.Xoot.CreditoParaTi.mapper.Mail;
-import com.Xoot.CreditoParaTi.repositories.interfaces.*;
+import com.Xoot.CreditoParaTi.repositories.app.*;
+import com.Xoot.CreditoParaTi.repositories.pima.IPimaCreditApplicationDao;
 import com.Xoot.CreditoParaTi.services.interfaces.IDetalleCredito;
 import com.Xoot.CreditoParaTi.services.interfaces.IMailService;
 import com.Xoot.CreditoParaTi.services.interfaces.IUserService;
@@ -26,12 +29,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
 
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +84,9 @@ public class PdfController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IPimaCreditApplicationDao pimaCreditApplicationDao;
 
 
     private String templateName = "templatePDF.html";
@@ -241,7 +244,8 @@ public class PdfController {
         HashMap<Integer, String> direccionWorkCoacreditado = new HashMap<Integer, String>();
 
         try {
-            CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            //CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            PimaCreditApplication userCredit = pimaCreditApplicationDao.FindByCreditUser(creditId);
             countryOfBirth.put(0,"México");
             countryOfBirth.put(1,"Otro");
 
@@ -740,7 +744,9 @@ public class PdfController {
         HashMap<Integer, String> direccionWorkCoacreditado = new HashMap<Integer, String>();
 
         try {
-            CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            //CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
+            PimaCreditApplication userCredit = pimaCreditApplicationDao.FindByCreditUser(creditId);
+
             countryOfBirth.put(0,"México");
             countryOfBirth.put(1,"Otro");
 

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.Xoot.CreditoParaTi.services.interfaces.ICreditApplicationStatusService;
-import com.Xoot.CreditoParaTi.entity.CreditApplicationStatus;
+import com.Xoot.CreditoParaTi.entity.app.CreditApplicationStatus;
 import com.Xoot.CreditoParaTi.dto.CatalogoDTO;
 import com.Xoot.CreditoParaTi.dto.ResponseDTO;
-import com.Xoot.CreditoParaTi.repositories.interfaces.ICreditApplicationStatusDao;
+import com.Xoot.CreditoParaTi.repositories.app.ICreditApplicationStatusDao;
 
 @Service
 public class CreditApplicationStatusImpl implements ICreditApplicationStatusService {
