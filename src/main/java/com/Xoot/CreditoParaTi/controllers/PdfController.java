@@ -1075,16 +1075,20 @@ public class PdfController {
                         context.setVariable("lstFreeAnswer", medical.getFreeQuestionnairies());
                     }
 
-                    Double weight = (Double) medicquestionnario.get("weight");
-                    Double height = (Double) medicquestionnario.get("height");
+                    Double weight = Double.parseDouble(medicquestionnario.get("weight").toString());
+                    Double height = Double.parseDouble(medicquestionnario.get("height").toString());
 
 
                     if ( weight > 0){
                         medicquestionnario.put("weight",weight+40);
+                    } else {
+                        medicquestionnario.put("weight",0);
                     }
 
                     if ( height > 0){
                         medicquestionnario.put("height",height+60);
+                    } else {
+                        medicquestionnario.put("height",0);
                     }
 
                     context.setVariable("medicquestionnario", medicquestionnario);
@@ -1093,8 +1097,11 @@ public class PdfController {
                         property = creditID.getProperty();
                     }
 
+                    Integer propertyState = -1;
+                    if (property.getState() != null){
+                        propertyState = Integer.parseInt(property.getState().trim())+1;
+                    }
 
-                    Integer propertyState = Integer.parseInt(property.getState().trim())+1;
                     context.setVariable("property",property);
                     context.setVariable("propertyState",propertyState);
 
