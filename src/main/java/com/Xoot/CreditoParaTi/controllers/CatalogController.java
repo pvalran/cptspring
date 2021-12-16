@@ -1,13 +1,12 @@
 package com.Xoot.CreditoParaTi.controllers;
 
-import com.Xoot.CreditoParaTi.entity.pima.Employee;
-import com.Xoot.CreditoParaTi.entity.app.LocationCity;
-import com.Xoot.CreditoParaTi.entity.app.LocationCounty;
-import com.Xoot.CreditoParaTi.entity.app.LocationState;
+import com.Xoot.CreditoParaTi.entity.LocationCity;
+import com.Xoot.CreditoParaTi.entity.LocationCounty;
+import com.Xoot.CreditoParaTi.entity.LocationState;
 import com.Xoot.CreditoParaTi.mapper.RfcDTO;
-import com.Xoot.CreditoParaTi.repositories.app.ILocationCityDao;
-import com.Xoot.CreditoParaTi.repositories.app.ILocationStateDao;
-import com.Xoot.CreditoParaTi.repositories.app.ILocationsCountiesDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
+import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
 import com.josketres.rfcfacil.Rfc;
 import com.Xoot.CreditoParaTi.dto.*;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
@@ -67,8 +66,7 @@ public class CatalogController {
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
-	@Autowired
-	private IEmployeeService employeeService;
+
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -228,31 +226,11 @@ public class CatalogController {
 		}
 	}
 
-	@GetMapping("/{zipcode}")
+	@GetMapping("/getDirectionToCp/{zipcode}")
 	public ResponseDTO getDirectionToCp(@PathVariable Integer zipcode) {
 		try {
 			List<LocationsSuburbDTO> suburbDTOS = locationSuburbService.getDirectionToCp(zipcode);
-			for (LocationsSuburbDTO suburbDTO:suburbDTOS){
-				Integer stateId = Integer.valueOf(suburbDTO.getStateCode());
-				LocationState state = stateDao.findById(stateId).orElse(null);
-				if (state != null) {
-					suburbDTO.setState(state.getName());
-				}
 
-				if (suburbDTO.getCountiesId() != null) {
-					LocationCounty county = countiesDao.findById(suburbDTO.getCountiesId()).orElse(null);
-					if (county != null) {
-						suburbDTO.setCounty(county.getName());
-					}
-				}
-
-				if (suburbDTO.getCityId()!= null) {
-					LocationCity city = cityDao.findById(suburbDTO.getCityId()).orElse(null);
-					if (city != null) {
-						suburbDTO.setCity(city.getName());
-					}
-				}
-			}
 			return new ResponseDTO(suburbDTOS, "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -296,41 +274,5 @@ public class CatalogController {
 		}
 	}
 
-	@GetMapping("/getCustomersUser/{id}")
-	public ResponseDTO getCustomersUser(@PathVariable Integer id) {
-		Object data;
-		try {
-			Employee employee = employeeService.findById(id);
-			if (employee.getProfileId().equals("2")) {
-				data = customerService.getByCustomerTransaction(employee.getIdUser());
-			} else {
-				data = customerService.getByCustomerTransaction();
-			}
-			return new ResponseDTO(data, "Exito", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
-		}
-	}
 
-	@GetMapping("/getLeafletUser/{id}")
-	public ResponseDTO getLeafletUser(@PathVariable Integer id) {
-		try {
-			Employee employee = employeeService.findById(id);
-			Type listType = new TypeToken<List<UserBoardDTO>>() {}.getType();
-			return new ResponseDTO(modelMapper.map(userService.findLeafletUser(employee.getUsername()),listType), "Exito", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
-		}
-	}
-	@GetMapping("/getSolicitud/{id}")
-	public ResponseDTO getSolicitud(@PathVariable Integer id) {
-		try {
-			return new ResponseDTO(detalleCreditoService.findBySolictud(id), "Exito", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseDTO(null, "Catalogo no encontrado .", false);
-		}
-	}
 }

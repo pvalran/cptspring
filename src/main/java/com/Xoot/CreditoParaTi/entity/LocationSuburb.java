@@ -1,20 +1,51 @@
 package com.Xoot.CreditoParaTi.entity;
 
+import com.Xoot.CreditoParaTi.dto.LocationsSuburbDTO;
+
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+@NamedNativeQuery(name = "LocationSuburb.getDirectionToCp",
+		query = "SELECT ls.id as idSuburb," +
+				"ls.code as code," +
+				"ls.name as name," +
+				"ls.zip_code as zipCode," +
+				"ls.type_suburb as typeSuburb," +
+				"ls.counties_id as countiesId," +
+				"ls.city_id  as cityId," +
+				"ls.state_code  as stateCode," +
+				"ls.counties_code  as countiesCode," +
+				"ls.cities_code as citiesCode," +
+				"lc.name as city,lcs.name  as county, ls2.name as state FROM locations_suburb ls " +
+				"left join locations_cities lc " +
+				"on lc.code = ls.cities_code " +
+				"and lc.counties_code = ls.counties_code " +
+				"and lc.state_code  = ls.state_code " +
+				"left join locations_counties lcs " +
+				"on lcs.code = ls.counties_code " +
+				"and lcs.state_id  = ls.state_code " +
+				"left join locations_states ls2 " +
+				"on ls2.id = ls.state_code where zip_code = :zipcode ORDER by ls.name ",
+		resultSetMapping = "Mapping.LocationsSuburbDTO")
+@SqlResultSetMapping(name = "Mapping.LocationsSuburbDTO",
+		classes = @ConstructorResult(targetClass = LocationsSuburbDTO.class,
+				columns = {
+						@ColumnResult(name = "idSuburb"),
+						@ColumnResult(name = "code"),
+						@ColumnResult(name = "name"),
+						@ColumnResult(name = "zipCode"),
+						@ColumnResult(name = "typeSuburb"),
+						@ColumnResult(name = "countiesId"),
+						@ColumnResult(name = "cityId"),
+						@ColumnResult(name = "stateCode"),
+						@ColumnResult(name = "countiesCode"),
+						@ColumnResult(name = "citiesCode"),
+						@ColumnResult(name = "state"),
+						@ColumnResult(name = "county"),
+						@ColumnResult(name = "city")
+				}))
 @Entity
 @Table(name = "locations_suburb")
 public class LocationSuburb implements Serializable {
@@ -52,6 +83,7 @@ public class LocationSuburb implements Serializable {
 
 	@Column(name = "status_flag")
 	private Integer status_flag;
+
 
 	@Column(name = "crtd_on")
 	@Temporal(TemporalType.TIMESTAMP)

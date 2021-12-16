@@ -6,9 +6,12 @@ import com.Xoot.CreditoParaTi.entity.LocationState;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationCityDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationStateDao;
 import com.Xoot.CreditoParaTi.repositories.interfaces.ILocationsCountiesDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class LocationsSuburbDTO {
+
     private Integer idSuburb;
     private String code;
     private String name;
@@ -22,6 +25,37 @@ public class LocationsSuburbDTO {
     private String state;
     private String county;
     private String city;
+
+    public LocationsSuburbDTO(
+         Integer idSuburb,
+         String code,
+         String name,
+         String zipCode,
+         String typeSuburb,
+         Integer countiesId,
+         Integer cityId,
+         String stateCode,
+         String countiesCode,
+         String citiesCode,
+         String state,
+         String county,
+         String city
+    ){
+        this.idSuburb = idSuburb;
+        this.code = code;
+        this.name = name;
+        this.zipCode = zipCode;
+        this.typeSuburb = typeSuburb;
+        this.countiesId = countiesId;
+        this.cityId = cityId;
+        this.stateCode = stateCode;
+        this.countiesCode = countiesCode;
+        this.citiesCode = citiesCode;
+        this.state = state;
+        this.county = county;
+        this.city = city;
+    }
+
 
     public Integer getIdSuburb() {
         return idSuburb;

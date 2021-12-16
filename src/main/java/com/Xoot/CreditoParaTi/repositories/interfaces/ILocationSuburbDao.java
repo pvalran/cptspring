@@ -2,6 +2,7 @@ package com.Xoot.CreditoParaTi.repositories.interfaces;
 
 import java.util.List;
 
+import com.Xoot.CreditoParaTi.dto.LocationsSuburbDTO;
 import com.Xoot.CreditoParaTi.entity.LocationCity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -34,6 +35,6 @@ public interface ILocationSuburbDao
 			" and counties_code = :counties and cities_code = :city")
 	List<LocationSuburb> getSuburbToCity(@Param("state") String state, @Param("counties") String counties, @Param("city") String city);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM locations_suburb where zip_code = :zipcode")
-	List<LocationSuburb> getDirectionToCp(@Param("zipcode") Integer zipcode);
+	@Query(nativeQuery = true)
+	List<LocationsSuburbDTO> getDirectionToCp(@Param("zipcode") Integer zipcode);
 }

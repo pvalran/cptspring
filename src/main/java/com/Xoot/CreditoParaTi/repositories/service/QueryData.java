@@ -12,8 +12,7 @@ import java.util.List;
 
 
 @Repository
-public class QueryData {
-    private final static Logger LOGGER = Logger.getLogger(QueryData.class.getName());
+public class QueryData { private final static Logger LOGGER = Logger.getLogger(QueryData.class.getName());
     private final EntityManager entityManager;
 
     @SqlResultSetMapping(
@@ -50,4 +49,5 @@ public class QueryData {
         List<DocStatusMap> docStatusMap =  query.getResultList();
         return docStatusMap;
     }
+
 }

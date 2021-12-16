@@ -49,8 +49,8 @@ public class LocationSuburbImp implements ILocationSuburbService {
 	@Transactional(readOnly = true)
 	public List<LocationsSuburbDTO> getDirectionToCp(Integer zipcode) {
 		Type listType = new TypeToken<List<LocationsSuburbDTO>>() {}.getType();
-		List<LocationSuburb> locationsSuburb = iLocationSuburbDao.getDirectionToCp(zipcode);
-		List<LocationsSuburbDTO> locationsSuburbDTO = modelMapper.map(locationsSuburb,listType);
+		List<LocationsSuburbDTO> locationsSuburbDTO = iLocationSuburbDao.getDirectionToCp(zipcode);
+		//List<LocationsSuburbDTO> locationsSuburbDTO = modelMapper.map(locationsSuburb,listType);
 		return locationsSuburbDTO;
 	}
 
