@@ -265,6 +265,11 @@ public class DetalleCreditoImpl implements IDetalleCredito {
                     solicitud = true;
                 }
             }
+            if (solicitud == true) {
+                creditApplication.setStatus(4);
+                creditApplicationDao.save(creditApplication);
+            }
+
             detalleCredito.setDocumentStatus(items);
             detalleCredito.setSolicitud(solicitud);
             em.close();
