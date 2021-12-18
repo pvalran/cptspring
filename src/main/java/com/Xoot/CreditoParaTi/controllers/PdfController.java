@@ -677,7 +677,7 @@ public class PdfController {
                     prop.put("name", creditID.getCustomer().getName() +" " +creditID.getCustomer().getPaternalLastName() + " " + creditID.getCustomer().getMotherLastName());
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
+                    //mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
@@ -920,38 +920,12 @@ public class PdfController {
                     }
 
 
-                    if (creditID.getAdditionalies().getCivilState() == 0)
-                    {
-                        typeDependent.put(0, "");
-                        typeDependent.put(1, "Hijo(a)");
-                        typeDependent.put(2, "Primo(a)");
-                        typeDependent.put(3, "Tio(a)");
-                        typeDependent.put(4, "Otro(a)");
-                    } else if (creditID.getAdditionalies().getCivilState() == 1) {
-                        typeDependent.put(0, "");
-                        typeDependent.put(1, "Esposo(a)");
-                        typeDependent.put(2, "Hijo(a)");
-                        typeDependent.put(3, "Primo(a)");
-                        typeDependent.put(4, "Tio(a)");
-                        typeDependent.put(5, "Otro(a)");
-                    } else if (creditID.getAdditionalies().getCivilState() == 2) {
-                        typeDependent.put(0, "");
-                        typeDependent.put(1, "Concubino(a)");
-                        typeDependent.put(2, "Pareja");
-                        typeDependent.put(3, "Hijo(a)");
-                        typeDependent.put(4, "Primo(a)");
-                        typeDependent.put(5, "Tio(a)");
-                        typeDependent.put(6, "Otro(a)");
-                    } else {
-                        typeDependent.put(0, "");
-                        typeDependent.put(1, "Concubino(a)");
-                        typeDependent.put(2, "Pareja");
-                        typeDependent.put(3, "Esposo (a)");
-                        typeDependent.put(4, "Hijo(a)");
-                        typeDependent.put(5, "Primo(a)");
-                        typeDependent.put(6, "Tio(a)");
-                        typeDependent.put(7, "Otro(a)");
-                    }
+                    typeDependent.put(0, "");
+                    typeDependent.put(1, "Esposo(a)");
+                    typeDependent.put(2, "Hijo(a)");
+                    typeDependent.put(3, "Primo(a)");
+                    typeDependent.put(4, "Tio(a)");
+                    typeDependent.put(5, "Otro(a)");
 
                     context.setVariable("direccion",direccion);
                     context.setVariable("creditId", creditID);

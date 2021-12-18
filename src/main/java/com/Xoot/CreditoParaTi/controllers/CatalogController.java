@@ -136,6 +136,10 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
+				case "typedependent":
+					listType = new TypeToken<List<TypeDependentDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
+
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
