@@ -1864,7 +1864,8 @@
         <tbody>
         <tr>
             <td align="center" class="auto-style36" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">1</td>
-            <td colspan="2" style="border-style: solid; border-width: thin">Peso <span th:text="${medicquestionnario.get('weight')}"></span> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <span th:text="${medicquestionnario.get('height')}"></span> cm.</td>
+
+            <td colspan="2" style="border-style: solid; border-width: thin">Peso <span th:text="${medicquestionnario.get('weight') eq 0}? '' : ${medicquestionnario.get('weight')}"></span> kg.&nbsp;&nbsp;&nbsp;&nbsp; Estatura <span th:text="${medicquestionnario.get('height') eq 0} ? '' : ${medicquestionnario.get('height')}"></span> cm.</td>
         </tr>
 
         <tr>
@@ -1876,39 +1877,63 @@
                 <td style="border-style: solid; border-width: thin">a) Infarto, angina de pecho, trastornos de válvulas cardiacas, soplo y/o cualquier otro
                     <br>
                     problema cardíaco y/o padece o ha padecido de hipertensión o hipotensión arterial?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer1') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer1') != null}" th:text="${medicquestionnario.get('answer1') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">b) Convulsiones y/o epilepsias, derrame cerebral, esclerosis cualquier otro problema cerebral o del sistema nervioso?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer2') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer2') != null}" th:text="${medicquestionnario.get('answer2') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">c) Tumores malignos (cáncer), leucemia, melanoma o linfoma?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer3') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer3') != null}" th:text="${medicquestionnario.get('answer3') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">d) Cualquier enfermedad renal y/o trastorno hepático?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer4') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer4') != null}"  th:text="${medicquestionnario.get('answer4') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">e) Asma, enfisema pulmonar, tuberculosis y/o cualquier otra enfermedad pulmonar?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer5') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer5') != null}"  th:text="${medicquestionnario.get('answer5') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">f) SIDA, resultados positivos en la prueba de VIH, Lupus?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer6') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer6') != null}"  th:text="${medicquestionnario.get('answer6') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">g) Diabetes y/o por niveles elevados de azúcar en la sangre, enfermedades
                     <br>
                     tiroideas (excepto hipotiroidismo) y/o cualquier problema endocrino?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer7') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer7') != null}"  th:text="${medicquestionnario.get('answer7') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin">h) Trastornos de columna vertebral, enfermedades de los huesos (excepto<br>
                     fractura de extremidades), de oídos o de ojos (excepto miopía, astigmatismo<br>
                     o hipermetropía) o de la sangre?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer8') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer8') != null}"  th:text="${medicquestionnario.get('answer8') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">3</td>
@@ -1916,14 +1941,20 @@
                     programada alguna intervención quirúrgica u hospitalización o proyectada alguna cita<br>
                     para practicar pruebas médicas o ya le fueron practicadas para la detección o sospecha de<br>
                     alguna enfermedad de la que aún no tenga el diagnóstico exacto?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer9') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer9') != null}"  th:text="${medicquestionnario.get('answer9') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">4</td>
                 <td style="border-style: solid; border-width: thin">¿Tiene alguna enfermedad o limitación física (como la falta de un miembro o algún tipo de<br>
                     invalidez) que le impida o pudiera impedir en el futuro el desempeñar su actividad,<br>
                     profesión u ocupación actual?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span></td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer10') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer10') != null}"  th:text="${medicquestionnario.get('answer10') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span>
+                </td>
             </tr>
             <tr>
                 <td align="center" style="border-style: solid; border-width: thin; font-size: 12px; color: #FFFFFF; background-color: #ff0000; font-weight: bold;">5</td>
@@ -1931,7 +1962,9 @@
                     algún motivo está usted expuesto o maneja: explosivos, armas de fuego, material biológico<br>
                     de riesgo, sustancias químicas peligrosas, maquinaria pesada, maquinaria ligera de riesgo,<br>
                     radiaciones, alto voltaje, riesgo por altura, transporte en motocicleta o actividades aéreas?</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span><br>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer11') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer11') != null}"  th:text="${medicquestionnario.get('answer11') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span><br>
                     Especifique:</td>
             </tr>
             <tr>
@@ -1940,8 +1973,11 @@
                     en los próximos 12 meses? Se consideran deportes de alto riesgo: carreras de autos,<br>
                     motociclismo, motonáutica, alpinismo, buceo, espeleología, montañismo, paracaidismo,<br>
                     vuelo de ala delta, esquí en agua o nieve, rafting o cualquier similar.</td>
-                <td align="center" style="border-style: solid; border-width: thin"><span th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span><br>
-                    Especifique:</td>
+                <td align="center" style="border-style: solid; border-width: thin">
+                    <span th:if="${medicquestionnario.get('answer12') == null}">Si (  ) No ( )</span>
+                    <span th:if="${medicquestionnario.get('answer12') != null}"  th:text="${medicquestionnario.get('answer12') eq 0}? 'Si (X) No ( )' : 'Si ( ) No (X)'"></span><br>
+                    Especifique:
+                </td>
             </tr>
             <tr>
                 <td style="border-style: solid; border-width: thin;" colspan="3">En caso afirmativo para cualquiera de las preguntas 2 a 4, proporcionar la siguiente información:</td>
