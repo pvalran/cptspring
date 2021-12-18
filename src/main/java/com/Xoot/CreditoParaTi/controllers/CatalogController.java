@@ -63,6 +63,8 @@ public class CatalogController {
 	@Autowired
 	private ITypeReferenceService TypeReferenceService;
 	@Autowired
+	private ITypeDependentService TypeDependentService;
+	@Autowired
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
@@ -134,12 +136,29 @@ public class CatalogController {
 				case "typereference":
 					listType = new TypeToken<List<TypeReferenceDTO>>() {}.getType();
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
+				case "typedependent":
+					listType = new TypeToken<List<TypeDependentDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeDependentService.findAllActive(),listType), "Exito", true);
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		}
 	}
+
+	@GetMapping("/getDependentByCivil/{civil}")
+	public ResponseDTO getDependentByCivil(@PathVariable Integer civil) {
+		try {
+			Type listType;
+			listType = new TypeToken<List<TypeDependentDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(TypeDependentService.findByCivil(civil),listType), "Exito", true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, e.getMessage(), false);
+		}
+	}
+
 
 	@GetMapping("/getDetalleCredito/{id}")
 	public ResponseDTO getDetalleCredito(@PathVariable Integer id) {
