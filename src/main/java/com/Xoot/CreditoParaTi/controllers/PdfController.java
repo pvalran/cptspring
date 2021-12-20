@@ -245,43 +245,7 @@ public class PdfController {
 
         try {
             CreditApplication userCredit = creditApplicationDao.FindByCreditUser(creditId);
-            countryOfBirth.put(0,"México");
-            countryOfBirth.put(1,"Otro");
 
-            countryOfResidence.put(0,"México");
-            countryOfResidence.put(1,"Otro");
-
-            direccion.put(0,"");
-            direccion.put(1,"");
-            direccion.put(2,"");
-            direccion.put(3,"");
-            direccion.put(4,"");
-            direccion.put(5,"");
-            direccion.put(6,"");
-
-            direccionWork.put(0,"");
-            direccionWork.put(1,"");
-            direccionWork.put(2,"");
-            direccionWork.put(3,"");
-            direccionWork.put(4,"");
-            direccionWork.put(5,"");
-            direccionWork.put(6,"");
-
-            direccionCoacreditado.put(0,"");
-            direccionCoacreditado.put(1,"");
-            direccionCoacreditado.put(2,"");
-            direccionCoacreditado.put(3,"");
-            direccionCoacreditado.put(4,"");
-            direccionCoacreditado.put(5,"");
-            direccionCoacreditado.put(6,"");
-
-            direccionWorkCoacreditado.put(0,"");
-            direccionWorkCoacreditado.put(1,"");
-            direccionWorkCoacreditado.put(2,"");
-            direccionWorkCoacreditado.put(3,"");
-            direccionWorkCoacreditado.put(4,"");
-            direccionWorkCoacreditado.put(5,"");
-            direccionWorkCoacreditado.put(6,"");
 
             if (userCredit == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -344,7 +308,7 @@ public class PdfController {
                     prop.put("name", customerName +" " +customerPaternal + " " + customerMaternal);
                     HashMap<String, byte[]> file = new HashMap<String, byte[]>();
                     file.put("solicitud_" + creditId + ".pdf", bytes);
-                    //mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
+                    mailService.sendEmailTemplete(mail, prop, "emailSolicitud", file);
                     resp.put("data", "");
                     resp.put("message", "Correo enviado");
                     resp.put("result", true);
@@ -765,11 +729,13 @@ public class PdfController {
                     }
                     String firmaObligado = "";
                     Integer coacreditado = 1;
-                    if (creditID.getAdditionalies().getCivilState() == 1) {
-                        if (creditID.getAdditionalies().getIncomeSpouse().equals("false")) {
-                            firmaObligado = firmaCoyunge;
-                            coacreditado = 0;
-                            firmaCoacreditado = "";
+                    if (creditID.getAdditionalies().getCivilState() != null){
+                        if (creditID.getAdditionalies().getCivilState() == 1) {
+                            if (creditID.getAdditionalies().getIncomeSpouse().equals("false")) {
+                                firmaObligado = firmaCoyunge;
+                                coacreditado = 0;
+                                firmaCoacreditado = "";
+                            }
                         }
                     }
 
