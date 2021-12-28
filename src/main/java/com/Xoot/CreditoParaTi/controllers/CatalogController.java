@@ -68,13 +68,14 @@ public class CatalogController {
 	@Autowired
 	private ITypeReferenceService TypeReferenceService;
 	@Autowired
+	private ITypeDependentService TypeDependentService;
+	@Autowired
 	private IDetalleCredito detalleCreditoService;
 	@Autowired
 	private ICustomerService customerService;
 
 	@Autowired
-	private ModelMapper modelMapper;
-
+	private IUserService userService;
 	@Autowired
 	private ILocationStateDao stateDao;
 
@@ -83,12 +84,14 @@ public class CatalogController {
 
 	@Autowired
 	private ILocationCityDao cityDao;
-
 	@Autowired
 	private QueryData queryData;
 
 	@PersistenceUnit
 	private EntityManagerFactory emf;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 
 	@GetMapping("/catalogy/{catalog}")
@@ -149,11 +152,27 @@ public class CatalogController {
 					return new ResponseDTO(modelMapper.map(TypeReferenceService.findAllActive(),listType), "Exito", true);
 				case "customerstransacion":
 					return customerService.getByCustomerTransaction();
+				case "typedependent":
+					listType = new TypeToken<List<TypeDependentDTO>>() {}.getType();
+					return new ResponseDTO(modelMapper.map(TypeDependentService.findAllActive(),listType), "Exito", true);
 
 			}
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
 		} catch (Exception e) {
 			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
+
+	@GetMapping("/getDependentByCivil/{civil}")
+	public ResponseDTO getDependentByCivil(@PathVariable Integer civil) {
+		try {
+			Type listType;
+			listType = new TypeToken<List<TypeDependentDTO>>() {}.getType();
+			return new ResponseDTO(modelMapper.map(TypeDependentService.findByCivil(civil),listType), "Exito", true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, e.getMessage(), false);
 		}
 	}
 
@@ -246,27 +265,6 @@ public class CatalogController {
 	public ResponseDTO getDirectionToCp(@PathVariable Integer zipcode) {
 		try {
 			List<LocationsSuburbDTO> suburbDTOS = locationSuburbService.getDirectionToCp(zipcode);
-			for (LocationsSuburbDTO suburbDTO:suburbDTOS){
-				Integer stateId = Integer.valueOf(suburbDTO.getStateCode());
-				LocationState state = stateDao.findById(stateId).orElse(null);
-				if (state != null) {
-					suburbDTO.setState(state.getName());
-				}
-
-				if (suburbDTO.getCountiesId() != null) {
-					LocationCounty county = countiesDao.findById(suburbDTO.getCountiesId()).orElse(null);
-					if (county != null) {
-						suburbDTO.setCounty(county.getName());
-					}
-				}
-
-				if (suburbDTO.getCityId()!= null) {
-					LocationCity city = cityDao.findById(suburbDTO.getCityId()).orElse(null);
-					if (city != null) {
-						suburbDTO.setCity(city.getName());
-					}
-				}
-			}
 			return new ResponseDTO(suburbDTOS, "Exito", true);
 		} catch (Exception e) {
 			e.printStackTrace();

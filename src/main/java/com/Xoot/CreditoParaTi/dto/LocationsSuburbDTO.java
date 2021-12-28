@@ -15,6 +15,37 @@ public class LocationsSuburbDTO {
     private String county;
     private String city;
 
+    public LocationsSuburbDTO(
+         Integer idSuburb,
+         String code,
+         String name,
+         String zipCode,
+         String typeSuburb,
+         Integer countiesId,
+         Integer cityId,
+         String stateCode,
+         String countiesCode,
+         String citiesCode,
+         String state,
+         String county,
+         String city
+    ){
+        this.idSuburb = idSuburb;
+        this.code = code;
+        this.name = name;
+        this.zipCode = zipCode;
+        this.typeSuburb = typeSuburb;
+        this.countiesId = countiesId;
+        this.cityId = cityId;
+        this.stateCode = stateCode;
+        this.countiesCode = countiesCode;
+        this.citiesCode = citiesCode;
+        this.state = state;
+        this.county = county;
+        this.city = city;
+    }
+
+
     public Integer getIdSuburb() {
         return idSuburb;
     }

@@ -697,5 +697,4 @@ public class FormController {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos usuario.", false);
         }
     }
-
 }
