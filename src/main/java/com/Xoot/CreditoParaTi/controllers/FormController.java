@@ -827,7 +827,48 @@ public class FormController {
         return new ResponseDTO(data, message, result);
     }
 
+    @GetMapping("/userboard/app/resendLink/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseDTO FormUserBoardAppResend(@PathVariable Integer id) {
+        Object data;
+        String message;
+        Boolean result;
+        try {
+            data = null;
+            result = false;
+            Usuario user = userService.findById(id);
+            String username = user.getName() + " " +user.getPaternalLastName() + " " + user.getMotherLastName();
+            String password = PasswordGeneratorUtil.getPassword(8);
+            Employee employee = employeeService.findByemail(user.getCrtd_by());
+            try {
+                Mail mail = new Mail();
+                mail.setMailFrom("envios@creditoparati.com.mx");
+                mail.setMailTo(user.getEmail());
+                mail.setMailSubject("Credito para Ti - Alta de usuario");
+                mail.setMailContent("");
+                Map<String, Object> prop = new HashMap<String, Object>();
+                prop.put("name", username);
+                prop.put("username", user.getEmail());
+                prop.put("password", password);
+                prop.put("link", "http://url");
+                prop.put("location","Ciudad de Mexico");
+                prop.put("namecreated", employee.getName()+" "+employee.getPaternalLastName()+" "+employee.getMotherLastName());
+                prop.put("emailcreated", employee.getEmail());
+                prop.put("phonecreated", employee.getPhone());
+                mailService.sendEmailTemplete(mail, prop, "emailAddPropect");
+            } catch (Exception ex) {
 
+            }
+            result = true;
+            message = "Correo enviado";
+        } catch (Exception ex) {
+            data = null;
+            result = false;
+            ex.printStackTrace();
+            message = "Ocurrió un error al reenvio del link de descargar de la app.";
+        }
+        return new ResponseDTO(data, message, result);
+    }
 
     @PutMapping("/userboard/{id}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -838,6 +879,8 @@ public class FormController {
             return new ResponseDTO(null, "Ocurrió un error en la actualización de los datos usuario.", false);
         }
     }
+
+
 
 
     @GetMapping("/branchoffice")

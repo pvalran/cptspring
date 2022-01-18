@@ -182,6 +182,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>Cpttablero</finalName>
+		<finalName>CptProdTablero</finalName>
 	</build>
 </project>
