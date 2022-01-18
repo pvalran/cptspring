@@ -156,6 +156,6 @@
 			</plugin>
 			
 		</plugins>
-		<finalName>CreditoParaTi</finalName>
+		<finalName>ProdCreditoParaTi</finalName>
 	</build>
 </project>
