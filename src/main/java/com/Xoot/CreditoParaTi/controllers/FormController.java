@@ -839,6 +839,8 @@ public class FormController {
             Usuario user = userService.findById(id);
             String username = user.getName() + " " +user.getPaternalLastName() + " " + user.getMotherLastName();
             String password = PasswordGeneratorUtil.getPassword(8);
+            user.setPassword(password);
+            userService.save(user);
             Employee employee = employeeService.findByemail(user.getCrtd_by());
             try {
                 Mail mail = new Mail();
