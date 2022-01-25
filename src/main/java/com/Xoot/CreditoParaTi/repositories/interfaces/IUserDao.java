@@ -29,6 +29,10 @@ public interface IUserDao extends CrudRepository<Usuario, Integer>, JpaSpecifica
 	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE status_flag = 1 AND username=:userName and password = :password LIMIT 1")
 	public Usuario Login(@Param("userName") String userName,@Param("password") String password);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE status_flag = 1 AND crtd_by=:promotor")
+	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE crtd_by=:promotor")
 	public List<Usuario> findLeafletUser(@Param("promotor") String promotor);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE (" +
+			"concat(name,' ',paternal_last_name,' ',mother_last_name) LIKE %:search%  or email like %:search%) and crtd_by=:promotor")
+	public List<Usuario> findLeafletSearch(@Param("promotor") String promotor, @Param("search") String search);
 }

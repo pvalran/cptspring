@@ -80,6 +80,11 @@ public class UserImpl  implements IUserService, UserDetailsService{
 	public List<Usuario> findLeafletUser(String promotor)  { return userDao.findLeafletUser(promotor); }
 
 	@Override
+	public List<Usuario> findLeafletSearch(String promotor, String search) {
+		return userDao.findLeafletSearch(promotor,search);
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		

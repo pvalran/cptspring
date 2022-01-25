@@ -61,6 +61,12 @@ public class UserboardImp implements IUserService, UserDetailsService {
     }
 
     @Override
+    public List<Usuario> findLeafletSearch(String promotor, String search) {
+        return userDao.findLeafletSearch(promotor,search);
+    }
+
+
+    @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

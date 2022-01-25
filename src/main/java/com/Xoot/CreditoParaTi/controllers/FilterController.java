@@ -1,15 +1,19 @@
 package com.Xoot.CreditoParaTi.controllers;
 
 import com.Xoot.CreditoParaTi.dto.*;
+import com.Xoot.CreditoParaTi.entity.Employee;
 import com.Xoot.CreditoParaTi.entity.StatisticsTransaction;
+import com.Xoot.CreditoParaTi.mapper.FilterLeafletUserDTO;
 import com.Xoot.CreditoParaTi.mapper.FilterTransacionDTO;
 import com.Xoot.CreditoParaTi.services.interfaces.*;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.QueryParam;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -63,6 +67,10 @@ public class FilterController {
 	private ICustomerService customerService;
 	@Autowired
 	private ITransactionService transactionService;
+	@Autowired
+	private IEmployeeService employeeService;
+	@Autowired
+	private IUserService userService;
 
 
 	@Autowired
@@ -117,6 +125,16 @@ public class FilterController {
 	}
 
 
-
-
+	@PostMapping("/leafletUser/search/{id}")
+	public ResponseDTO getLeafletUserSearch(@PathVariable Integer id, @RequestBody FilterLeafletUserDTO filterSearch) {
+		try {
+			Employee employee = employeeService.findById(id);
+			Type listType = new TypeToken<List<UserBoardDTO>>() {
+			}.getType();
+			return new ResponseDTO(modelMapper.map(userService.findLeafletSearch(employee.getUsername(),filterSearch.getSearch()), listType), "Exito", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseDTO(null, "Catalogo no encontrado .", false);
+		}
+	}
 }

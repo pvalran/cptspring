@@ -22,7 +22,10 @@ public interface IUserService {
 	public List<Usuario> findAllBoardApp();
 
 	public List<Usuario> findLeafletUser(String promotor);
-	
+
+	public List<Usuario> findLeafletSearch(String promotor,String search);
+
+
 	public Usuario findByUsername(String username);
 	
 	public Usuario findByemail(String email);
