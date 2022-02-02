@@ -293,9 +293,6 @@ public class PdfController {
                     mail.setMailSubject("Credito para Ti - Solicitud de Credito para Ti");
                     mail.setMailContent("");
                     Map<String, Object> prop = new HashMap<String, Object>();
-
-
-
                     String customerName = "";
                     String customerPaternal = "";
                     String customerMaternal = "";

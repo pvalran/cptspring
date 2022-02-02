@@ -160,8 +160,7 @@ public class UserController {
 		try {
 			data = null;
 			result = false;
-
-			Usuario userchange = userService.findByemail(user.getEmail());
+			Employee userchange = employeeService.findByemail(user.getEmail());
 			if (userchange == null) {
 				message = "Su correo no ha sido registrado";
 				result = false;
@@ -170,7 +169,7 @@ public class UserController {
 				String password = PasswordGeneratorUtil.getPassword(8);
 				userchange.setPassword(password);
 				userchange.setDtLastLogin(new Date());
-				userService.save(userchange);
+				employeeService.save(userchange);
 				Mail mail = new Mail();
 				mail.setMailFrom("envios@creditoparati.com.mx");
 				mail.setMailTo(user.getEmail());
